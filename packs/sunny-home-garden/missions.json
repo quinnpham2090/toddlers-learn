@@ -1,0 +1,183 @@
+[
+  {
+    "id": "mission-tidy-team",
+    "record_type": "mission",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "mission.tidy_team.title",
+    "skill_id": "sorting-one-rule",
+    "parent_script_ref": "mission.tidy_team.parent_script",
+    "child_prompt_ref": "mission.tidy_team.child_prompt",
+    "team_goal_ref": "mission.tidy_team.team_goal",
+    "return_ritual_ref": "mission.tidy_team.return_ritual",
+    "parent_precheck": {
+      "required": true,
+      "prompt_ref": "mission.tidy_team.precheck",
+      "space_clear_check": true,
+      "adult_present_check": true
+    },
+    "parent_gate_required": true,
+    "estimated_minutes": 3,
+    "cooperative_only": true,
+    "song_id": "our-colour-song",
+    "song_fallback_rule": "use_lesson_song_template",
+    "safety_notes_refs": [
+      "mission.tidy_team.safety_1",
+      "mission.tidy_team.safety_2",
+      "mission.tidy_team.safety_3"
+    ],
+    "objects": [
+      {
+        "object_id": "laundry-basket",
+        "picture_ref": "laundry-basket",
+        "label_ref": "item.laundry_basket.label",
+        "alternative_object_id": "cardboard-box",
+        "alternative_picture_ref": "cardboard-box",
+        "fallback_body_action_id": "flat-towel",
+        "fallback_body_picture_ref": "flat-towel"
+      },
+      {
+        "object_id": "soft-toy",
+        "picture_ref": "soft-toy",
+        "label_ref": "item.soft_toy.label",
+        "alternative_object_id": "book-stack",
+        "alternative_picture_ref": "book-stack",
+        "fallback_body_action_id": "clean-socks",
+        "fallback_body_picture_ref": "clean-socks"
+      }
+    ]
+  },
+  {
+    "id": "mission-table-helpers",
+    "record_type": "mission",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "mission.table_helpers.title",
+    "skill_id": "sequencing-now-next",
+    "parent_script_ref": "mission.table_helpers.parent_script",
+    "child_prompt_ref": "mission.table_helpers.child_prompt",
+    "team_goal_ref": "mission.table_helpers.team_goal",
+    "return_ritual_ref": "mission.table_helpers.return_ritual",
+    "parent_precheck": {
+      "required": true,
+      "prompt_ref": "mission.table_helpers.precheck",
+      "space_clear_check": true,
+      "adult_present_check": true
+    },
+    "parent_gate_required": true,
+    "estimated_minutes": 3,
+    "cooperative_only": true,
+    "song_id": "our-goodnight-song",
+    "song_fallback_rule": "use_lesson_song_template",
+    "safety_notes_refs": [
+      "mission.table_helpers.safety_1",
+      "mission.table_helpers.safety_2",
+      "mission.table_helpers.safety_3",
+      "mission.table_helpers.safety_4"
+    ],
+    "objects": [
+      {
+        "object_id": "plastic-plate",
+        "picture_ref": "plastic-plate",
+        "label_ref": "item.plastic_plate.label",
+        "alternative_object_id": "paper-plate",
+        "alternative_picture_ref": "paper-plate",
+        "fallback_body_action_id": "placemat",
+        "fallback_body_picture_ref": "placemat"
+      },
+      {
+        "object_id": "plastic-cup",
+        "picture_ref": "plastic-cup",
+        "label_ref": "item.plastic_cup.label",
+        "alternative_object_id": "paper-cup",
+        "alternative_picture_ref": "paper-cup",
+        "fallback_body_action_id": "cloth-napkin",
+        "fallback_body_picture_ref": "cloth-napkin"
+      },
+      {
+        "object_id": "cloth-napkin",
+        "picture_ref": "cloth-napkin",
+        "label_ref": "item.cloth_napkin.label",
+        "alternative_object_id": "paper-towel-sheet",
+        "alternative_picture_ref": "paper-towel-sheet",
+        "fallback_body_action_id": "tea-towel",
+        "fallback_body_picture_ref": "tea-towel"
+      }
+    ]
+  },
+  {
+    "id": "mission-water-plants",
+    "record_type": "mission",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "mission.water_plants.title",
+    "skill_id": "sequencing-now-next",
+    "parent_script_ref": "mission.water_plants.parent_script",
+    "child_prompt_ref": "mission.water_plants.child_prompt",
+    "team_goal_ref": "mission.water_plants.team_goal",
+    "return_ritual_ref": "mission.water_plants.return_ritual",
+    "parent_precheck": {
+      "required": true,
+      "prompt_ref": "mission.water_plants.precheck",
+      "space_clear_check": true,
+      "adult_present_check": true
+    },
+    "parent_gate_required": true,
+    "estimated_minutes": 3,
+    "cooperative_only": true,
+    "song_id": "our-goodnight-song",
+    "song_fallback_rule": "use_lesson_song_template",
+    "safety_notes_refs": [
+      "mission.water_plants.safety_1",
+      "mission.water_plants.safety_2",
+      "mission.water_plants.safety_3"
+    ],
+    "objects": [
+      {
+        "object_id": "plastic-cup",
+        "picture_ref": "plastic-cup",
+        "label_ref": "item.plastic_cup.label",
+        "alternative_object_id": "watering-can",
+        "alternative_picture_ref": "watering-can",
+        "fallback_body_action_id": "damp-cloth",
+        "fallback_body_picture_ref": "damp-cloth"
+      },
+      {
+        "object_id": "indoor-plant",
+        "picture_ref": "indoor-plant",
+        "label_ref": "item.indoor_plant.label",
+        "alternative_object_id": "outdoor-plant",
+        "alternative_picture_ref": "outdoor-plant",
+        "fallback_body_action_id": "damp-cloth",
+        "fallback_body_picture_ref": "damp-cloth"
+      }
+    ]
+  }
+]

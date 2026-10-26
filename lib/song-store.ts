@@ -13,6 +13,7 @@ export interface UserSavedSong {
   name_wordlist_id: string;
   name_word_indices: number[];
   note_events: UserSavedSongNoteEvent[];
+  saved_date?: string;
 }
 
 const STORE_FILE_NAME = 'saved-songs.json';
@@ -47,7 +48,8 @@ function isUserSavedSong(value: unknown): value is UserSavedSong {
     Array.isArray(song.name_word_indices) &&
     song.name_word_indices.every((index) => typeof index === 'number') &&
     Array.isArray(song.note_events) &&
-    song.note_events.every(isNoteEvent)
+    song.note_events.every(isNoteEvent) &&
+    (song.saved_date === undefined || typeof song.saved_date === 'string')
   );
 }
 
@@ -81,7 +83,11 @@ function nextSongId(existing: UserSavedSong[]): string {
 export function saveSong(song: Omit<UserSavedSong, 'id'>): UserSavedSong | null {
   try {
     const existing = loadSavedSongs();
-    const record: UserSavedSong = { id: nextSongId(existing), ...song };
+    const record: UserSavedSong = {
+      id: nextSongId(existing),
+      ...song,
+      saved_date: new Date().toISOString(),
+    };
     storeFile().writeSync(JSON.stringify([...existing, record]));
     return record;
   } catch {

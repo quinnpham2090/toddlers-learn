@@ -1,0 +1,110 @@
+[
+  {
+    "id": "everyday-object-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "skill.everyday_object_words.title",
+    "description_ref": "skill.everyday_object_words.description",
+    "domain": "language",
+    "is_entry_skill": true,
+    "prerequisites": [],
+    "next_skills": [
+      "colour-naming"
+    ],
+    "age_band_min": "2-3",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "colour-naming",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "skill.colour_naming.title",
+    "description_ref": "skill.colour_naming.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "everyday-object-words"
+    ],
+    "next_skills": [
+      "sorting-one-rule"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sorting-one-rule",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "skill.sorting_one_rule.title",
+    "description_ref": "skill.sorting_one_rule.description",
+    "domain": "social_cooperative",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "colour-naming"
+    ],
+    "next_skills": [
+      "sequencing-now-next"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sequencing-now-next",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "skill.sequencing_now_next.title",
+    "description_ref": "skill.sequencing_now_next.description",
+    "domain": "time_concepts",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "sorting-one-rule"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  }
+]

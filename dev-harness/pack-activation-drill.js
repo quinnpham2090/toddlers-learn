@@ -127,6 +127,11 @@ report(
   knownPackIds.includes('test-switch') && knownPackIds.includes('core'),
   `known pack ids: ${knownPackIds.join(', ')}`
 );
+report(
+  'Sunny Home Garden pack is an activation target',
+  knownPackIds.includes('sunny-home-garden'),
+  `known pack ids: ${knownPackIds.join(', ')}`
+);
 
 // --- 2. Sandbox document directory + bundle pointer ---
 const docDir = fs.mkdtempSync(path.join(os.tmpdir(), 'toddlers-learn-activation-'));
@@ -141,38 +146,39 @@ report(
   `resolved: ${resolveInDocDir(docDir, pointerId, knownPackIds)}`
 );
 
-// --- 4. Activate the fixture: atomic override write + read-back check ---
-writeOverrideAtomically(docDir, {
-  active_pack_id: 'test-switch',
-  previous_pack_id: pointerId,
-  updated_at: new Date().toISOString(),
-});
-const afterSwitch = resolveInDocDir(docDir, pointerId, knownPackIds);
-report(
-  'Switch: override written atomically and resolves to the fixture',
-  afterSwitch === 'test-switch',
-  `resolved: ${afterSwitch}`
-);
-const storedAfterSwitch = loadOverride(docDir);
-report(
-  'Switch: stored override records the previous pack for rollback',
-  storedAfterSwitch !== null && storedAfterSwitch.previous_pack_id === pointerId,
-  `previous_pack_id: ${storedAfterSwitch ? storedAfterSwitch.previous_pack_id : 'none'}`
-);
-
-// --- 5. Rollback: one write restoring the previous pack ---
-const rollbackTarget = storedAfterSwitch ? storedAfterSwitch.previous_pack_id : null;
-writeOverrideAtomically(docDir, {
-  active_pack_id: rollbackTarget,
-  previous_pack_id: null,
-  updated_at: new Date().toISOString(),
-});
-const afterRollback = resolveInDocDir(docDir, pointerId, knownPackIds);
-report(
-  'Rollback: one write restores the previous pack',
-  afterRollback === pointerId,
-  `resolved: ${afterRollback}`
-);
+// --- 4. Activate each non-pointer pack: atomic override write + read-back + rollback ---
+const switchTargets = knownPackIds.filter((id) => id !== pointerId);
+for (const targetId of switchTargets) {
+  writeOverrideAtomically(docDir, {
+    active_pack_id: targetId,
+    previous_pack_id: pointerId,
+    updated_at: new Date().toISOString(),
+  });
+  const afterSwitch = resolveInDocDir(docDir, pointerId, knownPackIds);
+  report(
+    `Switch: override resolves to "${targetId}" (atomic write + read-back)`,
+    afterSwitch === targetId,
+    `resolved: ${afterSwitch}`
+  );
+  const storedAfterSwitch = loadOverride(docDir);
+  report(
+    `Switch: stored override records the previous pack for rollback (${targetId})`,
+    storedAfterSwitch !== null && storedAfterSwitch.previous_pack_id === pointerId,
+    `previous_pack_id: ${storedAfterSwitch ? storedAfterSwitch.previous_pack_id : 'none'}`
+  );
+  const rollbackTarget = storedAfterSwitch ? storedAfterSwitch.previous_pack_id : null;
+  writeOverrideAtomically(docDir, {
+    active_pack_id: rollbackTarget,
+    previous_pack_id: null,
+    updated_at: new Date().toISOString(),
+  });
+  const afterRollback = resolveInDocDir(docDir, pointerId, knownPackIds);
+  report(
+    `Rollback: one write restores the previous pack after switching to "${targetId}"`,
+    afterRollback === pointerId,
+    `resolved: ${afterRollback}`
+  );
+}
 
 // --- 6. Corrupt override: fall through safely to the pointer ---
 fs.writeFileSync(path.join(docDir, OVERRIDE_FILE_NAME), '{this is not valid json');

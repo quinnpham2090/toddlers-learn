@@ -99,10 +99,10 @@ export function deriveSkillBand(evidence: SkillEvidenceRecord[]): SkillBand {
   if (independent.length === 0) {
     return 'exploring';
   }
-  if (independent.length === 1) {
-    return 'practising';
+  if (independent.length >= 3) {
+    return 'confident';
   }
-  return 'confident';
+  return 'practising';
 }
 
 export function groupEvidenceBySkill(

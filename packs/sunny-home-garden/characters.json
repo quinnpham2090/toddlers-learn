@@ -1,0 +1,80 @@
+[
+  {
+    "id": "soli",
+    "record_type": "character",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "name_ref": "character.soli.name",
+    "species_or_role": "lantern_guide",
+    "appearance": {
+      "silhouette_shape": "rounded_lantern",
+      "primary_palette": "meadow_gold",
+      "distinctive_prop": "felt_drum"
+    },
+    "voice_profile": {
+      "register": "warm_alto",
+      "pacing_wpm": 118,
+      "synth_fallback_enabled": true
+    },
+    "personality_lines": [
+      "character.soli.line_1",
+      "character.soli.line_2"
+    ],
+    "world_home_id": "sunny-home-garden",
+    "model_asset_path": "assets/soli.svg",
+    "fallback_character_id": null,
+    "originality_attestation": {
+      "attester": "kilo",
+      "date": "2026-10-26",
+      "derivation_statement": "Original round sun-sprite design with leaf-ears and a sun hand drum, authored for this pack only; not derived from any existing character."
+    }
+  },
+  {
+    "id": "fern",
+    "record_type": "character",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "name_ref": "character.fern.name",
+    "species_or_role": "routine_helper",
+    "appearance": {
+      "silhouette_shape": "bell_pebble",
+      "primary_palette": "sage_coral",
+      "distinctive_prop": "story_leaf"
+    },
+    "voice_profile": {
+      "register": "soft_mezzo",
+      "pacing_wpm": 100,
+      "synth_fallback_enabled": true
+    },
+    "personality_lines": [
+      "character.fern.line_1",
+      "character.fern.line_2"
+    ],
+    "world_home_id": "sunny-home-garden",
+    "model_asset_path": "assets/fern.svg",
+    "fallback_character_id": null,
+    "originality_attestation": {
+      "attester": "kilo",
+      "date": "2026-10-26",
+      "derivation_statement": "Original tall teardrop garden-sprite design with drooping leaf-ears and a sorting basket, authored for this pack only; not derived from any existing character."
+    }
+  }
+]

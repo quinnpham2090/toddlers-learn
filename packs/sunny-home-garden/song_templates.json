@@ -1,0 +1,102 @@
+[
+  {
+    "id": "our-colour-song",
+    "record_type": "song_template",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "song.our_colour_song.title",
+    "lesson_word_ref": "song.our_colour_song.lesson_word",
+    "pentatonic_set_id": "c_major_pentatonic",
+    "note_slots_total": 8,
+    "child_slots": 3,
+    "completion_rule_id": "resolve_to_tonic",
+    "tempo": 104,
+    "timbre": "felt_piano",
+    "name_wordlist_id": "colour-object-wordlist",
+    "wordlists": {
+      "adjective_refs": [
+        "song.wordlist.colour_red",
+        "song.wordlist.colour_yellow",
+        "song.wordlist.colour_blue",
+        "song.wordlist.colour_green"
+      ],
+      "noun_refs": [
+        "song.wordlist.object_cup",
+        "song.wordlist.object_spoon",
+        "song.wordlist.object_book",
+        "song.wordlist.object_ball",
+        "song.wordlist.object_sock",
+        "song.wordlist.object_leaf"
+      ]
+    },
+    "base_notes": [
+      "C4",
+      "D4",
+      "E4",
+      "G4",
+      "E4",
+      "D4",
+      "E4",
+      "C4"
+    ]
+  },
+  {
+    "id": "our-goodnight-song",
+    "record_type": "song_template",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "song.our_goodnight_song.title",
+    "lesson_word_ref": "song.our_goodnight_song.lesson_word",
+    "pentatonic_set_id": "c_major_pentatonic",
+    "note_slots_total": 8,
+    "child_slots": 3,
+    "completion_rule_id": "resolve_to_tonic",
+    "tempo": 78,
+    "timbre": "soft_kalimba",
+    "name_wordlist_id": "colour-object-wordlist",
+    "wordlists": {
+      "adjective_refs": [
+        "song.wordlist.colour_red",
+        "song.wordlist.colour_yellow",
+        "song.wordlist.colour_blue",
+        "song.wordlist.colour_green"
+      ],
+      "noun_refs": [
+        "song.wordlist.object_cup",
+        "song.wordlist.object_spoon",
+        "song.wordlist.object_book",
+        "song.wordlist.object_ball",
+        "song.wordlist.object_sock",
+        "song.wordlist.object_leaf"
+      ]
+    },
+    "base_notes": [
+      "C4",
+      "D4",
+      "E4",
+      "D4",
+      "E4",
+      "G4",
+      "E4",
+      "C4"
+    ]
+  }
+]

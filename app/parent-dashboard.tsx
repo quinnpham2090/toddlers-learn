@@ -17,6 +17,7 @@ import {
   loadTogetherCompletions,
 } from '../lib/progress-store';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
+import { loadSavedSongs } from '../lib/song-store';
 
 const BACK_LABEL = 'Back';
 const DASHBOARD_TITLE = 'For grown-ups';
@@ -205,10 +206,16 @@ export default function ParentDashboardScreen() {
   const togetherToday = history.filter(
     (entry) => localDateKey(new Date(entry.date)) === todayKey
   ).length;
+  const songsToday = loadSavedSongs().filter(
+    (song) => song.saved_date && localDateKey(new Date(song.saved_date)) === todayKey
+  ).length;
 
   const noteParts: string[] = [];
   if (lessonsToday > 0) {
     noteParts.push(`finished ${lessonsToday} lesson${lessonsToday === 1 ? '' : 's'}`);
+  }
+  if (songsToday > 0) {
+    noteParts.push(`saved ${songsToday} song${songsToday === 1 ? '' : 's'}`);
   }
   if (togetherToday > 0) {
     noteParts.push(

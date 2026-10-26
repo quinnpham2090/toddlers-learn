@@ -1,0 +1,60 @@
+[
+  {
+    "id": "routine-goodnight-garden",
+    "record_type": "routine",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "routine.goodnight_garden.title",
+    "anchor": "bedtime_winddown",
+    "time_of_day": "evening",
+    "skill_id": "sequencing-now-next",
+    "parent_script_ref": "routine.goodnight_garden.parent_script",
+    "child_prompt_ref": "routine.goodnight_garden.child_prompt",
+    "team_goal_ref": "routine.goodnight_garden.team_goal",
+    "cooperative_only": true,
+    "song_id": "our-goodnight-song",
+    "song_fallback_rule": "use_lesson_song_template",
+    "return_ritual_ref": "routine.goodnight_garden.return_ritual",
+    "safety_notes_refs": [
+      "routine.goodnight_garden.safety_1"
+    ],
+    "objects": [
+      {
+        "object_id": "soft-toy",
+        "picture_ref": "soft-toy",
+        "label_ref": "item.soft_toy.label",
+        "alternative_object_id": "book-stack",
+        "alternative_picture_ref": "book-stack",
+        "fallback_body_action_id": "helping-hands",
+        "fallback_body_picture_ref": "helping-hands"
+      },
+      {
+        "object_id": "quiet-book",
+        "picture_ref": "quiet-book",
+        "label_ref": "item.quiet_book.label",
+        "alternative_object_id": "song-time-card",
+        "alternative_picture_ref": "song-time-card",
+        "fallback_body_action_id": "helping-hands",
+        "fallback_body_picture_ref": "helping-hands"
+      },
+      {
+        "object_id": "night-lamp",
+        "picture_ref": "night-lamp",
+        "label_ref": "item.night_lamp.label",
+        "alternative_object_id": "closed-curtains",
+        "alternative_picture_ref": "closed-curtains",
+        "fallback_body_action_id": "helping-hands",
+        "fallback_body_picture_ref": "helping-hands"
+      }
+    ]
+  }
+]
