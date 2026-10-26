@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import {
   CharacterRecord,
   SkillDomain,
@@ -14,7 +14,6 @@ import {
 } from '../lib/pack-loader';
 
 const START_BUTTON_LABEL = 'Start';
-const START_PENDING_MESSAGE = 'Your adventure starts soon';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -111,16 +110,7 @@ function StartButton({ onPress }: { onPress: () => void }) {
   );
 }
 
-function PendingMessage() {
-  return (
-    <View style={styles.pendingCard}>
-      <Text style={styles.pendingText}>{START_PENDING_MESSAGE}</Text>
-    </View>
-  );
-}
-
 export default function HubWorld() {
-  const [adventurePending, setAdventurePending] = useState(false);
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
 
@@ -131,8 +121,7 @@ export default function HubWorld() {
 
   const startSection = (
     <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
-      <StartButton onPress={() => setAdventurePending(true)} />
-      {adventurePending ? <PendingMessage /> : null}
+      <StartButton onPress={() => router.push('/session')} />
     </View>
   );
 
@@ -427,20 +416,5 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: '800',
     letterSpacing: 0.3,
-  },
-  pendingCard: {
-    marginTop: 14,
-    backgroundColor: '#E1EFE8',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#BFDCCB',
-    padding: 16,
-    alignItems: 'center',
-  },
-  pendingText: {
-    color: '#2B6E58',
-    fontSize: 16,
-    fontWeight: '700',
-    textAlign: 'center',
   },
 });
