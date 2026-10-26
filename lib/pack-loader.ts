@@ -531,6 +531,10 @@ export function getSongTemplates(): SongTemplateRecord[] {
   return getActivePack().songTemplates;
 }
 
+export function getSongTemplateById(id: string): SongTemplateRecord | undefined {
+  return getSongTemplates().find((template) => template.id === id);
+}
+
 export function getSavedSongs(): SavedSongRecord[] {
   return getActivePack().savedSongs;
 }

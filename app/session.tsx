@@ -321,13 +321,21 @@ function ClosingCard({
       <View style={isTablet ? styles.closingCardTablet : styles.closingCard}>
         <Text style={isTablet ? styles.closingTextTablet : styles.closingText}>{closingWin}</Text>
       </View>
-      {songTitle && lessonWord ? (
-        <View style={isTablet ? styles.songCardTablet : styles.songCard}>
+      {song ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={songTitle ?? undefined}
+          onPress={() => router.push({ pathname: '/composer', params: { templateId: song.id } })}
+          style={({ pressed }) => [
+            isTablet ? styles.songCardTablet : styles.songCard,
+            pressed && styles.songCardPressed,
+          ]}
+        >
           <Text style={isTablet ? styles.songTitleTablet : styles.songTitle}>{songTitle}</Text>
           <View style={styles.songWordChip}>
             <Text style={isTablet ? styles.songWordTablet : styles.songWord}>{lessonWord}</Text>
           </View>
-        </View>
+        </Pressable>
       ) : null}
       <Pressable
         accessibilityRole="button"
@@ -861,6 +869,9 @@ const styles = StyleSheet.create({
     borderColor: '#E7DFCE',
     padding: 18,
     alignItems: 'center',
+  },
+  songCardPressed: {
+    backgroundColor: '#F7F1E6',
   },
   songCardTablet: {
     backgroundColor: '#FFFFFF',

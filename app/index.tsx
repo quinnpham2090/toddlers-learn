@@ -14,6 +14,7 @@ import {
 } from '../lib/pack-loader';
 
 const START_BUTTON_LABEL = 'Start';
+const SONGBOOK_BUTTON_LABEL = 'Songbook';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -110,6 +111,19 @@ function StartButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function SongbookButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={SONGBOOK_BUTTON_LABEL}
+      onPress={onPress}
+      style={({ pressed }) => [styles.songbookButton, pressed && styles.songbookButtonPressed]}
+    >
+      <Text style={styles.songbookButtonText}>{SONGBOOK_BUTTON_LABEL}</Text>
+    </Pressable>
+  );
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
@@ -122,6 +136,7 @@ export default function HubWorld() {
   const startSection = (
     <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
       <StartButton onPress={() => router.push('/session')} />
+      <SongbookButton onPress={() => router.push('/songbook')} />
     </View>
   );
 
@@ -395,8 +410,11 @@ const styles = StyleSheet.create({
   },
   startSection: {
     marginTop: 6,
+    gap: 10,
   },
-  startSectionTablet: {},
+  startSectionTablet: {
+    gap: 10,
+  },
   startButton: {
     backgroundColor: '#E8A24B',
     borderRadius: 999,
@@ -416,5 +434,21 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: '800',
     letterSpacing: 0.3,
+  },
+  songbookButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: '#2B6E58',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  songbookButtonPressed: {
+    backgroundColor: '#F1EADB',
+  },
+  songbookButtonText: {
+    color: '#2B6E58',
+    fontSize: 15,
+    fontWeight: '800',
   },
 });
