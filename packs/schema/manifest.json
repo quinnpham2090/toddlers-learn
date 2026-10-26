@@ -115,6 +115,12 @@
       "const": true,
       "description": "Gating flag present and consistent for adult-facing pack controls."
     },
+    "gating": {
+      "type": "string",
+      "enum": ["free", "paid"],
+      "default": "free",
+      "description": "Pack monetization gate. Absent or \"free\" means the core free pack; \"paid\" marks a purchasable pack. Read later by the store/product layer."
+    },
     "retired_ids": {
       "type": "array",
       "items": {

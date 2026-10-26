@@ -51,5 +51,6 @@
     "core"
   ],
   "title_ref": "pack.core.title",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "gating": "free"
 }

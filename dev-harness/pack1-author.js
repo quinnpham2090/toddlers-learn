@@ -702,6 +702,7 @@ function main() {
     locales_available: [LOCALE],
     demo: false,
     parent_gate_required: true,
+    gating: 'free',
     retired_ids: [],
     dependencies: [],
     file_hashes: fileHashes,

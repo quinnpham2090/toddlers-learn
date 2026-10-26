@@ -663,6 +663,17 @@ export function validate(pack) {
       );
     }
 
+    // P-GATING: free/paid pack gate (absent defaults to "free")
+    if (manifest.gating !== undefined && manifest.gating !== 'free' && manifest.gating !== 'paid') {
+      addError(
+        'P-SCHEMA',
+        'P-SCHEMA-MANIFEST-GATING',
+        manifest.id || 'manifest',
+        'manifest',
+        `manifest.gating must be "free" or "paid" (got "${manifest.gating}"). Absent defaults to "free".`
+      );
+    }
+
     if (!manifest.file_hashes || typeof manifest.file_hashes !== 'object' || Object.keys(manifest.file_hashes).length === 0) {
       addError('P-MEDIA', 'P-MEDIA-MANIFEST-HASHES', manifest.id || 'manifest', 'manifest', 'manifest.file_hashes must record SHA-256 digests for pack files.');
     } else {

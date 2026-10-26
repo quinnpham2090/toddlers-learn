@@ -52,6 +52,14 @@
   - After 1-click rollback: `active_pack_id: "core"`, `active_pack_version: "0.1.0"`, `previous_pack_id: null`
 - Authoring form (`/app/author/`) dynamically generates its form inputs from `/packs/schema/*.json` and compiles both Form (Path A) and CSV (Path B) inputs through `/tools/compiler.js`.
 
+### E. Manifest `gating` field (free/paid switch)
+
+- Optional `gating` field on the pack manifest: allowed values `"free"` and `"paid"`.
+- **Default:** absent = `"free"` (backward-compatible — existing packs stay free).
+- **Meaning:** marks whether a pack is the core free pack or a purchasable pack. The
+  store/product layer reads this later; this task does NOT build any store or
+  purchase flow.
+
 ---
 
 ## 2. What Remains Open for Founder Content Authoring

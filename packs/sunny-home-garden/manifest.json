@@ -85,5 +85,6 @@
     "time_concepts.json": "f282c2c49a0ee9524cbc4d9af4c69f7325102d459a23fb073119fdfe45763237",
     "saved_songs.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "98768dce72d0a575482d4b7bb1cb99b7b190dc5d84c411924b11c6027c95b50e"
+  "pack_sha256": "98768dce72d0a575482d4b7bb1cb99b7b190dc5d84c411924b11c6027c95b50e",
+  "gating": "free"
 }
