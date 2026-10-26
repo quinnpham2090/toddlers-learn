@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://toddlers-learn.local/packs/schema/time_concept.json",
+  "title": "Time-Concept Record",
+  "description": "Fixed age-ladder time concept record. Clock-minute, month-order, and abstract-duration concepts have NO enum value and cannot be authored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "record_type",
+    "version",
+    "locale",
+    "age_band",
+    "status",
+    "tags",
+    "created_by",
+    "reviewed_by",
+    "notes_author",
+    "concept_key",
+    "title_ref",
+    "prompt_ref",
+    "picture_set_id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "time_concept"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$"
+    },
+    "age_band": {
+      "type": "string",
+      "enum": ["2-3", "3-4", "4-5"],
+      "description": "Must match the fixed age ladder for concept_key."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "live"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+(?:-[a-z0-9_]+)*$"
+      }
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes_author": {
+      "type": "string"
+    },
+    "concept_key": {
+      "type": "string",
+      "enum": [
+        "now_next",
+        "day_night",
+        "first_then",
+        "morning_afternoon_evening",
+        "before_after",
+        "yesterday_today_tomorrow",
+        "seasons_cycle"
+      ],
+      "description": "Closed enum of developmentally appropriate preschool time concepts. Clock-minute, month-order, and abstract-duration have NO enum value."
+    },
+    "title_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+    },
+    "prompt_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+    },
+    "picture_set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://toddlers-learn.local/packs/schema/lesson.json",
+  "title": "Lesson Record",
+  "description": "Interactive lesson with 1-8 steps, scaffold levels 0-3, resolving character/picture sets, and fallbacks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "record_type",
+    "version",
+    "locale",
+    "age_band",
+    "status",
+    "tags",
+    "created_by",
+    "reviewed_by",
+    "notes_author",
+    "title_ref",
+    "primary_skill_id",
+    "secondary_skill_ids",
+    "interaction_type",
+    "character_id",
+    "picture_set_id",
+    "song_template_id",
+    "mission_id",
+    "routine_id",
+    "estimated_minutes",
+    "chunk_budget_minutes",
+    "fallback_lesson_id",
+    "fallback_picture_id",
+    "closing_win_ref",
+    "steps",
+    "scaffolds"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Unique slug id (never reused)."
+    },
+    "record_type": {
+      "type": "string",
+      "const": "lesson"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$"
+    },
+    "age_band": {
+      "type": "string",
+      "enum": ["2-3", "3-4", "4-5", "2-5"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "live"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+(?:-[a-z0-9_]+)*$"
+      }
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes_author": {
+      "type": "string"
+    },
+    "title_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+    },
+    "primary_skill_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Exactly 1 primary skill ID."
+    },
+    "secondary_skill_ids": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "description": "At most 2 secondary skill IDs."
+    },
+    "interaction_type": {
+      "type": "string",
+      "enum": [
+        "tap_choice",
+        "match_pair",
+        "sort_group",
+        "rhythm_tap",
+        "story_echo",
+        "do_together"
+      ],
+      "description": "Closed interaction enum."
+    },
+    "character_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "picture_set_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "song_template_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "mission_id": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Optional linked mission_id (at most one of mission_id or routine_id may be non-null)."
+    },
+    "routine_id": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Optional linked routine_id (at most one of mission_id or routine_id may be non-null)."
+    },
+    "estimated_minutes": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Estimated duration in minutes (must be <= chunk_budget_minutes)."
+    },
+    "chunk_budget_minutes": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Maximum allowed minutes for this session chunk."
+    },
+    "fallback_lesson_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Required fallback lesson ID."
+    },
+    "fallback_picture_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "description": "Required fallback picture set ID."
+    },
+    "closing_win_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$",
+      "description": "String reference celebrated when session ends on a win."
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step_index",
+          "prompt_ref",
+          "target_item_id",
+          "choice_item_ids",
+          "celebration_ref"
+        ],
+        "properties": {
+          "step_index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "prompt_ref": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          },
+          "target_item_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "choice_item_ids": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "celebration_ref": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          }
+        }
+      }
+    },
+    "scaffolds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["0", "1", "2", "3"],
+      "properties": {
+        "0": { "$ref": "#/$defs/scaffold_level" },
+        "1": { "$ref": "#/$defs/scaffold_level" },
+        "2": { "$ref": "#/$defs/scaffold_level" },
+        "3": { "$ref": "#/$defs/scaffold_level" }
+      }
+    }
+  },
+  "$defs": {
+    "scaffold_level": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "mode",
+        "prompt_ref",
+        "max_choices",
+        "highlight_target",
+        "model_demonstration",
+        "child_final_tap_required"
+      ],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "full_task",
+            "fewer_choices",
+            "highlight_and_model",
+            "do_together_final_tap"
+          ]
+        },
+        "prompt_ref": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+        },
+        "max_choices": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "highlight_target": {
+          "type": "boolean"
+        },
+        "model_demonstration": {
+          "type": "boolean"
+        },
+        "child_final_tap_required": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  }
+}

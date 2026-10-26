@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://toddlers-learn.local/packs/schema/saved_song.json",
+  "title": "Saved Song Record",
+  "description": "On-device user song record containing note data and wordlist indices only — no voice, no photo, no child name, no free text.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "record_type",
+    "version",
+    "locale",
+    "age_band",
+    "status",
+    "tags",
+    "created_by",
+    "reviewed_by",
+    "notes_author",
+    "song_template_id",
+    "name_wordlist_id",
+    "name_word_indices",
+    "note_events"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "saved_song"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$"
+    },
+    "age_band": {
+      "type": "string",
+      "enum": ["2-3", "3-4", "4-5", "2-5"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "live"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+(?:-[a-z0-9_]+)*$"
+      }
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes_author": {
+      "type": "string"
+    },
+    "song_template_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name_wordlist_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name_word_indices": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "description": "Deterministic indices into [adjective_refs, noun_refs] to re-derive the song title without free text."
+    },
+    "note_events": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slot_index", "pitch", "authored_by_slot"],
+        "properties": {
+          "slot_index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "pitch": {
+            "type": "string",
+            "enum": ["C4", "D4", "E4", "G4", "A4", "C5"]
+          },
+          "authored_by_slot": {
+            "type": "string",
+            "enum": ["template", "child_slot"]
+          }
+        }
+      }
+    }
+  }
+}

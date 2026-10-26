@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://toddlers-learn.local/packs/schema/song_template.json",
+  "title": "Song Template Record",
+  "description": "Pentatonic closing song template with 6-12 total note slots and 3-4 child slots.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "record_type",
+    "version",
+    "locale",
+    "age_band",
+    "status",
+    "tags",
+    "created_by",
+    "reviewed_by",
+    "notes_author",
+    "title_ref",
+    "lesson_word_ref",
+    "pentatonic_set_id",
+    "note_slots_total",
+    "child_slots",
+    "completion_rule_id",
+    "tempo",
+    "timbre",
+    "name_wordlist_id",
+    "wordlists",
+    "base_notes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "song_template"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$"
+    },
+    "age_band": {
+      "type": "string",
+      "enum": ["2-3", "3-4", "4-5", "2-5"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "live"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+(?:-[a-z0-9_]+)*$"
+      }
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes_author": {
+      "type": "string"
+    },
+    "title_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+    },
+    "lesson_word_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$",
+      "description": "String reference for the lesson word celebrated in the song."
+    },
+    "pentatonic_set_id": {
+      "type": "string",
+      "enum": ["c_major_pentatonic", "g_major_pentatonic", "f_major_pentatonic", "d_minor_pentatonic"]
+    },
+    "note_slots_total": {
+      "type": "integer",
+      "minimum": 6,
+      "maximum": 12
+    },
+    "child_slots": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 4
+    },
+    "completion_rule_id": {
+      "type": "string",
+      "enum": ["resolve_to_tonic", "gentle_cadence_echo", "auto_fill_rest_on_pause"]
+    },
+    "tempo": {
+      "type": "integer",
+      "minimum": 60,
+      "maximum": 120
+    },
+    "timbre": {
+      "type": "string",
+      "enum": ["wooden_marimba", "soft_kalimba", "warm_bell", "felt_piano"]
+    },
+    "name_wordlist_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "wordlists": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adjective_refs", "noun_refs"],
+      "properties": {
+        "adjective_refs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          }
+        },
+        "noun_refs": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          }
+        }
+      }
+    },
+    "base_notes": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 12,
+      "items": {
+        "type": "string",
+        "enum": ["C4", "D4", "E4", "G4", "A4", "C5"]
+      }
+    }
+  }
+}

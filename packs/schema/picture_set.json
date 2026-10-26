@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://toddlers-learn.local/packs/schema/picture_set.json",
+  "title": "Picture Set Record",
+  "description": "Picture set with parent alt-text ref, safety depiction tags, size class, and choke-tube proxy clearance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "record_type",
+    "version",
+    "locale",
+    "age_band",
+    "status",
+    "tags",
+    "created_by",
+    "reviewed_by",
+    "notes_author",
+    "title_ref",
+    "alt_text_parent_ref",
+    "depiction_tags",
+    "items"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "record_type": {
+      "type": "string",
+      "const": "picture_set"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$"
+    },
+    "age_band": {
+      "type": "string",
+      "enum": ["2-3", "3-4", "4-5", "2-5"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "live"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]+(?:-[a-z0-9_]+)*$"
+      }
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes_author": {
+      "type": "string"
+    },
+    "title_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+    },
+    "alt_text_parent_ref": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$",
+      "description": "Required parent-facing alt-text string_ref."
+    },
+    "depiction_tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "household_safe",
+          "soft_fabric",
+          "wooden_toy",
+          "nature_item",
+          "small_object",
+          "sharp",
+          "hot",
+          "requires_stairs"
+        ]
+      },
+      "description": "Depiction tags; small_object, sharp, hot, requires_stairs are safety-blocked for missions/routines."
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "item_id",
+          "label_ref",
+          "alt_text_parent_ref",
+          "asset_path",
+          "asset_sha256",
+          "size_class",
+          "passes_choke_tube_proxy",
+          "depiction_tags"
+        ],
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "label_ref": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          },
+          "alt_text_parent_ref": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+(?:\\.[a-z0-9_]+)+$"
+          },
+          "asset_path": {
+            "type": "string",
+            "pattern": "^assets/[a-z0-9/_-]+\\.(svg|png|webp)$"
+          },
+          "asset_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size_class": {
+            "type": "string",
+            "enum": ["handheld_safe", "large_household", "small_blocked"]
+          },
+          "passes_choke_tube_proxy": {
+            "type": "boolean"
+          },
+          "depiction_tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "household_safe",
+                "soft_fabric",
+                "wooden_toy",
+                "nature_item",
+                "small_object",
+                "sharp",
+                "hot",
+                "requires_stairs"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

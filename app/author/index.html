@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 0 Schema-Generated Authoring Form (DEV ONLY)</title>
+  <style>
+    :root {
+      --bg: #f6f5f0;
+      --surface: #ffffff;
+      --border: #d9d6cc;
+      --text: #1f2421;
+      --muted: #5a625d;
+      --accent: #2b6e58;
+      --pass: #1f6f43;
+      --pass-bg: #e7f6ed;
+      --err: #9e2a2b;
+      --err-bg: #fdecec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .dev-banner {
+      background: #1f2421;
+      color: #f6f5f0;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+    .dev-banner a {
+      color: #9be3c8;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 14px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    h2 { font-size: 17px; margin: 0 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    .field-group {
+      margin-bottom: 12px;
+    }
+    .field-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .field-group .desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      min-height: 74px;
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #e3e0d6;
+      color: var(--text);
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+    pre {
+      background: #1d201e;
+      color: #e6efe9;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+      max-height: 540px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge-pass { background: var(--pass-bg); color: var(--pass); }
+    .badge-fail { background: var(--err-bg); color: var(--err); }
+  </style>
+</head>
+<body>
+  <div class="dev-banner">
+    <div>
+      <strong>PHASE 0 SCHEMA-GENERATED AUTHORING FORM</strong> — Human-Authored Pack Compiler (Form Path A + CSV Path B)
+    </div>
+    <div>
+      <a href="/app/preview/">Preview Harness</a>
+      <a href="/app/author/">Schema Authoring Form</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h1>Schema-Driven Authoring Form (<code>/packs/schema/*.json</code> → <code>/tools/compiler.js</code>)</h1>
+      <p style="font-size:13px;color:var(--muted);margin-top:0;">
+        Every field below is generated at runtime directly from the JSON Schema Draft 2020-12 files in <code>/packs/schema/</code>, so the authoring form and validator can never drift apart. Human-authored input only (no AI drafting).
+      </p>
+
+      <div class="btn-row">
+        <label for="schema-type-select" style="font-size:13px;font-weight:700;align-self:center;">Record Type Schema:</label>
+        <select id="schema-type-select" style="width:auto;min-width:220px;">
+          <option value="lesson">Lesson (/packs/schema/lesson.json)</option>
+          <option value="mission">Mission (/packs/schema/mission.json)</option>
+          <option value="song_template">Song Template (/packs/schema/song_template.json)</option>
+        </select>
+        <button type="button" id="btn-load-demo-preset" class="secondary">Load Demo Preset Values</button>
+        <button type="button" id="btn-compile-form">Compile Form (Path A)</button>
+      </div>
+
+      <div class="grid-2" style="margin-top:14px;">
+        <div>
+          <h2 id="form-schema-title">Generated Schema Fields</h2>
+          <form id="schema-generated-form"></form>
+        </div>
+
+        <div>
+          <h2>Compiled Pack JSON Output &amp; Live Validation</h2>
+          <div id="author-validation-status" style="margin-bottom:10px;"></div>
+          <pre id="compiled-output-pre"></pre>
+
+          <h2 style="margin-top:18px;">Path B: CSV / Spreadsheet Upload Compiler</h2>
+          <p style="font-size:12px;color:var(--muted);margin-top:0;">
+            Upload or paste CSV rows with the same fields to compile through <code>compile({ format: 'csv', csvText })</code> and compare byte-for-byte with Path A.
+          </p>
+          <input type="file" id="csv-file-input" accept=".csv" style="margin-bottom:8px;font-size:12px;" />
+          <textarea id="csv-text-input" placeholder="Paste CSV content here..."></textarea>
+          <div class="btn-row">
+            <button type="button" id="btn-compile-csv">Compile CSV (Path B) &amp; Diff Against Form (Path A)</button>
+          </div>
+          <div id="csv-diff-status" style="font-size:13px;margin-top:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app/author/author.js"></script>
+</body>
+</html>

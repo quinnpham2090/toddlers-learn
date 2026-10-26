@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 0 Dev Preview Harness — Validation &amp; Pack Runner (DEV ONLY)</title>
+  <style>
+    :root {
+      --bg: #f6f5f0;
+      --surface: #ffffff;
+      --border: #d9d6cc;
+      --text: #1f2421;
+      --muted: #5a625d;
+      --accent: #2b6e58;
+      --accent-soft: #e6f2ee;
+      --warn: #8a5a19;
+      --warn-bg: #fdf5e6;
+      --err: #9e2a2b;
+      --err-bg: #fdecec;
+      --pass: #1f6f43;
+      --pass-bg: #e7f6ed;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .dev-banner {
+      background: #1f2421;
+      color: #f6f5f0;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+    .dev-banner a {
+      color: #9be3c8;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 14px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    h1 { font-size: 22px; margin-bottom: 6px; }
+    h2 { font-size: 17px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .badge-pass { background: var(--pass-bg); color: var(--pass); }
+    .badge-fail { background: var(--err-bg); color: var(--err); }
+    .badge-demo { background: var(--warn-bg); color: var(--warn); }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { background: #f0eee6; font-weight: 600; }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #e3e0d6;
+      color: var(--text);
+    }
+    button.danger {
+      background: var(--err);
+      color: #fff;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .stage-box {
+      background: var(--accent-soft);
+      border: 1px solid #b8d8ce;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .choices-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .choice-btn {
+      background: #fff;
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      min-width: 150px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .choice-btn.highlight {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(43, 110, 88, 0.25);
+      background: #f4fbf8;
+    }
+    .choice-btn img {
+      width: 56px;
+      height: 56px;
+      display: block;
+      margin: 0 auto 6px;
+    }
+    pre {
+      background: #1d201e;
+      color: #e6efe9;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .log-list {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      background: #f7f6f2;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .toggle-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dev-banner">
+    <div>
+      <strong>PHASE 0 DEV PREVIEW HARNESS</strong> — Contract Validator, Lesson Runner, Degradation &amp; Rollback Drill (Never Ships)
+    </div>
+    <div>
+      <a href="/app/preview/">Preview Harness</a>
+      <a href="/app/author/">Schema Authoring Form</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Pack Summary & Validator -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h1>Pack Inspector &amp; Pure Validator (<code>/tools/validator.js</code>)</h1>
+          <div id="pack-meta" style="font-size:13px;color:var(--muted);">Loading pack files from <code>/packs/core/</code>...</div>
+        </div>
+        <div id="validation-badge"></div>
+      </div>
+
+      <div class="grid-2" style="margin-top:14px;">
+        <div>
+          <h3>Loaded Pack Records (Data from <code>/packs/core/*.json</code>)</h3>
+          <table id="records-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Slug ID</th>
+                <th>Status</th>
+                <th>Age Band</th>
+                <th>Title (Resolved from <code>strings.json</code>)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Validator Rule Family Summary</h3>
+          <table id="family-table">
+            <thead>
+              <tr>
+                <th>Rule Family</th>
+                <th>Errors</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="validator-errors-box" style="margin-top:10px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson Player + Scaffold Ladder + Degradation Rules -->
+    <div class="card">
+      <h2>End-to-End Lesson Runner (Scaffold Ladder L0 → L1 → L2 → L3 &amp; Degradation Drill)</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:0;">
+        Plays a lesson directly from pack JSON. Demonstrates the 4 scaffold levels (L0 full task → L1 fewer choices → L2 highlight + model → L3 do-together where the child always makes the final tap), zero "wrong" events, closing song ritual, and graceful data degradation.
+      </p>
+
+      <div class="grid-2">
+        <div>
+          <label for="lesson-select" style="font-size:13px;font-weight:600;">Select Lesson from Pack:</label>
+          <select id="lesson-select" style="margin-left:8px;padding:6px;border-radius:6px;border:1px solid var(--border);"></select>
+
+          <div style="margin-top:12px;">
+            <strong style="font-size:13px;">Scaffold Ladder Control:</strong>
+            <div class="btn-row" id="scaffold-buttons">
+              <button type="button" data-level="0">L0: Full Task</button>
+              <button type="button" data-level="1" class="secondary">L1: Fewer Choices</button>
+              <button type="button" data-level="2" class="secondary">L2: Highlight + Model</button>
+              <button type="button" data-level="3" class="secondary">L3: Do-Together (Child Final Tap)</button>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <strong style="font-size:13px;">Degradation Rule Simulation (Substitute, Never Blank/Crash/Block):</strong>
+            <div class="toggle-group">
+              <label><input type="checkbox" id="deg-missing-audio" /> Missing Character Audio (→ synth speech from <code>strings.json</code>)</label>
+              <label><input type="checkbox" id="deg-missing-model" /> Missing Character Model (→ fallback to <code>guide</code>)</label>
+              <label><input type="checkbox" id="deg-both-fail" /> Both Character Assets Fail (→ narration + generic picture)</label>
+              <label><input type="checkbox" id="deg-broken-mission" /> Broken Mission Link (→ mission suppressed, never offered)</label>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:12px;">
+            <button type="button" id="btn-auto-play">Auto-Play Full Lesson (L0→L1→L2→L3 → Win)</button>
+            <button type="button" id="btn-reset-lesson" class="secondary">Reset Lesson Session</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="stage-box" id="lesson-stage"></div>
+          <div style="margin-top:10px;">
+            <strong style="font-size:12px;">Session Event Log (No "wrong" events; always ends on a win):</strong>
+            <div class="log-list" id="lesson-log"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Atomic Pointer Activation & Rollback Drill -->
+    <div class="card">
+      <h2>Activation &amp; Atomic Rollback Drill (<code>/packs/active.json</code>)</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:0;">
+        Demonstrates atomic pointer swap in <code>/packs/active.json</code>: activating a validated candidate pack updates the active pointer and stores the previous pointer; failed download or failed validation leaves the previous pack active; rollback restores the previous pointer in one action.
+      </p>
+      <div class="grid-2">
+        <div>
+          <div class="btn-row">
+            <button type="button" id="btn-activate-candidate">1. Activate Valid Candidate Pack (<code>core-v0.2.0-candidate</code>)</button>
+            <button type="button" id="btn-activate-broken" class="danger">2. Attempt Broken Pack Activation (Blocked by Validator)</button>
+            <button type="button" id="btn-rollback" class="secondary">3. Rollback to Previous Pointer (1-Click)</button>
+          </div>
+          <div class="log-list" id="pointer-log" style="margin-top:10px;"></div>
+        </div>
+        <div>
+          <strong style="font-size:13px;">Current <code>/packs/active.json</code> Pointer State:</strong>
+          <pre id="active-pointer-json"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 Mandatory Negative Validator Tests -->
+    <div class="card">
+      <h2>7 Mandatory Negative Validator Tests (All 7 Must FAIL with Named Error)</h2>
+      <table id="negative-tests-table">
+        <thead>
+          <tr>
+            <th>Test ID</th>
+            <th>Scenario</th>
+            <th>Expected Family / Rule</th>
+            <th>Validator Outcome</th>
+            <th>Named Error &amp; Referrer Details</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Compiler Equivalence Result -->
+    <div class="card">
+      <h2>Compiler Equivalence Verification (Path A Authoring Form vs Path B CSV)</h2>
+      <div id="compiler-diff-summary" style="margin-bottom:10px;"></div>
+      <div class="grid-2">
+        <div>
+          <strong style="font-size:13px;">Path B CSV Input (<code>compile({ format: 'csv', csvText })</code>):</strong>
+          <pre id="compiler-csv-preview" style="max-height:220px;"></pre>
+        </div>
+        <div>
+          <strong style="font-size:13px;">Canonical Compiled Pack JSON Output (Byte-Identical Across Both Paths):</strong>
+          <pre id="compiler-json-preview" style="max-height:220px;"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app/preview/preview.js"></script>
+</body>
+</html>

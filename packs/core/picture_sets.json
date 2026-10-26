@@ -1,0 +1,136 @@
+[
+  {
+    "age_band": "2-5",
+    "alt_text_parent_ref": "picture_set.household_cozy_set.alt_parent",
+    "created_by": "phase0-architect",
+    "depiction_tags": [
+      "household_safe",
+      "soft_fabric",
+      "wooden_toy"
+    ],
+    "id": "household-cozy-set",
+    "items": [
+      {
+        "alt_text_parent_ref": "item.soft_cushion.alt_parent",
+        "asset_path": "assets/soft-cushion.svg",
+        "asset_sha256": "f56e8aa596bf24f4a9fe39ac353d58c25ca9e5355f6f708f060bc558ddfe2761",
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ],
+        "item_id": "soft-cushion",
+        "label_ref": "item.soft_cushion.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "large_household"
+      },
+      {
+        "alt_text_parent_ref": "item.cozy_blanket.alt_parent",
+        "asset_path": "assets/cozy-blanket.svg",
+        "asset_sha256": "52c096c7d3961c7c807491b06094f1dedc35c21bd39f332a5fbe0644415d5c99",
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ],
+        "item_id": "cozy-blanket",
+        "label_ref": "item.cozy_blanket.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "large_household"
+      },
+      {
+        "alt_text_parent_ref": "item.folded_towel.alt_parent",
+        "asset_path": "assets/folded-towel.svg",
+        "asset_sha256": "59176d0b1ba6a11a159d16139a66210feb2b60b6b8b074fb7bd0665d2385af05",
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ],
+        "item_id": "folded-towel",
+        "label_ref": "item.folded_towel.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "large_household"
+      },
+      {
+        "alt_text_parent_ref": "item.pretend_pillow_hands.alt_parent",
+        "asset_path": "assets/pretend-pillow-hands.svg",
+        "asset_sha256": "1fd4a2d9ca77651e1a17665e1aa6363cf6bc230a36bc2dfd5682f874fbc8addf",
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "item_id": "pretend-pillow-hands",
+        "label_ref": "item.pretend_pillow_hands.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "handheld_safe"
+      },
+      {
+        "alt_text_parent_ref": "item.warm_cup.alt_parent",
+        "asset_path": "assets/warm-cup.svg",
+        "asset_sha256": "279d141de4a33332141a109a51f6d69cd1411d3f9afa21d12ad02dc7c853d7f9",
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "item_id": "warm-cup",
+        "label_ref": "item.warm_cup.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "handheld_safe"
+      },
+      {
+        "alt_text_parent_ref": "item.wooden_block.alt_parent",
+        "asset_path": "assets/wooden-block.svg",
+        "asset_sha256": "b053ab1452bd50d70d5b3a746c838c690ed37927cdbe2d4d831ded02cf097e13",
+        "depiction_tags": [
+          "household_safe",
+          "wooden_toy"
+        ],
+        "item_id": "wooden-block",
+        "label_ref": "item.wooden_block.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "handheld_safe"
+      }
+    ],
+    "locale": "en-US",
+    "notes_author": "DEMO household items passing choke-tube proxy and universal item criteria.",
+    "record_type": "picture_set",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "household"
+    ],
+    "title_ref": "picture_set.household_cozy_set.title",
+    "version": "0.1.0"
+  },
+  {
+    "age_band": "2-5",
+    "alt_text_parent_ref": "picture_set.fallback_generic_set.alt_parent",
+    "created_by": "phase0-architect",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "id": "fallback-generic-set",
+    "items": [
+      {
+        "alt_text_parent_ref": "item.generic_picture.alt_parent",
+        "asset_path": "assets/generic-picture.svg",
+        "asset_sha256": "53b553a27802a9471cefed6628b8ce0ad3549db3a4b3b01652dd184def3c7eb5",
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "item_id": "generic-picture",
+        "label_ref": "item.generic_picture.label",
+        "passes_choke_tube_proxy": true,
+        "size_class": "large_household"
+      }
+    ],
+    "locale": "en-US",
+    "notes_author": "DEMO fallback picture set for graceful degradation.",
+    "record_type": "picture_set",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "fallback"
+    ],
+    "title_ref": "picture_set.fallback_generic_set.title",
+    "version": "0.1.0"
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "age_band": "2-5",
+    "created_by": "phase0-architect",
+    "id": "saved-song-demo-1",
+    "locale": "en-US",
+    "name_word_indices": [
+      1,
+      0
+    ],
+    "name_wordlist_id": "cozy-nature-wordlist",
+    "note_events": [
+      {
+        "authored_by_slot": "template",
+        "pitch": "C4",
+        "slot_index": 0
+      },
+      {
+        "authored_by_slot": "child_slot",
+        "pitch": "E4",
+        "slot_index": 1
+      },
+      {
+        "authored_by_slot": "template",
+        "pitch": "G4",
+        "slot_index": 2
+      },
+      {
+        "authored_by_slot": "child_slot",
+        "pitch": "A4",
+        "slot_index": 3
+      },
+      {
+        "authored_by_slot": "template",
+        "pitch": "G4",
+        "slot_index": 4
+      },
+      {
+        "authored_by_slot": "child_slot",
+        "pitch": "E4",
+        "slot_index": 5
+      },
+      {
+        "authored_by_slot": "template",
+        "pitch": "D4",
+        "slot_index": 6
+      },
+      {
+        "authored_by_slot": "template",
+        "pitch": "C4",
+        "slot_index": 7
+      }
+    ],
+    "notes_author": "DEMO saved song record showing zero PII, note data + wordlist indices only.",
+    "record_type": "saved_song",
+    "reviewed_by": "phase0-reviewer",
+    "song_template_id": "cozy-chime-song",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "saved_song"
+    ],
+    "version": "0.1.0"
+  }
+]
