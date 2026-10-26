@@ -1,0 +1,56 @@
+[
+  {
+    "age_band": "2-3",
+    "age_band_min": "2-3",
+    "catch_up_variant_of": null,
+    "created_by": "phase0-architect",
+    "description_ref": "skill.everyday_words_entry.description",
+    "domain": "language",
+    "evidence_needed_to_advance": 3,
+    "id": "everyday-words-entry",
+    "is_entry_skill": true,
+    "locale": "en-US",
+    "next_skills": [
+      "sorting-pairs-next"
+    ],
+    "notes_author": "DEMO entry skill in language domain.",
+    "prerequisites": [],
+    "record_type": "skill",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "entry",
+      "language"
+    ],
+    "title_ref": "skill.everyday_words_entry.title",
+    "version": "0.1.0"
+  },
+  {
+    "age_band": "3-4",
+    "age_band_min": "3-4",
+    "catch_up_variant_of": null,
+    "created_by": "phase0-architect",
+    "description_ref": "skill.sorting_pairs_next.description",
+    "domain": "social_cooperative",
+    "evidence_needed_to_advance": 3,
+    "id": "sorting-pairs-next",
+    "is_entry_skill": false,
+    "locale": "en-US",
+    "next_skills": [],
+    "notes_author": "DEMO downstream skill reachable from everyday-words-entry.",
+    "prerequisites": [
+      "everyday-words-entry"
+    ],
+    "record_type": "skill",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "grouping",
+      "cooperative"
+    ],
+    "title_ref": "skill.sorting_pairs_next.title",
+    "version": "0.1.0"
+  }
+]

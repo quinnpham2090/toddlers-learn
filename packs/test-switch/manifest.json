@@ -1,0 +1,55 @@
+{
+  "age_band": "2-5",
+  "created_by": "phase0-architect",
+  "default_locale": "en-US",
+  "demo": true,
+  "dependencies": [],
+  "file_hashes": {
+    "assets/cozy-blanket.svg": "52c096c7d3961c7c807491b06094f1dedc35c21bd39f332a5fbe0644415d5c99",
+    "assets/folded-towel.svg": "59176d0b1ba6a11a159d16139a66210feb2b60b6b8b074fb7bd0665d2385af05",
+    "assets/generic-picture.svg": "53b553a27802a9471cefed6628b8ce0ad3549db3a4b3b01652dd184def3c7eb5",
+    "assets/guide.svg": "7b78429fd5d1646366ed6c123f0ac5f071ff30e3409640f59dcdda5f83e5ac8f",
+    "assets/pretend-pillow-hands.svg": "1fd4a2d9ca77651e1a17665e1aa6363cf6bc230a36bc2dfd5682f874fbc8addf",
+    "assets/soft-cushion.svg": "f56e8aa596bf24f4a9fe39ac353d58c25ca9e5355f6f708f060bc558ddfe2761",
+    "assets/warm-cup.svg": "279d141de4a33332141a109a51f6d69cd1411d3f9afa21d12ad02dc7c853d7f9",
+    "assets/wooden-block.svg": "b053ab1452bd50d70d5b3a746c838c690ed37927cdbe2d4d831ded02cf097e13",
+    "assets/words-guide.svg": "e5a8e8fdc092be95110c0ccc3d2c28449a9710926f7894a160463df754da0e86",
+    "characters.json": "9d4b100796b530345d4fe43d43116ed3f0f3915bc2c54366839569d2fa9ef345",
+    "lessons.json": "0fd6a99779d63586124dd28baf105d074ab78249bcd176274b5e32bcfafc6220",
+    "missions.json": "26af35021cd75235682f1e8dc5e69c1f1539c79705450f155c0d0062ba0fb3e6",
+    "picture_sets.json": "3869e6ef154879c9f6a055ad57ae648d90a04e1a33531e3d9924098852a090c0",
+    "routines.json": "e4a7ee91d9068891d91e96f81097705e1e758ee367ed006c146f322e2b95db9c",
+    "saved_songs.json": "19c83ee14c2ed4c6c757397d5d1e58b3e088c224103da5b486914c96c7d68183",
+    "skills.json": "f9a631e03f5bcfcbf9b84b2909ccc634ea6835165fa685ee64c7fd3b3a24f874",
+    "song_templates.json": "26c91ffce72878e4bddd0b51b90514bc4c86386a41fda6de62fcd398d48da9a8",
+    "strings.json": "fcf51ac0395f2562fdbcbe76e2652dc06f7abf892f12bd95aca0dfc5ad03564b",
+    "time_concepts.json": "5ad52b28c7f4cf5a2473dce1e81b74d57e3b75e362fc4258fec8d294a39c29e6"
+  },
+  "id": "test-switch",
+  "locale": "en-US",
+  "locales_available": [
+    "en-US"
+  ],
+  "notes_author": "TEST FIXTURE pack used only to prove the pack-activation switch and rollback drill. Never real content, never ships as a content pack.",
+  "pack_sha256": "466adb8272372952ec1894fe426827589424e7d63bcd30d8cf75e77c14805245",
+  "parent_gate_required": true,
+  "record_type": "manifest",
+  "retired_ids": [
+    "retired-lesson-old-1",
+    "retired-skill-old-1"
+  ],
+  "reviewed_by": "phase0-reviewer",
+  "schema_version": "1.0.0",
+  "status": "draft",
+  "summary_ref": "pack.core.summary",
+  "supported_schema_versions": [
+    "1.0.0"
+  ],
+  "tags": [
+    "demo",
+    "test-fixture",
+    "activation-drill"
+  ],
+  "title_ref": "pack.test_switch.title",
+  "version": "0.1.0"
+}

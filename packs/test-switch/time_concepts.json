@@ -1,0 +1,21 @@
+[
+  {
+    "age_band": "2-3",
+    "concept_key": "now_next",
+    "created_by": "phase0-architect",
+    "id": "concept-now-next",
+    "locale": "en-US",
+    "notes_author": "DEMO time-concept record following fixed age ladder (now_next -> 2-3).",
+    "picture_set_id": "household-cozy-set",
+    "prompt_ref": "time_concept.concept_now_next.prompt",
+    "record_type": "time_concept",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "time_concept"
+    ],
+    "title_ref": "time_concept.concept_now_next.title",
+    "version": "0.1.0"
+  }
+]

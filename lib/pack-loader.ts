@@ -10,6 +10,17 @@ import corePictureSetsJson from '../packs/core/picture_sets.json';
 import coreMissionsJson from '../packs/core/missions.json';
 import coreRoutinesJson from '../packs/core/routines.json';
 import coreTimeConceptsJson from '../packs/core/time_concepts.json';
+import testSwitchManifestJson from '../packs/test-switch/manifest.json';
+import testSwitchStringsJson from '../packs/test-switch/strings.json';
+import testSwitchSkillsJson from '../packs/test-switch/skills.json';
+import testSwitchLessonsJson from '../packs/test-switch/lessons.json';
+import testSwitchSongTemplatesJson from '../packs/test-switch/song_templates.json';
+import testSwitchSavedSongsJson from '../packs/test-switch/saved_songs.json';
+import testSwitchCharactersJson from '../packs/test-switch/characters.json';
+import testSwitchPictureSetsJson from '../packs/test-switch/picture_sets.json';
+import testSwitchMissionsJson from '../packs/test-switch/missions.json';
+import testSwitchRoutinesJson from '../packs/test-switch/routines.json';
+import testSwitchTimeConceptsJson from '../packs/test-switch/time_concepts.json';
 import cozyBlanketSvg from '../packs/core/assets/cozy-blanket.svg';
 import foldedTowelSvg from '../packs/core/assets/folded-towel.svg';
 import genericPictureSvg from '../packs/core/assets/generic-picture.svg';
@@ -19,6 +30,8 @@ import softCushionSvg from '../packs/core/assets/soft-cushion.svg';
 import warmCupSvg from '../packs/core/assets/warm-cup.svg';
 import woodenBlockSvg from '../packs/core/assets/wooden-block.svg';
 import wordsGuideSvg from '../packs/core/assets/words-guide.svg';
+import { ActivePackOverride, loadActivePackOverride } from './active-pack-store';
+import { resolveActivePackId } from './pack-activation-resolution.js';
 
 export type AgeBand = '2-3' | '3-4' | '4-5' | '2-5';
 export type RecordStatus = 'draft' | 'review' | 'live';
@@ -438,6 +451,20 @@ const PACK_REGISTRY: Record<string, PackFiles> = {
     routines: coreRoutinesJson as RoutineRecord[],
     timeConcepts: coreTimeConceptsJson as TimeConceptRecord[],
   },
+  'test-switch': {
+    packId: 'test-switch',
+    manifest: testSwitchManifestJson as PackManifest,
+    strings: testSwitchStringsJson as PackStrings,
+    skills: testSwitchSkillsJson as SkillRecord[],
+    lessons: testSwitchLessonsJson as LessonRecord[],
+    songTemplates: testSwitchSongTemplatesJson as SongTemplateRecord[],
+    savedSongs: testSwitchSavedSongsJson as SavedSongRecord[],
+    characters: testSwitchCharactersJson as CharacterRecord[],
+    pictureSets: testSwitchPictureSetsJson as PictureSetRecord[],
+    missions: testSwitchMissionsJson as MissionRecord[],
+    routines: testSwitchRoutinesJson as RoutineRecord[],
+    timeConcepts: testSwitchTimeConceptsJson as TimeConceptRecord[],
+  },
 };
 
 const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
@@ -452,18 +479,54 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/wooden-block.svg': woodenBlockSvg,
     'assets/words-guide.svg': wordsGuideSvg,
   },
+  'test-switch': {
+    'assets/cozy-blanket.svg': cozyBlanketSvg,
+    'assets/folded-towel.svg': foldedTowelSvg,
+    'assets/generic-picture.svg': genericPictureSvg,
+    'assets/guide.svg': guideSvg,
+    'assets/pretend-pillow-hands.svg': pretendPillowHandsSvg,
+    'assets/soft-cushion.svg': softCushionSvg,
+    'assets/warm-cup.svg': warmCupSvg,
+    'assets/wooden-block.svg': woodenBlockSvg,
+    'assets/words-guide.svg': wordsGuideSvg,
+  },
 };
 
+let cachedOverride: ActivePackOverride | null | undefined;
+
+function readOverrideCached(): ActivePackOverride | null {
+  if (cachedOverride === undefined) {
+    cachedOverride = loadActivePackOverride();
+  }
+  return cachedOverride;
+}
+
+export function invalidateActivePackOverrideCache(): void {
+  cachedOverride = undefined;
+}
+
+export function getRegisteredPacks(): PackFiles[] {
+  return Object.values(PACK_REGISTRY);
+}
+
 export function getActivePackId(): string {
-  return activePackPointer.active_pack_id;
+  const override = readOverrideCached();
+  const resolved = resolveActivePackId(
+    override ? override.active_pack_id : null,
+    activePackPointer.active_pack_id,
+    Object.keys(PACK_REGISTRY)
+  );
+  if (resolved === null) {
+    throw new Error('No content packs are present in the static pack registry.');
+  }
+  return resolved;
 }
 
 export function getActivePack(): PackFiles {
-  const pack = PACK_REGISTRY[activePackPointer.active_pack_id];
+  const activePackId = getActivePackId();
+  const pack = PACK_REGISTRY[activePackId];
   if (!pack) {
-    throw new Error(
-      `Active pack "${activePackPointer.active_pack_id}" is not present in the static pack registry.`
-    );
+    throw new Error(`Active pack "${activePackId}" is not present in the static pack registry.`);
   }
   return pack;
 }

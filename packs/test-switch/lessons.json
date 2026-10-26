@@ -1,0 +1,268 @@
+[
+  {
+    "age_band": "2-3",
+    "character_id": "words-guide",
+    "chunk_budget_minutes": 4,
+    "closing_win_ref": "lesson.lesson_cozy_words_1.closing_win",
+    "created_by": "phase0-architect",
+    "estimated_minutes": 3,
+    "fallback_lesson_id": "lesson-fallback-calm",
+    "fallback_picture_id": "fallback-generic-set",
+    "id": "lesson-cozy-words-1",
+    "interaction_type": "tap_choice",
+    "locale": "en-US",
+    "mission_id": "mission-cushion-nest",
+    "notes_author": "DEMO lesson 1: primary everyday-words-entry, linked to mission-cushion-nest.",
+    "picture_set_id": "household-cozy-set",
+    "primary_skill_id": "everyday-words-entry",
+    "record_type": "lesson",
+    "reviewed_by": "phase0-reviewer",
+    "routine_id": null,
+    "scaffolds": {
+      "0": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 0,
+        "max_choices": 3,
+        "mode": "full_task",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l0.prompt"
+      },
+      "1": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 1,
+        "max_choices": 2,
+        "mode": "fewer_choices",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l1.prompt"
+      },
+      "2": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 2,
+        "max_choices": 2,
+        "mode": "highlight_and_model",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l2.prompt"
+      },
+      "3": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 3,
+        "max_choices": 1,
+        "mode": "do_together_final_tap",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l3.prompt"
+      }
+    },
+    "secondary_skill_ids": [
+      "sorting-pairs-next"
+    ],
+    "song_template_id": "cozy-chime-song",
+    "status": "draft",
+    "steps": [
+      {
+        "celebration_ref": "lesson.lesson_cozy_words_1.step_1.celebration",
+        "choice_item_ids": [
+          "soft-cushion",
+          "warm-cup",
+          "wooden-block"
+        ],
+        "prompt_ref": "lesson.lesson_cozy_words_1.step_1.prompt",
+        "step_index": 1,
+        "target_item_id": "soft-cushion"
+      },
+      {
+        "celebration_ref": "lesson.lesson_cozy_words_1.step_2.celebration",
+        "choice_item_ids": [
+          "cozy-blanket",
+          "folded-towel",
+          "wooden-block"
+        ],
+        "prompt_ref": "lesson.lesson_cozy_words_1.step_2.prompt",
+        "step_index": 2,
+        "target_item_id": "cozy-blanket"
+      }
+    ],
+    "tags": [
+      "demo",
+      "words",
+      "entry"
+    ],
+    "title_ref": "lesson.lesson_cozy_words_1.title",
+    "version": "0.1.0"
+  },
+  {
+    "age_band": "3-4",
+    "character_id": "guide",
+    "chunk_budget_minutes": 4,
+    "closing_win_ref": "lesson.lesson_cozy_pairs_2.closing_win",
+    "created_by": "phase0-architect",
+    "estimated_minutes": 3,
+    "fallback_lesson_id": "lesson-fallback-calm",
+    "fallback_picture_id": "fallback-generic-set",
+    "id": "lesson-cozy-pairs-2",
+    "interaction_type": "sort_group",
+    "locale": "en-US",
+    "mission_id": null,
+    "notes_author": "DEMO lesson 2: primary sorting-pairs-next, linked to routine-evening-tidy.",
+    "picture_set_id": "household-cozy-set",
+    "primary_skill_id": "sorting-pairs-next",
+    "record_type": "lesson",
+    "reviewed_by": "phase0-reviewer",
+    "routine_id": "routine-evening-tidy",
+    "scaffolds": {
+      "0": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 0,
+        "max_choices": 3,
+        "mode": "full_task",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l0.prompt"
+      },
+      "1": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 1,
+        "max_choices": 2,
+        "mode": "fewer_choices",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l1.prompt"
+      },
+      "2": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 2,
+        "max_choices": 2,
+        "mode": "highlight_and_model",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l2.prompt"
+      },
+      "3": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 3,
+        "max_choices": 1,
+        "mode": "do_together_final_tap",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l3.prompt"
+      }
+    },
+    "secondary_skill_ids": [
+      "everyday-words-entry"
+    ],
+    "song_template_id": "cozy-chime-song",
+    "status": "draft",
+    "steps": [
+      {
+        "celebration_ref": "lesson.lesson_cozy_pairs_2.step_1.celebration",
+        "choice_item_ids": [
+          "folded-towel",
+          "warm-cup",
+          "soft-cushion"
+        ],
+        "prompt_ref": "lesson.lesson_cozy_pairs_2.step_1.prompt",
+        "step_index": 1,
+        "target_item_id": "folded-towel"
+      },
+      {
+        "celebration_ref": "lesson.lesson_cozy_pairs_2.step_2.celebration",
+        "choice_item_ids": [
+          "wooden-block",
+          "cozy-blanket",
+          "warm-cup"
+        ],
+        "prompt_ref": "lesson.lesson_cozy_pairs_2.step_2.prompt",
+        "step_index": 2,
+        "target_item_id": "wooden-block"
+      }
+    ],
+    "tags": [
+      "demo",
+      "pairs",
+      "routine"
+    ],
+    "title_ref": "lesson.lesson_cozy_pairs_2.title",
+    "version": "0.1.0"
+  },
+  {
+    "age_band": "2-5",
+    "character_id": "guide",
+    "chunk_budget_minutes": 3,
+    "closing_win_ref": "lesson.lesson_fallback_calm.closing_win",
+    "created_by": "phase0-architect",
+    "estimated_minutes": 2,
+    "fallback_lesson_id": "lesson-cozy-words-1",
+    "fallback_picture_id": "fallback-generic-set",
+    "id": "lesson-fallback-calm",
+    "interaction_type": "do_together",
+    "locale": "en-US",
+    "mission_id": null,
+    "notes_author": "DEMO lesson 3: calm fallback lesson used when any primary lesson degrades.",
+    "picture_set_id": "fallback-generic-set",
+    "primary_skill_id": "everyday-words-entry",
+    "record_type": "lesson",
+    "reviewed_by": "phase0-reviewer",
+    "routine_id": null,
+    "scaffolds": {
+      "0": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 0,
+        "max_choices": 1,
+        "mode": "full_task",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l0.prompt"
+      },
+      "1": {
+        "child_final_tap_required": true,
+        "highlight_target": false,
+        "level": 1,
+        "max_choices": 1,
+        "mode": "fewer_choices",
+        "model_demonstration": false,
+        "prompt_ref": "scaffold.l1.prompt"
+      },
+      "2": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 2,
+        "max_choices": 1,
+        "mode": "highlight_and_model",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l2.prompt"
+      },
+      "3": {
+        "child_final_tap_required": true,
+        "highlight_target": true,
+        "level": 3,
+        "max_choices": 1,
+        "mode": "do_together_final_tap",
+        "model_demonstration": true,
+        "prompt_ref": "scaffold.l3.prompt"
+      }
+    },
+    "secondary_skill_ids": [],
+    "song_template_id": "cozy-chime-song",
+    "status": "draft",
+    "steps": [
+      {
+        "celebration_ref": "lesson.lesson_fallback_calm.step_1.celebration",
+        "choice_item_ids": [
+          "generic-picture"
+        ],
+        "prompt_ref": "lesson.lesson_fallback_calm.step_1.prompt",
+        "step_index": 1,
+        "target_item_id": "generic-picture"
+      }
+    ],
+    "tags": [
+      "demo",
+      "fallback"
+    ],
+    "title_ref": "lesson.lesson_fallback_calm.title",
+    "version": "0.1.0"
+  }
+]

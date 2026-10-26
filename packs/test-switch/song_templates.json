@@ -1,0 +1,49 @@
+[
+  {
+    "age_band": "2-5",
+    "base_notes": [
+      "C4",
+      "D4",
+      "E4",
+      "G4",
+      "A4",
+      "G4",
+      "E4",
+      "C4"
+    ],
+    "child_slots": 3,
+    "completion_rule_id": "resolve_to_tonic",
+    "created_by": "phase0-architect",
+    "id": "cozy-chime-song",
+    "lesson_word_ref": "song.cozy_chime_song.lesson_word",
+    "locale": "en-US",
+    "name_wordlist_id": "cozy-nature-wordlist",
+    "note_slots_total": 8,
+    "notes_author": "DEMO pentatonic song template with 8 total slots and 3 child slots.",
+    "pentatonic_set_id": "c_major_pentatonic",
+    "record_type": "song_template",
+    "reviewed_by": "phase0-reviewer",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "music",
+      "pentatonic"
+    ],
+    "tempo": 84,
+    "timbre": "wooden_marimba",
+    "title_ref": "song.cozy_chime_song.title",
+    "version": "0.1.0",
+    "wordlists": {
+      "adjective_refs": [
+        "song.wordlist.adj_sunny",
+        "song.wordlist.adj_gentle",
+        "song.wordlist.adj_breezy"
+      ],
+      "noun_refs": [
+        "song.wordlist.noun_meadow",
+        "song.wordlist.noun_lantern",
+        "song.wordlist.noun_pebble"
+      ]
+    }
+  }
+]

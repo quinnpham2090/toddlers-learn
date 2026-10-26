@@ -1,0 +1,43 @@
+[
+  {
+    "age_band": "2-5",
+    "anchor": "tidy_together",
+    "child_prompt_ref": "routine.routine_evening_tidy.child_prompt",
+    "cooperative_only": true,
+    "created_by": "phase0-architect",
+    "id": "routine-evening-tidy",
+    "locale": "en-US",
+    "notes_author": "DEMO evening tidy routine with 3-level alternative chain.",
+    "objects": [
+      {
+        "alternative_object_id": "folded-towel",
+        "alternative_picture_ref": "folded-towel",
+        "fallback_body_action_id": "pretend-pillow-hands",
+        "fallback_body_picture_ref": "pretend-pillow-hands",
+        "label_ref": "item.cozy_blanket.label",
+        "object_id": "cozy-blanket",
+        "picture_ref": "cozy-blanket"
+      }
+    ],
+    "parent_script_ref": "routine.routine_evening_tidy.parent_script",
+    "record_type": "routine",
+    "return_ritual_ref": "routine.routine_evening_tidy.return_ritual",
+    "reviewed_by": "phase0-reviewer",
+    "safety_notes_refs": [
+      "routine.routine_evening_tidy.safety_1"
+    ],
+    "skill_id": "sorting-pairs-next",
+    "song_fallback_rule": "use_lesson_song_template",
+    "song_id": "cozy-chime-song",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "routine",
+      "evening"
+    ],
+    "team_goal_ref": "routine.routine_evening_tidy.team_goal",
+    "time_of_day": "evening",
+    "title_ref": "routine.routine_evening_tidy.title",
+    "version": "0.1.0"
+  }
+]

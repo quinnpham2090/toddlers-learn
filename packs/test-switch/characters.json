@@ -1,0 +1,82 @@
+[
+  {
+    "age_band": "2-5",
+    "appearance": {
+      "distinctive_prop": "wooden_chime",
+      "primary_palette": "warm_ochre_teal",
+      "silhouette_shape": "rounded_lantern"
+    },
+    "created_by": "phase0-architect",
+    "fallback_character_id": null,
+    "id": "guide",
+    "locale": "en-US",
+    "model_asset_path": "assets/guide.svg",
+    "name_ref": "character.guide.name",
+    "notes_author": "DEMO placeholder default guide character. Originality attestation verified.",
+    "originality_attestation": {
+      "attester": "phase0-architect",
+      "date": "2026-10-26",
+      "derivation_statement": "Original geometric rounded lantern silhouette created specifically for Phase 0 contract validation with zero external IP derivation."
+    },
+    "personality_lines": [
+      "character.guide.line_1",
+      "character.guide.line_2"
+    ],
+    "record_type": "character",
+    "reviewed_by": "phase0-reviewer",
+    "species_or_role": "lantern_guide",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "guide",
+      "placeholder"
+    ],
+    "version": "0.1.0",
+    "voice_profile": {
+      "pacing_wpm": 105,
+      "register": "warm_alto",
+      "synth_fallback_enabled": true
+    },
+    "world_home_id": "zone-lantern-clearing"
+  },
+  {
+    "age_band": "2-5",
+    "appearance": {
+      "distinctive_prop": "story_leaf",
+      "primary_palette": "sage_coral",
+      "silhouette_shape": "leaf_cape"
+    },
+    "created_by": "phase0-architect",
+    "fallback_character_id": "guide",
+    "id": "words-guide",
+    "locale": "en-US",
+    "model_asset_path": "assets/words-guide.svg",
+    "name_ref": "character.words_guide.name",
+    "notes_author": "DEMO placeholder companion for language domain lessons.",
+    "originality_attestation": {
+      "attester": "phase0-architect",
+      "date": "2026-10-26",
+      "derivation_statement": "Original abstract leaf-cape geometric figure created solely as a placeholder for Phase 0 structural verification."
+    },
+    "personality_lines": [
+      "character.words_guide.line_1",
+      "character.words_guide.line_2"
+    ],
+    "record_type": "character",
+    "reviewed_by": "phase0-reviewer",
+    "species_or_role": "words_companion",
+    "status": "draft",
+    "tags": [
+      "demo",
+      "language",
+      "placeholder"
+    ],
+    "version": "0.1.0",
+    "voice_profile": {
+      "pacing_wpm": 100,
+      "register": "soft_mezzo",
+      "synth_fallback_enabled": true
+    },
+    "world_home_id": "zone-story-grove"
+  }
+]
