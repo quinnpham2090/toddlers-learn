@@ -17,7 +17,7 @@
     "primary_skill_id": "everyday-object-words",
     "secondary_skill_ids": [],
     "interaction_type": "tap_choice",
-    "character_id": "soli",
+    "character_id": "puff",
     "picture_set_id": "everyday-objects-set",
     "song_template_id": "our-colour-song",
     "mission_id": null,
@@ -136,7 +136,7 @@
       "everyday-object-words"
     ],
     "interaction_type": "tap_choice",
-    "character_id": "soli",
+    "character_id": "puff",
     "picture_set_id": "colour-garden-set",
     "song_template_id": "our-colour-song",
     "mission_id": null,
@@ -258,7 +258,7 @@
       "colour-naming"
     ],
     "interaction_type": "sort_group",
-    "character_id": "fern",
+    "character_id": "moss",
     "picture_set_id": "sorting-set",
     "song_template_id": "our-colour-song",
     "mission_id": null,
@@ -382,7 +382,7 @@
       "sorting-one-rule"
     ],
     "interaction_type": "do_together",
-    "character_id": "fern",
+    "character_id": "moss",
     "picture_set_id": "routine-cards-set",
     "song_template_id": "our-goodnight-song",
     "mission_id": null,

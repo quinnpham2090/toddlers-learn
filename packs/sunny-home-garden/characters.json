@@ -1,6 +1,6 @@
 [
   {
-    "id": "soli",
+    "id": "puff",
     "record_type": "character",
     "version": "1.0.0",
     "locale": "en-US",
@@ -13,12 +13,12 @@
     "created_by": "kilo",
     "reviewed_by": "founder",
     "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
-    "name_ref": "character.soli.name",
+    "name_ref": "character.puff.name",
     "species_or_role": "lantern_guide",
     "appearance": {
-      "silhouette_shape": "rounded_lantern",
-      "primary_palette": "meadow_gold",
-      "distinctive_prop": "felt_drum"
+      "silhouette_shape": "cloud_cushion",
+      "primary_palette": "indigo_amber",
+      "distinctive_prop": "story_leaf"
     },
     "voice_profile": {
       "register": "warm_alto",
@@ -26,8 +26,8 @@
       "synth_fallback_enabled": true
     },
     "personality_lines": [
-      "character.soli.line_1",
-      "character.soli.line_2"
+      "character.puff.line_1",
+      "character.puff.line_2"
     ],
     "world_home_id": "sunny-home-garden",
     "model_asset_path": "assets/soli.svg",
@@ -35,11 +35,11 @@
     "originality_attestation": {
       "attester": "kilo",
       "date": "2026-10-26",
-      "derivation_statement": "Original round sun-sprite design with leaf-ears and a sun hand drum, authored for this pack only; not derived from any existing character."
+      "derivation_statement": "Original fluffy cloud-sprite design with a striped sky-blue scarf and a basket of flowers, authored for this pack only; not derived from any existing character."
     }
   },
   {
-    "id": "fern",
+    "id": "moss",
     "record_type": "character",
     "version": "1.0.0",
     "locale": "en-US",
@@ -52,7 +52,7 @@
     "created_by": "kilo",
     "reviewed_by": "founder",
     "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
-    "name_ref": "character.fern.name",
+    "name_ref": "character.moss.name",
     "species_or_role": "routine_helper",
     "appearance": {
       "silhouette_shape": "bell_pebble",
@@ -65,8 +65,8 @@
       "synth_fallback_enabled": true
     },
     "personality_lines": [
-      "character.fern.line_1",
-      "character.fern.line_2"
+      "character.moss.line_1",
+      "character.moss.line_2"
     ],
     "world_home_id": "sunny-home-garden",
     "model_asset_path": "assets/fern.svg",
@@ -74,7 +74,7 @@
     "originality_attestation": {
       "attester": "kilo",
       "date": "2026-10-26",
-      "derivation_statement": "Original tall teardrop garden-sprite design with drooping leaf-ears and a sorting basket, authored for this pack only; not derived from any existing character."
+      "derivation_statement": "Original round mushroom-cap sprite design with a sage vest and watering can, authored for this pack only; not derived from any existing character."
     }
   }
 ]

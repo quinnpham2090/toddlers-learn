@@ -154,31 +154,43 @@ function itemKeys() {
 
 en['pack.sunny_home_garden.title'] = 'Sunny Home Garden';
 en['pack.sunny_home_garden.summary'] =
-  'A gentle first pack set in a small round house and its sunny garden, with Soli and Fern, four lessons, two team missions, and a goodnight routine.';
+  'A gentle first pack set in a small round house and its sunny garden, with Puff and Moss, four lessons, two team missions, and a goodnight routine.';
 
-en['character.soli.name'] = 'Soli';
-en['character.soli.line_1'] = 'What is this? Let us find out together!';
-en['character.soli.line_2'] = 'You tried it — let us sing about it!';
-en['character.soli.design_bible.silhouette'] =
-  'Perfect circle body with a big round head merged into one round shape, tiny legs, and two short leaf-ears on top; reads as a single circle at thumbnail size.';
-en['character.soli.design_bible.palette'] =
-  'Warm yellow body, coral cheeks and leaf-ears, cream belly; one warm accent family only.';
-en['character.soli.design_bible.prop'] =
-  'Small sun-shaped hand drum, tapped with a flat hand, never shaken near the face; the song prop.';
-en['character.soli.design_bible.movement'] =
-  'Bounces twice on every celebration; bright, bouncy, and curious.';
+en['character.puff.name'] = 'Puff';
+en['character.puff.line_1'] = 'Hello, friend! Shall we wave hello together?';
+en['character.puff.line_2'] = 'Look what is in my flower basket — let us see together!';
+en['character.puff.design_bible.silhouette'] =
+  'Soft cloud-shaped fluffy body made of overlapping rounded cloud puffs; fluffy cloud arms that often wave hello. Round and soft, reads as a cloud at thumbnail size.';
+en['character.puff.design_bible.palette'] =
+  'Body soft white (#FBFCFE); shading light sky-blue (#A9D3F0); eyes brown (#6B4A2F); cheeks pink (#F2A7B4).';
+en['character.puff.design_bible.outfit'] =
+  'Striped sky-blue scarf — this is the whole outfit; no other clothing.';
+en['character.puff.design_bible.prop'] =
+  'Small basket of flowers; the only prop.';
+en['character.puff.design_bible.face'] =
+  'Round friendly face, big brown eyes, pink cheeks, gentle happy expression.';
+en['character.puff.design_bible.movement'] =
+  'Fluffy cloud arms often wave hello; bright and bouncy.';
+en['character.puff.design_bible.hard_negatives'] =
+  'Never a human child, never a person; no hair, no necklace, no human ears, no legs or feet.';
 
-en['character.fern.name'] = 'Fern';
-en['character.fern.line_1'] = 'Where does this go? We can look together.';
-en['character.fern.line_2'] = 'What comes next? Take your time.';
-en['character.fern.design_bible.silhouette'] =
-  'Tall pear or teardrop body with a long neck, long drooping leaf-ears, and long arms; reads as a tall teardrop, the opposite of Soli in height and width.';
-en['character.fern.design_bible.palette'] =
-  'Sage green body, cream belly, plum leaf-ears; one cool accent family only, sharing no dominant colour with Soli.';
-en['character.fern.design_bible.prop'] =
-  'Small soft sorting basket for lessons, and a small green watering can with a short spout for missions.';
-en['character.fern.design_bible.movement'] =
-  'Sways gently side to side while waiting; calm, patient, and methodical, never rushing the child.';
+en['character.moss.name'] = 'Moss';
+en['character.moss.line_1'] = 'What does our little sprout need today? Let us look together.';
+en['character.moss.line_2'] = 'We can water gently and take our time.';
+en['character.moss.design_bible.silhouette'] =
+  'Round mushroom-cap sprite — a terracotta-brown mushroom cap with cream spots on top of a cream round face and body; reads as a round mushroom at thumbnail size.';
+en['character.moss.design_bible.palette'] =
+  'Cap terracotta-brown (#B5651D); spots, face and body cream (#F7EBD6); eyes brown (#6B4A2F); cheeks pink (#F2A7B4); vest sage-green (#9CAF88); shorts brown (#6B4A2F).';
+en['character.moss.design_bible.outfit'] =
+  'Little sage-green vest over brown shorts — fully dressed; no other clothing.';
+en['character.moss.design_bible.prop'] =
+  'Small potted sprout and a small silver watering can.';
+en['character.moss.design_bible.face'] =
+  'Cream round face, big brown eyes, pink cheeks, warm friendly smile.';
+en['character.moss.design_bible.movement'] =
+  'Sways gently while waiting; warm, friendly, and patient.';
+en['character.moss.design_bible.hard_negatives'] =
+  'Never a human child, never a person; no hair, no necklace, no human ears (the cap is the head); no bare torso (always vested).';
 
 en['skill.everyday_object_words.title'] = 'Everyday Object Words';
 en['skill.everyday_object_words.description'] =
@@ -199,16 +211,16 @@ en['scaffold.l2.prompt'] = 'Watch the gentle glow, then tap the glowing picture.
 en['scaffold.l3.prompt'] = 'Let us do it together — I will point, and you make the final tap.';
 
 en['lesson.hello_cup.title'] = 'Hello, Cup!';
-en['lesson.hello_cup.step_1.prompt'] = 'Soli holds up something from the kitchen shelf. Tap it to hear its name!';
-en['lesson.hello_cup.step_1.celebration'] = 'You tapped the cup — Soli sings its name for you!';
-en['lesson.hello_cup.step_2.prompt'] = 'Soli says “cup”! Can you tap the cup?';
+en['lesson.hello_cup.step_1.prompt'] = 'Puff holds up something from the kitchen shelf. Tap it to hear its name!';
+en['lesson.hello_cup.step_1.celebration'] = 'You tapped the cup — Puff sings its name for you!';
+en['lesson.hello_cup.step_2.prompt'] = 'Puff says “cup”! Can you tap the cup?';
 en['lesson.hello_cup.step_2.celebration'] = 'There it is — you found the cup!';
-en['lesson.hello_cup.step_3.prompt'] = 'Now say it with Soli — tap the cup and say “cup”!';
-en['lesson.hello_cup.step_3.celebration'] = 'You said the word with Soli — what a friendly hello!';
+en['lesson.hello_cup.step_3.prompt'] = 'Now say it with Puff — tap the cup and say “cup”!';
+en['lesson.hello_cup.step_3.celebration'] = 'You said the word with Puff — what a friendly hello!';
 en['lesson.hello_cup.step_4.prompt'] = 'The cup is hiding in the garden. Can you tap it?';
 en['lesson.hello_cup.step_4.celebration'] = 'You found the cup in the garden!';
 en['lesson.hello_cup.step_5.prompt'] = 'One more hello for the cup — tap it gently!';
-en['lesson.hello_cup.step_5.celebration'] = 'Hello, cup! Soli bounces twice for you!';
+en['lesson.hello_cup.step_5.celebration'] = 'Hello, cup! Puff waves hello for you!';
 en['lesson.hello_cup.closing_win'] =
   'We said hello to the cup together — and finished with a song!';
 
@@ -217,13 +229,13 @@ en['lesson.red_flower_yellow_flower.step_1.prompt'] =
   'Two flowers are the same colour here. Tap the red flower!';
 en['lesson.red_flower_yellow_flower.step_1.celebration'] = 'You matched the two red flowers!';
 en['lesson.red_flower_yellow_flower.step_2.prompt'] =
-  'Soli sings “red”! Tap a flower that is red.';
+  'Puff sings “red”! Tap a flower that is red.';
 en['lesson.red_flower_yellow_flower.step_2.celebration'] =
   'Red, red, red — you found the red flower!';
 en['lesson.red_flower_yellow_flower.step_3.prompt'] =
-  'Say “red” with Soli — tap the red flower and sing it together.';
+  'Say “red” with Puff — tap the red flower and sing it together.';
 en['lesson.red_flower_yellow_flower.step_3.celebration'] =
-  'You sang the colour name with Soli!';
+  'You sang the colour name with Puff!';
 en['lesson.red_flower_yellow_flower.step_4.prompt'] =
   'One more red thing is in the garden. Tap it!';
 en['lesson.red_flower_yellow_flower.step_4.celebration'] =
@@ -237,10 +249,10 @@ en['lesson.red_flower_yellow_flower.closing_win'] =
 
 en['lesson.where_does_this_go.title'] = 'Where Does This Go?';
 en['lesson.where_does_this_go.step_1.prompt'] =
-  'Fern shows two baskets. Red things go in the red basket — tap the red basket!';
+  'Moss shows two baskets. Red things go in the red basket — tap the red basket!';
 en['lesson.where_does_this_go.step_1.celebration'] = 'The red basket is ready!';
 en['lesson.where_does_this_go.step_2.prompt'] =
-  'Fern puts the first one in. Now you tap something red!';
+  'Moss puts the first one in. Now you tap something red!';
 en['lesson.where_does_this_go.step_2.celebration'] = 'The red ball goes in — red things together!';
 en['lesson.where_does_this_go.step_3.prompt'] = 'Your turn to sort. Tap something red!';
 en['lesson.where_does_this_go.step_3.celebration'] = 'The red sock joins the red group!';
@@ -261,7 +273,7 @@ en['lesson.now_next.step_2.celebration'] = 'Now comes first — we tidy now!';
 en['lesson.now_next.step_3.prompt'] = 'Which card comes after now? Tap the Next card!';
 en['lesson.now_next.step_3.celebration'] = 'Next comes after now — we sing next!';
 en['lesson.now_next.step_4.prompt'] =
-  'Watch Soli and Fern act it out — tap the Now card as they tidy!';
+  'Watch Puff and Moss act it out — tap the Now card as they tidy!';
 en['lesson.now_next.step_4.celebration'] =
   'Now, then next — they showed the whole little routine!';
 en['lesson.now_next.step_5.prompt'] = 'Tap the Next card to act it out with them!';
@@ -312,7 +324,7 @@ en['mission.tidy_team.team_goal'] = 'Sort six friendly things into two groups as
 en['mission.tidy_team.precheck'] =
   'Please confirm the floor is clear, the items are large and soft with no small parts, and a grown-up stays beside your child throughout.';
 en['mission.tidy_team.return_ritual'] =
-  'We did it together — Soli and Fern hum your song fragment with you.';
+  'We did it together — Puff and Moss hum your song fragment with you.';
 en['mission.tidy_team.safety_1'] = 'Check the floor for small objects before you begin.';
 en['mission.tidy_team.safety_2'] = 'No climbing to reach high shelves — keep everything at child height.';
 en['mission.tidy_team.safety_3'] =
@@ -328,7 +340,7 @@ en['mission.table_helpers.team_goal'] =
 en['mission.table_helpers.precheck'] =
   'Please confirm there is no glass, no knives, and no hot items on the table yet, and a grown-up stays beside your child throughout.';
 en['mission.table_helpers.return_ritual'] =
-  'Now, next, done — we did it together! Soli and Fern hum your goodnight song fragment with you.';
+  'Now, next, done — we did it together! Puff and Moss hum your goodnight song fragment with you.';
 en['mission.table_helpers.safety_1'] = 'A grown-up places anything heavy, hot, or breakable.';
 en['mission.table_helpers.safety_2'] = 'Your child carries one light, unbreakable item at a time.';
 en['mission.table_helpers.safety_3'] = 'Dry wet hands before carrying anything.';
@@ -342,20 +354,20 @@ en['mission.water_plants.team_goal'] = 'Care for a plant together with a small d
 en['mission.water_plants.precheck'] =
   'Please confirm the plant is safe — not toxic, not spiky, within reach without climbing — any water is a small grown-up-filled amount, and a grown-up stays beside your child throughout.';
 en['mission.water_plants.return_ritual'] =
-  'The plant had its drink — we did it together! Soli and Fern hum your song fragment with you.';
+  'The plant had its drink — we did it together! Puff and Moss hum your song fragment with you.';
 en['mission.water_plants.safety_1'] = 'A grown-up checks the plant is not toxic or spiky first.';
 en['mission.water_plants.safety_2'] = 'No tasting soil — watering is for the plant only.';
 en['mission.water_plants.safety_3'] = 'Wipe spills immediately and keep water away from sockets and devices.';
 
 en['routine.goodnight_garden.title'] = 'Goodnight Garden';
 en['routine.goodnight_garden.parent_script'] =
-  'A calm, parent-led wind-down. On the device: Fern shows three picture cards and sings the first line of the goodnight song. Then put the device down — the routine does not need the screen after the start.';
+  'A calm, parent-led wind-down. On the device: Moss shows three picture cards and sings the first line of the goodnight song. Then put the device down — the routine does not need the screen after the start.';
 en['routine.goodnight_garden.child_prompt'] =
   'Let us get ready for bed together, one kind step at a time.';
 en['routine.goodnight_garden.team_goal'] =
   'Wind down for bed together: tidy one thing, share a quiet book or song, and dim the lights.';
 en['routine.goodnight_garden.return_ritual'] =
-  'You came back! Soli and Fern sing your song fragment together to welcome you.';
+  'You came back! Puff and Moss sing your song fragment together to welcome you.';
 en['routine.goodnight_garden.safety_1'] =
   'Keep the lights low and soft for the last step, and an adult stays with the child until they are settled.';
 en['routine.goodnight_garden.goodnight_phrase'] = 'Goodnight, garden, goodnight!';
@@ -419,7 +431,7 @@ function lessonSteps(id, stepDefs) {
 const lessons = [
   {
     id: 'lesson-hello-cup', title: 'lesson.hello_cup.title', primary_skill_id: 'everyday-object-words', secondary_skill_ids: [],
-    interaction_type: 'tap_choice', character_id: 'soli', picture_set_id: 'everyday-objects-set', song_template_id: 'our-colour-song',
+    interaction_type: 'tap_choice', character_id: 'puff', picture_set_id: 'everyday-objects-set', song_template_id: 'our-colour-song',
     fallback_lesson_id: 'lesson-hello-cup', fallback_picture_id: 'everyday-objects-set',
     steps: [
       { target: 'cup', choices: ['cup'] },
@@ -431,7 +443,7 @@ const lessons = [
   },
   {
     id: 'lesson-red-flower-yellow-flower', title: 'lesson.red_flower_yellow_flower.title', primary_skill_id: 'colour-naming', secondary_skill_ids: ['everyday-object-words'],
-    interaction_type: 'tap_choice', character_id: 'soli', picture_set_id: 'colour-garden-set', song_template_id: 'our-colour-song',
+    interaction_type: 'tap_choice', character_id: 'puff', picture_set_id: 'colour-garden-set', song_template_id: 'our-colour-song',
     fallback_lesson_id: 'lesson-hello-cup', fallback_picture_id: 'everyday-objects-set',
     steps: [
       { target: 'red-flower', choices: ['red-flower', 'yellow-flower'] },
@@ -443,7 +455,7 @@ const lessons = [
   },
   {
     id: 'lesson-where-does-this-go', title: 'lesson.where_does_this_go.title', primary_skill_id: 'sorting-one-rule', secondary_skill_ids: ['colour-naming'],
-    interaction_type: 'sort_group', character_id: 'fern', picture_set_id: 'sorting-set', song_template_id: 'our-colour-song',
+    interaction_type: 'sort_group', character_id: 'moss', picture_set_id: 'sorting-set', song_template_id: 'our-colour-song',
     fallback_lesson_id: 'lesson-red-flower-yellow-flower', fallback_picture_id: 'colour-garden-set',
     steps: [
       { target: 'red-basket', choices: ['red-basket', 'yellow-basket'] },
@@ -455,7 +467,7 @@ const lessons = [
   },
   {
     id: 'lesson-now-next', title: 'lesson.now_next.title', primary_skill_id: 'sequencing-now-next', secondary_skill_ids: ['sorting-one-rule'],
-    interaction_type: 'do_together', character_id: 'fern', picture_set_id: 'routine-cards-set', song_template_id: 'our-goodnight-song',
+    interaction_type: 'do_together', character_id: 'moss', picture_set_id: 'routine-cards-set', song_template_id: 'our-goodnight-song',
     fallback_lesson_id: 'lesson-where-does-this-go', fallback_picture_id: 'sorting-set',
     steps: [
       { target: 'next-song-card', choices: ['now-tidy-card', 'next-song-card'] },
@@ -488,27 +500,27 @@ const songTemplates = [
 
 const characters = [
   {
-    id: 'soli', name_ref: 'character.soli.name', species_or_role: 'lantern_guide',
-    appearance: { silhouette_shape: 'rounded_lantern', primary_palette: 'meadow_gold', distinctive_prop: 'felt_drum' },
+    id: 'puff', name_ref: 'character.puff.name', species_or_role: 'lantern_guide',
+    appearance: { silhouette_shape: 'cloud_cushion', primary_palette: 'indigo_amber', distinctive_prop: 'story_leaf' },
     voice_profile: { register: 'warm_alto', pacing_wpm: 118, synth_fallback_enabled: true },
-    personality_lines: ['character.soli.line_1', 'character.soli.line_2'],
+    personality_lines: ['character.puff.line_1', 'character.puff.line_2'],
     world_home_id: 'sunny-home-garden', model_asset_path: 'assets/soli.svg', fallback_character_id: null,
     originality_attestation: {
       attester: 'kilo',
       date: '2026-10-26',
-      derivation_statement: 'Original round sun-sprite design with leaf-ears and a sun hand drum, authored for this pack only; not derived from any existing character.',
+      derivation_statement: 'Original fluffy cloud-sprite design with a striped sky-blue scarf and a basket of flowers, authored for this pack only; not derived from any existing character.',
     },
   },
   {
-    id: 'fern', name_ref: 'character.fern.name', species_or_role: 'routine_helper',
+    id: 'moss', name_ref: 'character.moss.name', species_or_role: 'routine_helper',
     appearance: { silhouette_shape: 'bell_pebble', primary_palette: 'sage_coral', distinctive_prop: 'story_leaf' },
     voice_profile: { register: 'soft_mezzo', pacing_wpm: 100, synth_fallback_enabled: true },
-    personality_lines: ['character.fern.line_1', 'character.fern.line_2'],
+    personality_lines: ['character.moss.line_1', 'character.moss.line_2'],
     world_home_id: 'sunny-home-garden', model_asset_path: 'assets/fern.svg', fallback_character_id: null,
     originality_attestation: {
       attester: 'kilo',
       date: '2026-10-26',
-      derivation_statement: 'Original tall teardrop garden-sprite design with drooping leaf-ears and a sorting basket, authored for this pack only; not derived from any existing character.',
+      derivation_statement: 'Original round mushroom-cap sprite design with a sage vest and watering can, authored for this pack only; not derived from any existing character.',
     },
   },
 ];

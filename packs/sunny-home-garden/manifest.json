@@ -24,6 +24,7 @@
   ],
   "demo": false,
   "parent_gate_required": true,
+  "gating": "free",
   "retired_ids": [],
   "dependencies": [],
   "file_hashes": {
@@ -74,17 +75,16 @@
     "assets/quiet-book.svg": "998053f48385963a9929f6dab66f1aca30b2b1f233eb36b4b216016d61df66a8",
     "assets/song-time-card.svg": "a30e603dba2efd5fbec6c08abcafcd1891450172b5083e0d5be54de4df8567d8",
     "assets/helping-hands.svg": "70b57e8f187edfb54506655c72d59cbf6f3708add4ac24a6ba58c02c6ed89f0f",
-    "strings.json": "45c6f2e3d1b86ac7ca002f8f74a131143d4bd54ffc83285358c257cd2a633d79",
+    "strings.json": "380baa20dcc46c35edf54b5bb760806b6213cc0bddeb8d090f560d450257ed55",
     "skills.json": "9652e89784fcf820ecab512a99cf394558a4928f62c74fee5f01651c089ffa35",
-    "lessons.json": "8ed60daf865ad7baa8f08e232b4977fc289a0414b81cca9152fe8206cef886b5",
+    "lessons.json": "b5d334930064883620bea4ba65d5e59963336fc00743756fd751cbd51e252bfa",
     "song_templates.json": "9465ae685dcbf116336ad4d60b47f0dbe3430967020ba56d771c396f97e1bc88",
-    "characters.json": "136c676c871d531f35f0a3f25a9a5e714ec6469bff30332667e9c0f5c618a30f",
+    "characters.json": "b1931c03731e569982d620b1c83239c99f94a885d47724c0abee4525745e162e",
     "picture_sets.json": "a0104b93298b6fe9a8039a2a8f39e3f2f45146e7ff84217406e79a3522ae5f2a",
     "missions.json": "bf290b4ff3eb8dbceeac77eef88d4a6e3cc4527ebca19e04bb6b5aaa92cd0751",
     "routines.json": "82b091ed805fd36f63a754acd85990e9d41616eb57e233d27b9bf516b0d33008",
     "time_concepts.json": "f282c2c49a0ee9524cbc4d9af4c69f7325102d459a23fb073119fdfe45763237",
     "saved_songs.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "98768dce72d0a575482d4b7bb1cb99b7b190dc5d84c411924b11c6027c95b50e",
-  "gating": "free"
+  "pack_sha256": "0ee5e6d5153eb6a4c864b14a25b5ee7fb26aa42e5d2de61f4caf4f8d928376c4"
 }

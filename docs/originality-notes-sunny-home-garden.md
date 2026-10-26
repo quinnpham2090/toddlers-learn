@@ -1,59 +1,58 @@
 # Originality Notes — Sunny Home Garden (DRAFT)
 
-Status: **DRAFT for founder signature.** These notes count only when the founder signs them.
-They are a pattern comparison for the steer-clear screen, NOT legal clearance. A trademark/design
-search on the final names, silhouettes, and props is still required before production.
+Status: **Finalized for founder signature.** These notes are a pattern screen for
+the steer-clear check, **NOT legal clearance**. A trademark/design search on the
+final names, silhouettes, and props is still required before production.
+
+The guides of Pack 1 are **Puff** (the fluffy cloud sprite, `lantern_guide` role)
+and **Moss** (the round mushroom-cap sprite, `routine_helper` role).
 
 ---
 
-## Soli
+## Puff
 
-Turnaround: one merged round silhouette — perfect-circle body and large round head read as a
-single circle at thumbnail size; tiny legs below; two short leaf-ears on top. Warm yellow body,
-coral cheeks and leaf-ears, cream belly. Prop: small sun-shaped hand drum, tapped with a flat
-hand. Movement: bounces twice on celebration.
+Turnaround: soft cloud-shaped fluffy body made of overlapping rounded cloud
+puffs; fluffy cloud arms that often wave hello; round friendly face with big
+brown eyes and pink cheeks. Soft white body with light sky-blue shading. Outfit:
+striped sky-blue scarf (the whole outfit). Prop: a small basket of flowers.
+Movement: waves hello, bright and bouncy.
 
-Closest well-known characters in the same category (round, warm, bright, music-adjacent mascots):
-the Teletubbies baby sun, Pac-Man, Care Bears.
+Nearest lookalikes: the Stay Puft Marshmallow Man, Kirby, generic weather/cloud
+app mascots.
 
 Distinguishing features (at least three):
 
-1. **Silhouette** — a single merged circle with short leaf-ears and tiny legs; the baby sun has a
-   face-in-a-disc with rays, Pac-Man is a circle with a mouth wedge, Care Bears are full-bodied
-   rounded animals. Soli has no rays, no mouth wedge, and no full bear body.
-2. **Palette/accents** — warm yellow body with coral leaf-ears and cheeks (one warm accent family);
-   the baby sun is a plain smiling face with no ears, Care Bears carry a belly symbol and multitone
-   fur. Soli's accent is ears+cheeks, not a belly emblem.
-3. **Prop** — a small sun-shaped hand drum, tapped (never shaken near the face); the comparables
-   carry no instrument at all or a different object. The drum is the song prop and drives the
-   Namer-and-Singer role.
-4. **Face/proportions** — leaf-ears are the only facial extension; no rays, no eyebrows, no teeth;
-   the face sits inside the single round form rather than on a disc.
+1. **Silhouette** — overlapping cloud-puff body with fluffy cloud arms, not a
+   smooth rounded marshmallow or ball body.
+2. **Palette/shading** — light sky-blue shading inside a soft-white cloud body;
+   Stay Puft is plain white, Kirby is solid pink.
+3. **Outfit** — a striped sky-blue scarf is the sole outfit item; the lookalikes
+   have no scarf (or a full costume).
+4. **Props** — a small basket of flowers, unique to this character.
 
----
+## Moss
 
-## Fern
+Turnaround: round mushroom-cap sprite — a terracotta-brown mushroom cap with
+cream spots on top of a cream round face and body; big brown eyes, pink cheeks,
+warm friendly smile. Outfit: little sage-green vest over brown shorts (fully
+dressed). Props: a small potted sprout and a small silver watering can.
+Movement: sways gently while waiting, never rushes.
 
-Turnaround: tall pear/teardrop body, long neck, long drooping leaf-ears, long arms; reads as a
-tall teardrop — the height/width opposite of Soli. Sage green body, cream belly, plum leaf-ears.
-Props: small soft sorting basket (lessons) and a small green watering can with a short spout
-(missions). Movement: sways side-to-side while waiting, never rushes.
-
-Closest well-known characters in the same category (tall plant/forest spirits or helpers): Groot,
-Totoro, generic broccoli/leaf mascots.
+Nearest lookalikes: Toad (Nintendo mushroom character), generic mushroom
+mascots, Smurf-like capped sprites.
 
 Distinguishing features (at least three):
 
-1. **Silhouette** — a tall teardrop/pear with a long neck and long arms; Groot is a humanoid tree
-   with a branching crown, Totoro is a broad rounded forest creature. Fern is a single vertical
-   teardrop, not humanoid and not broad.
-2. **Palette** — sage green body with cream belly and plum leaf-ears (one cool accent family,
-   sharing no dominant colour with Soli); Groot is brown/wood with green leafing, Totoro is grey.
-3. **Props** — a soft sorting basket plus a short-spout watering can (the Sorter-and-Helper role);
-   the comparables carry no sorting/watering props.
-4. **Face/proportions** — drooping leaf-ears and a long neck; no branches, no crown, no whiskers;
-   the long arms end in simple hands used only to sort and water.
+1. **Cap** — terracotta-brown cap with cream spots (Toad's cap is red/white or
+   white/red); the terracotta-and-cream palette is the anchor difference.
+2. **Body/proportions** — a single round cream body where cap meets face, not a
+   humanoid mushroom with a separate head/body and small stature.
+3. **Outfit** — sage-green vest over brown shorts (Toad wears a blue vest);
+   fully dressed, no bare arms or legs.
+4. **Props** — a small potted sprout plus a silver watering can, neither of
+   which the lookalikes carry.
 
 ---
 
-Drafted by: Kilo (generator), for founder review (reviewer).
+Drafted by: Kilo (generator), for founder review (reviewer). Founder signature
+pending — these notes count only when signed.
