@@ -1,7 +1,9 @@
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
+import ParentGate from '../components/ParentGate';
 import {
   CharacterRecord,
   SkillDomain,
@@ -12,10 +14,12 @@ import {
   getJourneyStopSkills,
   getPackAsset,
 } from '../lib/pack-loader';
+import { loadParentSettings } from '../lib/parent-settings';
 
 const START_BUTTON_LABEL = 'Start';
 const SONGBOOK_BUTTON_LABEL = 'Songbook';
 const TOGETHER_BUTTON_LABEL = 'Together';
+const FOR_GROWN_UPS_LABEL = 'For grown-ups';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -138,9 +142,32 @@ function TogetherButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function ForGrownUpsButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={FOR_GROWN_UPS_LABEL}
+      onPress={onPress}
+      style={({ pressed }) => [styles.forGrownUpsButton, pressed && styles.forGrownUpsButtonPressed]}
+    >
+      <Text style={styles.forGrownUpsButtonText}>{FOR_GROWN_UPS_LABEL}</Text>
+    </Pressable>
+  );
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
+
+  const [missionsEnabled, setMissionsEnabled] = useState(true);
+  const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setMissionsEnabled(loadParentSettings().missions_enabled);
+      return () => {};
+    }, [])
+  );
 
   const characters = getCharacters();
   const stops = getJourneyStopSkills();
@@ -151,9 +178,22 @@ export default function HubWorld() {
     <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
       <StartButton onPress={() => router.push('/session')} />
       <SongbookButton onPress={() => router.push('/songbook')} />
-      <TogetherButton onPress={() => router.push('/together')} />
+      {missionsEnabled ? (
+        <TogetherButton onPress={() => router.push('/together')} />
+      ) : null}
+      <ForGrownUpsButton onPress={() => setGrownUpsGateOpen(true)} />
     </View>
   );
+
+  const grownUpsGate = grownUpsGateOpen ? (
+    <ParentGate
+      onPass={() => {
+        setGrownUpsGateOpen(false);
+        router.push('/parent-dashboard');
+      }}
+      onCancel={() => setGrownUpsGateOpen(false)}
+    />
+  ) : null;
 
   const pathSection = (
     <View style={styles.pathList}>
@@ -186,6 +226,7 @@ export default function HubWorld() {
             <View style={styles.tabletColumn}>{pathSection}</View>
           </View>
         </ScrollView>
+        {grownUpsGate}
       </SafeAreaView>
     );
   }
@@ -202,6 +243,7 @@ export default function HubWorld() {
         {pathSection}
         {startSection}
       </ScrollView>
+      {grownUpsGate}
     </SafeAreaView>
   );
 }
@@ -481,5 +523,22 @@ const styles = StyleSheet.create({
     color: '#9A6A1F',
     fontSize: 15,
     fontWeight: '800',
+  },
+  forGrownUpsButton: {
+    backgroundColor: 'transparent',
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#D8CDB6',
+    paddingVertical: 9,
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  forGrownUpsButtonPressed: {
+    backgroundColor: '#F4EDDD',
+  },
+  forGrownUpsButtonText: {
+    color: '#9C9484',
+    fontSize: 13,
+    fontWeight: '700',
   },
 });

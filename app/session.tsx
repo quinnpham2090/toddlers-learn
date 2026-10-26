@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,14 +23,23 @@ import {
   getString,
   getSongTemplates,
 } from '../lib/pack-loader';
+import { recordStepEvidence } from '../lib/progress-store';
+import {
+  SessionBookmark,
+  clearSessionBookmark,
+  loadSessionBookmark,
+  setSessionBookmark,
+} from '../lib/resume-store';
 
 const BACK_LABEL = 'Back';
 const HELP_LABEL = 'Help';
 const NEXT_LABEL = 'Next';
 const DONE_LABEL = 'Done';
+const CONTINUE_LABEL = 'Continue where you left off';
+const START_FRESH_LABEL = 'Start fresh';
 
 type ScaffoldLevelNumber = 0 | 1 | 2 | 3;
-type SessionPhase = 'step' | 'celebration' | 'closing';
+type SessionPhase = 'resume' | 'step' | 'celebration' | 'closing';
 
 interface StepOutcome {
   stepIndex: number;
@@ -40,6 +49,8 @@ interface StepOutcome {
 
 // Step outcomes are held in memory only, shaped for the later progress store:
 // a step completed at scaffold L3 is completed-with-help and never independent evidence.
+// On reaching the closing ritual they are written as one evidence entry per completed
+// step against the lesson's primary skill (the pack's steps carry no skill refs of their own).
 
 function resolveLesson(): LessonRecord | undefined {
   const lessons = getLessons();
@@ -349,15 +360,72 @@ function ClosingCard({
   );
 }
 
+function ResumeChoiceCard({
+  isTablet,
+  onContinue,
+  onStartFresh,
+}: {
+  isTablet: boolean;
+  onContinue: () => void;
+  onStartFresh: () => void;
+}) {
+  return (
+    <View style={isTablet ? styles.resumeCardTablet : styles.resumeCard}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={CONTINUE_LABEL}
+        onPress={onContinue}
+        style={({ pressed }) => [styles.resumePrimaryButton, pressed && styles.resumePrimaryPressed]}
+      >
+        <Text style={styles.resumePrimaryText}>{CONTINUE_LABEL}</Text>
+      </Pressable>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={START_FRESH_LABEL}
+        onPress={onStartFresh}
+        style={({ pressed }) => [styles.resumeSecondaryButton, pressed && styles.resumeSecondaryPressed]}
+      >
+        <Text style={styles.resumeSecondaryText}>{START_FRESH_LABEL}</Text>
+      </Pressable>
+    </View>
+  );
+}
+
 export default function SessionScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
 
   const lesson = resolveLesson();
+  const [resume, setResume] = useState<{ stepIndex: number } | null>(() => {
+    const bookmark: SessionBookmark | null = loadSessionBookmark();
+    if (
+      bookmark &&
+      lesson &&
+      bookmark.lesson_id === lesson.id &&
+      bookmark.step_index >= 0 &&
+      bookmark.step_index < lesson.steps.length
+    ) {
+      return { stepIndex: bookmark.step_index };
+    }
+    return null;
+  });
   const [stepIndex, setStepIndex] = useState(0);
   const [scaffoldLevel, setScaffoldLevel] = useState<ScaffoldLevelNumber>(0);
-  const [phase, setPhase] = useState<SessionPhase>('step');
+  const [phase, setPhase] = useState<SessionPhase>(() => (resume ? 'resume' : 'step'));
   const [stepOutcomes, setStepOutcomes] = useState<StepOutcome[]>([]);
+
+  useEffect(() => {
+    const bookmark = loadSessionBookmark();
+    const stale =
+      bookmark !== null &&
+      (!lesson ||
+        bookmark.lesson_id !== lesson.id ||
+        bookmark.step_index < 0 ||
+        bookmark.step_index >= lesson.steps.length);
+    if (stale) {
+      clearSessionBookmark();
+    }
+  }, [lesson]);
 
   if (!lesson) {
     return (
@@ -370,6 +438,8 @@ export default function SessionScreen() {
   }
 
   const steps = lesson.steps;
+  const lessonId = lesson.id;
+  const lessonPrimarySkillId = lesson.primary_skill_id;
   const step = steps[Math.min(stepIndex, steps.length - 1)];
   const character = resolveCharacter(lesson);
   const pictureSet = resolvePictureSet(lesson);
@@ -409,11 +479,41 @@ export default function SessionScreen() {
 
   function handleNext() {
     if (stepIndex >= steps.length - 1) {
+      recordStepEvidence(
+        stepOutcomes.map((outcome) => ({
+          skill_id: lessonPrimarySkillId,
+          scaffold_level_at_completion: outcome.scaffoldLevelAtCompletion,
+          completed_with_help: outcome.completedWithHelp,
+        }))
+      );
+      clearSessionBookmark();
       setPhase('closing');
       return;
     }
-    setStepIndex((index) => index + 1);
+    const nextIndex = stepIndex + 1;
+    setStepIndex(nextIndex);
+    setSessionBookmark(lessonId, nextIndex);
     setScaffoldLevel(0);
+    setPhase('step');
+  }
+
+  function handleResume() {
+    if (!resume) {
+      setPhase('step');
+      return;
+    }
+    const safeIndex = Math.max(0, Math.min(resume.stepIndex, steps.length - 1));
+    setStepIndex(safeIndex);
+    setScaffoldLevel(0);
+    setResume(null);
+    setPhase('step');
+  }
+
+  function handleStartFresh() {
+    clearSessionBookmark();
+    setStepIndex(0);
+    setScaffoldLevel(0);
+    setResume(null);
     setPhase('step');
   }
 
@@ -421,24 +521,33 @@ export default function SessionScreen() {
     <View>
       <View style={styles.topRow}>
         <BackButton />
-        {phase === 'closing' ? null : <ProgressPill text={progressText} />}
+        {phase === 'step' || phase === 'celebration' ? (
+          <ProgressPill text={progressText} />
+        ) : null}
       </View>
       <Text style={isTablet ? styles.lessonTitleTablet : styles.lessonTitle}>{lessonTitle}</Text>
       {character ? <CharacterHeader character={character} isTablet={isTablet} /> : null}
     </View>
   );
 
-  const promptSection = (
-    <View>
-      <PromptCard prompt={stepPrompt} scaffoldPrompt={scaffoldPrompt} isTablet={isTablet} />
-      {phase === 'step' ? (
-        <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
-      ) : null}
-    </View>
-  );
+  const promptSection =
+    phase === 'resume' ? null : (
+      <View>
+        <PromptCard prompt={stepPrompt} scaffoldPrompt={scaffoldPrompt} isTablet={isTablet} />
+        {phase === 'step' ? (
+          <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
+        ) : null}
+      </View>
+    );
 
   const playSection =
-    phase === 'step' ? (
+    phase === 'resume' ? (
+      <ResumeChoiceCard
+        isTablet={isTablet}
+        onContinue={handleResume}
+        onStartFresh={handleStartFresh}
+      />
+    ) : phase === 'step' ? (
       <PictureGrid
         items={visibleChoices}
         targetItemId={step.target_item_id}
@@ -930,5 +1039,53 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     letterSpacing: 0.3,
+  },
+  resumeCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    padding: 20,
+    gap: 12,
+  },
+  resumeCardTablet: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    padding: 26,
+    gap: 14,
+  },
+  resumePrimaryButton: {
+    backgroundColor: '#2B6E58',
+    borderRadius: 999,
+    paddingVertical: 15,
+    alignItems: 'center',
+  },
+  resumePrimaryPressed: {
+    backgroundColor: '#225744',
+  },
+  resumePrimaryText: {
+    color: '#FFFFFF',
+    fontSize: 16.5,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  resumeSecondaryButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: '#9A6A1F',
+    paddingVertical: 13,
+    alignItems: 'center',
+  },
+  resumeSecondaryPressed: {
+    backgroundColor: '#F7F1E6',
+  },
+  resumeSecondaryText: {
+    color: '#9A6A1F',
+    fontSize: 15.5,
+    fontWeight: '800',
+    textAlign: 'center',
   },
 });
