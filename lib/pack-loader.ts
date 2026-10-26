@@ -519,8 +519,16 @@ export function getMissions(): MissionRecord[] {
   return getActivePack().missions;
 }
 
+export function getMissionById(id: string): MissionRecord | undefined {
+  return getMissions().find((mission) => mission.id === id);
+}
+
 export function getRoutines(): RoutineRecord[] {
   return getActivePack().routines;
+}
+
+export function getRoutineById(id: string): RoutineRecord | undefined {
+  return getRoutines().find((routine) => routine.id === id);
 }
 
 export function getTimeConcepts(): TimeConceptRecord[] {

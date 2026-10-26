@@ -15,6 +15,7 @@ import {
 
 const START_BUTTON_LABEL = 'Start';
 const SONGBOOK_BUTTON_LABEL = 'Songbook';
+const TOGETHER_BUTTON_LABEL = 'Together';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -124,6 +125,19 @@ function SongbookButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function TogetherButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={TOGETHER_BUTTON_LABEL}
+      onPress={onPress}
+      style={({ pressed }) => [styles.togetherButton, pressed && styles.togetherButtonPressed]}
+    >
+      <Text style={styles.togetherButtonText}>{TOGETHER_BUTTON_LABEL}</Text>
+    </Pressable>
+  );
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
@@ -137,6 +151,7 @@ export default function HubWorld() {
     <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
       <StartButton onPress={() => router.push('/session')} />
       <SongbookButton onPress={() => router.push('/songbook')} />
+      <TogetherButton onPress={() => router.push('/together')} />
     </View>
   );
 
@@ -448,6 +463,22 @@ const styles = StyleSheet.create({
   },
   songbookButtonText: {
     color: '#2B6E58',
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  togetherButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: '#9A6A1F',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  togetherButtonPressed: {
+    backgroundColor: '#F7F1E6',
+  },
+  togetherButtonText: {
+    color: '#9A6A1F',
     fontSize: 15,
     fontWeight: '800',
   },
