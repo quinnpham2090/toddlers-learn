@@ -23,7 +23,8 @@ import {
   getString,
   getSongTemplates,
 } from '../lib/pack-loader';
-import { recordStepEvidence } from '../lib/progress-store';
+import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
+import { selectNextLesson } from '../lib/lesson-selection.js';
 import {
   SessionBookmark,
   clearSessionBookmark,
@@ -54,17 +55,16 @@ interface StepOutcome {
 
 function resolveLesson(): LessonRecord | undefined {
   const lessons = getLessons();
-  for (const stop of getJourneyStopSkills()) {
-    const lesson = lessons.find((candidate) => candidate.primary_skill_id === stop.id);
-    if (lesson) {
-      return lesson;
-    }
-  }
-  const first = lessons[0];
-  if (!first) {
-    return undefined;
-  }
-  return getLessonById(first.fallback_lesson_id) ?? first;
+  const journeySkills = getJourneyStopSkills();
+  const evidence = loadSkillEvidence();
+  const completedSkillIds = Array.from(new Set(evidence.map((record) => record.skill_id)));
+  const selected = selectNextLesson({
+    lessons,
+    journeySkills,
+    completedSkillIds,
+    getLessonById,
+  }) as LessonRecord | null;
+  return selected ?? undefined;
 }
 
 function resolveCharacter(lesson: LessonRecord): CharacterRecord | undefined {
