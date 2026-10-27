@@ -3,6 +3,12 @@ import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } fr
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import {
+  LessonRecord,
+  getActivePack,
+  getActivePackId,
+  getJourneyStopSkills,
+  getLessonById,
+  getLessons,
   getMissionById,
   getRoutineById,
   getSkills,
@@ -16,6 +22,7 @@ import {
   loadSkillEvidence,
   loadTogetherCompletions,
 } from '../lib/progress-store';
+import { SELECTION_CODE_VERSION, selectNextLesson } from '../lib/lesson-selection.js';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
 import { loadSavedSongs } from '../lib/song-store';
 
@@ -27,6 +34,7 @@ const TODAYS_NOTE_LABEL = "Today's note";
 const MISSIONS_SETTING_LABEL = 'Missions setting';
 const MISSIONS_TOGGLE_LABEL = 'Missions';
 const MISSIONS_TOGGLE_HINT = 'Shows the Together lane on the child’s home screen.';
+const DIAGNOSTICS_LABEL = 'Diagnostics';
 const QUIET_DAY_MESSAGE = 'A quiet day — nothing recorded yet.';
 const NO_HISTORY_MESSAGE = 'No together activities yet.';
 
@@ -165,6 +173,23 @@ function SettingsToggleRow({
   );
 }
 
+function DiagnosticRow({
+  label,
+  value,
+  isTablet,
+}: {
+  label: string;
+  value: string;
+  isTablet: boolean;
+}) {
+  return (
+    <View style={styles.diagRow}>
+      <Text style={isTablet ? styles.diagLabelTablet : styles.diagLabel}>{label}</Text>
+      <Text style={isTablet ? styles.diagValueTablet : styles.diagValue}>{value}</Text>
+    </View>
+  );
+}
+
 export default function ParentDashboardScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
@@ -185,6 +210,22 @@ export default function ParentDashboardScreen() {
     title: getString(skill.title_ref),
     band: deriveSkillBand(evidenceBySkill.get(skill.id) ?? []),
   }));
+
+  const journeySkills = getJourneyStopSkills();
+  const evidenceByJourneySkill = journeySkills.map((skill) => ({
+    id: skill.id,
+    title: getString(skill.title_ref),
+    count: (evidenceBySkill.get(skill.id) ?? []).length,
+  }));
+  const completedSkillIds = Array.from(new Set(evidence.map((record) => record.skill_id)));
+  const nextLesson = selectNextLesson({
+    lessons: getLessons(),
+    journeySkills,
+    completedSkillIds,
+    getLessonById,
+  }) as LessonRecord | null;
+  const activePackId = getActivePackId();
+  const activePackVersion = getActivePack().manifest.version;
 
   const completions = loadTogetherCompletions();
   const history: TogetherHistoryEntry[] = completions
@@ -282,6 +323,43 @@ export default function ParentDashboardScreen() {
     </SectionCard>
   );
 
+  const diagnosticsSection = (
+    <SectionCard heading={DIAGNOSTICS_LABEL} isTablet={isTablet}>
+      <DiagnosticRow
+        label="Active pack"
+        value={`${activePackId} (v${activePackVersion})`}
+        isTablet={isTablet}
+      />
+      <DiagnosticRow
+        label="Next lesson"
+        value={
+          nextLesson
+            ? `${nextLesson.id} — ${getString(nextLesson.title_ref)}`
+            : 'none resolvable'
+        }
+        isTablet={isTablet}
+      />
+      <DiagnosticRow
+        label="Selection code version"
+        value={SELECTION_CODE_VERSION}
+        isTablet={isTablet}
+      />
+      <View style={styles.diagEvidenceBlock}>
+        <Text style={isTablet ? styles.diagLabelTablet : styles.diagLabel}>
+          Evidence by journey skill
+        </Text>
+        {evidenceByJourneySkill.map((row) => (
+          <Text
+            key={row.id}
+            style={isTablet ? styles.diagEvidenceLineTablet : styles.diagEvidenceLine}
+          >
+            {row.title}: {row.count}
+          </Text>
+        ))}
+      </View>
+    </SectionCard>
+  );
+
   if (isTablet) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
@@ -295,6 +373,7 @@ export default function ParentDashboardScreen() {
             <View style={styles.tabletColumn}>
               {historySection}
               {settingsSection}
+              {diagnosticsSection}
             </View>
           </View>
         </ScrollView>
@@ -310,6 +389,7 @@ export default function ParentDashboardScreen() {
         {historySection}
         {todaysNoteSection}
         {settingsSection}
+        {diagnosticsSection}
       </ScrollView>
     </SafeAreaView>
   );
@@ -540,5 +620,43 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     lineHeight: 21,
     color: '#7A7264',
+  },
+  diagRow: {
+    paddingVertical: 6,
+  },
+  diagLabel: {
+    fontSize: 12.5,
+    fontWeight: '700',
+    color: '#7A7264',
+    marginBottom: 2,
+  },
+  diagLabelTablet: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#7A7264',
+    marginBottom: 3,
+  },
+  diagValue: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#33302B',
+  },
+  diagValueTablet: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#33302B',
+  },
+  diagEvidenceBlock: {
+    marginTop: 8,
+  },
+  diagEvidenceLine: {
+    fontSize: 14,
+    color: '#33302B',
+    marginTop: 3,
+  },
+  diagEvidenceLineTablet: {
+    fontSize: 16,
+    color: '#33302B',
+    marginTop: 4,
   },
 });
