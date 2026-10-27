@@ -1,6 +1,6 @@
-# Originality Notes — Sunny Home Garden (DRAFT)
+# Originality Notes — Sunny Home Garden (SIGNED)
 
-Status: **Finalized for founder signature.** These notes are a pattern screen for
+Status: **Signed by the founder on 2026-10-27.** These notes are a pattern screen for
 the steer-clear check, **NOT legal clearance**. A trademark/design search on the
 final names, silhouettes, and props is still required before production.
 
@@ -54,5 +54,6 @@ Distinguishing features (at least three):
 
 ---
 
-Drafted by: Kilo (generator), for founder review (reviewer). Founder signature
-pending — these notes count only when signed.
+Drafted by: Kilo (generator), for founder review (reviewer).
+Founder signature: **recorded 2026-10-27** — the founder confirmed "signed" in the
+working session; these notes now count as signed.
