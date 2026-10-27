@@ -333,7 +333,7 @@
         "label_ref": "item.now_tidy_card.label",
         "alt_text_parent_ref": "item.now_tidy_card.alt_parent",
         "asset_path": "assets/now-tidy-card.jpg",
-        "asset_sha256": "b1bf964f0197a39541a1c7f0a219e25f3509e1ff4f9781edb121b63c9b0e172e",
+        "asset_sha256": "fc8796bfb7606d8ce732c3a16015116e7b36e6730184f37254f52e71b6239d5e",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -345,7 +345,7 @@
         "label_ref": "item.next_song_card.label",
         "alt_text_parent_ref": "item.next_song_card.alt_parent",
         "asset_path": "assets/next-song-card.jpg",
-        "asset_sha256": "8f57e45d58c16cc867f7db0ff85684a5eacea0aab71db8af8c6d600ecd57ca92",
+        "asset_sha256": "c41eff761b11ef57f24c0cd7bacadfcfee621891dfc54735f6e42d6d3af7357f",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
