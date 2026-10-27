@@ -42,8 +42,8 @@ const START_FRESH_LABEL = 'Start fresh';
 const LISTEN_LABEL = 'Listen';
 const LISTEN_AGAIN_LABEL = 'Listen again';
 const SPEECH_LANGUAGE = 'en-US';
-const SPEECH_RATE = 0.9;
-const CELEBRATION_AUTO_ADVANCE_MS = 2000;
+const SPEECH_RATE = 0.75;
+const CELEBRATION_FALLBACK_MS = 10000;
 
 function stopSpeech(): void {
   try {
@@ -76,6 +76,80 @@ function Narrator({ text }: { text: string | null }) {
       stopSpeech();
     };
   }, [text]);
+  return null;
+}
+
+function CelebrationSpeaker({
+  celebration,
+  word,
+  onAdvance,
+}: {
+  celebration: string;
+  word: string | null;
+  onAdvance: () => void;
+}) {
+  const finishedRef = useRef(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const finish = () => {
+      if (cancelled || finishedRef.current) {
+        return;
+      }
+      finishedRef.current = true;
+      if (fallbackTimer !== null) {
+        clearTimeout(fallbackTimer);
+        fallbackTimer = null;
+      }
+      onAdvance();
+    };
+
+    const speakWord = () => {
+      if (cancelled) {
+        return;
+      }
+      if (!word) {
+        finish();
+        return;
+      }
+      try {
+        Speech.speak(word, {
+          language: SPEECH_LANGUAGE,
+          rate: SPEECH_RATE,
+          onDone: finish,
+          onError: finish,
+        });
+      } catch {
+        finish();
+      }
+    };
+
+    try {
+      Speech.stop();
+      Speech.speak(celebration, {
+        language: SPEECH_LANGUAGE,
+        rate: SPEECH_RATE,
+        onDone: speakWord,
+        onError: speakWord,
+      });
+    } catch {
+      speakWord();
+    }
+
+    fallbackTimer = setTimeout(finish, CELEBRATION_FALLBACK_MS);
+
+    return () => {
+      cancelled = true;
+      if (fallbackTimer !== null) {
+        clearTimeout(fallbackTimer);
+        fallbackTimer = null;
+      }
+      stopSpeech();
+    };
+  }, []);
+
   return null;
 }
 
@@ -477,14 +551,7 @@ export default function SessionScreen() {
   const [scaffoldLevel, setScaffoldLevel] = useState<ScaffoldLevelNumber>(0);
   const [phase, setPhase] = useState<SessionPhase>(() => (resume ? 'resume' : 'step'));
   const [stepOutcomes, setStepOutcomes] = useState<StepOutcome[]>([]);
-  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  function clearAutoAdvance(): void {
-    if (autoAdvanceTimer.current !== null) {
-      clearTimeout(autoAdvanceTimer.current);
-      autoAdvanceTimer.current = null;
-    }
-  }
+  const advanceHandledRef = useRef(false);
 
   useEffect(() => {
     const bookmark = loadSessionBookmark();
@@ -498,20 +565,6 @@ export default function SessionScreen() {
       clearSessionBookmark();
     }
   }, [lesson]);
-
-  useEffect(() => {
-    if (phase !== 'celebration') {
-      return;
-    }
-    clearAutoAdvance();
-    autoAdvanceTimer.current = setTimeout(() => {
-      autoAdvanceTimer.current = null;
-      handleNext();
-    }, CELEBRATION_AUTO_ADVANCE_MS);
-    return () => {
-      clearAutoAdvance();
-    };
-  }, [phase, stepIndex]);
 
   if (!lesson) {
     return (
@@ -544,18 +597,19 @@ export default function SessionScreen() {
     scaffoldLevel > 0 ? getString(scaffold.prompt_ref) : null;
   const celebration = getString(step.celebration_ref);
   const closingWin = getString(lesson.closing_win_ref);
+  const targetItem = itemsById.get(step.target_item_id);
+  const targetWord = targetItem ? getString(targetItem.label_ref) : null;
   const progressText = `Step ${Math.min(stepIndex + 1, steps.length)} of ${steps.length}`;
   const lessonTitle = getString(lesson.title_ref);
   const speechLine =
     phase === 'step'
       ? scaffoldPrompt ?? stepPrompt
-      : phase === 'celebration'
-        ? celebration
-        : phase === 'closing'
-          ? closingWin
-          : null;
+      : phase === 'closing'
+        ? closingWin
+        : null;
 
   function handleChoose() {
+    advanceHandledRef.current = false;
     setStepOutcomes((previous) => [
       ...previous,
       {
@@ -572,7 +626,11 @@ export default function SessionScreen() {
   }
 
   function handleNext() {
-    clearAutoAdvance();
+    if (advanceHandledRef.current) {
+      return;
+    }
+    advanceHandledRef.current = true;
+    stopSpeech();
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
         stepOutcomes.map((outcome) => ({
@@ -665,6 +723,9 @@ export default function SessionScreen() {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <Narrator text={speechLine} />
+        {phase === 'celebration' ? (
+          <CelebrationSpeaker celebration={celebration} word={targetWord} onAdvance={handleNext} />
+        ) : null}
         <ScrollView contentContainerStyle={styles.scrollTablet}>
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
@@ -681,6 +742,9 @@ export default function SessionScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
       <Narrator text={speechLine} />
+      {phase === 'celebration' ? (
+        <CelebrationSpeaker celebration={celebration} word={targetWord} onAdvance={handleNext} />
+      ) : null}
       <ScrollView contentContainerStyle={styles.scroll}>
         {headerSection}
         {promptSection}
