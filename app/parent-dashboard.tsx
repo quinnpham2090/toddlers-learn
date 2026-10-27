@@ -17,12 +17,14 @@ import {
 import {
   SkillBand,
   SkillEvidenceRecord,
+  clearSkillEvidence,
   deriveSkillBand,
   groupEvidenceBySkill,
   loadSkillEvidence,
   loadTogetherCompletions,
 } from '../lib/progress-store';
 import { SELECTION_CODE_VERSION, selectNextLesson } from '../lib/lesson-selection.js';
+import { clearSessionBookmark } from '../lib/resume-store';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
 import { loadSavedSongs } from '../lib/song-store';
 
@@ -35,6 +37,14 @@ const MISSIONS_SETTING_LABEL = 'Missions setting';
 const MISSIONS_TOGGLE_LABEL = 'Missions';
 const MISSIONS_TOGGLE_HINT = 'Shows the Together lane on the child’s home screen.';
 const DIAGNOSTICS_LABEL = 'Diagnostics';
+const RESET_SECTION_LABEL = 'Reset lesson progress';
+const RESET_BUTTON_LABEL = 'Reset lesson progress';
+const RESET_HINT =
+  'Lesson progress only. Saved songs, together history, and parent settings are kept.';
+const RESET_CONFIRM_TEXT =
+  'Reset lesson progress? This erases lesson progress and the resume bookmark. Songs and together history are kept.';
+const CONFIRM_LABEL = 'Confirm';
+const CANCEL_LABEL = 'Cancel';
 const QUIET_DAY_MESSAGE = 'A quiet day — nothing recorded yet.';
 const NO_HISTORY_MESSAGE = 'No together activities yet.';
 
@@ -201,9 +211,10 @@ export default function ParentDashboardScreen() {
       return true;
     }
   });
+  const [evidence, setEvidence] = useState<SkillEvidenceRecord[]>(() => loadSkillEvidence());
+  const [resetConfirming, setResetConfirming] = useState(false);
 
   const skills = getSkills();
-  const evidence: SkillEvidenceRecord[] = loadSkillEvidence();
   const evidenceBySkill = groupEvidenceBySkill(evidence);
   const bandRows = skills.map((skill) => ({
     key: skill.id,
@@ -274,6 +285,13 @@ export default function ParentDashboardScreen() {
     }
   }
 
+  function handleConfirmReset() {
+    clearSkillEvidence();
+    clearSessionBookmark();
+    setEvidence(loadSkillEvidence());
+    setResetConfirming(false);
+  }
+
   const headerSection = (
     <View>
       <View style={styles.topRow}>
@@ -320,6 +338,57 @@ export default function ParentDashboardScreen() {
         isTablet={isTablet}
         onToggle={handleToggleMissions}
       />
+    </SectionCard>
+  );
+
+  const resetSection = (
+    <SectionCard heading={RESET_SECTION_LABEL} isTablet={isTablet}>
+      {resetConfirming ? (
+        <View>
+          <Text style={isTablet ? styles.resetConfirmTextTablet : styles.resetConfirmText}>
+            {RESET_CONFIRM_TEXT}
+          </Text>
+          <View style={styles.resetButtonRow}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={CONFIRM_LABEL}
+              onPress={handleConfirmReset}
+              style={({ pressed }) => [
+                styles.resetConfirmButton,
+                pressed && styles.resetConfirmButtonPressed,
+              ]}
+            >
+              <Text style={styles.resetConfirmButtonText}>{CONFIRM_LABEL}</Text>
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={CANCEL_LABEL}
+              onPress={() => setResetConfirming(false)}
+              style={({ pressed }) => [
+                styles.resetCancelButton,
+                pressed && styles.resetCancelButtonPressed,
+              ]}
+            >
+              <Text style={styles.resetCancelButtonText}>{CANCEL_LABEL}</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <View>
+          <Text style={isTablet ? styles.resetHintTablet : styles.resetHint}>{RESET_HINT}</Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={RESET_BUTTON_LABEL}
+            onPress={() => setResetConfirming(true)}
+            style={({ pressed }) => [
+              styles.resetButton,
+              pressed && styles.resetButtonPressed,
+            ]}
+          >
+            <Text style={styles.resetButtonText}>{RESET_BUTTON_LABEL}</Text>
+          </Pressable>
+        </View>
+      )}
     </SectionCard>
   );
 
@@ -373,6 +442,7 @@ export default function ParentDashboardScreen() {
             <View style={styles.tabletColumn}>
               {historySection}
               {settingsSection}
+              {resetSection}
               {diagnosticsSection}
             </View>
           </View>
@@ -389,6 +459,7 @@ export default function ParentDashboardScreen() {
         {historySection}
         {todaysNoteSection}
         {settingsSection}
+        {resetSection}
         {diagnosticsSection}
       </ScrollView>
     </SafeAreaView>
@@ -658,5 +729,83 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#33302B',
     marginTop: 4,
+  },
+  resetHint: {
+    fontSize: 13.5,
+    lineHeight: 20,
+    color: '#7A7264',
+    marginBottom: 12,
+  },
+  resetHintTablet: {
+    fontSize: 15.5,
+    lineHeight: 23,
+    color: '#7A7264',
+    marginBottom: 14,
+  },
+  resetConfirmText: {
+    fontSize: 15,
+    lineHeight: 23,
+    fontWeight: '700',
+    color: '#33302B',
+    marginBottom: 14,
+  },
+  resetConfirmTextTablet: {
+    fontSize: 17.5,
+    lineHeight: 27,
+    fontWeight: '700',
+    color: '#33302B',
+    marginBottom: 16,
+  },
+  resetButtonRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  resetButton: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: '#B4502F',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  resetButtonPressed: {
+    backgroundColor: '#FBE7DF',
+  },
+  resetButtonText: {
+    color: '#B4502F',
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  resetConfirmButton: {
+    backgroundColor: '#B4502F',
+    borderRadius: 999,
+    paddingVertical: 12,
+    paddingHorizontal: 22,
+  },
+  resetConfirmButtonPressed: {
+    backgroundColor: '#9A3F24',
+  },
+  resetConfirmButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  resetCancelButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    paddingVertical: 12,
+    paddingHorizontal: 22,
+  },
+  resetCancelButtonPressed: {
+    backgroundColor: '#F1EADB',
+  },
+  resetCancelButtonText: {
+    color: '#7A7264',
+    fontSize: 15,
+    fontWeight: '700',
   },
 });

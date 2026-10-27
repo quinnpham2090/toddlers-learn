@@ -91,6 +91,17 @@ export function recordStepEvidence(entries: NewSkillEvidence[]): SkillEvidenceRe
   }
 }
 
+export function clearSkillEvidence(): void {
+  try {
+    const file = storeFile();
+    if (file.exists) {
+      file.delete();
+    }
+  } catch {
+    return;
+  }
+}
+
 export function deriveSkillBand(evidence: SkillEvidenceRecord[]): SkillBand {
   if (evidence.length === 0) {
     return 'not-yet-explored';
