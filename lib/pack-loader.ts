@@ -32,53 +32,53 @@ import sunnyPictureSetsJson from '../packs/sunny-home-garden/picture_sets.json';
 import sunnyMissionsJson from '../packs/sunny-home-garden/missions.json';
 import sunnyRoutinesJson from '../packs/sunny-home-garden/routines.json';
 import sunnyTimeConceptsJson from '../packs/sunny-home-garden/time_concepts.json';
-import soliSvg from '../packs/sunny-home-garden/assets/soli.svg';
-import fernSvg from '../packs/sunny-home-garden/assets/fern.svg';
-import cupSvg from '../packs/sunny-home-garden/assets/cup.svg';
-import spoonSvg from '../packs/sunny-home-garden/assets/spoon.svg';
-import bookSvg from '../packs/sunny-home-garden/assets/book.svg';
-import ballSvg from '../packs/sunny-home-garden/assets/ball.svg';
-import redFlowerSvg from '../packs/sunny-home-garden/assets/red-flower.svg';
-import yellowFlowerSvg from '../packs/sunny-home-garden/assets/yellow-flower.svg';
-import blueFlowerSvg from '../packs/sunny-home-garden/assets/blue-flower.svg';
-import greenFlowerSvg from '../packs/sunny-home-garden/assets/green-flower.svg';
-import redBallSvg from '../packs/sunny-home-garden/assets/red-ball.svg';
-import yellowCupSvg from '../packs/sunny-home-garden/assets/yellow-cup.svg';
-import blueBookSvg from '../packs/sunny-home-garden/assets/blue-book.svg';
-import greenLeafSvg from '../packs/sunny-home-garden/assets/green-leaf.svg';
-import redBasketSvg from '../packs/sunny-home-garden/assets/red-basket.svg';
-import yellowBasketSvg from '../packs/sunny-home-garden/assets/yellow-basket.svg';
-import sortRedBallSvg from '../packs/sunny-home-garden/assets/sort-red-ball.svg';
-import sortRedSockSvg from '../packs/sunny-home-garden/assets/sort-red-sock.svg';
-import sortYellowCupSvg from '../packs/sunny-home-garden/assets/sort-yellow-cup.svg';
-import sortYellowBookSvg from '../packs/sunny-home-garden/assets/sort-yellow-book.svg';
-import sortBlueSpoonSvg from '../packs/sunny-home-garden/assets/sort-blue-spoon.svg';
-import sortBlueLeafSvg from '../packs/sunny-home-garden/assets/sort-blue-leaf.svg';
-import nowTidyCardSvg from '../packs/sunny-home-garden/assets/now-tidy-card.svg';
-import nextSongCardSvg from '../packs/sunny-home-garden/assets/next-song-card.svg';
-import laundryBasketSvg from '../packs/sunny-home-garden/assets/laundry-basket.svg';
-import cardboardBoxSvg from '../packs/sunny-home-garden/assets/cardboard-box.svg';
-import flatTowelSvg from '../packs/sunny-home-garden/assets/flat-towel.svg';
-import softToySvg from '../packs/sunny-home-garden/assets/soft-toy.svg';
-import bookStackSvg from '../packs/sunny-home-garden/assets/book-stack.svg';
-import cleanSocksSvg from '../packs/sunny-home-garden/assets/clean-socks.svg';
-import plasticPlateSvg from '../packs/sunny-home-garden/assets/plastic-plate.svg';
-import paperPlateSvg from '../packs/sunny-home-garden/assets/paper-plate.svg';
-import placematSvg from '../packs/sunny-home-garden/assets/placemat.svg';
-import plasticCupSvg from '../packs/sunny-home-garden/assets/plastic-cup.svg';
-import paperCupSvg from '../packs/sunny-home-garden/assets/paper-cup.svg';
-import clothNapkinSvg from '../packs/sunny-home-garden/assets/cloth-napkin.svg';
-import paperTowelSheetSvg from '../packs/sunny-home-garden/assets/paper-towel-sheet.svg';
-import teaTowelSvg from '../packs/sunny-home-garden/assets/tea-towel.svg';
-import wateringCanSvg from '../packs/sunny-home-garden/assets/watering-can.svg';
-import dampClothSvg from '../packs/sunny-home-garden/assets/damp-cloth.svg';
-import indoorPlantSvg from '../packs/sunny-home-garden/assets/indoor-plant.svg';
-import outdoorPlantSvg from '../packs/sunny-home-garden/assets/outdoor-plant.svg';
-import nightLampSvg from '../packs/sunny-home-garden/assets/night-lamp.svg';
-import closedCurtainsSvg from '../packs/sunny-home-garden/assets/closed-curtains.svg';
-import quietBookSvg from '../packs/sunny-home-garden/assets/quiet-book.svg';
-import songTimeCardSvg from '../packs/sunny-home-garden/assets/song-time-card.svg';
-import helpingHandsSvg from '../packs/sunny-home-garden/assets/helping-hands.svg';
+import puffPortraitJpg from '../packs/sunny-home-garden/assets/puff-portrait.jpg';
+import mossPortraitJpg from '../packs/sunny-home-garden/assets/moss-portrait.jpg';
+import cupJpg from '../packs/sunny-home-garden/assets/cup.jpg';
+import spoonJpg from '../packs/sunny-home-garden/assets/spoon.jpg';
+import bookJpg from '../packs/sunny-home-garden/assets/book.jpg';
+import ballJpg from '../packs/sunny-home-garden/assets/ball.jpg';
+import redFlowerJpg from '../packs/sunny-home-garden/assets/red-flower.jpg';
+import yellowFlowerJpg from '../packs/sunny-home-garden/assets/yellow-flower.jpg';
+import blueFlowerJpg from '../packs/sunny-home-garden/assets/blue-flower.jpg';
+import greenFlowerJpg from '../packs/sunny-home-garden/assets/green-flower.jpg';
+import redBallJpg from '../packs/sunny-home-garden/assets/red-ball.jpg';
+import yellowCupJpg from '../packs/sunny-home-garden/assets/yellow-cup.jpg';
+import blueBookJpg from '../packs/sunny-home-garden/assets/blue-book.jpg';
+import greenLeafJpg from '../packs/sunny-home-garden/assets/green-leaf.jpg';
+import redBasketJpg from '../packs/sunny-home-garden/assets/red-basket.jpg';
+import yellowBasketJpg from '../packs/sunny-home-garden/assets/yellow-basket.jpg';
+import sortRedBallJpg from '../packs/sunny-home-garden/assets/sort-red-ball.jpg';
+import sortRedSockJpg from '../packs/sunny-home-garden/assets/sort-red-sock.jpg';
+import sortYellowCupJpg from '../packs/sunny-home-garden/assets/sort-yellow-cup.jpg';
+import sortYellowBookJpg from '../packs/sunny-home-garden/assets/sort-yellow-book.jpg';
+import sortBlueSpoonJpg from '../packs/sunny-home-garden/assets/sort-blue-spoon.jpg';
+import sortBlueLeafJpg from '../packs/sunny-home-garden/assets/sort-blue-leaf.jpg';
+import nowTidyCardJpg from '../packs/sunny-home-garden/assets/now-tidy-card.jpg';
+import nextSongCardJpg from '../packs/sunny-home-garden/assets/next-song-card.jpg';
+import laundryBasketJpg from '../packs/sunny-home-garden/assets/laundry-basket.jpg';
+import cardboardBoxJpg from '../packs/sunny-home-garden/assets/cardboard-box.jpg';
+import flatTowelJpg from '../packs/sunny-home-garden/assets/flat-towel.jpg';
+import softToyJpg from '../packs/sunny-home-garden/assets/soft-toy.jpg';
+import bookStackJpg from '../packs/sunny-home-garden/assets/book-stack.jpg';
+import cleanSocksJpg from '../packs/sunny-home-garden/assets/clean-socks.jpg';
+import plasticPlateJpg from '../packs/sunny-home-garden/assets/plastic-plate.jpg';
+import paperPlateJpg from '../packs/sunny-home-garden/assets/paper-plate.jpg';
+import placematJpg from '../packs/sunny-home-garden/assets/placemat.jpg';
+import plasticCupJpg from '../packs/sunny-home-garden/assets/plastic-cup.jpg';
+import paperCupJpg from '../packs/sunny-home-garden/assets/paper-cup.jpg';
+import clothNapkinJpg from '../packs/sunny-home-garden/assets/cloth-napkin.jpg';
+import paperTowelSheetJpg from '../packs/sunny-home-garden/assets/paper-towel-sheet.jpg';
+import teaTowelJpg from '../packs/sunny-home-garden/assets/tea-towel.jpg';
+import wateringCanJpg from '../packs/sunny-home-garden/assets/watering-can.jpg';
+import dampClothJpg from '../packs/sunny-home-garden/assets/damp-cloth.jpg';
+import indoorPlantJpg from '../packs/sunny-home-garden/assets/indoor-plant.jpg';
+import outdoorPlantJpg from '../packs/sunny-home-garden/assets/outdoor-plant.jpg';
+import nightLampJpg from '../packs/sunny-home-garden/assets/night-lamp.jpg';
+import closedCurtainsJpg from '../packs/sunny-home-garden/assets/closed-curtains.jpg';
+import quietBookJpg from '../packs/sunny-home-garden/assets/quiet-book.jpg';
+import songTimeCardJpg from '../packs/sunny-home-garden/assets/song-time-card.jpg';
+import helpingHandsJpg from '../packs/sunny-home-garden/assets/helping-hands.jpg';
 import cozyBlanketSvg from '../packs/core/assets/cozy-blanket.svg';
 import foldedTowelSvg from '../packs/core/assets/folded-towel.svg';
 import genericPictureSvg from '../packs/core/assets/generic-picture.svg';
@@ -563,53 +563,53 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/words-guide.svg': wordsGuideSvg,
   },
   'sunny-home-garden': {
-    'assets/soli.svg': soliSvg,
-    'assets/fern.svg': fernSvg,
-    'assets/cup.svg': cupSvg,
-    'assets/spoon.svg': spoonSvg,
-    'assets/book.svg': bookSvg,
-    'assets/ball.svg': ballSvg,
-    'assets/red-flower.svg': redFlowerSvg,
-    'assets/yellow-flower.svg': yellowFlowerSvg,
-    'assets/blue-flower.svg': blueFlowerSvg,
-    'assets/green-flower.svg': greenFlowerSvg,
-    'assets/red-ball.svg': redBallSvg,
-    'assets/yellow-cup.svg': yellowCupSvg,
-    'assets/blue-book.svg': blueBookSvg,
-    'assets/green-leaf.svg': greenLeafSvg,
-    'assets/red-basket.svg': redBasketSvg,
-    'assets/yellow-basket.svg': yellowBasketSvg,
-    'assets/sort-red-ball.svg': sortRedBallSvg,
-    'assets/sort-red-sock.svg': sortRedSockSvg,
-    'assets/sort-yellow-cup.svg': sortYellowCupSvg,
-    'assets/sort-yellow-book.svg': sortYellowBookSvg,
-    'assets/sort-blue-spoon.svg': sortBlueSpoonSvg,
-    'assets/sort-blue-leaf.svg': sortBlueLeafSvg,
-    'assets/now-tidy-card.svg': nowTidyCardSvg,
-    'assets/next-song-card.svg': nextSongCardSvg,
-    'assets/laundry-basket.svg': laundryBasketSvg,
-    'assets/cardboard-box.svg': cardboardBoxSvg,
-    'assets/flat-towel.svg': flatTowelSvg,
-    'assets/soft-toy.svg': softToySvg,
-    'assets/book-stack.svg': bookStackSvg,
-    'assets/clean-socks.svg': cleanSocksSvg,
-    'assets/plastic-plate.svg': plasticPlateSvg,
-    'assets/paper-plate.svg': paperPlateSvg,
-    'assets/placemat.svg': placematSvg,
-    'assets/plastic-cup.svg': plasticCupSvg,
-    'assets/paper-cup.svg': paperCupSvg,
-    'assets/cloth-napkin.svg': clothNapkinSvg,
-    'assets/paper-towel-sheet.svg': paperTowelSheetSvg,
-    'assets/tea-towel.svg': teaTowelSvg,
-    'assets/watering-can.svg': wateringCanSvg,
-    'assets/damp-cloth.svg': dampClothSvg,
-    'assets/indoor-plant.svg': indoorPlantSvg,
-    'assets/outdoor-plant.svg': outdoorPlantSvg,
-    'assets/night-lamp.svg': nightLampSvg,
-    'assets/closed-curtains.svg': closedCurtainsSvg,
-    'assets/quiet-book.svg': quietBookSvg,
-    'assets/song-time-card.svg': songTimeCardSvg,
-    'assets/helping-hands.svg': helpingHandsSvg,
+    'assets/puff-portrait.jpg': puffPortraitJpg,
+    'assets/moss-portrait.jpg': mossPortraitJpg,
+    'assets/cup.jpg': cupJpg,
+    'assets/spoon.jpg': spoonJpg,
+    'assets/book.jpg': bookJpg,
+    'assets/ball.jpg': ballJpg,
+    'assets/red-flower.jpg': redFlowerJpg,
+    'assets/yellow-flower.jpg': yellowFlowerJpg,
+    'assets/blue-flower.jpg': blueFlowerJpg,
+    'assets/green-flower.jpg': greenFlowerJpg,
+    'assets/red-ball.jpg': redBallJpg,
+    'assets/yellow-cup.jpg': yellowCupJpg,
+    'assets/blue-book.jpg': blueBookJpg,
+    'assets/green-leaf.jpg': greenLeafJpg,
+    'assets/red-basket.jpg': redBasketJpg,
+    'assets/yellow-basket.jpg': yellowBasketJpg,
+    'assets/sort-red-ball.jpg': sortRedBallJpg,
+    'assets/sort-red-sock.jpg': sortRedSockJpg,
+    'assets/sort-yellow-cup.jpg': sortYellowCupJpg,
+    'assets/sort-yellow-book.jpg': sortYellowBookJpg,
+    'assets/sort-blue-spoon.jpg': sortBlueSpoonJpg,
+    'assets/sort-blue-leaf.jpg': sortBlueLeafJpg,
+    'assets/now-tidy-card.jpg': nowTidyCardJpg,
+    'assets/next-song-card.jpg': nextSongCardJpg,
+    'assets/laundry-basket.jpg': laundryBasketJpg,
+    'assets/cardboard-box.jpg': cardboardBoxJpg,
+    'assets/flat-towel.jpg': flatTowelJpg,
+    'assets/soft-toy.jpg': softToyJpg,
+    'assets/book-stack.jpg': bookStackJpg,
+    'assets/clean-socks.jpg': cleanSocksJpg,
+    'assets/plastic-plate.jpg': plasticPlateJpg,
+    'assets/paper-plate.jpg': paperPlateJpg,
+    'assets/placemat.jpg': placematJpg,
+    'assets/plastic-cup.jpg': plasticCupJpg,
+    'assets/paper-cup.jpg': paperCupJpg,
+    'assets/cloth-napkin.jpg': clothNapkinJpg,
+    'assets/paper-towel-sheet.jpg': paperTowelSheetJpg,
+    'assets/tea-towel.jpg': teaTowelJpg,
+    'assets/watering-can.jpg': wateringCanJpg,
+    'assets/damp-cloth.jpg': dampClothJpg,
+    'assets/indoor-plant.jpg': indoorPlantJpg,
+    'assets/outdoor-plant.jpg': outdoorPlantJpg,
+    'assets/night-lamp.jpg': nightLampJpg,
+    'assets/closed-curtains.jpg': closedCurtainsJpg,
+    'assets/quiet-book.jpg': quietBookJpg,
+    'assets/song-time-card.jpg': songTimeCardJpg,
+    'assets/helping-hands.jpg': helpingHandsJpg,
   },
 };
 
