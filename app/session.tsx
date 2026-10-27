@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -43,6 +43,7 @@ const LISTEN_LABEL = 'Listen';
 const LISTEN_AGAIN_LABEL = 'Listen again';
 const SPEECH_LANGUAGE = 'en-US';
 const SPEECH_RATE = 0.9;
+const CELEBRATION_AUTO_ADVANCE_MS = 2000;
 
 function stopSpeech(): void {
   try {
@@ -476,6 +477,14 @@ export default function SessionScreen() {
   const [scaffoldLevel, setScaffoldLevel] = useState<ScaffoldLevelNumber>(0);
   const [phase, setPhase] = useState<SessionPhase>(() => (resume ? 'resume' : 'step'));
   const [stepOutcomes, setStepOutcomes] = useState<StepOutcome[]>([]);
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function clearAutoAdvance(): void {
+    if (autoAdvanceTimer.current !== null) {
+      clearTimeout(autoAdvanceTimer.current);
+      autoAdvanceTimer.current = null;
+    }
+  }
 
   useEffect(() => {
     const bookmark = loadSessionBookmark();
@@ -489,6 +498,20 @@ export default function SessionScreen() {
       clearSessionBookmark();
     }
   }, [lesson]);
+
+  useEffect(() => {
+    if (phase !== 'celebration') {
+      return;
+    }
+    clearAutoAdvance();
+    autoAdvanceTimer.current = setTimeout(() => {
+      autoAdvanceTimer.current = null;
+      handleNext();
+    }, CELEBRATION_AUTO_ADVANCE_MS);
+    return () => {
+      clearAutoAdvance();
+    };
+  }, [phase, stepIndex]);
 
   if (!lesson) {
     return (
@@ -549,6 +572,7 @@ export default function SessionScreen() {
   }
 
   function handleNext() {
+    clearAutoAdvance();
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
         stepOutcomes.map((outcome) => ({

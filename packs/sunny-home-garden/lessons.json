@@ -40,30 +40,33 @@
       {
         "step_index": 2,
         "prompt_ref": "lesson.hello_cup.step_2.prompt",
-        "target_item_id": "cup",
+        "target_item_id": "spoon",
         "choice_item_ids": [
+          "spoon",
           "cup",
-          "ball"
+          "book"
         ],
         "celebration_ref": "lesson.hello_cup.step_2.celebration"
       },
       {
         "step_index": 3,
         "prompt_ref": "lesson.hello_cup.step_3.prompt",
-        "target_item_id": "cup",
+        "target_item_id": "book",
         "choice_item_ids": [
-          "cup"
+          "book",
+          "spoon",
+          "ball"
         ],
         "celebration_ref": "lesson.hello_cup.step_3.celebration"
       },
       {
         "step_index": 4,
         "prompt_ref": "lesson.hello_cup.step_4.prompt",
-        "target_item_id": "cup",
+        "target_item_id": "ball",
         "choice_item_ids": [
-          "cup",
-          "spoon",
-          "book"
+          "ball",
+          "book",
+          "spoon"
         ],
         "celebration_ref": "lesson.hello_cup.step_4.celebration"
       },
@@ -72,7 +75,9 @@
         "prompt_ref": "lesson.hello_cup.step_5.prompt",
         "target_item_id": "cup",
         "choice_item_ids": [
-          "cup"
+          "cup",
+          "ball",
+          "book"
         ],
         "celebration_ref": "lesson.hello_cup.step_5.celebration"
       }
@@ -160,10 +165,10 @@
       {
         "step_index": 2,
         "prompt_ref": "lesson.red_flower_yellow_flower.step_2.prompt",
-        "target_item_id": "red-flower",
+        "target_item_id": "yellow-flower",
         "choice_item_ids": [
-          "red-flower",
           "yellow-flower",
+          "red-flower",
           "blue-flower"
         ],
         "celebration_ref": "lesson.red_flower_yellow_flower.step_2.celebration"
@@ -171,8 +176,10 @@
       {
         "step_index": 3,
         "prompt_ref": "lesson.red_flower_yellow_flower.step_3.prompt",
-        "target_item_id": "red-flower",
+        "target_item_id": "blue-flower",
         "choice_item_ids": [
+          "blue-flower",
+          "yellow-flower",
           "red-flower"
         ],
         "celebration_ref": "lesson.red_flower_yellow_flower.step_3.celebration"
@@ -180,11 +187,11 @@
       {
         "step_index": 4,
         "prompt_ref": "lesson.red_flower_yellow_flower.step_4.prompt",
-        "target_item_id": "red-ball",
+        "target_item_id": "yellow-cup",
         "choice_item_ids": [
-          "red-ball",
           "yellow-cup",
-          "blue-book"
+          "blue-book",
+          "red-ball"
         ],
         "celebration_ref": "lesson.red_flower_yellow_flower.step_4.celebration"
       },
@@ -194,7 +201,7 @@
         "target_item_id": "red-flower",
         "choice_item_ids": [
           "red-flower",
-          "yellow-flower"
+          "blue-flower"
         ],
         "celebration_ref": "lesson.red_flower_yellow_flower.step_5.celebration"
       }
@@ -315,7 +322,7 @@
       {
         "step_index": 5,
         "prompt_ref": "lesson.where_does_this_go.step_5.prompt",
-        "target_item_id": "red-basket",
+        "target_item_id": "yellow-basket",
         "choice_item_ids": [
           "red-basket",
           "yellow-basket"
