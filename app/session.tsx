@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } fr
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import * as Speech from 'expo-speech';
 import {
   CharacterRecord,
   LessonRecord,
@@ -38,6 +39,49 @@ const NEXT_LABEL = 'Next';
 const DONE_LABEL = 'Done';
 const CONTINUE_LABEL = 'Continue where you left off';
 const START_FRESH_LABEL = 'Start fresh';
+const LISTEN_LABEL = 'Listen';
+const LISTEN_AGAIN_LABEL = 'Listen again';
+const SPEECH_LANGUAGE = 'en-US';
+const SPEECH_RATE = 0.9;
+
+function stopSpeech(): void {
+  try {
+    Speech.stop();
+  } catch {
+    return;
+  }
+}
+
+function speakLine(text: string | null): void {
+  if (!text) {
+    return;
+  }
+  try {
+    Speech.stop();
+    Speech.speak(text, { language: SPEECH_LANGUAGE, rate: SPEECH_RATE });
+  } catch {
+    return;
+  }
+}
+
+function Narrator({ text }: { text: string | null }) {
+  useEffect(() => {
+    if (!text) {
+      stopSpeech();
+      return;
+    }
+    speakLine(text);
+    return () => {
+      stopSpeech();
+    };
+  }, [text]);
+  return null;
+}
+
+function goBack(): void {
+  stopSpeech();
+  router.back();
+}
 
 type ScaffoldLevelNumber = 0 | 1 | 2 | 3;
 type SessionPhase = 'resume' | 'step' | 'celebration' | 'closing';
@@ -134,7 +178,7 @@ function BackButton() {
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={BACK_LABEL}
-      onPress={() => router.back()}
+      onPress={goBack}
       style={({ pressed }) => [styles.backButton, pressed && styles.backButtonPressed]}
     >
       <Text style={styles.backButtonText}>{BACK_LABEL}</Text>
@@ -186,14 +230,30 @@ function PromptCard({
   prompt,
   scaffoldPrompt,
   isTablet,
+  onListen,
 }: {
   prompt: string;
   scaffoldPrompt: string | null;
   isTablet: boolean;
+  onListen: () => void;
 }) {
   return (
     <View style={isTablet ? styles.promptCardTablet : styles.promptCard}>
-      <Text style={isTablet ? styles.promptTextTablet : styles.promptText}>{prompt}</Text>
+      <View style={styles.promptRow}>
+        <Text style={[isTablet ? styles.promptTextTablet : styles.promptText, styles.promptTextFlex]}>
+          {prompt}
+        </Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={LISTEN_AGAIN_LABEL}
+          onPress={onListen}
+          style={({ pressed }) => [styles.listenButton, pressed && styles.listenButtonPressed]}
+        >
+          <Text style={isTablet ? styles.listenButtonTextTablet : styles.listenButtonText}>
+            {LISTEN_LABEL}
+          </Text>
+        </Pressable>
+      </View>
       {scaffoldPrompt ? (
         <Text style={isTablet ? styles.scaffoldPromptTablet : styles.scaffoldPrompt}>
           {scaffoldPrompt}
@@ -336,7 +396,10 @@ function ClosingCard({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={songTitle ?? undefined}
-          onPress={() => router.push({ pathname: '/composer', params: { templateId: song.id } })}
+          onPress={() => {
+            stopSpeech();
+            router.push({ pathname: '/composer', params: { templateId: song.id } });
+          }}
           style={({ pressed }) => [
             isTablet ? styles.songCardTablet : styles.songCard,
             pressed && styles.songCardPressed,
@@ -351,7 +414,7 @@ function ClosingCard({
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={DONE_LABEL}
-        onPress={() => router.back()}
+        onPress={goBack}
         style={({ pressed }) => [styles.doneButton, pressed && styles.doneButtonPressed]}
       >
         <Text style={styles.doneButtonText}>{DONE_LABEL}</Text>
@@ -460,6 +523,14 @@ export default function SessionScreen() {
   const closingWin = getString(lesson.closing_win_ref);
   const progressText = `Step ${Math.min(stepIndex + 1, steps.length)} of ${steps.length}`;
   const lessonTitle = getString(lesson.title_ref);
+  const speechLine =
+    phase === 'step'
+      ? scaffoldPrompt ?? stepPrompt
+      : phase === 'celebration'
+        ? celebration
+        : phase === 'closing'
+          ? closingWin
+          : null;
 
   function handleChoose() {
     setStepOutcomes((previous) => [
@@ -533,7 +604,12 @@ export default function SessionScreen() {
   const promptSection =
     phase === 'resume' ? null : (
       <View>
-        <PromptCard prompt={stepPrompt} scaffoldPrompt={scaffoldPrompt} isTablet={isTablet} />
+        <PromptCard
+          prompt={stepPrompt}
+          scaffoldPrompt={scaffoldPrompt}
+          isTablet={isTablet}
+          onListen={() => speakLine(stepPrompt)}
+        />
         {phase === 'step' ? (
           <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
         ) : null}
@@ -564,6 +640,7 @@ export default function SessionScreen() {
   if (isTablet) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+        <Narrator text={speechLine} />
         <ScrollView contentContainerStyle={styles.scrollTablet}>
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
@@ -579,6 +656,7 @@ export default function SessionScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+      <Narrator text={speechLine} />
       <ScrollView contentContainerStyle={styles.scroll}>
         {headerSection}
         {promptSection}
@@ -755,6 +833,36 @@ const styles = StyleSheet.create({
     lineHeight: 31,
     fontWeight: '700',
     color: '#33302B',
+  },
+  promptRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  promptTextFlex: {
+    flex: 1,
+  },
+  listenButton: {
+    backgroundColor: '#F4EBDA',
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#D8CDB6',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    marginTop: 2,
+  },
+  listenButtonPressed: {
+    backgroundColor: '#EADFC8',
+  },
+  listenButtonText: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#9A6A1F',
+  },
+  listenButtonTextTablet: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#9A6A1F',
   },
   scaffoldPrompt: {
     marginTop: 8,
