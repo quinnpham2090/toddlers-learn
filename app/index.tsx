@@ -8,15 +8,18 @@ import {
   CharacterRecord,
   SkillDomain,
   SkillRecord,
+  getActivePack,
   getActivePackId,
   getCharacters,
   getString,
   getJourneyStopSkills,
   getPackAsset,
 } from '../lib/pack-loader';
+import { loadSkillEvidence } from '../lib/progress-store';
 import { loadParentSettings } from '../lib/parent-settings';
 
 const START_BUTTON_LABEL = 'Start';
+const PLAY_AGAIN_LABEL = 'Play again!';
 const SONGBOOK_BUTTON_LABEL = 'Songbook';
 const TOGETHER_BUTTON_LABEL = 'Together';
 const FOR_GROWN_UPS_LABEL = 'For grown-ups';
@@ -103,15 +106,15 @@ function JourneyStop({
   );
 }
 
-function StartButton({ onPress }: { onPress: () => void }) {
+function StartButton({ label, onPress }: { label: string; onPress: () => void }) {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={START_BUTTON_LABEL}
+      accessibilityLabel={label}
       onPress={onPress}
       style={({ pressed }) => [styles.startButton, pressed && styles.startButtonPressed]}
     >
-      <Text style={styles.startButtonText}>{START_BUTTON_LABEL}</Text>
+      <Text style={styles.startButtonText}>{label}</Text>
     </Pressable>
   );
 }
@@ -161,10 +164,22 @@ export default function HubWorld() {
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
+  const [allLessonsCompleted, setAllLessonsCompleted] = useState(false);
+
+  function computeAllLessonsCompleted(): boolean {
+    const evidence = loadSkillEvidence();
+    const completedSkillIds = new Set(evidence.map((record) => record.skill_id));
+    const journeySkills = getJourneyStopSkills();
+    return (
+      journeySkills.length > 0 &&
+      journeySkills.every((skill) => completedSkillIds.has(skill.id))
+    );
+  }
 
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
+      setAllLessonsCompleted(computeAllLessonsCompleted());
       return () => {};
     }, [])
   );
@@ -174,9 +189,21 @@ export default function HubWorld() {
   const guide = characters.find((character) => character.species_or_role === 'lantern_guide');
   const welcomeText = guide ? getString(guide.personality_lines[0]) : null;
 
+  const activePack = getActivePack();
+  const packTitle = getString(activePack.manifest.title_ref);
   const startSection = (
     <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
-      <StartButton onPress={() => router.push('/session')} />
+      {allLessonsCompleted ? (
+        <View style={styles.completionBanner}>
+          <Text style={isTablet ? styles.completionBannerTextTablet : styles.completionBannerText}>
+            {`You finished all the lessons in ${packTitle}!`}
+          </Text>
+        </View>
+      ) : null}
+      <StartButton
+        label={allLessonsCompleted ? PLAY_AGAIN_LABEL : START_BUTTON_LABEL}
+        onPress={() => router.push('/session')}
+      />
       <SongbookButton onPress={() => router.push('/songbook')} />
       {missionsEnabled ? (
         <TogetherButton onPress={() => router.push('/together')} />
@@ -540,5 +567,26 @@ const styles = StyleSheet.create({
     color: '#9C9484',
     fontSize: 13,
     fontWeight: '700',
+  },
+  completionBanner: {
+    backgroundColor: '#E1EFE8',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#BFDCCB',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  completionBannerText: {
+    color: '#2B6E58',
+    fontSize: 15,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  completionBannerTextTablet: {
+    color: '#2B6E58',
+    fontSize: 18,
+    fontWeight: '800',
+    textAlign: 'center',
   },
 });

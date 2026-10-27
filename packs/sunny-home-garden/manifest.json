@@ -75,7 +75,7 @@
     "assets/yellow-basket.jpg": "de3fd09bb89e94604081d9fb24f0deacbdda4f2a3a5f8a5d0ab010ef61263c77",
     "assets/yellow-cup.jpg": "022dfb0256ef3eebc828c2a040c44c32a392c794f59fe9705a1b489877248343",
     "assets/yellow-flower.jpg": "414cafccf786b513069ab9e0a118dcbfa6276dbaed38a1064040858aa060d8a3",
-    "strings.json": "fc0c168c142efa7001741a25117198663ff7621639509967de1ce4d41c3012fb",
+    "strings.json": "cde5138520aaa8171b84c51e147e9a97be3889630712acadcab8e63f1a284b8f",
     "skills.json": "9652e89784fcf820ecab512a99cf394558a4928f62c74fee5f01651c089ffa35",
     "lessons.json": "ced0e911cffa210453081130e40936921fcf8e481af6a50b54fc9d0d405ce6e7",
     "song_templates.json": "9465ae685dcbf116336ad4d60b47f0dbe3430967020ba56d771c396f97e1bc88",
@@ -86,5 +86,5 @@
     "routines.json": "82b091ed805fd36f63a754acd85990e9d41616eb57e233d27b9bf516b0d33008",
     "time_concepts.json": "f282c2c49a0ee9524cbc4d9af4c69f7325102d459a23fb073119fdfe45763237"
   },
-  "pack_sha256": "0cc77d285c9be28937078570f3cfed91eae587ea1d0c3105a661505fa2c25b08"
+  "pack_sha256": "5badf83a32dac93b2f6caf68d7152bd5df13c814d156034b5db65140f2df94a8"
 }

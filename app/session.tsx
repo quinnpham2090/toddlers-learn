@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Animated, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -43,6 +43,8 @@ const LISTEN_LABEL = 'Listen';
 const LISTEN_AGAIN_LABEL = 'Listen again';
 const SPEECH_LANGUAGE = 'en-US';
 const SPEECH_RATE = 0.75;
+const WORD_SPEECH_RATE = 0.6;
+const WORD_PAUSE_MS = 900;
 const CELEBRATION_FALLBACK_MS = 10000;
 
 function stopSpeech(): void {
@@ -53,29 +55,43 @@ function stopSpeech(): void {
   }
 }
 
-function speakLine(text: string | null): void {
+function speakLine(text: string | null, onDone?: () => void): void {
   if (!text) {
     return;
   }
   try {
     Speech.stop();
-    Speech.speak(text, { language: SPEECH_LANGUAGE, rate: SPEECH_RATE });
+    Speech.speak(text, {
+      language: SPEECH_LANGUAGE,
+      rate: SPEECH_RATE,
+      onDone,
+      onError: onDone,
+    });
   } catch {
-    return;
+    onDone?.();
   }
 }
 
-function Narrator({ text }: { text: string | null }) {
+function Narrator({
+  text,
+  onSpeakingChange,
+}: {
+  text: string | null;
+  onSpeakingChange: (speaking: boolean) => void;
+}) {
   useEffect(() => {
     if (!text) {
+      onSpeakingChange(false);
       stopSpeech();
       return;
     }
-    speakLine(text);
+    onSpeakingChange(true);
+    speakLine(text, () => onSpeakingChange(false));
     return () => {
       stopSpeech();
+      onSpeakingChange(false);
     };
-  }, [text]);
+  }, [text, onSpeakingChange]);
   return null;
 }
 
@@ -83,16 +99,19 @@ function CelebrationSpeaker({
   celebration,
   word,
   onAdvance,
+  onSpeakingChange,
 }: {
   celebration: string;
   word: string | null;
   onAdvance: () => void;
+  onSpeakingChange: (speaking: boolean) => void;
 }) {
   const finishedRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
     let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+    let pauseTimer: ReturnType<typeof setTimeout> | null = null;
 
     const finish = () => {
       if (cancelled || finishedRef.current) {
@@ -103,7 +122,19 @@ function CelebrationSpeaker({
         clearTimeout(fallbackTimer);
         fallbackTimer = null;
       }
+      if (pauseTimer !== null) {
+        clearTimeout(pauseTimer);
+        pauseTimer = null;
+      }
+      onSpeakingChange(false);
       onAdvance();
+    };
+
+    const startPause = () => {
+      if (cancelled) {
+        return;
+      }
+      pauseTimer = setTimeout(finish, WORD_PAUSE_MS);
     };
 
     const speakWord = () => {
@@ -117,15 +148,22 @@ function CelebrationSpeaker({
       try {
         Speech.speak(word, {
           language: SPEECH_LANGUAGE,
-          rate: SPEECH_RATE,
-          onDone: finish,
-          onError: finish,
+          rate: WORD_SPEECH_RATE,
+          onDone: () => {
+            onSpeakingChange(false);
+            startPause();
+          },
+          onError: () => {
+            onSpeakingChange(false);
+            finish();
+          },
         });
       } catch {
         finish();
       }
     };
 
+    onSpeakingChange(true);
     try {
       Speech.stop();
       Speech.speak(celebration, {
@@ -146,7 +184,12 @@ function CelebrationSpeaker({
         clearTimeout(fallbackTimer);
         fallbackTimer = null;
       }
+      if (pauseTimer !== null) {
+        clearTimeout(pauseTimer);
+        pauseTimer = null;
+      }
       stopSpeech();
+      onSpeakingChange(false);
     };
   }, []);
 
@@ -272,16 +315,49 @@ function ProgressPill({ text }: { text: string }) {
 function CharacterHeader({
   character,
   isTablet,
+  speaking,
 }: {
   character: CharacterRecord;
   isTablet: boolean;
+  speaking: boolean;
 }) {
   const name = getString(character.name_ref);
   const line = getString(character.personality_lines[0]);
   const asset = resolveCharacterAsset(character);
+  const bob = useRef(new Animated.Value(0)).current;
+  const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
+
+  useEffect(() => {
+    if (speaking) {
+      const animation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(bob, { toValue: 1, duration: 380, useNativeDriver: true }),
+          Animated.timing(bob, { toValue: 0, duration: 380, useNativeDriver: true }),
+        ])
+      );
+      bobAnimation.current = animation;
+      animation.start();
+    } else {
+      bobAnimation.current?.stop();
+      bobAnimation.current = null;
+      bob.setValue(0);
+    }
+    return () => {
+      bobAnimation.current?.stop();
+      bobAnimation.current = null;
+    };
+  }, [speaking, bob]);
+
+  const bobTranslate = bob.interpolate({ inputRange: [0, 1], outputRange: [0, -6] });
+
   return (
     <View style={isTablet ? styles.characterHeaderTablet : styles.characterHeader}>
-      <View style={isTablet ? styles.characterFrameTablet : styles.characterFrame}>
+      <Animated.View
+        style={[
+          isTablet ? styles.characterFrameTablet : styles.characterFrame,
+          { transform: [{ translateY: bobTranslate }] },
+        ]}
+      >
         {asset !== undefined ? (
           <Image
             source={asset}
@@ -292,7 +368,7 @@ function CharacterHeader({
         ) : (
           <View style={isTablet ? styles.characterImageTablet : styles.characterImage} />
         )}
-      </View>
+      </Animated.View>
       <View style={styles.characterHeaderText}>
         <Text style={isTablet ? styles.characterNameTablet : styles.characterName}>{name}</Text>
         <Text style={isTablet ? styles.characterLineTablet : styles.characterLine}>{line}</Text>
@@ -349,7 +425,7 @@ function PictureGrid({
   targetItemId: string;
   highlightTarget: boolean;
   isTablet: boolean;
-  onChoose: () => void;
+  onChoose: (itemId: string) => void;
 }) {
   const single = items.length === 1;
   return (
@@ -363,7 +439,7 @@ function PictureGrid({
             key={item.item_id}
             accessibilityRole="button"
             accessibilityLabel={label}
-            onPress={onChoose}
+            onPress={() => onChoose(item.item_id)}
             style={[
               single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
               highlighted && styles.pictureCardHighlighted,
@@ -551,6 +627,8 @@ export default function SessionScreen() {
   const [scaffoldLevel, setScaffoldLevel] = useState<ScaffoldLevelNumber>(0);
   const [phase, setPhase] = useState<SessionPhase>(() => (resume ? 'resume' : 'step'));
   const [stepOutcomes, setStepOutcomes] = useState<StepOutcome[]>([]);
+  const [retryCue, setRetryCue] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
   const advanceHandledRef = useRef(false);
 
   useEffect(() => {
@@ -608,7 +686,12 @@ export default function SessionScreen() {
         ? closingWin
         : null;
 
-  function handleChoose() {
+  function handleChoose(itemId: string) {
+    if (itemId !== step.target_item_id) {
+      setRetryCue(true);
+      return;
+    }
+    setRetryCue(false);
     advanceHandledRef.current = false;
     setStepOutcomes((previous) => [
       ...previous,
@@ -631,6 +714,7 @@ export default function SessionScreen() {
     }
     advanceHandledRef.current = true;
     stopSpeech();
+    setRetryCue(false);
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
         stepOutcomes.map((outcome) => ({
@@ -651,6 +735,7 @@ export default function SessionScreen() {
   }
 
   function handleResume() {
+    setRetryCue(false);
     if (!resume) {
       setPhase('step');
       return;
@@ -667,7 +752,13 @@ export default function SessionScreen() {
     setStepIndex(0);
     setScaffoldLevel(0);
     setResume(null);
+    setRetryCue(false);
     setPhase('step');
+  }
+
+  function handleListenAgain() {
+    setSpeaking(true);
+    speakLine(stepPrompt, () => setSpeaking(false));
   }
 
   const headerSection = (
@@ -679,7 +770,9 @@ export default function SessionScreen() {
         ) : null}
       </View>
       <Text style={isTablet ? styles.lessonTitleTablet : styles.lessonTitle}>{lessonTitle}</Text>
-      {character ? <CharacterHeader character={character} isTablet={isTablet} /> : null}
+      {character ? (
+        <CharacterHeader character={character} isTablet={isTablet} speaking={speaking} />
+      ) : null}
     </View>
   );
 
@@ -690,8 +783,13 @@ export default function SessionScreen() {
           prompt={stepPrompt}
           scaffoldPrompt={scaffoldPrompt}
           isTablet={isTablet}
-          onListen={() => speakLine(stepPrompt)}
+          onListen={handleListenAgain}
         />
+        {phase === 'step' && retryCue ? (
+          <Text style={isTablet ? styles.retryCueTablet : styles.retryCue}>
+            {getString('session.retry_cue')}
+          </Text>
+        ) : null}
         {phase === 'step' ? (
           <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
         ) : null}
@@ -722,9 +820,14 @@ export default function SessionScreen() {
   if (isTablet) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <Narrator text={speechLine} />
+        <Narrator text={speechLine} onSpeakingChange={setSpeaking} />
         {phase === 'celebration' ? (
-          <CelebrationSpeaker celebration={celebration} word={targetWord} onAdvance={handleNext} />
+<CelebrationSpeaker
+            celebration={celebration}
+            word={targetWord}
+            onAdvance={handleNext}
+            onSpeakingChange={setSpeaking}
+          />
         ) : null}
         <ScrollView contentContainerStyle={styles.scrollTablet}>
           <View style={styles.tabletColumns}>
@@ -741,9 +844,14 @@ export default function SessionScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-      <Narrator text={speechLine} />
+      <Narrator text={speechLine} onSpeakingChange={setSpeaking} />
       {phase === 'celebration' ? (
-        <CelebrationSpeaker celebration={celebration} word={targetWord} onAdvance={handleNext} />
+        <CelebrationSpeaker
+          celebration={celebration}
+          word={targetWord}
+          onAdvance={handleNext}
+          onSpeakingChange={setSpeaking}
+        />
       ) : null}
       <ScrollView contentContainerStyle={styles.scroll}>
         {headerSection}
@@ -965,6 +1073,20 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontStyle: 'italic',
     color: '#2B6E58',
+  },
+  retryCue: {
+    marginTop: 10,
+    fontSize: 14.5,
+    lineHeight: 21,
+    fontWeight: '700',
+    color: '#9A6A1F',
+  },
+  retryCueTablet: {
+    marginTop: 12,
+    fontSize: 17,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: '#9A6A1F',
   },
   helpRow: {
     flexDirection: 'row',
