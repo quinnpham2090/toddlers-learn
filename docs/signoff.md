@@ -21,6 +21,7 @@
 - `packs/schema/routine.json` — Closed `anchor` enum, `time_of_day` (at most 1 daily anchor per `time_of_day` per pack), cooperative and 3-level alternative object rules.
 - `packs/schema/time_concept.json` — Fixed age ladder (`now_next`, `day_night`, `first_then` -> `2-3`; `morning_afternoon_evening`, `before_after` -> `3-4`; `yesterday_today_tomorrow`, `seasons_cycle` -> `4-5`). Clock-minute, month-order, and abstract-duration have no enum value and cannot be authored.
 - `packs/schema/strings.json` — Dot-namespaced `string_ref` dictionary per BCP 47 locale; no partial locales allowed.
+- Media extensions — asset paths allow `.svg`, `.png`, `.webp`, `.jpg`, and `.jpeg` (jpg/jpeg added for raster art, founder-approved 2026-10-27).
 
 ### B. Pure Validator (`/tools/validator.js`)
 - Zero DOM, fetch, Node, or framework imports.

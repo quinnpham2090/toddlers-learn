@@ -152,7 +152,7 @@
     },
     "model_asset_path": {
       "type": "string",
-      "pattern": "^assets/[a-z0-9/_-]+\\.(svg|png|webp)$"
+      "pattern": "^assets/[a-z0-9/_-]+\\.(svg|png|webp|jpg|jpeg)$"
     },
     "fallback_character_id": {
       "type": ["string", "null"],

@@ -30,7 +30,7 @@
       "character.puff.line_2"
     ],
     "world_home_id": "sunny-home-garden",
-    "model_asset_path": "assets/soli.svg",
+    "model_asset_path": "assets/puff-portrait.jpg",
     "fallback_character_id": null,
     "originality_attestation": {
       "attester": "kilo",
@@ -69,7 +69,7 @@
       "character.moss.line_2"
     ],
     "world_home_id": "sunny-home-garden",
-    "model_asset_path": "assets/fern.svg",
+    "model_asset_path": "assets/moss-portrait.jpg",
     "fallback_character_id": null,
     "originality_attestation": {
       "attester": "kilo",

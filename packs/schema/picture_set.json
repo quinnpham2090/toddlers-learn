@@ -121,7 +121,7 @@
           },
           "asset_path": {
             "type": "string",
-            "pattern": "^assets/[a-z0-9/_-]+\\.(svg|png|webp)$"
+            "pattern": "^assets/[a-z0-9/_-]+\\.(svg|png|webp|jpg|jpeg)$"
           },
           "asset_sha256": {
             "type": "string",

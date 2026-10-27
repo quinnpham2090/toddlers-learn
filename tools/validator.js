@@ -9,7 +9,7 @@ const SEMVER_RE = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?
 const LOCALE_RE = /^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$/;
 const STRING_REF_RE = /^[a-z0-9_]+(?:\.[a-z0-9_]+)+$/;
 const SHA256_RE = /^[a-f0-9]{64}$/;
-const ASSET_EXT_RE = /^assets\/[a-z0-9/_-]+\.(svg|png|webp)$/;
+const ASSET_EXT_RE = /^assets\/[a-z0-9/_-]+\.(svg|png|webp|jpg|jpeg)$/;
 
 const AGE_BANDS = ['2-3', '3-4', '4-5', '2-5'];
 const AGE_BAND_MIN_ORDER = { '2-3': 1, '3-4': 2, '4-5': 3, '2-5': 1 };
