@@ -95,7 +95,7 @@
     "assets/voice/puff/item_spoon_label.mp3": "2fc91c654e628bb8247dee23c4273deee5dba7078df805f210e2649627bd74f5",
     "assets/voice/puff/item_yellow_cup_label.mp3": "ae4065c3cade486759c12991874f28a127614ee2186a9f2651dde4329efe9647",
     "assets/voice/puff/item_yellow_flower_label.mp3": "29689bd8c4d51f32e272761ece7e01841078738fe8426aa44a70f16a050c0543",
-    "assets/voice/puff/lesson_hello_cup_closing_win.mp3": "efe8c270d9cf55e00c4fe1d8422e0bd0677993046d92bc16627be77efc0651ea",
+    "assets/voice/puff/lesson_hello_cup_closing_win.mp3": "f51afd1d16ceaeba2e568a355a2ad74d09a5279bed7bf07974c0f039e231f6c4",
     "assets/voice/puff/lesson_hello_cup_step_1_celebration.mp3": "610b0fdb9b484308d7faa62f5ce3f56b0ff2029e78f36efda2ed7e754337a15d",
     "assets/voice/puff/lesson_hello_cup_step_1_prompt.mp3": "ccd6a468443cbcb4b81e85e6608f6d82c5dc9c3a515acc4864406d87a0ebce96",
     "assets/voice/puff/lesson_hello_cup_step_2_celebration.mp3": "c4cdd3d0a646744b9d7af30f146fb07fb8c3d427105582831f3332f24c850262",
@@ -106,7 +106,7 @@
     "assets/voice/puff/lesson_hello_cup_step_4_prompt.mp3": "78290854010111ade5eaa8eaf51d9fca0c10fcde8f210a4371f9e15031f32983",
     "assets/voice/puff/lesson_hello_cup_step_5_celebration.mp3": "4132b91a1753ee11e21d29b3bdd654b1a6ecc749741dd520e54f3423c284acfe",
     "assets/voice/puff/lesson_hello_cup_step_5_prompt.mp3": "de3ed125640c0d6da039731757c8022cef43a56acac84c9c23583ed1504e3e33",
-    "assets/voice/puff/lesson_red_flower_yellow_flower_closing_win.mp3": "6aedeba01f9adac6d57ba189083e195e15ae4e5b50517e92ec2e554132875267",
+    "assets/voice/puff/lesson_red_flower_yellow_flower_closing_win.mp3": "ede5d199d58a1864f5ab19ddf9bfef1574fa057de67bc9ba37d5b1711e5c03df",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_1_celebration.mp3": "798b4b3582be05e4204a3be783512799c9c02c58581787b8fb19df4910c1fe22",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_1_prompt.mp3": "ecd1901f67ca4fb7c459987cf219242c4a94f7ce659b3833bfe55af5af9e4e6f",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_2_celebration.mp3": "b85b586668c36491c43444156b37c3e8035b932d20c9aa74bb4b329fcae07c97",
@@ -147,7 +147,7 @@
     "assets/voice/moss/lesson_big_little_step_4_prompt.mp3": "12f182fa865ec8ebd06d5336df2f04e409535c78f99ffdad56b188331aaebab1",
     "assets/voice/moss/lesson_big_little_step_5_celebration.mp3": "a3c57d1aa0afbc75f0d5d012cc849448cfa5dd98e593555f50e9cb6b876f7d43",
     "assets/voice/moss/lesson_big_little_step_5_prompt.mp3": "cd2f337bfdae29e8e487e81a278f1959acaca72b2c486273fe4b533cb2c4dd67",
-    "assets/voice/moss/lesson_where_does_this_go_closing_win.mp3": "df89326d76ddf3ea3432530f7fb72e37373aff8302f5911d772c200770a1171b",
+    "assets/voice/moss/lesson_where_does_this_go_closing_win.mp3": "e9662ca5c1a9f4e31475def35807384db9b7d69fcff9874b640f0f8c40849824",
     "assets/voice/moss/lesson_where_does_this_go_step_1_celebration.mp3": "ba653ee33b043ed3b76c87f6413b4903cdfaedd363ce0e2c7f6ac046d285d62f",
     "assets/voice/moss/lesson_where_does_this_go_step_1_prompt.mp3": "2ae9bbc201883a92aef3812d797f390ecf1211b74d2b18895f4f7d2001cd6dc3",
     "assets/voice/moss/lesson_where_does_this_go_step_2_celebration.mp3": "a574a3e90d230e64ae44be4f88e8eed6cda682d4d6288ff3fb21788ccc6832b0",
@@ -162,7 +162,7 @@
     "assets/voice/moss/scaffold_l1_prompt.mp3": "414f867ca6561f4f3e8d6ad87dbe944837a11d3f952872e24b2295c05a43937f",
     "assets/voice/moss/scaffold_l2_prompt.mp3": "ceef70bf977825977f604ea3b816b1d89ce9d54682e90b61944d5b97c37c90d5",
     "assets/voice/moss/scaffold_l3_prompt.mp3": "4ca14d48f54479209f8c2f0857b273761e301fc24c6d95c9eb91447b05b24d2c",
-    "strings.json": "04ed0162f1d6c162427ee64e1a669f45629ed6c56992e656dfffb0c6070ea4a1",
+    "strings.json": "224e0f8d1df5131c5f30ffa6c7c8745c9320abba19a60553b26416746dc19c82",
     "skills.json": "20323c662f7ca5ddab91122fb0baff989c6a98e28ec28d449230002ab0e76fed",
     "lessons.json": "83be6ec6508393ddaa34e7d5070ecb18eb273f74959b5d24a66cfea674658e22",
     "song_templates.json": "9465ae685dcbf116336ad4d60b47f0dbe3430967020ba56d771c396f97e1bc88",
@@ -173,5 +173,5 @@
     "routines.json": "5e6f9bf2e62470979927c14aaea9ec18d3a586edde87f72f5b3354aebf518c50",
     "time_concepts.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "29366a390a983f29511feae505be152547f3a79c525d210dbfbcb148888a5e14"
+  "pack_sha256": "2534651536968559d142ea8126275eb8dca42b15cffb65153a553dfecb188b50"
 }

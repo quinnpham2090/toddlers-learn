@@ -77,6 +77,16 @@ import closedCurtainsJpg from '../packs/sunny-home-garden/assets/closed-curtains
 import quietBookJpg from '../packs/sunny-home-garden/assets/quiet-book.jpg';
 import songTimeCardJpg from '../packs/sunny-home-garden/assets/song-time-card.jpg';
 import helpingHandsJpg from '../packs/sunny-home-garden/assets/helping-hands.jpg';
+import bigCupJpg from '../packs/sunny-home-garden/assets/big-cup.jpg';
+import littleCupJpg from '../packs/sunny-home-garden/assets/little-cup.jpg';
+import bigBallJpg from '../packs/sunny-home-garden/assets/big-ball.jpg';
+import littleBallJpg from '../packs/sunny-home-garden/assets/little-ball.jpg';
+import bigBookJpg from '../packs/sunny-home-garden/assets/big-book.jpg';
+import littleBookJpg from '../packs/sunny-home-garden/assets/little-book.jpg';
+import bigFlowerJpg from '../packs/sunny-home-garden/assets/big-flower.jpg';
+import littleFlowerJpg from '../packs/sunny-home-garden/assets/little-flower.jpg';
+import bigSpoonJpg from '../packs/sunny-home-garden/assets/big-spoon.jpg';
+import littleSpoonJpg from '../packs/sunny-home-garden/assets/little-spoon.jpg';
 import cozyBlanketSvg from '../packs/core/assets/cozy-blanket.svg';
 import foldedTowelSvg from '../packs/core/assets/folded-towel.svg';
 import genericPictureSvg from '../packs/core/assets/generic-picture.svg';
@@ -766,6 +776,16 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/quiet-book.jpg': quietBookJpg,
     'assets/song-time-card.jpg': songTimeCardJpg,
     'assets/helping-hands.jpg': helpingHandsJpg,
+    'assets/big-cup.jpg': bigCupJpg,
+    'assets/little-cup.jpg': littleCupJpg,
+    'assets/big-ball.jpg': bigBallJpg,
+    'assets/little-ball.jpg': littleBallJpg,
+    'assets/big-book.jpg': bigBookJpg,
+    'assets/little-book.jpg': littleBookJpg,
+    'assets/big-flower.jpg': bigFlowerJpg,
+    'assets/little-flower.jpg': littleFlowerJpg,
+    'assets/big-spoon.jpg': bigSpoonJpg,
+    'assets/little-spoon.jpg': littleSpoonJpg,
   },
 };
 
