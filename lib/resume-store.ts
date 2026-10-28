@@ -61,3 +61,47 @@ export function clearSessionBookmark(): void {
     return;
   }
 }
+
+const REPLAY_FILE_NAME = 'session-bookmark-replay.json';
+
+function replayStoreFile(): File {
+  return new File(Paths.document, REPLAY_FILE_NAME);
+}
+
+export function loadReplayBookmark(): SessionBookmark | null {
+  try {
+    const file = replayStoreFile();
+    if (!file.exists) {
+      return null;
+    }
+    const parsed: unknown = JSON.parse(file.textSync());
+    return isSessionBookmark(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+export function setReplayBookmark(lessonId: string, stepIndex: number): SessionBookmark | null {
+  try {
+    const bookmark: SessionBookmark = {
+      lesson_id: lessonId,
+      step_index: stepIndex,
+      date: new Date().toISOString(),
+    };
+    replayStoreFile().writeSync(JSON.stringify(bookmark));
+    return bookmark;
+  } catch {
+    return null;
+  }
+}
+
+export function clearReplayBookmark(): void {
+  try {
+    const file = replayStoreFile();
+    if (file.exists) {
+      file.delete();
+    }
+  } catch {
+    return;
+  }
+}

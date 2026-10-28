@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import * as Speech from 'expo-speech';
 import {
   CharacterRecord,
@@ -30,8 +30,11 @@ import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
 import {
   SessionBookmark,
+  clearReplayBookmark,
   clearSessionBookmark,
+  loadReplayBookmark,
   loadSessionBookmark,
+  setReplayBookmark,
   setSessionBookmark,
 } from '../lib/resume-store';
 
@@ -232,7 +235,13 @@ interface StepOutcome {
 // On reaching the closing ritual they are written as one evidence entry per completed
 // step against the lesson's primary skill (the pack's steps carry no skill refs of their own).
 
-function resolveLesson(): LessonRecord | undefined {
+function resolveLesson(overrideLessonId?: string): LessonRecord | undefined {
+  if (overrideLessonId) {
+    const overridden = getLessonById(overrideLessonId);
+    if (overridden) {
+      return overridden;
+    }
+  }
   const lessons = getLessons();
   const journeySkills = getJourneyStopSkills();
   const evidence = loadSkillEvidence();
@@ -321,10 +330,55 @@ function BackButton() {
   );
 }
 
-function ProgressPill({ text }: { text: string }) {
+function ProgressDots({
+  total,
+  current,
+  isTablet,
+}: {
+  total: number;
+  current: number;
+  isTablet: boolean;
+}) {
+  const pulse = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 350, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0, duration: 350, useNativeDriver: true }),
+      ])
+    );
+    animation.start();
+    return () => {
+      animation.stop();
+    };
+  }, [pulse]);
+
+  const pulseScale = pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.35] });
+
   return (
-    <View style={styles.progressPill}>
-      <Text style={styles.progressPillText}>{text}</Text>
+    <View style={styles.dotsRow}>
+      {Array.from({ length: total }, (_, i) => {
+        const kind = i < current ? 'done' : i === current ? 'current' : 'upcoming';
+        const dot = (
+          <View
+            style={[
+              isTablet ? styles.dotTablet : styles.dot,
+              kind === 'done' && styles.dotDone,
+              kind === 'upcoming' && styles.dotUpcoming,
+              kind === 'current' && styles.dotCurrent,
+            ]}
+          />
+        );
+        if (kind !== 'current') {
+          return <View key={i}>{dot}</View>;
+        }
+        return (
+          <Animated.View key={i} style={{ transform: [{ scale: pulseScale }] }}>
+            {dot}
+          </Animated.View>
+        );
+      })}
     </View>
   );
 }
@@ -333,10 +387,12 @@ function CharacterHeader({
   character,
   isTablet,
   speaking,
+  celebrating,
 }: {
   character: CharacterRecord;
   isTablet: boolean;
   speaking: boolean;
+  celebrating: boolean;
 }) {
   const name = getString(character.name_ref);
   const line = getString(character.personality_lines[0]);
@@ -345,27 +401,30 @@ function CharacterHeader({
   const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
 
   useEffect(() => {
-    if (speaking) {
-      const animation = Animated.loop(
-        Animated.sequence([
-          Animated.timing(bob, { toValue: 1, duration: 380, useNativeDriver: true }),
-          Animated.timing(bob, { toValue: 0, duration: 380, useNativeDriver: true }),
-        ])
-      );
-      bobAnimation.current = animation;
-      animation.start();
-    } else {
+    const mode = celebrating ? 'bounce' : speaking ? 'bob' : 'rest';
+    if (mode === 'rest') {
       bobAnimation.current?.stop();
       bobAnimation.current = null;
       bob.setValue(0);
+      return;
     }
+    const halfDuration = mode === 'bounce' ? 240 : 380;
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bob, { toValue: 1, duration: halfDuration, useNativeDriver: true }),
+        Animated.timing(bob, { toValue: 0, duration: halfDuration, useNativeDriver: true }),
+      ])
+    );
+    bobAnimation.current = animation;
+    animation.start();
     return () => {
       bobAnimation.current?.stop();
       bobAnimation.current = null;
     };
-  }, [speaking, bob]);
+  }, [celebrating, speaking, bob]);
 
-  const bobTranslate = bob.interpolate({ inputRange: [0, 1], outputRange: [0, -6] });
+  const bobAmplitude = celebrating ? -13 : speaking ? -6 : 0;
+  const bobTranslate = bob.interpolate({ inputRange: [0, 1], outputRange: [0, bobAmplitude] });
 
   return (
     <View style={isTablet ? styles.characterHeaderTablet : styles.characterHeader}>
@@ -431,6 +490,64 @@ function PromptCard({
   );
 }
 
+function PictureChoice({
+  item,
+  single,
+  highlighted,
+  isTablet,
+  onChoose,
+}: {
+  item: PictureSetItem;
+  single: boolean;
+  highlighted: boolean;
+  isTablet: boolean;
+  onChoose: (itemId: string) => void;
+}) {
+  const label = getString(item.label_ref);
+  const asset = getPackAsset(getActivePackId(), item.asset_path);
+  const pressScale = useRef(new Animated.Value(1)).current;
+
+  const pressIn = () => {
+    Animated.timing(pressScale, { toValue: 0.95, duration: 90, useNativeDriver: true }).start();
+  };
+  const pressOut = () => {
+    Animated.timing(pressScale, { toValue: 1, duration: 120, useNativeDriver: true }).start();
+  };
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      onPressIn={pressIn}
+      onPressOut={pressOut}
+      onPress={() => onChoose(item.item_id)}
+      style={single ? styles.pictureCardSlotSingle : isTablet ? styles.pictureCardSlotTablet : styles.pictureCardSlot}
+    >
+      <Animated.View
+        style={[
+          single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
+          highlighted && styles.pictureCardHighlighted,
+          { transform: [{ scale: pressScale }] },
+        ]}
+      >
+        <View style={single ? styles.pictureFrameSingle : styles.pictureFrame}>
+          {asset !== undefined ? (
+            <Image
+              source={asset}
+              style={StyleSheet.absoluteFill}
+              contentFit="contain"
+              accessibilityLabel={label}
+            />
+          ) : null}
+        </View>
+        <Text style={single ? styles.pictureLabelSingle : styles.pictureLabel} numberOfLines={2}>
+          {label}
+        </Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
+
 function PictureGrid({
   items,
   targetItemId,
@@ -447,42 +564,16 @@ function PictureGrid({
   const single = items.length === 1;
   return (
     <View style={isTablet ? styles.gridTablet : styles.grid}>
-      {items.map((item) => {
-        const highlighted = highlightTarget && item.item_id === targetItemId;
-        const label = getString(item.label_ref);
-        const asset = getPackAsset(getActivePackId(), item.asset_path);
-        return (
-          <Pressable
-            key={item.item_id}
-            accessibilityRole="button"
-            accessibilityLabel={label}
-            onPress={() => onChoose(item.item_id)}
-            style={[
-              single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
-              highlighted && styles.pictureCardHighlighted,
-            ]}
-          >
-            <View
-              style={single ? styles.pictureFrameSingle : styles.pictureFrame}
-            >
-              {asset !== undefined ? (
-                <Image
-                  source={asset}
-                  style={StyleSheet.absoluteFill}
-                  contentFit="contain"
-                  accessibilityLabel={label}
-                />
-              ) : null}
-            </View>
-            <Text
-              style={single ? styles.pictureLabelSingle : styles.pictureLabel}
-              numberOfLines={2}
-            >
-              {label}
-            </Text>
-          </Pressable>
-        );
-      })}
+      {items.map((item) => (
+        <PictureChoice
+          key={item.item_id}
+          item={item}
+          single={single}
+          highlighted={highlightTarget && item.item_id === targetItemId}
+          isTablet={isTablet}
+          onChoose={onChoose}
+        />
+      ))}
     </View>
   );
 }
@@ -514,6 +605,59 @@ function HelpControl({
       <View style={styles.levelChip}>
         <Text style={styles.levelChipText}>L{level}</Text>
       </View>
+    </View>
+  );
+}
+
+const BURST_COLORS = ['#E8A24B', '#2B6E58', '#B4502F', '#6F4E82', '#4F7A3A', '#3A5A8C'];
+
+function CelebrationBurst() {
+  const progress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const animation = Animated.timing(progress, { toValue: 1, duration: 700, useNativeDriver: true });
+    animation.start();
+    return () => {
+      animation.stop();
+    };
+  }, [progress]);
+
+  const directions = [0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return { x: Math.cos(rad), y: Math.sin(rad) };
+  });
+
+  return (
+    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+      {directions.map((dir, i) => {
+        const dotOpacity = progress.interpolate({ inputRange: [0, 0.7, 1], outputRange: [1, 0.9, 0] });
+        const dotScale = progress.interpolate({ inputRange: [0, 1], outputRange: [0.4, 1.1] });
+        return (
+          <Animated.View
+            key={i}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '30%',
+              transform: [
+                { translateX: progress.interpolate({ inputRange: [0, 1], outputRange: [0, dir.x * 86] }) },
+                { translateY: progress.interpolate({ inputRange: [0, 1], outputRange: [0, dir.y * 86] }) },
+                { scale: dotScale },
+              ],
+              opacity: dotOpacity,
+            }}
+          >
+            <View
+              style={{
+                width: 12,
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: BURST_COLORS[i % BURST_COLORS.length],
+              }}
+            />
+          </Animated.View>
+        );
+      })}
     </View>
   );
 }
@@ -626,9 +770,18 @@ export default function SessionScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
 
-  const lesson = resolveLesson();
+  const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
+  const overrideLessonId = Array.isArray(params.lessonId)
+    ? params.lessonId[0]
+    : params.lessonId;
+  const overrideActive = typeof overrideLessonId === 'string' && overrideLessonId.length > 0;
+
+  const lesson = resolveLesson(overrideActive ? overrideLessonId : undefined);
+  const loadBookmark = overrideActive ? loadReplayBookmark : loadSessionBookmark;
+  const saveBookmark = overrideActive ? setReplayBookmark : setSessionBookmark;
+  const clearBookmark = overrideActive ? clearReplayBookmark : clearSessionBookmark;
   const [resume, setResume] = useState<{ stepIndex: number } | null>(() => {
-    const bookmark: SessionBookmark | null = loadSessionBookmark();
+    const bookmark: SessionBookmark | null = loadBookmark();
     if (
       bookmark &&
       lesson &&
@@ -647,9 +800,10 @@ export default function SessionScreen() {
   const [retryCue, setRetryCue] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const advanceHandledRef = useRef(false);
+  const stepAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const bookmark = loadSessionBookmark();
+    const bookmark = loadBookmark();
     const stale =
       bookmark !== null &&
       (!lesson ||
@@ -657,9 +811,22 @@ export default function SessionScreen() {
         bookmark.step_index < 0 ||
         bookmark.step_index >= lesson.steps.length);
     if (stale) {
-      clearSessionBookmark();
+      clearBookmark();
     }
-  }, [lesson]);
+  }, [lesson, loadBookmark, clearBookmark]);
+
+  useEffect(() => {
+    stepAnim.setValue(0);
+    const animation = Animated.timing(stepAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    });
+    animation.start();
+    return () => {
+      animation.stop();
+    };
+  }, [stepIndex, phase, stepAnim]);
 
   if (!lesson) {
     return (
@@ -694,7 +861,6 @@ export default function SessionScreen() {
   const closingWin = getString(lesson.closing_win_ref);
   const targetItem = itemsById.get(step.target_item_id);
   const targetWord = targetItem ? getString(targetItem.label_ref) : null;
-  const progressText = `Step ${Math.min(stepIndex + 1, steps.length)} of ${steps.length}`;
   const lessonTitle = getString(lesson.title_ref);
   const speechLine =
     phase === 'step'
@@ -748,13 +914,13 @@ export default function SessionScreen() {
           completed_with_help: outcome.completedWithHelp,
         }))
       );
-      clearSessionBookmark();
+      clearBookmark();
       setPhase('closing');
       return;
     }
     const nextIndex = stepIndex + 1;
     setStepIndex(nextIndex);
-    setSessionBookmark(lessonId, nextIndex);
+    saveBookmark(lessonId, nextIndex);
     setScaffoldLevel(0);
     setPhase('step');
   }
@@ -773,7 +939,7 @@ export default function SessionScreen() {
   }
 
   function handleStartFresh() {
-    clearSessionBookmark();
+    clearBookmark();
     setStepIndex(0);
     setScaffoldLevel(0);
     setResume(null);
@@ -793,12 +959,17 @@ export default function SessionScreen() {
       <View style={styles.topRow}>
         <BackButton />
         {phase === 'step' || phase === 'celebration' ? (
-          <ProgressPill text={progressText} />
+          <ProgressDots total={steps.length} current={stepIndex} isTablet={isTablet} />
         ) : null}
       </View>
       <Text style={isTablet ? styles.lessonTitleTablet : styles.lessonTitle}>{lessonTitle}</Text>
       {character ? (
-        <CharacterHeader character={character} isTablet={isTablet} speaking={speaking} />
+        <CharacterHeader
+          character={character}
+          isTablet={isTablet}
+          speaking={speaking}
+          celebrating={phase === 'celebration'}
+        />
       ) : null}
     </View>
   );
@@ -839,10 +1010,17 @@ export default function SessionScreen() {
         onChoose={handleChoose}
       />
     ) : phase === 'celebration' ? (
-      <CelebrationCard celebration={celebration} isTablet={isTablet} onNext={handleNext} />
+      <View>
+        <CelebrationBurst />
+        <CelebrationCard celebration={celebration} isTablet={isTablet} onNext={handleNext} />
+      </View>
     ) : (
       <ClosingCard closingWin={closingWin} song={song} isTablet={isTablet} />
     );
+
+  const stepOpacity = stepAnim;
+  const stepTranslate = stepAnim.interpolate({ inputRange: [0, 1], outputRange: [18, 0] });
+  const stepAnimStyle = { opacity: stepOpacity, transform: [{ translateX: stepTranslate }] };
 
   if (isTablet) {
     return (
@@ -868,9 +1046,11 @@ export default function SessionScreen() {
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
               {headerSection}
-              {promptSection}
+              <Animated.View style={stepAnimStyle}>{promptSection}</Animated.View>
             </View>
-            <View style={styles.tabletColumn}>{playSection}</View>
+            <View style={styles.tabletColumn}>
+              <Animated.View style={stepAnimStyle}>{playSection}</Animated.View>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -898,8 +1078,10 @@ export default function SessionScreen() {
       ) : null}
       <ScrollView contentContainerStyle={styles.scroll}>
         {headerSection}
-        {promptSection}
-        {playSection}
+        <Animated.View style={stepAnimStyle}>
+          {promptSection}
+          {playSection}
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -951,16 +1133,34 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#33302B',
   },
-  progressPill: {
-    backgroundColor: '#E1EFE8',
-    borderRadius: 999,
-    paddingHorizontal: 12,
+  dotsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     paddingVertical: 6,
   },
-  progressPillText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#2B6E58',
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#2B6E58',
+  },
+  dotTablet: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#2B6E58',
+  },
+  dotDone: {
+    backgroundColor: '#2B6E58',
+  },
+  dotCurrent: {
+    backgroundColor: '#E8A24B',
+    borderColor: '#B4622D',
+    borderWidth: 2,
+  },
+  dotUpcoming: {
+    backgroundColor: '#E7DFCE',
   },
   lessonTitle: {
     fontSize: 22,
@@ -1184,9 +1384,18 @@ const styles = StyleSheet.create({
     gap: 20,
     marginTop: 8,
   },
-  pictureCard: {
+  pictureCardSlot: {
     flexBasis: '31%',
     flexGrow: 1,
+  },
+  pictureCardSlotTablet: {
+    flexBasis: '47%',
+    flexGrow: 1,
+  },
+  pictureCardSlotSingle: {
+    alignSelf: 'stretch',
+  },
+  pictureCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1,
@@ -1195,8 +1404,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pictureCardTablet: {
-    flexBasis: '47%',
-    flexGrow: 1,
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
     borderWidth: 1,
@@ -1205,7 +1412,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pictureCardSingle: {
-    alignSelf: 'stretch',
     backgroundColor: '#FFFFFF',
     borderRadius: 22,
     borderWidth: 1,

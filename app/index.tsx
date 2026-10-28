@@ -1,8 +1,8 @@
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Animated, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ParentGate from '../components/ParentGate';
 import {
   CharacterRecord,
@@ -11,6 +11,7 @@ import {
   getActivePack,
   getActivePackId,
   getCharacters,
+  getLessons,
   getString,
   getJourneyStopSkills,
   getPackAsset,
@@ -64,31 +65,126 @@ function CharacterCard({ character, isTablet }: { character: CharacterRecord; is
   );
 }
 
+type StopState = 'done' | 'current' | 'locked';
+
+function StopLockMark({ color }: { color: string }) {
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <View
+        style={{
+          width: 11,
+          height: 9,
+          borderRadius: 6,
+          borderWidth: 2.5,
+          borderColor: color,
+          marginBottom: -3,
+        }}
+      />
+      <View style={{ width: 15, height: 11, borderRadius: 3.5, backgroundColor: color }} />
+    </View>
+  );
+}
+
 function JourneyStop({
   stop,
   index,
+  state,
   isLast,
   isTablet,
+  onPress,
 }: {
   stop: SkillRecord;
   index: number;
+  state: StopState;
   isLast: boolean;
   isTablet: boolean;
+  onPress: (() => void) | null;
 }) {
   const title = getString(stop.title_ref);
   const description = getString(stop.description_ref);
   const accent = STOP_ACCENTS[stop.domain];
+  const bob = useRef(new Animated.Value(0)).current;
+  const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
+
+  useEffect(() => {
+    if (state !== 'current') {
+      bobAnimation.current?.stop();
+      bobAnimation.current = null;
+      bob.setValue(0);
+      return;
+    }
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(bob, { toValue: 1, duration: 600, useNativeDriver: true }),
+        Animated.timing(bob, { toValue: 0, duration: 600, useNativeDriver: true }),
+      ])
+    );
+    bobAnimation.current = animation;
+    animation.start();
+    return () => {
+      bobAnimation.current?.stop();
+      bobAnimation.current = null;
+    };
+  }, [state, bob]);
+
+  const nodeSize = state === 'current' ? (isTablet ? 56 : 46) : isTablet ? 42 : 34;
+  const nodeStyle = [
+    isTablet ? styles.stopCircleTablet : styles.stopCircle,
+    state === 'done' && { backgroundColor: accent.deep, borderColor: accent.deep },
+    state === 'current' && {
+      backgroundColor: accent.soft,
+      borderColor: accent.deep,
+      width: nodeSize,
+      height: nodeSize,
+      borderRadius: nodeSize / 2,
+    },
+    state === 'locked' && { backgroundColor: '#EFEAE0', borderColor: '#D8CDB6' },
+  ];
+
+  const nodeContent =
+    state === 'done' ? (
+      <Text style={[styles.stopCircleText, { color: '#FFFFFF' }]}>{'✓'}</Text>
+    ) : state === 'current' ? (
+      <Text style={[styles.stopCircleText, { color: accent.deep }]}>{index + 1}</Text>
+    ) : (
+      <StopLockMark color="#B9AF9C" />
+    );
+
+  const nodeVisual = (
+    <Animated.View style={{ transform: [{ translateY: bob.interpolate({ inputRange: [0, 1], outputRange: [0, -5] }) }] }}>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        {state === 'current' ? (
+          <View
+            style={{
+              position: 'absolute',
+              width: nodeSize + 14,
+              height: nodeSize + 14,
+              borderRadius: (nodeSize + 14) / 2,
+              backgroundColor: accent.soft,
+              opacity: 0.55,
+            }}
+          />
+        ) : null}
+        <View style={nodeStyle}>{nodeContent}</View>
+      </View>
+    </Animated.View>
+  );
+
   return (
     <View style={styles.stopRow}>
       <View style={styles.stopRail}>
-        <View
-          style={[
-            isTablet ? styles.stopCircleTablet : styles.stopCircle,
-            { backgroundColor: accent.soft, borderColor: accent.deep },
-          ]}
-        >
-          <Text style={[styles.stopCircleText, { color: accent.deep }]}>{index + 1}</Text>
-        </View>
+        {onPress ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={title}
+            onPress={onPress}
+            style={({ pressed }) => [styles.stopNodeTap, pressed && styles.stopNodeTapPressed]}
+          >
+            {nodeVisual}
+          </Pressable>
+        ) : (
+          <View style={styles.stopNodeTap}>{nodeVisual}</View>
+        )}
         {isLast ? null : <View style={styles.stopConnector} />}
       </View>
       <View style={isTablet ? styles.stopCardTablet : styles.stopCard}>
@@ -164,25 +260,48 @@ export default function HubWorld() {
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
-  const [allLessonsCompleted, setAllLessonsCompleted] = useState(false);
+  const [stopStates, setStopStates] = useState<StopState[]>(() => computeStopStates().states);
+  const [stopLessonIds, setStopLessonIds] = useState<(string | null)[]>(
+    () => computeStopStates().lessonIds
+  );
 
-  function computeAllLessonsCompleted(): boolean {
+  function computeStopStates(): { states: StopState[]; lessonIds: (string | null)[] } {
     const evidence = loadSkillEvidence();
     const completedSkillIds = new Set(evidence.map((record) => record.skill_id));
     const journeySkills = getJourneyStopSkills();
-    return (
-      journeySkills.length > 0 &&
-      journeySkills.every((skill) => completedSkillIds.has(skill.id))
-    );
+    const lessons = getLessons();
+    const lessonIds = journeySkills.map((skill) => {
+      const lesson = lessons.find((candidate) => candidate.primary_skill_id === skill.id);
+      return lesson ? lesson.id : null;
+    });
+    const firstOpenIndex = journeySkills.findIndex((skill) => !completedSkillIds.has(skill.id));
+    const states = journeySkills.map((_, index) => {
+      if (firstOpenIndex === -1) {
+        return 'done' as StopState;
+      }
+      if (index < firstOpenIndex) {
+        return 'done' as StopState;
+      }
+      if (index === firstOpenIndex) {
+        return 'current' as StopState;
+      }
+      return 'locked' as StopState;
+    });
+    return { states, lessonIds };
   }
 
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
-      setAllLessonsCompleted(computeAllLessonsCompleted());
+      const { states, lessonIds } = computeStopStates();
+      setStopStates(states);
+      setStopLessonIds(lessonIds);
       return () => {};
     }, [])
   );
+
+  const allLessonsCompleted =
+    stopStates.length > 0 && stopStates.every((state) => state === 'done');
 
   const characters = getCharacters();
   const stops = getJourneyStopSkills();
@@ -224,15 +343,27 @@ export default function HubWorld() {
 
   const pathSection = (
     <View style={styles.pathList}>
-      {stops.map((stop, index) => (
-        <JourneyStop
-          key={stop.id}
-          stop={stop}
-          index={index}
-          isLast={index === stops.length - 1}
-          isTablet={isTablet}
-        />
-      ))}
+      {stops.map((stop, index) => {
+        const state = stopStates[index] ?? 'locked';
+        const lessonId = stopLessonIds[index] ?? null;
+        const onPress =
+          state === 'current'
+            ? () => router.push('/session')
+            : state === 'done' && lessonId
+              ? () => router.push({ pathname: '/session', params: { lessonId } })
+              : null;
+        return (
+          <JourneyStop
+            key={stop.id}
+            stop={stop}
+            index={index}
+            state={state}
+            isLast={index === stops.length - 1}
+            isTablet={isTablet}
+            onPress={onPress}
+          />
+        );
+      })}
     </View>
   );
 
@@ -424,6 +555,12 @@ const styles = StyleSheet.create({
   stopCircleText: {
     fontSize: 15,
     fontWeight: '700',
+  },
+  stopNodeTap: {
+    alignItems: 'center',
+  },
+  stopNodeTapPressed: {
+    opacity: 0.75,
   },
   stopConnector: {
     flex: 1,
