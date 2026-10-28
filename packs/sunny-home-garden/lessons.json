@@ -370,7 +370,7 @@
     }
   },
   {
-    "id": "lesson-now-next",
+    "id": "lesson-big-little",
     "record_type": "lesson",
     "version": "1.0.0",
     "locale": "en-US",
@@ -383,14 +383,12 @@
     "created_by": "kilo",
     "reviewed_by": "founder",
     "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
-    "title_ref": "lesson.now_next.title",
-    "primary_skill_id": "sequencing-now-next",
-    "secondary_skill_ids": [
-      "sorting-one-rule"
-    ],
+    "title_ref": "lesson.big_little.title",
+    "primary_skill_id": "sizes-big-little",
+    "secondary_skill_ids": [],
     "interaction_type": "do_together",
     "character_id": "moss",
-    "picture_set_id": "routine-cards-set",
+    "picture_set_id": "sizes-set",
     "song_template_id": "our-goodnight-song",
     "mission_id": null,
     "routine_id": null,
@@ -398,57 +396,57 @@
     "chunk_budget_minutes": 5,
     "fallback_lesson_id": "lesson-where-does-this-go",
     "fallback_picture_id": "sorting-set",
-    "closing_win_ref": "lesson.now_next.closing_win",
+    "closing_win_ref": "lesson.big_little.closing_win",
     "steps": [
       {
         "step_index": 1,
-        "prompt_ref": "lesson.now_next.step_1.prompt",
-        "target_item_id": "next-song-card",
+        "prompt_ref": "lesson.big_little.step_1.prompt",
+        "target_item_id": "big-cup",
         "choice_item_ids": [
-          "now-tidy-card",
-          "next-song-card"
+          "big-cup",
+          "little-cup"
         ],
-        "celebration_ref": "lesson.now_next.step_1.celebration"
+        "celebration_ref": "lesson.big_little.step_1.celebration"
       },
       {
         "step_index": 2,
-        "prompt_ref": "lesson.now_next.step_2.prompt",
-        "target_item_id": "now-tidy-card",
+        "prompt_ref": "lesson.big_little.step_2.prompt",
+        "target_item_id": "little-ball",
         "choice_item_ids": [
-          "now-tidy-card",
-          "next-song-card"
+          "big-ball",
+          "little-ball"
         ],
-        "celebration_ref": "lesson.now_next.step_2.celebration"
+        "celebration_ref": "lesson.big_little.step_2.celebration"
       },
       {
         "step_index": 3,
-        "prompt_ref": "lesson.now_next.step_3.prompt",
-        "target_item_id": "next-song-card",
+        "prompt_ref": "lesson.big_little.step_3.prompt",
+        "target_item_id": "big-book",
         "choice_item_ids": [
-          "now-tidy-card",
-          "next-song-card"
+          "big-book",
+          "little-book"
         ],
-        "celebration_ref": "lesson.now_next.step_3.celebration"
+        "celebration_ref": "lesson.big_little.step_3.celebration"
       },
       {
         "step_index": 4,
-        "prompt_ref": "lesson.now_next.step_4.prompt",
-        "target_item_id": "now-tidy-card",
+        "prompt_ref": "lesson.big_little.step_4.prompt",
+        "target_item_id": "little-flower",
         "choice_item_ids": [
-          "now-tidy-card",
-          "next-song-card"
+          "big-flower",
+          "little-flower"
         ],
-        "celebration_ref": "lesson.now_next.step_4.celebration"
+        "celebration_ref": "lesson.big_little.step_4.celebration"
       },
       {
         "step_index": 5,
-        "prompt_ref": "lesson.now_next.step_5.prompt",
-        "target_item_id": "next-song-card",
+        "prompt_ref": "lesson.big_little.step_5.prompt",
+        "target_item_id": "big-spoon",
         "choice_item_ids": [
-          "now-tidy-card",
-          "next-song-card"
+          "big-spoon",
+          "little-spoon"
         ],
-        "celebration_ref": "lesson.now_next.step_5.celebration"
+        "celebration_ref": "lesson.big_little.step_5.celebration"
       }
     ],
     "scaffolds": {

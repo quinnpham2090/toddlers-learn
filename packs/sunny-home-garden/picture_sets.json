@@ -309,7 +309,7 @@
     ]
   },
   {
-    "id": "routine-cards-set",
+    "id": "sizes-set",
     "record_type": "picture_set",
     "version": "1.0.0",
     "locale": "en-US",
@@ -322,18 +322,18 @@
     "created_by": "kilo",
     "reviewed_by": "founder",
     "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
-    "title_ref": "picture_set.routine_cards.title",
-    "alt_text_parent_ref": "picture_set.routine_cards.alt_parent",
+    "title_ref": "picture_set.sizes_set.title",
+    "alt_text_parent_ref": "picture_set.sizes_set.alt_parent",
     "depiction_tags": [
       "household_safe"
     ],
     "items": [
       {
-        "item_id": "now-tidy-card",
-        "label_ref": "item.now_tidy_card.label",
-        "alt_text_parent_ref": "item.now_tidy_card.alt_parent",
-        "asset_path": "assets/now-tidy-card.jpg",
-        "asset_sha256": "fc8796bfb7606d8ce732c3a16015116e7b36e6730184f37254f52e71b6239d5e",
+        "item_id": "big-cup",
+        "label_ref": "item.big_cup.label",
+        "alt_text_parent_ref": "item.big_cup.alt_parent",
+        "asset_path": "assets/big-cup.jpg",
+        "asset_sha256": "fc020911a5d9fbb8fa6b58f8432168e866e1d7528da8d94b78abd0d926baa3cf",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -341,11 +341,107 @@
         ]
       },
       {
-        "item_id": "next-song-card",
-        "label_ref": "item.next_song_card.label",
-        "alt_text_parent_ref": "item.next_song_card.alt_parent",
-        "asset_path": "assets/next-song-card.jpg",
-        "asset_sha256": "c41eff761b11ef57f24c0cd7bacadfcfee621891dfc54735f6e42d6d3af7357f",
+        "item_id": "little-cup",
+        "label_ref": "item.little_cup.label",
+        "alt_text_parent_ref": "item.little_cup.alt_parent",
+        "asset_path": "assets/little-cup.jpg",
+        "asset_sha256": "247ad36df115f2261ad7447219f675e32a74d89c1ad3b95f4eb363ef4f511296",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "big-ball",
+        "label_ref": "item.big_ball.label",
+        "alt_text_parent_ref": "item.big_ball.alt_parent",
+        "asset_path": "assets/big-ball.jpg",
+        "asset_sha256": "9c5ebdfde9aef06fdbd4a96d09ff7f06feb6c415211ddf936d21bc99b8dce716",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "little-ball",
+        "label_ref": "item.little_ball.label",
+        "alt_text_parent_ref": "item.little_ball.alt_parent",
+        "asset_path": "assets/little-ball.jpg",
+        "asset_sha256": "7fc65d0d5cf8b0e529fdad2719c51b3ca15b1d258e4a084955a3f8d2cc5b9f92",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "big-book",
+        "label_ref": "item.big_book.label",
+        "alt_text_parent_ref": "item.big_book.alt_parent",
+        "asset_path": "assets/big-book.jpg",
+        "asset_sha256": "115ff754e439234836dd13fcd58e07eb59ec47f24c0df43f8f040eadcc37ae7c",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "little-book",
+        "label_ref": "item.little_book.label",
+        "alt_text_parent_ref": "item.little_book.alt_parent",
+        "asset_path": "assets/little-book.jpg",
+        "asset_sha256": "2f0e7ac0a1bcd6e4aa0aabb66c54c189bc1f4ffcd88617313e732bba82ff0ef2",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "big-flower",
+        "label_ref": "item.big_flower.label",
+        "alt_text_parent_ref": "item.big_flower.alt_parent",
+        "asset_path": "assets/big-flower.jpg",
+        "asset_sha256": "248f88b9333266f4da7a7b3752259fc08c26b0e72538dbcea1d687394f6f9175",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "little-flower",
+        "label_ref": "item.little_flower.label",
+        "alt_text_parent_ref": "item.little_flower.alt_parent",
+        "asset_path": "assets/little-flower.jpg",
+        "asset_sha256": "7a6190d96c06f653d16051046ad749e4be7e70ba1bc0bceacf67a868a067a999",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "big-spoon",
+        "label_ref": "item.big_spoon.label",
+        "alt_text_parent_ref": "item.big_spoon.alt_parent",
+        "asset_path": "assets/big-spoon.jpg",
+        "asset_sha256": "4e7c47506a478a79ac517772d1b526b1f88c46e3b7e4af2c2f8248e10de0dac1",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "little-spoon",
+        "label_ref": "item.little_spoon.label",
+        "alt_text_parent_ref": "item.little_spoon.alt_parent",
+        "asset_path": "assets/little-spoon.jpg",
+        "asset_sha256": "865c37dbe433fbe0570b2ca24c0181f5100de706dc8bf73c9a4a77a745422e43",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [

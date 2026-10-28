@@ -75,14 +75,14 @@
       "colour-naming"
     ],
     "next_skills": [
-      "sequencing-now-next"
+      "sizes-big-little"
     ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null
   },
   {
-    "id": "sequencing-now-next",
+    "id": "sizes-big-little",
     "record_type": "skill",
     "version": "1.0.0",
     "locale": "en-US",
@@ -95,9 +95,9 @@
     "created_by": "kilo",
     "reviewed_by": "founder",
     "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
-    "title_ref": "skill.sequencing_now_next.title",
-    "description_ref": "skill.sequencing_now_next.description",
-    "domain": "time_concepts",
+    "title_ref": "skill.sizes_big_little.title",
+    "description_ref": "skill.sizes_big_little.description",
+    "domain": "numeracy",
     "is_entry_skill": false,
     "prerequisites": [
       "sorting-one-rule"

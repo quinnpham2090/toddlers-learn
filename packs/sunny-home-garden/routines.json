@@ -16,7 +16,7 @@
     "title_ref": "routine.goodnight_garden.title",
     "anchor": "bedtime_winddown",
     "time_of_day": "evening",
-    "skill_id": "sequencing-now-next",
+    "skill_id": "sizes-big-little",
     "parent_script_ref": "routine.goodnight_garden.parent_script",
     "child_prompt_ref": "routine.goodnight_garden.child_prompt",
     "team_goal_ref": "routine.goodnight_garden.team_goal",
