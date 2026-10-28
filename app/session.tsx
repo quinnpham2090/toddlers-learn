@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -381,6 +381,7 @@ function GuideSpeech({
   celebrating,
   prompt,
   scaffoldPrompt,
+  portraitSize,
   onListen,
 }: {
   character: CharacterRecord;
@@ -389,6 +390,7 @@ function GuideSpeech({
   celebrating: boolean;
   prompt: string;
   scaffoldPrompt: string | null;
+  portraitSize: number;
   onListen: () => void;
 }) {
   const name = getString(character.name_ref);
@@ -426,19 +428,24 @@ function GuideSpeech({
     <View style={isTablet ? styles.guideSpeechTablet : styles.guideSpeech}>
       <Animated.View
         style={[
-          isTablet ? styles.guideFrameTablet : styles.guideFrame,
-          { transform: [{ translateY: bobTranslate }] },
+          styles.guideFrameBase,
+          {
+            width: portraitSize,
+            height: portraitSize,
+            borderRadius: portraitSize / 2,
+            transform: [{ translateY: bobTranslate }],
+          },
         ]}
       >
         {asset !== undefined ? (
           <Image
             source={asset}
-            style={isTablet ? styles.guideImageTablet : styles.guideImage}
+            style={{ width: portraitSize - 10, height: portraitSize - 10 }}
             contentFit="contain"
             accessibilityLabel={name}
           />
         ) : (
-          <View style={isTablet ? styles.guideImageTablet : styles.guideImage} />
+          <View style={{ width: portraitSize - 10, height: portraitSize - 10 }} />
         )}
       </Animated.View>
       <View style={isTablet ? styles.speechBubbleTablet : styles.speechBubble}>
@@ -477,12 +484,14 @@ function PictureChoice({
   single,
   highlighted,
   isTablet,
+  size,
   onChoose,
 }: {
   item: PictureSetItem;
   single: boolean;
   highlighted: boolean;
   isTablet: boolean;
+  size: number;
   onChoose: (itemId: string) => void;
 }) {
   const label = getString(item.label_ref);
@@ -503,16 +512,29 @@ function PictureChoice({
       onPressIn={pressIn}
       onPressOut={pressOut}
       onPress={() => onChoose(item.item_id)}
-      style={single ? styles.pictureCardSlotSingle : isTablet ? styles.pictureCardSlotTablet : styles.pictureCardSlot}
+      style={
+        single
+          ? styles.pictureCardSlotSingle
+          : size > 0
+            ? { width: size, height: size }
+            : isTablet
+              ? styles.pictureCardSlotTablet
+              : styles.pictureCardSlot
+      }
     >
       <Animated.View
         style={[
           single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
+          size > 0 && styles.pictureCardSized,
           highlighted && styles.pictureCardHighlighted,
           { transform: [{ scale: pressScale }] },
         ]}
       >
-        <View style={single ? styles.pictureFrameSingle : styles.pictureFrame}>
+        <View
+          style={
+            single ? styles.pictureFrameSingle : size > 0 ? styles.pictureFrameSized : styles.pictureFrame
+          }
+        >
           {asset !== undefined ? (
             <Image
               source={asset}
@@ -535,12 +557,14 @@ function PictureGrid({
   targetItemId,
   highlightTarget,
   isTablet,
+  tileSize,
   onChoose,
 }: {
   items: PictureSetItem[];
   targetItemId: string;
   highlightTarget: boolean;
   isTablet: boolean;
+  tileSize: number;
   onChoose: (itemId: string) => void;
 }) {
   const single = items.length === 1;
@@ -553,6 +577,7 @@ function PictureGrid({
           single={single}
           highlighted={highlightTarget && item.item_id === targetItemId}
           isTablet={isTablet}
+          size={single ? 0 : tileSize}
           onChoose={onChoose}
         />
       ))}
@@ -676,8 +701,9 @@ function ResumeChoiceCard({
 }
 
 export default function SessionScreen() {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const isTablet = width > 768;
+  const [stage, setStage] = useState({ width, height: height * 0.62 });
 
   const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
   const overrideLessonId = Array.isArray(params.lessonId)
@@ -770,6 +796,43 @@ export default function SessionScreen() {
   const targetItem = itemsById.get(step.target_item_id);
   const targetWord = targetItem ? getString(targetItem.label_ref) : null;
   const lessonTitle = getString(lesson.title_ref);
+
+  const horizontalPad = isTablet ? 32 : 20;
+  const columnsGap = isTablet ? 36 : 0;
+  const contentWidth = Math.max(0, stage.width - horizontalPad * 2);
+  const gridWidth = isTablet ? Math.max(0, (contentWidth - columnsGap) / 2) : contentWidth;
+  const choiceRows = visibleChoices.length > 1 ? Math.ceil(visibleChoices.length / 2) : 1;
+  const preferredPortrait = isTablet ? 126 : 90;
+  const portraitFloor = isTablet ? 96 : 72;
+  const minTile = isTablet ? 120 : 96;
+  const bubbleReserve = isTablet ? 170 : 150;
+  const dotsHeight = phase === 'step' || phase === 'celebration' ? 34 : 0;
+  const verticalReserve = isTablet ? 40 : 24;
+
+  const widthTile = Math.floor((gridWidth - 12) / 2);
+  let portraitSize = preferredPortrait;
+  let tileSize = widthTile;
+  if (visibleChoices.length > 1) {
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      const guideRow = Math.max(portraitSize, bubbleReserve) + 14;
+      const fixedHeight = dotsHeight + guideRow + verticalReserve;
+      const byHeight = Math.floor((stage.height - fixedHeight - (choiceRows - 1) * 12) / choiceRows);
+      if (widthTile <= byHeight) {
+        tileSize = widthTile;
+        break;
+      }
+      if (byHeight >= minTile) {
+        tileSize = byHeight;
+        break;
+      }
+      if (portraitSize > portraitFloor) {
+        portraitSize = Math.max(portraitFloor, portraitSize - 8);
+        continue;
+      }
+      tileSize = Math.max(minTile, byHeight);
+      break;
+    }
+  }
   const speechLine =
     phase === 'step'
       ? scaffoldPrompt ?? stepPrompt
@@ -893,6 +956,7 @@ export default function SessionScreen() {
       celebrating={phase === 'celebration'}
       prompt={phase === 'closing' ? closingWin : phase === 'celebration' ? celebration : stepPrompt}
       scaffoldPrompt={phase === 'step' ? scaffoldPrompt : null}
+      portraitSize={portraitSize}
       onListen={handleListenAgain}
     />
   ) : null;
@@ -924,6 +988,7 @@ export default function SessionScreen() {
         targetItemId={step.target_item_id}
         highlightTarget={scaffold.highlight_target}
         isTablet={isTablet}
+        tileSize={tileSize}
         onChoose={handleChoose}
       />
     ) : phase === 'celebration' ? (
@@ -1008,7 +1073,12 @@ export default function SessionScreen() {
           />
         ) : null}
         {chromeSection}
-        <ScrollView contentContainerStyle={styles.scrollTablet}>
+        <View
+          style={styles.stageTablet}
+          onLayout={(event) =>
+            setStage({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })
+          }
+        >
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
               <Animated.View style={stepAnimStyle}>{headerSection}</Animated.View>
@@ -1017,7 +1087,7 @@ export default function SessionScreen() {
               <Animated.View style={stepAnimStyle}>{playSection}</Animated.View>
             </View>
           </View>
-        </ScrollView>
+        </View>
         {footer}
       </SafeAreaView>
     );
@@ -1043,12 +1113,17 @@ export default function SessionScreen() {
         />
       ) : null}
       {chromeSection}
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <View
+        style={styles.stage}
+        onLayout={(event) =>
+          setStage({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })
+        }
+      >
         <Animated.View style={stepAnimStyle}>
           {headerSection}
           {playSection}
         </Animated.View>
-      </ScrollView>
+      </View>
       {footer}
     </SafeAreaView>
   );
@@ -1059,14 +1134,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAF5EC',
   },
-  scroll: {
-    padding: 20,
-    paddingBottom: 24,
+  stage: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    justifyContent: 'space-between',
   },
-  scrollTablet: {
-    padding: 32,
-    paddingBottom: 24,
+  stageTablet: {
+    flex: 1,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  guideFrameBase: {
+    backgroundColor: '#F4EBDA',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  pictureCardSized: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  pictureFrameSized: {
+    width: '100%',
+    flex: 1,
+    borderRadius: 12,
+    backgroundColor: '#F4EBDA',
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   chrome: {
     flexDirection: 'row',
@@ -1124,32 +1222,6 @@ const styles = StyleSheet.create({
     gap: 14,
     marginBottom: 20,
   },
-  guideFrame: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: '#F4EBDA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  guideFrameTablet: {
-    width: 126,
-    height: 126,
-    borderRadius: 63,
-    backgroundColor: '#F4EBDA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  guideImage: {
-    width: 82,
-    height: 82,
-  },
-  guideImageTablet: {
-    width: 114,
-    height: 114,
-  },
   speechBubble: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -1200,7 +1272,7 @@ const styles = StyleSheet.create({
     color: '#33302B',
   },
   celebrationStage: {
-    height: 110,
+    height: 80,
     marginTop: 6,
   },
   feedbackBanner: {
