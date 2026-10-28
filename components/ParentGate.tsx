@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   optionButton: {
-    minWidth: 84,
+    minWidth: 96,
     backgroundColor: '#E1EFE8',
-    borderRadius: 18,
+    borderRadius: 22,
     borderWidth: 2,
     borderColor: '#2B6E58',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
+    paddingVertical: 22,
+    paddingHorizontal: 24,
     alignItems: 'center',
   },
   optionButtonPressed: {

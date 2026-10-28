@@ -103,15 +103,25 @@ function SongRow({
         pressed && !selected && styles.songRowPressed,
       ]}
     >
-      <Text style={isTablet ? styles.songRowTitleTablet : styles.songRowTitle}>{title}</Text>
-      {lessonWord ? (
-        <View style={styles.lessonWordChip}>
-          <Text style={isTablet ? styles.lessonWordTextTablet : styles.lessonWordText}>
-            {lessonWord}
-          </Text>
+      <View style={styles.playBadge}>
+        <Text style={styles.playBadgeText}>{'▶'}</Text>
+      </View>
+      <View style={styles.songRowBody}>
+        <Text style={isTablet ? styles.songRowTitleTablet : styles.songRowTitle}>{title}</Text>
+        <View style={styles.songRowMeta}>
+          {lessonWord ? (
+            <View style={styles.lessonWordChip}>
+              <Text style={isTablet ? styles.lessonWordTextTablet : styles.lessonWordText}>
+                {lessonWord}
+              </Text>
+            </View>
+          ) : null}
+          <View style={styles.savedChip}>
+            <Text style={isTablet ? styles.savedChipTextTablet : styles.savedChipText}>{'♪'}</Text>
+          </View>
         </View>
-      ) : null}
-      <DotRow events={song.note_events} />
+        <DotRow events={song.note_events} />
+      </View>
     </Pressable>
   );
 }
@@ -306,18 +316,62 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   songRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: '#E7DFCE',
     padding: 16,
   },
   songRowTablet: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
     backgroundColor: '#FFFFFF',
-    borderRadius: 22,
+    borderRadius: 24,
     borderWidth: 1,
     borderColor: '#E7DFCE',
     padding: 20,
+  },
+  playBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#E1EFE8',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  playBadgeText: {
+    fontSize: 16,
+    color: '#2B6E58',
+    marginLeft: 2,
+  },
+  songRowBody: {
+    flex: 1,
+  },
+  songRowMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  savedChip: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: '#FBEEDD',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  savedChipText: {
+    fontSize: 13,
+    color: '#9A6A1F',
+  },
+  savedChipTextTablet: {
+    fontSize: 15,
+    color: '#9A6A1F',
   },
   songRowSelected: {
     borderColor: '#2B6E58',

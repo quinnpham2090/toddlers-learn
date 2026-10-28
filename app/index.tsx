@@ -1,8 +1,9 @@
-import { Animated, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import type { ScrollViewInstance } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ParentGate from '../components/ParentGate';
 import {
   CharacterRecord,
@@ -24,6 +25,8 @@ const PLAY_AGAIN_LABEL = 'Play again!';
 const SONGBOOK_BUTTON_LABEL = 'Songbook';
 const TOGETHER_BUTTON_LABEL = 'Together';
 const FOR_GROWN_UPS_LABEL = 'For grown-ups';
+const OPEN_LABEL = 'Open';
+const JUMP_LABEL = 'Jump to the current stop';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -35,37 +38,51 @@ const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   world_discovery: { soft: '#E8F0E0', deep: '#4F7A3A' },
 };
 
-function WelcomeLine({ text, isTablet }: { text: string; isTablet: boolean }) {
-  return <Text style={isTablet ? styles.welcomeTablet : styles.welcome}>{text}</Text>;
-}
-
-function CharacterCard({ character, isTablet }: { character: CharacterRecord; isTablet: boolean }) {
-  const name = getString(character.name_ref);
-  const line = getString(character.personality_lines[0]);
-  const asset = getPackAsset(getActivePackId(), character.model_asset_path);
-  return (
-    <View style={isTablet ? styles.characterCardTablet : styles.characterCard}>
-      <View style={isTablet ? styles.characterImageFrameTablet : styles.characterImageFrame}>
-        {asset !== undefined ? (
-          <Image
-            source={asset}
-            style={isTablet ? styles.characterImageTablet : styles.characterImage}
-            contentFit="contain"
-            accessibilityLabel={name}
-          />
-        ) : (
-          <View style={isTablet ? styles.characterImageTablet : styles.characterImage} />
-        )}
-      </View>
-      <View style={isTablet ? styles.characterTextTablet : styles.characterText}>
-        <Text style={isTablet ? styles.characterNameTablet : styles.characterName}>{name}</Text>
-        <Text style={isTablet ? styles.characterLineTablet : styles.characterLine}>{line}</Text>
-      </View>
-    </View>
-  );
-}
-
 type StopState = 'done' | 'current' | 'locked';
+type ActivityIcon = 'star' | 'song' | 'together' | 'review';
+
+function activityIconFor(interactionType: string | undefined): ActivityIcon {
+  if (interactionType === 'do_together') {
+    return 'together';
+  }
+  if (interactionType === 'sort_group') {
+    return 'review';
+  }
+  if (interactionType === 'rhythm_tap') {
+    return 'song';
+  }
+  return 'star';
+}
+
+function NodeIcon({ icon, color }: { icon: ActivityIcon; color: string }) {
+  if (icon === 'together') {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <View
+          style={{
+            width: 16,
+            height: 16,
+            borderRadius: 8,
+            borderWidth: 2.5,
+            borderColor: color,
+            marginRight: -5,
+          }}
+        />
+        <View
+          style={{
+            width: 16,
+            height: 16,
+            borderRadius: 8,
+            borderWidth: 2.5,
+            borderColor: color,
+          }}
+        />
+      </View>
+    );
+  }
+  const glyph = icon === 'song' ? '♪' : icon === 'review' ? '↻' : '★';
+  return <Text style={{ fontSize: 26, lineHeight: 30, color }}>{glyph}</Text>;
+}
 
 function StopLockMark({ color }: { color: string }) {
   return (
@@ -85,119 +102,63 @@ function StopLockMark({ color }: { color: string }) {
   );
 }
 
-function JourneyStop({
-  stop,
-  index,
-  state,
-  isLast,
+function GuideBubble({
+  character,
+  text,
   isTablet,
-  onPress,
 }: {
-  stop: SkillRecord;
-  index: number;
-  state: StopState;
-  isLast: boolean;
+  character: CharacterRecord;
+  text: string;
   isTablet: boolean;
-  onPress: (() => void) | null;
 }) {
-  const title = getString(stop.title_ref);
-  const description = getString(stop.description_ref);
-  const accent = STOP_ACCENTS[stop.domain];
-  const bob = useRef(new Animated.Value(0)).current;
-  const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
-
-  useEffect(() => {
-    if (state !== 'current') {
-      bobAnimation.current?.stop();
-      bobAnimation.current = null;
-      bob.setValue(0);
-      return;
-    }
-    const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(bob, { toValue: 1, duration: 600, useNativeDriver: true }),
-        Animated.timing(bob, { toValue: 0, duration: 600, useNativeDriver: true }),
-      ])
-    );
-    bobAnimation.current = animation;
-    animation.start();
-    return () => {
-      bobAnimation.current?.stop();
-      bobAnimation.current = null;
-    };
-  }, [state, bob]);
-
-  const nodeSize = state === 'current' ? (isTablet ? 56 : 46) : isTablet ? 42 : 34;
-  const nodeStyle = [
-    isTablet ? styles.stopCircleTablet : styles.stopCircle,
-    state === 'done' && { backgroundColor: accent.deep, borderColor: accent.deep },
-    state === 'current' && {
-      backgroundColor: accent.soft,
-      borderColor: accent.deep,
-      width: nodeSize,
-      height: nodeSize,
-      borderRadius: nodeSize / 2,
-    },
-    state === 'locked' && { backgroundColor: '#EFEAE0', borderColor: '#D8CDB6' },
-  ];
-
-  const nodeContent =
-    state === 'done' ? (
-      <Text style={[styles.stopCircleText, { color: '#FFFFFF' }]}>{'✓'}</Text>
-    ) : state === 'current' ? (
-      <Text style={[styles.stopCircleText, { color: accent.deep }]}>{index + 1}</Text>
-    ) : (
-      <StopLockMark color="#B9AF9C" />
-    );
-
-  const nodeVisual = (
-    <Animated.View style={{ transform: [{ translateY: bob.interpolate({ inputRange: [0, 1], outputRange: [0, -5] }) }] }}>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        {state === 'current' ? (
-          <View
-            style={{
-              position: 'absolute',
-              width: nodeSize + 14,
-              height: nodeSize + 14,
-              borderRadius: (nodeSize + 14) / 2,
-              backgroundColor: accent.soft,
-              opacity: 0.55,
-            }}
+  const asset = getPackAsset(getActivePackId(), character.model_asset_path);
+  const name = getString(character.name_ref);
+  return (
+    <View style={isTablet ? styles.guideRowTablet : styles.guideRow}>
+      <View style={isTablet ? styles.guidePortraitTablet : styles.guidePortrait}>
+        {asset !== undefined ? (
+          <Image
+            source={asset}
+            style={{ width: '100%', height: '100%' }}
+            contentFit="contain"
+            accessibilityLabel={name}
           />
         ) : null}
-        <View style={nodeStyle}>{nodeContent}</View>
       </View>
-    </Animated.View>
-  );
-
-  return (
-    <View style={styles.stopRow}>
-      <View style={styles.stopRail}>
-        {onPress ? (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={title}
-            onPress={onPress}
-            style={({ pressed }) => [styles.stopNodeTap, pressed && styles.stopNodeTapPressed]}
-          >
-            {nodeVisual}
-          </Pressable>
-        ) : (
-          <View style={styles.stopNodeTap}>{nodeVisual}</View>
-        )}
-        {isLast ? null : <View style={styles.stopConnector} />}
-      </View>
-      <View style={isTablet ? styles.stopCardTablet : styles.stopCard}>
-        <Text style={isTablet ? styles.stopTitleTablet : styles.stopTitle}>{title}</Text>
-        <Text style={isTablet ? styles.stopDescriptionTablet : styles.stopDescription}>
-          {description}
+      <View style={isTablet ? styles.guideBubbleTablet : styles.guideBubble}>
+        <Text style={isTablet ? styles.guideBubbleTextTablet : styles.guideBubbleText}>
+          {text}
         </Text>
-        <View style={styles.bandChip}>
-          <Text style={isTablet ? styles.bandChipTextTablet : styles.bandChipText}>
-            {stop.age_band}
-          </Text>
-        </View>
       </View>
+    </View>
+  );
+}
+
+function ActivityCard({
+  icon,
+  title,
+  onOpen,
+  isTablet,
+}: {
+  icon: ActivityIcon;
+  title: string;
+  onOpen: () => void;
+  isTablet: boolean;
+}) {
+  return (
+    <View style={isTablet ? styles.activityCardTablet : styles.activityCard}>
+      <View style={styles.activityIconBubble}>
+        <NodeIcon icon={icon} color="#9A6A1F" />
+      </View>
+      <Text style={isTablet ? styles.activityTitleTablet : styles.activityTitle}>{title}</Text>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={title}
+        onPress={onOpen}
+        style={({ pressed }) => [styles.activityButton, pressed && styles.activityButtonPressed]}
+      >
+        <Text style={styles.activityButtonText}>{OPEN_LABEL}</Text>
+      </Pressable>
     </View>
   );
 }
@@ -211,32 +172,6 @@ function StartButton({ label, onPress }: { label: string; onPress: () => void })
       style={({ pressed }) => [styles.startButton, pressed && styles.startButtonPressed]}
     >
       <Text style={styles.startButtonText}>{label}</Text>
-    </Pressable>
-  );
-}
-
-function SongbookButton({ onPress }: { onPress: () => void }) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={SONGBOOK_BUTTON_LABEL}
-      onPress={onPress}
-      style={({ pressed }) => [styles.songbookButton, pressed && styles.songbookButtonPressed]}
-    >
-      <Text style={styles.songbookButtonText}>{SONGBOOK_BUTTON_LABEL}</Text>
-    </Pressable>
-  );
-}
-
-function TogetherButton({ onPress }: { onPress: () => void }) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={TOGETHER_BUTTON_LABEL}
-      onPress={onPress}
-      style={({ pressed }) => [styles.togetherButton, pressed && styles.togetherButtonPressed]}
-    >
-      <Text style={styles.togetherButtonText}>{TOGETHER_BUTTON_LABEL}</Text>
     </Pressable>
   );
 }
@@ -264,6 +199,9 @@ export default function HubWorld() {
   const [stopLessonIds, setStopLessonIds] = useState<(string | null)[]>(
     () => computeStopStates().lessonIds
   );
+  const [expandedStop, setExpandedStop] = useState<number | null>(null);
+  const [currentNodeY, setCurrentNodeY] = useState(0);
+  const scrollRef = useRef<ScrollViewInstance | null>(null);
 
   function computeStopStates(): { states: StopState[]; lessonIds: (string | null)[] } {
     const evidence = loadSkillEvidence();
@@ -296,6 +234,7 @@ export default function HubWorld() {
       const { states, lessonIds } = computeStopStates();
       setStopStates(states);
       setStopLessonIds(lessonIds);
+      setExpandedStop(null);
       return () => {};
     }, [])
   );
@@ -305,13 +244,194 @@ export default function HubWorld() {
 
   const characters = getCharacters();
   const stops = getJourneyStopSkills();
+  const lessons = getLessons();
   const guide = characters.find((character) => character.species_or_role === 'lantern_guide');
-  const welcomeText = guide ? getString(guide.personality_lines[0]) : null;
 
   const activePack = getActivePack();
   const packTitle = getString(activePack.manifest.title_ref);
-  const startSection = (
-    <View style={isTablet ? styles.startSectionTablet : styles.startSection}>
+
+  const currentIndex = stopStates.findIndex((state) => state === 'current');
+  const currentStop = currentIndex >= 0 ? stops[currentIndex] : undefined;
+
+  function characterForStop(stop: SkillRecord): CharacterRecord | null {
+    const lesson = lessons.find((candidate) => candidate.primary_skill_id === stop.id);
+    if (lesson) {
+      const character = characters.find((candidate) => candidate.id === lesson.character_id);
+      if (character) {
+        return character;
+      }
+    }
+    return guide ?? characters[0] ?? null;
+  }
+
+  function handleNodePress(index: number): void {
+    setExpandedStop((current) => (current === index ? null : index));
+  }
+
+  function handleJumpToCurrent(): void {
+    scrollRef.current?.scrollTo({ y: Math.max(0, currentNodeY - 16), animated: true });
+  }
+
+  const bannerStop = currentStop ?? stops[stops.length - 1];
+  const bannerAccent = bannerStop ? STOP_ACCENTS[bannerStop.domain] : null;
+
+  const bannerSection =
+    bannerStop && bannerAccent ? (
+      <View style={[styles.stopBanner, { backgroundColor: bannerAccent.deep }]}>
+        <Text style={styles.stopBannerText}>{getString(bannerStop.title_ref)}</Text>
+      </View>
+    ) : null;
+
+  const pathNodes = stops.map((stop, index) => {
+    const state = stopStates[index] ?? 'locked';
+    const lessonId = stopLessonIds[index] ?? null;
+    const accent = STOP_ACCENTS[stop.domain];
+    const lesson = lessons.find((candidate) => candidate.primary_skill_id === stop.id);
+    const icon = activityIconFor(lesson?.interaction_type);
+    const character = characterForStop(stop);
+    const isExpanded = expandedStop === index;
+    const nodeSize = state === 'current' ? (isTablet ? 96 : 78) : isTablet ? 80 : 66;
+    const nodeColor =
+      state === 'locked' ? '#EFEAE0' : accent.deep;
+    const iconColor = state === 'locked' ? '#C4BBA5' : '#FFFFFF';
+
+    const node = (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={getString(stop.title_ref)}
+        disabled={state === 'locked'}
+        onPress={() => handleNodePress(index)}
+        style={({ pressed }) => [pressed && state !== 'locked' ? styles.pathNodePressed : null]}
+      >
+        <View
+          style={[
+            styles.pathNode,
+            {
+              width: nodeSize,
+              height: nodeSize,
+              borderRadius: nodeSize / 2,
+              backgroundColor: nodeColor,
+            },
+            state === 'current' && styles.pathNodeCurrent,
+            state === 'locked' && styles.pathNodeLocked,
+          ]}
+        >
+          {state === 'locked' ? <StopLockMark color={iconColor} /> : <NodeIcon icon={icon} color={iconColor} />}
+        </View>
+      </Pressable>
+    );
+
+    const nodeRow =
+      state === 'current' && character ? (
+        <View style={styles.currentNodeRow}>
+          {index % 2 === 0 ? (
+            <GuideBubble
+              character={character}
+              text={getString(character.personality_lines[0])}
+              isTablet={isTablet}
+            />
+          ) : null}
+          {node}
+          {index % 2 === 1 ? (
+            <GuideBubble
+              character={character}
+              text={getString(character.personality_lines[0])}
+              isTablet={isTablet}
+            />
+          ) : null}
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.nodeRow,
+            index % 2 === 0 ? styles.nodeRowLeft : styles.nodeRowRight,
+          ]}
+        >
+          {node}
+        </View>
+      );
+
+    const overview = isExpanded && state !== 'locked' ? (
+      <View style={styles.overviewCard}>
+        <Text style={styles.overviewStopTitle}>{getString(stop.title_ref)}</Text>
+        {lesson ? (
+          <View style={styles.lessonTile}>
+            <Text style={styles.lessonTileTitle}>{getString(lesson.title_ref)}</Text>
+            <View style={[styles.lessonDot, state === 'done' && styles.lessonDotDone]} />
+          </View>
+        ) : null}
+        <View style={styles.bandChip}>
+          <Text style={styles.bandChipText}>{stop.age_band}</Text>
+        </View>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={state === 'current' ? START_BUTTON_LABEL : PLAY_AGAIN_LABEL}
+          onPress={() => {
+            if (state === 'current') {
+              router.push('/session');
+              return;
+            }
+            if (lessonId) {
+              router.push({ pathname: '/session', params: { lessonId } });
+            }
+          }}
+          style={({ pressed }) => [styles.overviewButton, pressed && styles.overviewButtonPressed]}
+        >
+          <Text style={styles.overviewButtonText}>
+            {state === 'current' ? START_BUTTON_LABEL : PLAY_AGAIN_LABEL}
+          </Text>
+        </Pressable>
+      </View>
+    ) : null;
+
+    return (
+      <View
+        key={stop.id}
+        onLayout={
+          index === currentIndex
+            ? (event) => setCurrentNodeY(event.nativeEvent.layout.y)
+            : undefined
+        }
+      >
+        {nodeRow}
+        {overview}
+      </View>
+    );
+  });
+
+  const songbookCard = (
+    <ActivityCard
+      icon="song"
+      title={SONGBOOK_BUTTON_LABEL}
+      onOpen={() => router.push('/songbook')}
+      isTablet={isTablet}
+    />
+  );
+  const togetherCard = missionsEnabled ? (
+    <ActivityCard
+      icon="together"
+      title={TOGETHER_BUTTON_LABEL}
+      onOpen={() => router.push('/together')}
+      isTablet={isTablet}
+    />
+  ) : null;
+
+  const pathSection = (
+    <View style={styles.pathList}>
+      {pathNodes.map((node, index) => (
+        <View key={stops[index].id}>
+          {node}
+          {index === 1 ? songbookCard : null}
+          {index === 2 ? togetherCard : null}
+        </View>
+      ))}
+      {stops.length < 2 ? songbookCard : null}
+      {stops.length < 3 ? togetherCard : null}
+    </View>
+  );
+
+  const actionSection = (
+    <View style={isTablet ? styles.actionSectionTablet : styles.actionSection}>
       {allLessonsCompleted ? (
         <View style={styles.completionBanner}>
           <Text style={isTablet ? styles.completionBannerTextTablet : styles.completionBannerText}>
@@ -323,10 +443,6 @@ export default function HubWorld() {
         label={allLessonsCompleted ? PLAY_AGAIN_LABEL : START_BUTTON_LABEL}
         onPress={() => router.push('/session')}
       />
-      <SongbookButton onPress={() => router.push('/songbook')} />
-      {missionsEnabled ? (
-        <TogetherButton onPress={() => router.push('/together')} />
-      ) : null}
       <ForGrownUpsButton onPress={() => setGrownUpsGateOpen(true)} />
     </View>
   );
@@ -341,49 +457,33 @@ export default function HubWorld() {
     />
   ) : null;
 
-  const pathSection = (
-    <View style={styles.pathList}>
-      {stops.map((stop, index) => {
-        const state = stopStates[index] ?? 'locked';
-        const lessonId = stopLessonIds[index] ?? null;
-        const onPress =
-          state === 'current'
-            ? () => router.push('/session')
-            : state === 'done' && lessonId
-              ? () => router.push({ pathname: '/session', params: { lessonId } })
-              : null;
-        return (
-          <JourneyStop
-            key={stop.id}
-            stop={stop}
-            index={index}
-            state={state}
-            isLast={index === stops.length - 1}
-            isTablet={isTablet}
-            onPress={onPress}
-          />
-        );
-      })}
-    </View>
-  );
+  const jumpButton =
+    stops.length > 1 ? (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={JUMP_LABEL}
+        onPress={handleJumpToCurrent}
+        style={({ pressed }) => [styles.jumpButton, pressed && styles.jumpButtonPressed]}
+      >
+        <Text style={styles.jumpButtonText}>{'↑'}</Text>
+      </Pressable>
+    ) : null;
 
   if (isTablet) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <ScrollView contentContainerStyle={styles.scrollTablet}>
+        <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollTablet}>
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
-              {welcomeText ? <WelcomeLine text={welcomeText} isTablet /> : null}
-              <View style={styles.characterColumn}>
-                {characters.map((character) => (
-                  <CharacterCard key={character.id} character={character} isTablet />
-                ))}
-              </View>
-              {startSection}
+              {actionSection}
             </View>
-            <View style={styles.tabletColumn}>{pathSection}</View>
+            <View style={styles.tabletColumn}>
+              {bannerSection}
+              {pathSection}
+            </View>
           </View>
         </ScrollView>
+        {jumpButton}
         {grownUpsGate}
       </SafeAreaView>
     );
@@ -391,16 +491,12 @@ export default function HubWorld() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-      <ScrollView contentContainerStyle={styles.scroll}>
-        {welcomeText ? <WelcomeLine text={welcomeText} isTablet={false} /> : null}
-        <View style={styles.characterRow}>
-          {characters.map((character) => (
-            <CharacterCard key={character.id} character={character} isTablet={false} />
-          ))}
-        </View>
+      <ScrollView ref={scrollRef} contentContainerStyle={styles.scroll}>
+        {bannerSection}
         {pathSection}
-        {startSection}
+        {actionSection}
       </ScrollView>
+      {jumpButton}
       {grownUpsGate}
     </SafeAreaView>
   );
@@ -413,7 +509,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     padding: 20,
-    paddingBottom: 44,
+    paddingBottom: 110,
   },
   scrollTablet: {
     padding: 40,
@@ -430,190 +526,165 @@ const styles = StyleSheet.create({
   tabletColumn: {
     flex: 1,
   },
-  welcome: {
-    fontSize: 17,
-    lineHeight: 25,
-    color: '#33302B',
+  stopBanner: {
+    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
     marginBottom: 18,
-  },
-  welcomeTablet: {
-    fontSize: 22,
-    lineHeight: 32,
-    color: '#33302B',
-    marginBottom: 24,
-  },
-  characterRow: {
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 24,
-  },
-  characterColumn: {
-    gap: 16,
-    marginBottom: 24,
-  },
-  characterCard: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 14,
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
   },
-  characterCardTablet: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 18,
-  },
-  characterImageFrame: {
-    width: 84,
-    height: 84,
-    borderRadius: 18,
-    backgroundColor: '#F4EBDA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  characterImageFrameTablet: {
-    width: 110,
-    height: 110,
-    borderRadius: 22,
-    backgroundColor: '#F4EBDA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  characterImage: {
-    width: 76,
-    height: 76,
-  },
-  characterImageTablet: {
-    width: 100,
-    height: 100,
-  },
-  characterText: {
-    flex: 1,
-  },
-  characterTextTablet: {
-    flex: 1,
-  },
-  characterName: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#33302B',
-  },
-  characterNameTablet: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#33302B',
-  },
-  characterLine: {
-    marginTop: 4,
-    fontSize: 12.5,
-    lineHeight: 18,
-    color: '#7A7264',
-  },
-  characterLineTablet: {
-    marginTop: 6,
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#7A7264',
+  stopBannerText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+    textAlign: 'center',
   },
   pathList: {
-    marginBottom: 22,
+    marginBottom: 10,
   },
-  stopRow: {
+  nodeRow: {
+    paddingVertical: 14,
+  },
+  nodeRowLeft: {
+    alignItems: 'flex-start',
+    paddingLeft: '8%',
+  },
+  nodeRowRight: {
+    alignItems: 'flex-end',
+    paddingRight: '8%',
+  },
+  currentNodeRow: {
     flexDirection: 'row',
-  },
-  stopRail: {
     alignItems: 'center',
-    width: 40,
+    gap: 12,
+    paddingVertical: 14,
   },
-  stopCircle: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    borderWidth: 2,
+  pathNode: {
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#B4622D',
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
   },
-  stopCircleTablet: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+  pathNodeCurrent: {
+    borderWidth: 4,
+    borderColor: '#FFFFFF',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
   },
-  stopCircleText: {
-    fontSize: 15,
-    fontWeight: '700',
+  pathNodeLocked: {
+    shadowOpacity: 0,
+    elevation: 0,
   },
-  stopNodeTap: {
-    alignItems: 'center',
+  pathNodePressed: {
+    opacity: 0.8,
   },
-  stopNodeTapPressed: {
-    opacity: 0.75,
-  },
-  stopConnector: {
+  guideRow: {
     flex: 1,
-    width: 3,
-    backgroundColor: '#E7DFCE',
-    marginTop: 4,
-    marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
-  stopCard: {
+  guideRowTablet: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  guidePortrait: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#F4EBDA',
+    overflow: 'hidden',
+  },
+  guidePortraitTablet: {
+    width: 68,
+    height: 68,
+    borderRadius: 34,
+    backgroundColor: '#F4EBDA',
+    overflow: 'hidden',
+  },
+  guideBubble: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     borderWidth: 1,
     borderColor: '#E7DFCE',
-    padding: 14,
-    marginLeft: 10,
-    marginBottom: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
-  stopCardTablet: {
+  guideBubbleTablet: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: '#E7DFCE',
-    padding: 20,
-    marginLeft: 14,
-    marginBottom: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
   },
-  stopTitle: {
-    fontSize: 15.5,
+  guideBubbleText: {
+    fontSize: 12.5,
+    lineHeight: 17,
     fontWeight: '700',
     color: '#33302B',
   },
-  stopTitleTablet: {
-    fontSize: 19,
-    fontWeight: '700',
-    color: '#33302B',
-  },
-  stopDescription: {
-    marginTop: 5,
-    fontSize: 13,
-    lineHeight: 19,
-    color: '#7A7264',
-  },
-  stopDescriptionTablet: {
-    marginTop: 6,
+  guideBubbleTextTablet: {
     fontSize: 15,
-    lineHeight: 22,
-    color: '#7A7264',
+    lineHeight: 21,
+    fontWeight: '700',
+    color: '#33302B',
+  },
+  overviewCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    padding: 16,
+    marginTop: 4,
+    marginBottom: 10,
+  },
+  overviewStopTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    color: '#9A6A1F',
+    marginBottom: 10,
+  },
+  lessonTile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: '#FAF5EC',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: '#D8CDB6',
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+    marginBottom: 10,
+  },
+  lessonTileTitle: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#33302B',
+  },
+  lessonDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#E7DFCE',
+  },
+  lessonDotDone: {
+    backgroundColor: '#2B6E58',
   },
   bandChip: {
     alignSelf: 'flex-start',
-    marginTop: 10,
+    marginBottom: 12,
     backgroundColor: '#E1EFE8',
     borderRadius: 999,
     paddingHorizontal: 10,
@@ -624,17 +695,87 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#2B6E58',
   },
-  bandChipTextTablet: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#2B6E58',
+  overviewButton: {
+    backgroundColor: '#E8A24B',
+    borderRadius: 999,
+    paddingVertical: 14,
+    alignItems: 'center',
   },
-  startSection: {
+  overviewButtonPressed: {
+    backgroundColor: '#D18A33',
+  },
+  overviewButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  activityCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginVertical: 8,
+  },
+  activityCardTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    marginVertical: 10,
+  },
+  activityIconBubble: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: '#FBEEDD',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  activityTitle: {
+    flex: 1,
+    fontSize: 15.5,
+    fontWeight: '800',
+    color: '#33302B',
+  },
+  activityTitleTablet: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#33302B',
+  },
+  activityButton: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 999,
+    borderWidth: 1.5,
+    borderColor: '#9A6A1F',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  activityButtonPressed: {
+    backgroundColor: '#F7F1E6',
+  },
+  activityButtonText: {
+    color: '#9A6A1F',
+    fontSize: 13.5,
+    fontWeight: '800',
+  },
+  actionSection: {
+    marginTop: 14,
+    gap: 10,
+  },
+  actionSectionTablet: {
     marginTop: 6,
-    gap: 10,
-  },
-  startSectionTablet: {
-    gap: 10,
+    gap: 12,
   },
   startButton: {
     backgroundColor: '#E8A24B',
@@ -656,38 +797,6 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: 0.3,
   },
-  songbookButton: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 999,
-    borderWidth: 1.5,
-    borderColor: '#2B6E58',
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  songbookButtonPressed: {
-    backgroundColor: '#F1EADB',
-  },
-  songbookButtonText: {
-    color: '#2B6E58',
-    fontSize: 15,
-    fontWeight: '800',
-  },
-  togetherButton: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 999,
-    borderWidth: 1.5,
-    borderColor: '#9A6A1F',
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  togetherButtonPressed: {
-    backgroundColor: '#F7F1E6',
-  },
-  togetherButtonText: {
-    color: '#9A6A1F',
-    fontSize: 15,
-    fontWeight: '800',
-  },
   forGrownUpsButton: {
     backgroundColor: 'transparent',
     borderRadius: 999,
@@ -695,7 +804,6 @@ const styles = StyleSheet.create({
     borderColor: '#D8CDB6',
     paddingVertical: 9,
     alignItems: 'center',
-    marginTop: 4,
   },
   forGrownUpsButtonPressed: {
     backgroundColor: '#F4EDDD',
@@ -725,5 +833,30 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     textAlign: 'center',
+  },
+  jumpButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 28,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#2B6E58',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#225744',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+  },
+  jumpButtonPressed: {
+    backgroundColor: '#225744',
+  },
+  jumpButtonText: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '800',
+    marginTop: -2,
   },
 });

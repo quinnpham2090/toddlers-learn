@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
   },
   sectionCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: '#E7DFCE',
     padding: 16,
@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
   },
   sectionCardTablet: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 22,
+    borderRadius: 26,
     borderWidth: 1,
     borderColor: '#E7DFCE',
     padding: 22,

@@ -383,19 +383,24 @@ function ProgressDots({
   );
 }
 
-function CharacterHeader({
+function GuideSpeech({
   character,
   isTablet,
   speaking,
   celebrating,
+  prompt,
+  scaffoldPrompt,
+  onListen,
 }: {
   character: CharacterRecord;
   isTablet: boolean;
   speaking: boolean;
   celebrating: boolean;
+  prompt: string;
+  scaffoldPrompt: string | null;
+  onListen: () => void;
 }) {
   const name = getString(character.name_ref);
-  const line = getString(character.personality_lines[0]);
   const asset = resolveCharacterAsset(character);
   const bob = useRef(new Animated.Value(0)).current;
   const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
@@ -427,65 +432,51 @@ function CharacterHeader({
   const bobTranslate = bob.interpolate({ inputRange: [0, 1], outputRange: [0, bobAmplitude] });
 
   return (
-    <View style={isTablet ? styles.characterHeaderTablet : styles.characterHeader}>
+    <View style={isTablet ? styles.guideSpeechTablet : styles.guideSpeech}>
       <Animated.View
         style={[
-          isTablet ? styles.characterFrameTablet : styles.characterFrame,
+          isTablet ? styles.guideFrameTablet : styles.guideFrame,
           { transform: [{ translateY: bobTranslate }] },
         ]}
       >
         {asset !== undefined ? (
           <Image
             source={asset}
-            style={isTablet ? styles.characterImageTablet : styles.characterImage}
+            style={isTablet ? styles.guideImageTablet : styles.guideImage}
             contentFit="contain"
             accessibilityLabel={name}
           />
         ) : (
-          <View style={isTablet ? styles.characterImageTablet : styles.characterImage} />
+          <View style={isTablet ? styles.guideImageTablet : styles.guideImage} />
         )}
       </Animated.View>
-      <View style={styles.characterHeaderText}>
-        <Text style={isTablet ? styles.characterNameTablet : styles.characterName}>{name}</Text>
-        <Text style={isTablet ? styles.characterLineTablet : styles.characterLine}>{line}</Text>
-      </View>
-    </View>
-  );
-}
-
-function PromptCard({
-  prompt,
-  scaffoldPrompt,
-  isTablet,
-  onListen,
-}: {
-  prompt: string;
-  scaffoldPrompt: string | null;
-  isTablet: boolean;
-  onListen: () => void;
-}) {
-  return (
-    <View style={isTablet ? styles.promptCardTablet : styles.promptCard}>
-      <View style={styles.promptRow}>
-        <Text style={[isTablet ? styles.promptTextTablet : styles.promptText, styles.promptTextFlex]}>
-          {prompt}
+      <View style={isTablet ? styles.speechBubbleTablet : styles.speechBubble}>
+        <Text style={isTablet ? styles.speechBubbleNameTablet : styles.speechBubbleName}>
+          {name}
         </Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={LISTEN_AGAIN_LABEL}
-          onPress={onListen}
-          style={({ pressed }) => [styles.listenButton, pressed && styles.listenButtonPressed]}
-        >
-          <Text style={isTablet ? styles.listenButtonTextTablet : styles.listenButtonText}>
-            {LISTEN_LABEL}
+        <View style={styles.speechBubbleRow}>
+          <Text
+            style={[isTablet ? styles.speechBubbleTextTablet : styles.speechBubbleText, styles.promptTextFlex]}
+          >
+            {prompt}
           </Text>
-        </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={LISTEN_AGAIN_LABEL}
+            onPress={onListen}
+            style={({ pressed }) => [styles.listenButton, pressed && styles.listenButtonPressed]}
+          >
+            <Text style={isTablet ? styles.listenButtonTextTablet : styles.listenButtonText}>
+              {LISTEN_LABEL}
+            </Text>
+          </Pressable>
+        </View>
+        {scaffoldPrompt ? (
+          <Text style={isTablet ? styles.scaffoldPromptTablet : styles.scaffoldPrompt}>
+            {scaffoldPrompt}
+          </Text>
+        ) : null}
       </View>
-      {scaffoldPrompt ? (
-        <Text style={isTablet ? styles.scaffoldPromptTablet : styles.scaffoldPrompt}>
-          {scaffoldPrompt}
-        </Text>
-      ) : null}
     </View>
   );
 }
@@ -662,38 +653,10 @@ function CelebrationBurst() {
   );
 }
 
-function CelebrationCard({
-  celebration,
-  isTablet,
-  onNext,
-}: {
-  celebration: string;
-  isTablet: boolean;
-  onNext: () => void;
-}) {
-  return (
-    <View style={isTablet ? styles.celebrationCardTablet : styles.celebrationCard}>
-      <Text style={isTablet ? styles.celebrationTextTablet : styles.celebrationText}>
-        {celebration}
-      </Text>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={NEXT_LABEL}
-        onPress={onNext}
-        style={({ pressed }) => [styles.nextButton, pressed && styles.nextButtonPressed]}
-      >
-        <Text style={styles.nextButtonText}>{NEXT_LABEL}</Text>
-      </Pressable>
-    </View>
-  );
-}
-
 function ClosingCard({
-  closingWin,
   song,
   isTablet,
 }: {
-  closingWin: string;
   song: SongTemplateRecord | undefined;
   isTablet: boolean;
 }) {
@@ -701,9 +664,6 @@ function ClosingCard({
   const lessonWord = song ? getString(song.lesson_word_ref) : null;
   return (
     <View style={styles.closingStack}>
-      <View style={isTablet ? styles.closingCardTablet : styles.closingCard}>
-        <Text style={isTablet ? styles.closingTextTablet : styles.closingText}>{closingWin}</Text>
-      </View>
       {song ? (
         <Pressable
           accessibilityRole="button"
@@ -723,14 +683,6 @@ function ClosingCard({
           </View>
         </Pressable>
       ) : null}
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={DONE_LABEL}
-        onPress={goBack}
-        style={({ pressed }) => [styles.doneButton, pressed && styles.doneButtonPressed]}
-      >
-        <Text style={styles.doneButtonText}>{DONE_LABEL}</Text>
-      </Pressable>
     </View>
   );
 }
@@ -948,51 +900,60 @@ export default function SessionScreen() {
   }
 
   function handleListenAgain() {
+    if (!speechLine || !speechKey) {
+      return;
+    }
     setSpeaking(true);
-    narrateLine(stepPrompt, step.prompt_ref, character?.id ?? null, SPEECH_RATE, () =>
+    narrateLine(speechLine, speechKey, character?.id ?? null, SPEECH_RATE, () =>
       setSpeaking(false)
     );
   }
 
-  const headerSection = (
-    <View>
-      <View style={styles.topRow}>
-        <BackButton />
-        {phase === 'step' || phase === 'celebration' ? (
-          <ProgressDots total={steps.length} current={stepIndex} isTablet={isTablet} />
-        ) : null}
-      </View>
-      <Text style={isTablet ? styles.lessonTitleTablet : styles.lessonTitle}>{lessonTitle}</Text>
-      {character ? (
-        <CharacterHeader
-          character={character}
-          isTablet={isTablet}
-          speaking={speaking}
-          celebrating={phase === 'celebration'}
+  const progressFraction = steps.length > 0 ? (stepIndex + 1) / steps.length : 0;
+
+  const chromeSection = (
+    <View style={styles.chrome}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={BACK_LABEL}
+        onPress={goBack}
+        style={({ pressed }) => [styles.closeButton, pressed && styles.closeButtonPressed]}
+      >
+        <Text style={styles.closeButtonText}>{'×'}</Text>
+      </Pressable>
+      <View style={styles.progressTrack}>
+        <View
+          style={[styles.progressFill, { width: `${Math.round(progressFraction * 100)}%` }]}
         />
-      ) : null}
+      </View>
     </View>
   );
 
-  const promptSection =
-    phase === 'resume' ? null : (
-      <View>
-        <PromptCard
-          prompt={stepPrompt}
-          scaffoldPrompt={scaffoldPrompt}
-          isTablet={isTablet}
-          onListen={handleListenAgain}
-        />
-        {phase === 'step' && retryCue ? (
-          <Text style={isTablet ? styles.retryCueTablet : styles.retryCue}>
-            {getString('session.retry_cue')}
-          </Text>
-        ) : null}
-        {phase === 'step' ? (
-          <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
-        ) : null}
-      </View>
-    );
+  const guideSpeech = character ? (
+    <GuideSpeech
+      character={character}
+      isTablet={isTablet}
+      speaking={speaking}
+      celebrating={phase === 'celebration'}
+      prompt={phase === 'closing' ? closingWin : phase === 'celebration' ? celebration : stepPrompt}
+      scaffoldPrompt={phase === 'step' ? scaffoldPrompt : null}
+      onListen={handleListenAgain}
+    />
+  ) : null;
+
+  const headerSection = (
+    <View>
+      {phase === 'step' || phase === 'celebration' ? (
+        <View style={styles.dotsWrap}>
+          <ProgressDots total={steps.length} current={stepIndex} isTablet={isTablet} />
+        </View>
+      ) : null}
+      {phase === 'closing' ? (
+        <Text style={isTablet ? styles.lessonTitleTablet : styles.lessonTitle}>{lessonTitle}</Text>
+      ) : null}
+      {phase === 'resume' ? null : guideSpeech}
+    </View>
+  );
 
   const playSection =
     phase === 'resume' ? (
@@ -1010,12 +971,62 @@ export default function SessionScreen() {
         onChoose={handleChoose}
       />
     ) : phase === 'celebration' ? (
-      <View>
+      <View style={styles.celebrationStage}>
         <CelebrationBurst />
-        <CelebrationCard celebration={celebration} isTablet={isTablet} onNext={handleNext} />
       </View>
     ) : (
-      <ClosingCard closingWin={closingWin} song={song} isTablet={isTablet} />
+      <ClosingCard song={song} isTablet={isTablet} />
+    );
+
+  const footerBanner =
+    phase === 'celebration' ? (
+      <View style={styles.feedbackBanner}>
+        <Text style={isTablet ? styles.feedbackBannerTextTablet : styles.feedbackBannerText}>
+          {celebration}
+        </Text>
+      </View>
+    ) : phase === 'step' && retryCue ? (
+      <View style={[styles.feedbackBanner, styles.feedbackBannerRetry]}>
+        <Text
+          style={[
+            isTablet ? styles.feedbackBannerTextTablet : styles.feedbackBannerText,
+            styles.feedbackBannerRetryText,
+          ]}
+        >
+          {getString('session.retry_cue')}
+        </Text>
+      </View>
+    ) : null;
+
+  const footerButton =
+    phase === 'celebration' ? (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={NEXT_LABEL}
+        onPress={handleNext}
+        style={({ pressed }) => [styles.footerPrimary, pressed && styles.footerPrimaryPressed]}
+      >
+        <Text style={styles.footerPrimaryText}>{NEXT_LABEL}</Text>
+      </Pressable>
+    ) : phase === 'closing' ? (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={DONE_LABEL}
+        onPress={goBack}
+        style={({ pressed }) => [styles.footerPrimary, pressed && styles.footerPrimaryPressed]}
+      >
+        <Text style={styles.footerPrimaryText}>{DONE_LABEL}</Text>
+      </Pressable>
+    ) : phase === 'step' ? (
+      <HelpControl level={scaffoldLevel} maxed={scaffoldLevel === 3} onPress={handleHelp} />
+    ) : null;
+
+  const footer =
+    phase === 'resume' ? null : (
+      <View style={isTablet ? styles.footerTablet : styles.footer}>
+        {footerBanner}
+        {footerButton}
+      </View>
     );
 
   const stepOpacity = stepAnim;
@@ -1042,17 +1053,18 @@ export default function SessionScreen() {
             onSpeakingChange={setSpeaking}
           />
         ) : null}
+        {chromeSection}
         <ScrollView contentContainerStyle={styles.scrollTablet}>
           <View style={styles.tabletColumns}>
             <View style={styles.tabletColumn}>
-              {headerSection}
-              <Animated.View style={stepAnimStyle}>{promptSection}</Animated.View>
+              <Animated.View style={stepAnimStyle}>{headerSection}</Animated.View>
             </View>
             <View style={styles.tabletColumn}>
               <Animated.View style={stepAnimStyle}>{playSection}</Animated.View>
             </View>
           </View>
         </ScrollView>
+        {footer}
       </SafeAreaView>
     );
   }
@@ -1076,13 +1088,14 @@ export default function SessionScreen() {
           onSpeakingChange={setSpeaking}
         />
       ) : null}
+      {chromeSection}
       <ScrollView contentContainerStyle={styles.scroll}>
-        {headerSection}
         <Animated.View style={stepAnimStyle}>
-          {promptSection}
+          {headerSection}
           {playSection}
         </Animated.View>
       </ScrollView>
+      {footer}
     </SafeAreaView>
   );
 }
@@ -1094,12 +1107,215 @@ const styles = StyleSheet.create({
   },
   scroll: {
     padding: 20,
-    paddingBottom: 44,
+    paddingBottom: 24,
   },
   scrollTablet: {
-    padding: 40,
-    paddingBottom: 60,
+    padding: 32,
+    paddingBottom: 24,
     alignItems: 'center',
+  },
+  chrome: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingTop: 6,
+    paddingBottom: 8,
+  },
+  closeButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButtonPressed: {
+    backgroundColor: '#F1EADB',
+  },
+  closeButtonText: {
+    fontSize: 22,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: '#7A7264',
+    marginTop: -2,
+  },
+  progressTrack: {
+    flex: 1,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#E7DFCE',
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    borderRadius: 3,
+    backgroundColor: '#2B6E58',
+  },
+  dotsWrap: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  guideSpeech: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginBottom: 16,
+  },
+  guideSpeechTablet: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
+    marginBottom: 20,
+  },
+  guideFrame: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#F4EBDA',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  guideFrameTablet: {
+    width: 84,
+    height: 84,
+    borderRadius: 42,
+    backgroundColor: '#F4EBDA',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  guideImage: {
+    width: 54,
+    height: 54,
+  },
+  guideImageTablet: {
+    width: 76,
+    height: 76,
+  },
+  speechBubble: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+  },
+  speechBubbleTablet: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E7DFCE',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  speechBubbleName: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    color: '#9A6A1F',
+    marginBottom: 4,
+  },
+  speechBubbleNameTablet: {
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    color: '#9A6A1F',
+    marginBottom: 5,
+  },
+  speechBubbleRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  speechBubbleText: {
+    fontSize: 16.5,
+    lineHeight: 24,
+    fontWeight: '700',
+    color: '#33302B',
+  },
+  speechBubbleTextTablet: {
+    fontSize: 20,
+    lineHeight: 29,
+    fontWeight: '700',
+    color: '#33302B',
+  },
+  celebrationStage: {
+    height: 110,
+    marginTop: 6,
+  },
+  feedbackBanner: {
+    borderRadius: 16,
+    backgroundColor: '#E1EFE8',
+    borderWidth: 1,
+    borderColor: '#BFDCCB',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  feedbackBannerRetry: {
+    backgroundColor: '#FBEEDD',
+    borderColor: '#E8CBA3',
+  },
+  feedbackBannerText: {
+    fontSize: 15.5,
+    lineHeight: 22,
+    fontWeight: '800',
+    color: '#2B6E58',
+    textAlign: 'center',
+  },
+  feedbackBannerTextTablet: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: '800',
+    color: '#2B6E58',
+    textAlign: 'center',
+  },
+  feedbackBannerRetryText: {
+    color: '#9A6A1F',
+    fontSize: 14.5,
+  },
+  footer: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
+    gap: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#E7DFCE',
+    backgroundColor: '#FAF5EC',
+  },
+  footerTablet: {
+    paddingHorizontal: 32,
+    paddingTop: 12,
+    paddingBottom: 24,
+    gap: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E7DFCE',
+    backgroundColor: '#FAF5EC',
+  },
+  footerPrimary: {
+    backgroundColor: '#E8A24B',
+    borderRadius: 999,
+    paddingVertical: 16,
+    alignItems: 'center',
+    shadowColor: '#B4622D',
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
+  footerPrimaryPressed: {
+    backgroundColor: '#D18A33',
+  },
+  footerPrimaryText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '800',
+    letterSpacing: 0.3,
   },
   tabletColumns: {
     flexDirection: 'row',
@@ -1385,7 +1601,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   pictureCardSlot: {
-    flexBasis: '31%',
+    flexBasis: '47%',
     flexGrow: 1,
   },
   pictureCardSlotTablet: {
@@ -1397,18 +1613,18 @@ const styles = StyleSheet.create({
   },
   pictureCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: '#E7DFCE',
-    padding: 10,
+    padding: 12,
     alignItems: 'center',
   },
   pictureCardTablet: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 24,
+    borderRadius: 26,
     borderWidth: 1,
     borderColor: '#E7DFCE',
-    padding: 16,
+    padding: 18,
     alignItems: 'center',
   },
   pictureCardSingle: {
