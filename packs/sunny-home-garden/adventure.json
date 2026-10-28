@@ -1,0 +1,1316 @@
+{
+  "id": "adventure-placement",
+  "record_type": "adventure",
+  "version": "1.0.0",
+  "locale": "en-US",
+  "age_band": "3-4",
+  "status": "draft",
+  "tags": [
+    "pack-1",
+    "sunny-home-garden",
+    "adventure"
+  ],
+  "created_by": "kilo",
+  "reviewed_by": "founder",
+  "notes_author": "DRAFT — M3 Entry Adventure content (Pass 1: records only).",
+  "stops": [
+    {
+      "id": "stop-porch",
+      "title_ref": "adventure.stop.porch.title",
+      "guide": "puff",
+      "order": 1
+    },
+    {
+      "id": "stop-flower",
+      "title_ref": "adventure.stop.flower.title",
+      "guide": "puff",
+      "order": 2
+    },
+    {
+      "id": "stop-apple",
+      "title_ref": "adventure.stop.apple.title",
+      "guide": "moss",
+      "order": 3
+    },
+    {
+      "id": "stop-shed",
+      "title_ref": "adventure.stop.shed.title",
+      "guide": "moss",
+      "order": 4
+    },
+    {
+      "id": "stop-night",
+      "title_ref": "adventure.stop.night.title",
+      "guide": "puff",
+      "order": 5,
+      "song_moment_ref": "adventure.night.song_moment"
+    }
+  ],
+  "skills": [
+    {
+      "id": "point-to",
+      "domain": "language",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.point_to.title"
+    },
+    {
+      "id": "name-with-grown-up",
+      "domain": "language",
+      "bandable": false,
+      "provisional": false,
+      "title_ref": "adventure.skill.name_with_grown_up.title"
+    },
+    {
+      "id": "find-the-rhyme",
+      "domain": "language",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.find_the_rhyme.title"
+    },
+    {
+      "id": "clap-the-beats",
+      "domain": "music",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.clap_the_beats.title"
+    },
+    {
+      "id": "give-n",
+      "domain": "maths",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.give_n.title"
+    },
+    {
+      "id": "subitize",
+      "domain": "maths",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.subitize.title"
+    },
+    {
+      "id": "sort-by-one-rule",
+      "domain": "maths",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.sort_by_one_rule.title"
+    },
+    {
+      "id": "now-switch",
+      "domain": "maths",
+      "bandable": false,
+      "provisional": false,
+      "title_ref": "adventure.skill.now_switch.title"
+    },
+    {
+      "id": "what-do-you-see",
+      "domain": "science",
+      "bandable": true,
+      "provisional": true,
+      "title_ref": "adventure.skill.what_do_you_see.title"
+    },
+    {
+      "id": "which-starts-with",
+      "domain": "language",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.which_starts_with.title"
+    },
+    {
+      "id": "what-comes-next",
+      "domain": "maths",
+      "bandable": true,
+      "provisional": false,
+      "title_ref": "adventure.skill.what_comes_next.title"
+    },
+    {
+      "id": "what-will-happen-if",
+      "domain": "science",
+      "bandable": true,
+      "provisional": true,
+      "title_ref": "adventure.skill.what_will_happen_if.title"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "adv-cat",
+      "label_ref": "item.adv_cat.label",
+      "alt_text_parent_ref": "item.adv_cat.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_cat.jpg",
+      "asset_sha256": "7479a38ac570c1c49a1940ccdff1b3860f5d47a06003555bf07495ed17ef491d",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-hat",
+      "label_ref": "item.adv_hat.label",
+      "alt_text_parent_ref": "item.adv_hat.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_hat.jpg",
+      "asset_sha256": "d1b43017a5471a080698d2a92c5610d3d5ef6ff80a3abee58925ee40a7df2d73",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-dog",
+      "label_ref": "item.adv_dog.label",
+      "alt_text_parent_ref": "item.adv_dog.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_dog.jpg",
+      "asset_sha256": "35a19f499f38d79ec7cfc65492df642f99f4a1e2689febb0fee8b49b53ec357a",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-frog",
+      "label_ref": "item.adv_frog.label",
+      "alt_text_parent_ref": "item.adv_frog.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_frog.jpg",
+      "asset_sha256": "6b68a179c1f8ea3c227bda928f3606271196a1504fa861c4afb52bba4216244c",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-bear",
+      "label_ref": "item.adv_bear.label",
+      "alt_text_parent_ref": "item.adv_bear.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_bear.jpg",
+      "asset_sha256": "20a273c82a1d5f87d9b003183d0adf513a1c43d486a1896076ccbe3269f58001",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-pear",
+      "label_ref": "item.adv_pear.label",
+      "alt_text_parent_ref": "item.adv_pear.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_pear.jpg",
+      "asset_sha256": "582215f659531d8efa167e8fb58c14b60ef91bc6a327f9dbec892c9b3a10286e",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-sun",
+      "label_ref": "item.adv_sun.label",
+      "alt_text_parent_ref": "item.adv_sun.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_sun.jpg",
+      "asset_sha256": "74df6df1a81c40821f9490c18a567b6a25a82cf7128efdd2d6f56bed1e1780d9",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-bun",
+      "label_ref": "item.adv_bun.label",
+      "alt_text_parent_ref": "item.adv_bun.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_bun.jpg",
+      "asset_sha256": "5bd300d18cc9d31c590061185dbcde4432be0dcd28ad7a3e1957513a2dfae994",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-pig",
+      "label_ref": "item.adv_pig.label",
+      "alt_text_parent_ref": "item.adv_pig.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_pig.jpg",
+      "asset_sha256": "3a7468d7d8f027059e217fa8cbaeb4a64e0fa756f9609ee5d1f3243a167d3719",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-wig",
+      "label_ref": "item.adv_wig.label",
+      "alt_text_parent_ref": "item.adv_wig.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_wig.jpg",
+      "asset_sha256": "4489571716c838e8b7a7ba0094dc82a95a31a2757d6c34f58dc482261e570eed",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-fox",
+      "label_ref": "item.adv_fox.label",
+      "alt_text_parent_ref": "item.adv_fox.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_fox.jpg",
+      "asset_sha256": "c9612b26f3d3d7b0eac435820ceb650a08f14c426279ec684d7eadfd2b304cfb",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-box",
+      "label_ref": "item.adv_box.label",
+      "alt_text_parent_ref": "item.adv_box.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_box.jpg",
+      "asset_sha256": "99794f09e50a69d4343a9da95524200b8a98bc84dcc32c033280a18ae1bcb175",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-apple",
+      "label_ref": "item.adv_apple.label",
+      "alt_text_parent_ref": "item.adv_apple.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_apple.jpg",
+      "asset_sha256": "fd091e0cd407e08658cd55e2cf8982b92202a199b3fc0769325f40520e5b14b5",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "adv-banana",
+      "label_ref": "item.adv_banana.label",
+      "alt_text_parent_ref": "item.adv_banana.alt_parent",
+      "display": "image",
+      "asset_path": "assets/adv_banana.jpg",
+      "asset_sha256": "56c44eaf7901357823a035d48a1f743a7631a0b6cbeed5439abb1c89a48e6e40",
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "beats-1",
+      "label_ref": "item.beats_1.label",
+      "alt_text_parent_ref": "item.beats_1.alt_parent",
+      "display": "dots",
+      "count": 1,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "beats-2",
+      "label_ref": "item.beats_2.label",
+      "alt_text_parent_ref": "item.beats_2.alt_parent",
+      "display": "dots",
+      "count": 2,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "beats-3",
+      "label_ref": "item.beats_3.label",
+      "alt_text_parent_ref": "item.beats_3.alt_parent",
+      "display": "dots",
+      "count": 3,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "pile-1",
+      "label_ref": "item.pile_1.label",
+      "alt_text_parent_ref": "item.pile_1.alt_parent",
+      "display": "apple_pile",
+      "count": 1,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "pile-2",
+      "label_ref": "item.pile_2.label",
+      "alt_text_parent_ref": "item.pile_2.alt_parent",
+      "display": "apple_pile",
+      "count": 2,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "pile-3",
+      "label_ref": "item.pile_3.label",
+      "alt_text_parent_ref": "item.pile_3.alt_parent",
+      "display": "apple_pile",
+      "count": 3,
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "word-flower",
+      "label_ref": "item.word_flower.label",
+      "alt_text_parent_ref": "item.word_flower.alt_parent",
+      "display": "text",
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "word-yellow",
+      "label_ref": "item.word_yellow.label",
+      "alt_text_parent_ref": "item.word_yellow.alt_parent",
+      "display": "text",
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    },
+    {
+      "item_id": "word-banana",
+      "label_ref": "item.word_banana.label",
+      "alt_text_parent_ref": "item.word_banana.alt_parent",
+      "display": "text",
+      "asset_path": null,
+      "asset_sha256": null,
+      "size_class": "handheld_safe",
+      "passes_choke_tube_proxy": true,
+      "depiction_tags": [
+        "household_safe"
+      ]
+    }
+  ],
+  "errands": [
+    {
+      "id": "errand-porch-point",
+      "stop_id": "stop-porch",
+      "skill_id": "point-to",
+      "selection": "items",
+      "item_bank": [
+        "cup",
+        "spoon",
+        "book",
+        "ball",
+        "red-flower",
+        "yellow-flower",
+        "blue-flower",
+        "green-flower"
+      ],
+      "celebration_ref": "adventure.porch.point.celebration",
+      "evidence": {
+        "observable_behaviour": "points to the named object among distractors",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-porch-point-cup",
+          "target_item_id": "cup",
+          "choice_item_ids": [
+            "cup",
+            "book",
+            "ball"
+          ],
+          "prompt_ref": "adventure.porch.point.cup.prompt"
+        },
+        {
+          "id": "variant-porch-point-spoon",
+          "target_item_id": "spoon",
+          "choice_item_ids": [
+            "spoon",
+            "ball",
+            "red-flower"
+          ],
+          "prompt_ref": "adventure.porch.point.spoon.prompt"
+        },
+        {
+          "id": "variant-porch-point-book",
+          "target_item_id": "book",
+          "choice_item_ids": [
+            "book",
+            "red-flower",
+            "yellow-flower"
+          ],
+          "prompt_ref": "adventure.porch.point.book.prompt"
+        },
+        {
+          "id": "variant-porch-point-ball",
+          "target_item_id": "ball",
+          "choice_item_ids": [
+            "ball",
+            "yellow-flower",
+            "blue-flower"
+          ],
+          "prompt_ref": "adventure.porch.point.ball.prompt"
+        },
+        {
+          "id": "variant-porch-point-red-flower",
+          "target_item_id": "red-flower",
+          "choice_item_ids": [
+            "red-flower",
+            "blue-flower",
+            "green-flower"
+          ],
+          "prompt_ref": "adventure.porch.point.red.flower.prompt"
+        },
+        {
+          "id": "variant-porch-point-yellow-flower",
+          "target_item_id": "yellow-flower",
+          "choice_item_ids": [
+            "yellow-flower",
+            "green-flower",
+            "cup"
+          ],
+          "prompt_ref": "adventure.porch.point.yellow.flower.prompt"
+        },
+        {
+          "id": "variant-porch-point-blue-flower",
+          "target_item_id": "blue-flower",
+          "choice_item_ids": [
+            "blue-flower",
+            "cup",
+            "spoon"
+          ],
+          "prompt_ref": "adventure.porch.point.blue.flower.prompt"
+        },
+        {
+          "id": "variant-porch-point-green-flower",
+          "target_item_id": "green-flower",
+          "choice_item_ids": [
+            "green-flower",
+            "spoon",
+            "book"
+          ],
+          "prompt_ref": "adventure.porch.point.green.flower.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-porch-name",
+      "stop_id": "stop-porch",
+      "skill_id": "name-with-grown-up",
+      "selection": "items",
+      "item_bank": [
+        "cup",
+        "spoon",
+        "book",
+        "ball",
+        "red-flower",
+        "yellow-flower",
+        "blue-flower",
+        "green-flower"
+      ],
+      "celebration_ref": "adventure.porch.name.celebration",
+      "evidence": {
+        "observable_behaviour": "names the object aloud with a grown-up",
+        "weight_strong": "participation",
+        "weight_participation": "participation",
+        "bandable": false
+      },
+      "variants": [
+        {
+          "id": "variant-porch-name-cup",
+          "target_item_id": "cup",
+          "choice_item_ids": [
+            "cup"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-spoon",
+          "target_item_id": "spoon",
+          "choice_item_ids": [
+            "spoon"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-book",
+          "target_item_id": "book",
+          "choice_item_ids": [
+            "book"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-ball",
+          "target_item_id": "ball",
+          "choice_item_ids": [
+            "ball"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-red-flower",
+          "target_item_id": "red-flower",
+          "choice_item_ids": [
+            "red-flower"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-yellow-flower",
+          "target_item_id": "yellow-flower",
+          "choice_item_ids": [
+            "yellow-flower"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-blue-flower",
+          "target_item_id": "blue-flower",
+          "choice_item_ids": [
+            "blue-flower"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        },
+        {
+          "id": "variant-porch-name-green-flower",
+          "target_item_id": "green-flower",
+          "choice_item_ids": [
+            "green-flower"
+          ],
+          "prompt_ref": "adventure.porch.name.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-flower-rhyme",
+      "stop_id": "stop-flower",
+      "skill_id": "find-the-rhyme",
+      "selection": "items",
+      "item_bank": [
+        "adv-cat",
+        "adv-hat",
+        "adv-dog",
+        "adv-frog",
+        "adv-bear",
+        "adv-pear",
+        "adv-sun",
+        "adv-bun",
+        "adv-pig",
+        "adv-wig",
+        "adv-fox",
+        "adv-box"
+      ],
+      "celebration_ref": "adventure.flower.rhyme.celebration",
+      "evidence": {
+        "observable_behaviour": "matches a word that rhymes with the prompt",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-flower-rhyme-cat",
+          "target_item_id": "adv-hat",
+          "choice_item_ids": [
+            "adv-hat",
+            "adv-dog",
+            "adv-frog"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.cat.prompt"
+        },
+        {
+          "id": "variant-flower-rhyme-dog",
+          "target_item_id": "adv-frog",
+          "choice_item_ids": [
+            "adv-frog",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.dog.prompt"
+        },
+        {
+          "id": "variant-flower-rhyme-bear",
+          "target_item_id": "adv-pear",
+          "choice_item_ids": [
+            "adv-pear",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.bear.prompt"
+        },
+        {
+          "id": "variant-flower-rhyme-sun",
+          "target_item_id": "adv-bun",
+          "choice_item_ids": [
+            "adv-bun",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.sun.prompt"
+        },
+        {
+          "id": "variant-flower-rhyme-pig",
+          "target_item_id": "adv-wig",
+          "choice_item_ids": [
+            "adv-wig",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.pig.prompt"
+        },
+        {
+          "id": "variant-flower-rhyme-fox",
+          "target_item_id": "adv-box",
+          "choice_item_ids": [
+            "adv-box",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.flower.rhyme.fox.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-flower-clap",
+      "stop_id": "stop-flower",
+      "skill_id": "clap-the-beats",
+      "selection": "items",
+      "item_bank": [
+        "cup",
+        "book",
+        "spoon",
+        "word-flower",
+        "word-yellow",
+        "word-banana"
+      ],
+      "celebration_ref": "adventure.flower.syllable.celebration",
+      "evidence": {
+        "observable_behaviour": "claps or taps the syllable count of a word",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-flower-clap-cup",
+          "target_item_id": "beats-1",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.cup.prompt"
+        },
+        {
+          "id": "variant-flower-clap-book",
+          "target_item_id": "beats-1",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.book.prompt"
+        },
+        {
+          "id": "variant-flower-clap-spoon",
+          "target_item_id": "beats-1",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.spoon.prompt"
+        },
+        {
+          "id": "variant-flower-clap-flower",
+          "target_item_id": "beats-2",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.flower.prompt"
+        },
+        {
+          "id": "variant-flower-clap-yellow",
+          "target_item_id": "beats-2",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.yellow.prompt"
+        },
+        {
+          "id": "variant-flower-clap-banana",
+          "target_item_id": "beats-3",
+          "choice_item_ids": [
+            "beats-1",
+            "beats-2",
+            "beats-3"
+          ],
+          "prompt_ref": "adventure.flower.syllable.banana.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-apple-give",
+      "stop_id": "stop-apple",
+      "skill_id": "give-n",
+      "selection": "quantities",
+      "quantities": [
+        1,
+        2,
+        3
+      ],
+      "celebration_ref": "adventure.apple.give.celebration",
+      "evidence": {
+        "observable_behaviour": "gives the requested number of items",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-apple-give-1",
+          "target_item_id": "pile-1",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "prompt_ref": "adventure.apple.give.1.prompt"
+        },
+        {
+          "id": "variant-apple-give-2",
+          "target_item_id": "pile-2",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "prompt_ref": "adventure.apple.give.2.prompt"
+        },
+        {
+          "id": "variant-apple-give-3",
+          "target_item_id": "pile-3",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "prompt_ref": "adventure.apple.give.3.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-apple-subitize",
+      "stop_id": "stop-apple",
+      "skill_id": "subitize",
+      "selection": "quantities",
+      "quantities": [
+        1,
+        2,
+        3
+      ],
+      "accessibility_note": "Extended displays are recorded as counted, not subitized.",
+      "celebration_ref": "adventure.apple.subitize.celebration",
+      "evidence": {
+        "observable_behaviour": "answers a small quantity quickly",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-apple-subitize-1",
+          "target_item_id": "pile-1",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "show_pile_count": 1,
+          "prompt_ref": "adventure.apple.subitize.prompt"
+        },
+        {
+          "id": "variant-apple-subitize-2",
+          "target_item_id": "pile-2",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "show_pile_count": 2,
+          "prompt_ref": "adventure.apple.subitize.prompt"
+        },
+        {
+          "id": "variant-apple-subitize-3",
+          "target_item_id": "pile-3",
+          "choice_item_ids": [
+            "pile-1",
+            "pile-2",
+            "pile-3"
+          ],
+          "show_pile_count": 3,
+          "prompt_ref": "adventure.apple.subitize.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-shed-sort",
+      "stop_id": "stop-shed",
+      "skill_id": "sort-by-one-rule",
+      "selection": "items",
+      "item_bank": [
+        "sort-red-ball",
+        "sort-red-sock",
+        "sort-yellow-cup",
+        "sort-yellow-book",
+        "sort-blue-spoon",
+        "sort-blue-leaf",
+        "red-basket",
+        "yellow-basket"
+      ],
+      "celebration_ref": "adventure.shed.sort.celebration",
+      "evidence": {
+        "observable_behaviour": "places an item by the active rule",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-shed-sort-sort-red-ball",
+          "display_item_id": "sort-red-ball",
+          "target_item_id": "red-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.sort.color.prompt"
+        },
+        {
+          "id": "variant-shed-sort-sort-yellow-cup",
+          "display_item_id": "sort-yellow-cup",
+          "target_item_id": "yellow-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.sort.color.prompt"
+        },
+        {
+          "id": "variant-shed-sort-sort-red-sock",
+          "display_item_id": "sort-red-sock",
+          "target_item_id": "red-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.sort.color.prompt"
+        },
+        {
+          "id": "variant-shed-sort-sort-yellow-book",
+          "display_item_id": "sort-yellow-book",
+          "target_item_id": "yellow-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.sort.color.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-shed-switch",
+      "stop_id": "stop-shed",
+      "skill_id": "now-switch",
+      "selection": "fixed",
+      "celebration_ref": "adventure.shed.switch.celebration",
+      "evidence": {
+        "observable_behaviour": "re-sorts after the rule changes",
+        "weight_strong": "participation",
+        "weight_participation": "participation",
+        "bandable": false
+      },
+      "variants": [
+        {
+          "id": "variant-shed-switch-shape",
+          "display_item_id": "sort-red-ball",
+          "target_item_id": "red-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.sort.shape.prompt"
+        },
+        {
+          "id": "variant-shed-switch-now",
+          "display_item_id": "sort-yellow-cup",
+          "target_item_id": "yellow-basket",
+          "choice_item_ids": [
+            "red-basket",
+            "yellow-basket"
+          ],
+          "prompt_ref": "adventure.shed.switch.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-shed-notice",
+      "stop_id": "stop-shed",
+      "skill_id": "what-do-you-see",
+      "selection": "fixed",
+      "celebration_ref": "adventure.shed.notice.celebration",
+      "evidence": {
+        "observable_behaviour": "notices and describes an object",
+        "weight_strong": "participation",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-shed-notice",
+          "display_item_id": "sort-red-ball",
+          "target_item_id": "sort-red-ball",
+          "choice_item_ids": [
+            "sort-red-ball"
+          ],
+          "prompt_ref": "adventure.shed.notice.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-night-sound",
+      "stop_id": "stop-night",
+      "skill_id": "which-starts-with",
+      "selection": "items",
+      "item_bank": [
+        "adv-cat",
+        "adv-hat",
+        "adv-dog",
+        "adv-frog",
+        "adv-bear",
+        "adv-pear",
+        "adv-sun",
+        "adv-bun",
+        "adv-pig",
+        "adv-wig",
+        "adv-fox",
+        "adv-box"
+      ],
+      "celebration_ref": "adventure.night.sound.celebration",
+      "evidence": {
+        "observable_behaviour": "matches an animal to its initial sound",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-night-sound-buh",
+          "target_item_id": "adv-bear",
+          "choice_item_ids": [
+            "adv-bear",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.night.sound.buh.prompt"
+        },
+        {
+          "id": "variant-night-sound-kuh",
+          "target_item_id": "adv-cat",
+          "choice_item_ids": [
+            "adv-cat",
+            "adv-hat",
+            "adv-dog"
+          ],
+          "prompt_ref": "adventure.night.sound.kuh.prompt"
+        },
+        {
+          "id": "variant-night-sound-fuh",
+          "target_item_id": "adv-fox",
+          "choice_item_ids": [
+            "adv-fox",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.night.sound.fuh.prompt"
+        },
+        {
+          "id": "variant-night-sound-duh",
+          "target_item_id": "adv-dog",
+          "choice_item_ids": [
+            "adv-dog",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.night.sound.duh.prompt"
+        },
+        {
+          "id": "variant-night-sound-huh",
+          "target_item_id": "adv-hat",
+          "choice_item_ids": [
+            "adv-hat",
+            "adv-cat",
+            "adv-dog"
+          ],
+          "prompt_ref": "adventure.night.sound.huh.prompt"
+        },
+        {
+          "id": "variant-night-sound-puh",
+          "target_item_id": "adv-pig",
+          "choice_item_ids": [
+            "adv-pig",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.night.sound.puh.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-night-pattern",
+      "stop_id": "stop-night",
+      "skill_id": "what-comes-next",
+      "selection": "items",
+      "item_bank": [
+        "adv-cat",
+        "adv-hat",
+        "adv-dog",
+        "adv-frog",
+        "adv-bear",
+        "adv-pear",
+        "adv-sun",
+        "adv-bun",
+        "adv-pig",
+        "adv-wig",
+        "adv-fox",
+        "adv-box"
+      ],
+      "celebration_ref": "adventure.night.pattern.celebration",
+      "evidence": {
+        "observable_behaviour": "continues a simple pattern",
+        "weight_strong": "strong",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-night-pattern-ab-1",
+          "sequence": [
+            "adv-cat",
+            "adv-hat",
+            "adv-cat",
+            "adv-hat"
+          ],
+          "target_item_id": "adv-cat",
+          "choice_item_ids": [
+            "adv-cat",
+            "adv-dog",
+            "adv-sun"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        },
+        {
+          "id": "variant-night-pattern-ab-2",
+          "sequence": [
+            "adv-dog",
+            "adv-frog",
+            "adv-dog",
+            "adv-frog"
+          ],
+          "target_item_id": "adv-dog",
+          "choice_item_ids": [
+            "adv-dog",
+            "adv-pig",
+            "adv-bun"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        },
+        {
+          "id": "variant-night-pattern-ab-3",
+          "sequence": [
+            "adv-sun",
+            "adv-bun",
+            "adv-sun",
+            "adv-bun"
+          ],
+          "target_item_id": "adv-sun",
+          "choice_item_ids": [
+            "adv-sun",
+            "adv-fox",
+            "adv-box"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        },
+        {
+          "id": "variant-night-pattern-abb-1",
+          "sequence": [
+            "adv-bear",
+            "adv-pear",
+            "adv-pear",
+            "adv-bear",
+            "adv-pear"
+          ],
+          "target_item_id": "adv-pear",
+          "choice_item_ids": [
+            "adv-pear",
+            "adv-wig",
+            "adv-cat"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        },
+        {
+          "id": "variant-night-pattern-abb-2",
+          "sequence": [
+            "adv-pig",
+            "adv-wig",
+            "adv-wig",
+            "adv-pig",
+            "adv-wig"
+          ],
+          "target_item_id": "adv-wig",
+          "choice_item_ids": [
+            "adv-wig",
+            "adv-dog",
+            "adv-sun"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        },
+        {
+          "id": "variant-night-pattern-abb-3",
+          "sequence": [
+            "adv-fox",
+            "adv-box",
+            "adv-box",
+            "adv-fox",
+            "adv-box"
+          ],
+          "target_item_id": "adv-box",
+          "choice_item_ids": [
+            "adv-box",
+            "adv-bear",
+            "adv-hat"
+          ],
+          "prompt_ref": "adventure.night.pattern.prompt"
+        }
+      ]
+    },
+    {
+      "id": "errand-night-predict",
+      "stop_id": "stop-night",
+      "skill_id": "what-will-happen-if",
+      "selection": "fixed",
+      "celebration_ref": "adventure.night.predict.celebration",
+      "evidence": {
+        "observable_behaviour": "predicts and checks an outcome",
+        "weight_strong": "participation",
+        "weight_participation": "participation",
+        "bandable": true
+      },
+      "variants": [
+        {
+          "id": "variant-night-predict",
+          "display_item_id": "indoor-plant",
+          "target_item_id": "indoor-plant",
+          "choice_item_ids": [
+            "indoor-plant"
+          ],
+          "prompt_ref": "adventure.night.predict.prompt"
+        }
+      ]
+    }
+  ],
+  "visit_rules": {
+    "max_stops_per_visit_day": 1,
+    "max_stops_per_visit_day_oldest": 2,
+    "max_checks_per_skill_per_visit": 1,
+    "entry_window_visits": 6,
+    "visits_target_min": 4,
+    "visits_target_max": 6,
+    "days_target_min": 5,
+    "days_target_max": 10,
+    "sparse_completion_day": 10,
+    "age_caps": [
+      {
+        "age_min": 2,
+        "age_max": 2,
+        "max_stops": 1,
+        "activities_min": 2,
+        "activities_max": 2,
+        "minutes": 4
+      },
+      {
+        "age_min": 3,
+        "age_max": 4,
+        "max_stops": 2,
+        "activities_min": 2,
+        "activities_max": 4,
+        "minutes": 6
+      },
+      {
+        "age_min": 5,
+        "age_max": 5,
+        "max_stops": 2,
+        "activities_min": 3,
+        "activities_max": 4,
+        "minutes": 10
+      }
+    ]
+  }
+}

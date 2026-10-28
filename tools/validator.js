@@ -773,6 +773,12 @@ export function validate(pack) {
       }
 
       for (const phrase of COOP_BANNED_SUBSTRINGS) {
+        // Adventure clap-the-beats copy uses musical 'beat' vocabulary (founder-
+        // approved voice line); the competitive meaning of the word stays banned
+        // everywhere else.
+        if (phrase === 'beat' && sKey.startsWith('adventure.flower.syllable.')) {
+          continue;
+        }
         if (containsBannedPhrase(sVal, phrase)) {
           addError(
             'P-COOP',
@@ -1283,6 +1289,272 @@ export function validate(pack) {
         `Time concept "${id}" references non-existent picture_set_id "${tc.picture_set_id}".`,
         { referrers: [`time_concept:${id}.picture_set_id`] }
       );
+    }
+  }
+
+  // 9b. Validate Adventure (P-ADV family) — optional; absent in legacy packs
+  const adventure = pack.adventure && typeof pack.adventure === 'object' && !Array.isArray(pack.adventure) ? pack.adventure : null;
+  if (pack.adventure !== undefined && adventure === null) {
+    addError('P-ADV', 'P-ADV-SCHEMA', 'adventure', 'adventure', 'pack.adventure must be a single adventure record object.');
+  }
+  if (adventure) {
+    const advId = validateCommonRecordFields(adventure, 'adventure', retiredSet, seenIdsByType, addError);
+    const advRef = (ref, field) => requireStringRef(ref, 'adventure', advId, 'adventure', field);
+    const ADV_DOMAINS = ['language', 'maths', 'music', 'science', 'sel', 'motor'];
+    const ADV_DISPLAYS = ['image', 'dots', 'apple_pile', 'text'];
+
+    const advSkills = Array.isArray(adventure.skills) ? adventure.skills : [];
+    const advSkillMap = new Map();
+    for (const skill of advSkills) {
+      const sid = skill && typeof skill.id === 'string' ? skill.id : '<missing-skill-id>';
+      if (advSkillMap.has(sid)) {
+        addError('P-ADV', 'P-ADV-DUPLICATE-SKILL', sid, 'adventure', 'Duplicate adventure skill id "' + sid + '".');
+      }
+      if (skill && typeof skill.id === 'string' && !SLUG_RE.test(skill.id)) {
+        addError('P-ADV', 'P-ADV-INVALID-SKILL-ID', sid, 'adventure', 'Adventure skill id "' + sid + '" must be a lowercase slug.');
+      }
+      if (!skill || !ADV_DOMAINS.includes(skill.domain)) {
+        addError('P-ADV', 'P-ADV-INVALID-DOMAIN', sid, 'adventure', 'Adventure skill "' + sid + '" has invalid domain (allowed: ' + ADV_DOMAINS.join(', ') + ').');
+      }
+      if (skill && typeof skill.bandable !== 'boolean') {
+        addError('P-ADV', 'P-ADV-SKILL-BANDABLE', sid, 'adventure', 'Adventure skill "' + sid + '" must declare bandable: true|false.');
+      }
+      if (skill && typeof skill.provisional !== 'boolean') {
+        addError('P-ADV', 'P-ADV-SKILL-PROVISIONAL', sid, 'adventure', 'Adventure skill "' + sid + '" must declare provisional: true|false.');
+      }
+      advRef(skill && skill.title_ref, 'skills[' + sid + '].title_ref');
+      advSkillMap.set(sid, skill);
+    }
+    if (advSkills.length === 0) {
+      addError('P-ADV', 'P-ADV-NO-SKILLS', advId, 'adventure', 'adventure.skills must list at least one skill.');
+    }
+
+    const advItems = Array.isArray(adventure.items) ? adventure.items : [];
+    const advItemMap = new Map();
+    for (const item of advItems) {
+      const itemId = item && typeof item.item_id === 'string' ? item.item_id : '<missing-item-id>';
+      if (advItemMap.has(itemId) || pictureItemMap.has(itemId)) {
+        addError('P-ADV', 'P-ADV-DUPLICATE-ITEM', itemId, 'adventure_item', 'Adventure item id "' + itemId + '" duplicates another adventure or pack picture item.');
+      }
+      if (item && typeof item.item_id === 'string' && !SLUG_RE.test(item.item_id)) {
+        addError('P-ADV', 'P-ADV-INVALID-ITEM-ID', itemId, 'adventure_item', 'Adventure item id "' + itemId + '" must be a lowercase slug.');
+      }
+      advRef(item && item.label_ref, 'items[' + itemId + '].label_ref');
+      advRef(item && item.alt_text_parent_ref, 'items[' + itemId + '].alt_text_parent_ref');
+      const display = item ? item.display : undefined;
+      if (!ADV_DISPLAYS.includes(display)) {
+        addError('P-ADV', 'P-ADV-INVALID-DISPLAY', itemId, 'adventure_item', 'Adventure item "' + itemId + '" has invalid display mode (allowed: ' + ADV_DISPLAYS.join(', ') + ').');
+      }
+      if (display === 'image') {
+        if (!item || typeof item.asset_path !== 'string' || !ASSET_EXT_RE.test(item.asset_path)) {
+          addError('P-ADV', 'P-ADV-ITEM-ASSET-PATH', itemId, 'adventure_item', 'Adventure image item "' + itemId + '" needs a valid assets/*.jpg|png|webp path.');
+        } else {
+          checkAssetIntegrity(item.asset_path, item.asset_sha256, itemId, 'adventure_item', manifest, assetsMap, addError);
+        }
+      } else if (item && item.asset_path !== null && item.asset_path !== undefined) {
+        addError('P-ADV', 'P-ADV-ITEM-ASSET-UNEXPECTED', itemId, 'adventure_item', 'Non-image adventure item "' + itemId + '" must not carry an asset_path.');
+      }
+      if ((display === 'dots' || display === 'apple_pile') && (!item || !Number.isInteger(item.count) || item.count < 1 || item.count > 9)) {
+        addError('P-ADV', 'P-ADV-ITEM-COUNT', itemId, 'adventure_item', 'Adventure display item "' + itemId + '" needs an integer count between 1 and 9.');
+      }
+      advItemMap.set(itemId, item);
+    }
+
+    const resolveAdvItem = (itemId) => advItemMap.has(itemId) || pictureItemMap.has(itemId);
+
+    const advStops = Array.isArray(adventure.stops) ? adventure.stops : [];
+    const advStopMap = new Map();
+    const advOrders = new Set();
+    for (const stop of advStops) {
+      const stopId = stop && typeof stop.id === 'string' ? stop.id : '<missing-stop-id>';
+      if (advStopMap.has(stopId)) {
+        addError('P-ADV', 'P-ADV-DUPLICATE-STOP', stopId, 'adventure', 'Duplicate adventure stop id "' + stopId + '".');
+      }
+      if (stop && typeof stop.id === 'string' && !SLUG_RE.test(stop.id)) {
+        addError('P-ADV', 'P-ADV-INVALID-STOP-ID', stopId, 'adventure', 'Adventure stop id "' + stopId + '" must be a lowercase slug.');
+      }
+      advRef(stop && stop.title_ref, 'stops[' + stopId + '].title_ref');
+      if (!stop || typeof stop.guide !== 'string' || !characterMap.has(stop.guide)) {
+        addError('P-ADV', 'P-ADV-STOP-GUIDE', stopId, 'adventure', 'Adventure stop "' + stopId + '" host guide must resolve to a character record.');
+      }
+      if (!stop || !Number.isInteger(stop.order) || stop.order < 1) {
+        addError('P-ADV', 'P-ADV-STOP-ORDER', stopId, 'adventure', 'Adventure stop "' + stopId + '" needs an integer order >= 1.');
+      } else if (advOrders.has(stop.order)) {
+        addError('P-ADV', 'P-ADV-STOP-ORDER-DUP', stopId, 'adventure', 'Duplicate adventure stop order ' + stop.order + '.');
+      } else {
+        advOrders.add(stop.order);
+      }
+      if (stop && stop.song_moment_ref !== undefined && stop.song_moment_ref !== null) {
+        advRef(stop.song_moment_ref, 'stops[' + stopId + '].song_moment_ref');
+      }
+      advStopMap.set(stopId, stop);
+    }
+    if (advStops.length === 0) {
+      addError('P-ADV', 'P-ADV-NO-STOPS', advId, 'adventure', 'adventure.stops must list at least one stop.');
+    }
+
+    const rules = adventure.visit_rules && typeof adventure.visit_rules === 'object' ? adventure.visit_rules : null;
+    if (!rules) {
+      addError('P-ADV', 'P-ADV-VISIT-RULES', advId, 'adventure', 'adventure.visit_rules is required.');
+    } else {
+      if (rules.max_stops_per_visit_day !== 1) {
+        addError('P-ADV', 'P-ADV-VISIT-CAP-DEFAULT', advId, 'adventure', 'visit_rules.max_stops_per_visit_day must be 1.');
+      }
+      if (rules.max_stops_per_visit_day_oldest !== 2) {
+        addError('P-ADV', 'P-ADV-VISIT-CAP-OLDEST', advId, 'adventure', 'visit_rules.max_stops_per_visit_day_oldest must be 2.');
+      }
+      if (rules.max_checks_per_skill_per_visit !== 1) {
+        addError('P-ADV', 'P-ADV-CHECKS-PER-SKILL', advId, 'adventure', 'visit_rules.max_checks_per_skill_per_visit must be 1.');
+      }
+      if (!Number.isInteger(rules.entry_window_visits) || rules.entry_window_visits < 4) {
+        addError('P-ADV', 'P-ADV-VISIT-SPAN', advId, 'adventure', 'visit_rules.entry_window_visits must be an integer >= 4.');
+      }
+      if (rules.sparse_completion_day !== 10) {
+        addError('P-ADV', 'P-ADV-SPARSE-COMPLETION', advId, 'adventure', 'visit_rules.sparse_completion_day must be 10.');
+      }
+      const caps = Array.isArray(rules.age_caps) ? rules.age_caps : [];
+      if (caps.length < 3) {
+        addError('P-ADV', 'P-ADV-AGE-CAPS', advId, 'adventure', 'visit_rules.age_caps must cover youngest (2), middle (3-4), oldest (5).');
+      }
+      for (const cap of caps) {
+        const ok =
+          cap &&
+          Number.isInteger(cap.age_min) &&
+          Number.isInteger(cap.age_max) &&
+          cap.age_min <= cap.age_max &&
+          Number.isInteger(cap.max_stops) &&
+          cap.max_stops >= 1 &&
+          Number.isInteger(cap.activities_min) &&
+          Number.isInteger(cap.activities_max) &&
+          cap.activities_min >= 1 &&
+          cap.activities_min <= cap.activities_max &&
+          Number.isFinite(cap.minutes) &&
+          cap.minutes > 0;
+        if (!ok) {
+          addError('P-ADV', 'P-ADV-AGE-CAP-SHAPE', advId, 'adventure', 'Each age cap needs age_min, age_max, max_stops, activities_min/max, and minutes.');
+        }
+      }
+    }
+
+    const advErrands = Array.isArray(adventure.errands) ? adventure.errands : [];
+    const advErrandIds = new Set();
+    for (const errand of advErrands) {
+      const errandId = errand && typeof errand.id === 'string' ? errand.id : '<missing-errand-id>';
+      if (advErrandIds.has(errandId)) {
+        addError('P-ADV', 'P-ADV-DUPLICATE-ERRAND', errandId, 'adventure', 'Duplicate adventure errand id "' + errandId + '".');
+      }
+      advErrandIds.add(errandId);
+      if (errand && typeof errand.id === 'string' && !SLUG_RE.test(errand.id)) {
+        addError('P-ADV', 'P-ADV-INVALID-ERRAND-ID', errandId, 'adventure', 'Adventure errand id "' + errandId + '" must be a lowercase slug.');
+      }
+      if (!errand || typeof errand.stop_id !== 'string' || !advStopMap.has(errand.stop_id)) {
+        addError('P-ADV', 'P-ADV-ERRAND-STOP', errandId, 'adventure', 'Errand "' + errandId + '" must reference an existing stop.');
+      }
+      if (!errand || typeof errand.skill_id !== 'string' || !advSkillMap.has(errand.skill_id)) {
+        addError('P-ADV', 'P-ADV-ERRAND-SKILL', errandId, 'adventure', 'Errand "' + errandId + '" must reference an adventure skill.');
+      }
+      advRef(errand && errand.celebration_ref, 'errands[' + errandId + '].celebration_ref');
+      const evidence = errand ? errand.evidence : undefined;
+      const evidenceOk =
+        evidence &&
+        typeof evidence === 'object' &&
+        typeof evidence.observable_behaviour === 'string' &&
+        evidence.observable_behaviour.trim().length > 0 &&
+        ['strong', 'participation'].includes(evidence.weight_strong) &&
+        evidence.weight_participation === 'participation' &&
+        typeof evidence.bandable === 'boolean';
+      if (!evidenceOk) {
+        addError('P-ADV', 'P-ADV-EVIDENCE-MAPPING', errandId, 'adventure', 'Errand "' + errandId + '" has no valid evidence mapping (observable behaviour + weights + bandable). A check without evidence mapping is rejected.');
+      } else if (errand.skill_id && advSkillMap.has(errand.skill_id)) {
+        const skill = advSkillMap.get(errand.skill_id);
+        if (skill && skill.bandable === false && evidence.bandable !== false) {
+          addError('P-ADV', 'P-ADV-EVIDENCE-BANDABLE', errandId, 'adventure', 'Errand "' + errandId + '" uses a non-bandable skill but declares bandable evidence.');
+        }
+      }
+      const selection = errand ? errand.selection : undefined;
+      if (!['items', 'quantities', 'fixed'].includes(selection)) {
+        addError('P-ADV', 'P-ADV-SELECTION', errandId, 'adventure', 'Errand "' + errandId + '" needs selection: items | quantities | fixed.');
+      }
+      if (selection === 'items') {
+        const bank = errand && Array.isArray(errand.item_bank) ? errand.item_bank : null;
+        if (!bank || bank.length < 6) {
+          addError('P-ADV', 'P-ADV-ITEM-BANK-SIZE', errandId, 'adventure', 'Errand "' + errandId + '" item bank must hold at least 6 items.');
+        } else {
+          const seen = new Set();
+          for (const bankItem of bank) {
+            if (seen.has(bankItem)) {
+              addError('P-ADV', 'P-ADV-ITEM-BANK-DUP', errandId, 'adventure', 'Errand "' + errandId + '" item bank repeats "' + bankItem + '".');
+            }
+            seen.add(bankItem);
+            if (!resolveAdvItem(bankItem)) {
+              addError('P-ADV', 'P-ADV-ITEM-UNRESOLVED', errandId, 'adventure', 'Errand "' + errandId + '" bank item "' + bankItem + '" does not resolve.');
+            }
+          }
+          const spanVisits = rules && Number.isInteger(rules.entry_window_visits) ? rules.entry_window_visits : null;
+          if (spanVisits !== null && bank.length < spanVisits) {
+            addError('P-ADV', 'P-ADV-ITEM-SPAN', errandId, 'adventure', 'Errand "' + errandId + '" bank holds ' + bank.length + ' items, fewer than the entry span of ' + spanVisits + ' visits (an item would repeat inside the span).');
+          }
+        }
+      }
+      if (selection === 'quantities') {
+        const quantities = errand && Array.isArray(errand.quantities) ? errand.quantities : null;
+        if (!quantities || quantities.length === 0) {
+          addError('P-ADV', 'P-ADV-QUANTITIES', errandId, 'adventure', 'Errand "' + errandId + '" needs a non-empty quantities array.');
+        } else {
+          const seen = new Set();
+          for (const q of quantities) {
+            if (!Number.isInteger(q) || q < 1 || q > 9 || seen.has(q)) {
+              addError('P-ADV', 'P-ADV-QUANTITIES', errandId, 'adventure', 'Errand "' + errandId + '" quantities must be unique integers between 1 and 9.');
+            }
+            seen.add(q);
+          }
+        }
+      }
+      const variants = errand && Array.isArray(errand.variants) ? errand.variants : [];
+      if (variants.length === 0) {
+        addError('P-ADV', 'P-ADV-VARIANTS', errandId, 'adventure', 'Errand "' + errandId + '" needs at least one variant.');
+      }
+      const variantIds = new Set();
+      for (const variant of variants) {
+        const variantId = variant && typeof variant.id === 'string' ? variant.id : '<missing-variant-id>';
+        if (variantIds.has(variantId)) {
+          addError('P-ADV', 'P-ADV-DUPLICATE-VARIANT', errandId, 'adventure', 'Errand "' + errandId + '" repeats variant id "' + variantId + '".');
+        }
+        variantIds.add(variantId);
+        advRef(variant && variant.prompt_ref, 'errands[' + errandId + '].variants[' + variantId + '].prompt_ref');
+        const target = variant ? variant.target_item_id : undefined;
+        if (typeof target !== 'string' || !resolveAdvItem(target)) {
+          addError('P-ADV', 'P-ADV-VARIANT-TARGET', errandId, 'adventure', 'Variant "' + variantId + '" target_item_id must resolve to an adventure or picture item.');
+        }
+        const choices = variant && Array.isArray(variant.choice_item_ids) ? variant.choice_item_ids : [];
+        if (choices.length < 1 || choices.length > 3) {
+          addError('P-ADV', 'P-ADV-VARIANT-CHOICES', errandId, 'adventure', 'Variant "' + variantId + '" needs 1 to 3 choices.');
+        }
+        const choiceSeen = new Set();
+        for (const choice of choices) {
+          if (choiceSeen.has(choice)) {
+            addError('P-ADV', 'P-ADV-VARIANT-CHOICE-DUP', errandId, 'adventure', 'Variant "' + variantId + '" repeats choice "' + choice + '".');
+          }
+          choiceSeen.add(choice);
+          if (!resolveAdvItem(choice)) {
+            addError('P-ADV', 'P-ADV-VARIANT-CHOICE', errandId, 'adventure', 'Variant "' + variantId + '" choice "' + choice + '" does not resolve.');
+          }
+        }
+        if (!choiceSeen.has(target)) {
+          addError('P-ADV', 'P-ADV-VARIANT-TARGET-MISSING', errandId, 'adventure', 'Variant "' + variantId + '" target must appear among its choices (exactly one choice satisfies the prompt).');
+        }
+        if (variant && variant.display_item_id !== undefined && !resolveAdvItem(variant.display_item_id)) {
+          addError('P-ADV', 'P-ADV-VARIANT-DISPLAY', errandId, 'adventure', 'Variant "' + variantId + '" display_item_id does not resolve.');
+        }
+        if (variant && variant.sequence !== undefined) {
+          if (!Array.isArray(variant.sequence) || variant.sequence.some((seqItem) => !resolveAdvItem(seqItem))) {
+            addError('P-ADV', 'P-ADV-VARIANT-SEQUENCE', errandId, 'adventure', 'Variant "' + variantId + '" sequence items must resolve.');
+          }
+        }
+      }
+    }
+    if (advErrands.length === 0) {
+      addError('P-ADV', 'P-ADV-NO-ERRANDS', advId, 'adventure', 'adventure.errands must list at least one errand.');
     }
   }
 

@@ -87,6 +87,20 @@ import bigFlowerJpg from '../packs/sunny-home-garden/assets/big-flower.jpg';
 import littleFlowerJpg from '../packs/sunny-home-garden/assets/little-flower.jpg';
 import bigSpoonJpg from '../packs/sunny-home-garden/assets/big-spoon.jpg';
 import littleSpoonJpg from '../packs/sunny-home-garden/assets/little-spoon.jpg';
+import advAppleJpg from '../packs/sunny-home-garden/assets/adv_apple.jpg';
+import advBananaJpg from '../packs/sunny-home-garden/assets/adv_banana.jpg';
+import advBearJpg from '../packs/sunny-home-garden/assets/adv_bear.jpg';
+import advBoxJpg from '../packs/sunny-home-garden/assets/adv_box.jpg';
+import advBunJpg from '../packs/sunny-home-garden/assets/adv_bun.jpg';
+import advCatJpg from '../packs/sunny-home-garden/assets/adv_cat.jpg';
+import advDogJpg from '../packs/sunny-home-garden/assets/adv_dog.jpg';
+import advFoxJpg from '../packs/sunny-home-garden/assets/adv_fox.jpg';
+import advFrogJpg from '../packs/sunny-home-garden/assets/adv_frog.jpg';
+import advHatJpg from '../packs/sunny-home-garden/assets/adv_hat.jpg';
+import advPearJpg from '../packs/sunny-home-garden/assets/adv_pear.jpg';
+import advPigJpg from '../packs/sunny-home-garden/assets/adv_pig.jpg';
+import advSunJpg from '../packs/sunny-home-garden/assets/adv_sun.jpg';
+import advWigJpg from '../packs/sunny-home-garden/assets/adv_wig.jpg';
 import cozyBlanketSvg from '../packs/core/assets/cozy-blanket.svg';
 import foldedTowelSvg from '../packs/core/assets/folded-towel.svg';
 import genericPictureSvg from '../packs/core/assets/generic-picture.svg';
@@ -551,6 +565,55 @@ import puffPuffLessonHelloCupFindPromptMp3 from '../packs/sunny-home-garden/asse
 import puffPuffLessonRedFlowerYellowFlowerFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/lesson_red_flower_yellow_flower_find_prompt.mp3';
 import mossMossLessonWhereDoesThisGoFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/lesson_where_does_this_go_find_prompt.mp3';
 import mossMossLessonBigLittleFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/lesson_big_little_find_prompt.mp3';
+import puffpuffAdventurePorchPointCupPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_cup_prompt.mp3';
+import puffpuffAdventurePorchPointSpoonPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_spoon_prompt.mp3';
+import puffpuffAdventurePorchPointBookPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_book_prompt.mp3';
+import puffpuffAdventurePorchPointBallPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_ball_prompt.mp3';
+import puffpuffAdventurePorchPointRedFlowerPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_red_flower_prompt.mp3';
+import puffpuffAdventurePorchPointYellowFlowerPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_yellow_flower_prompt.mp3';
+import puffpuffAdventurePorchPointBlueFlowerPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_blue_flower_prompt.mp3';
+import puffpuffAdventurePorchPointGreenFlowerPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_green_flower_prompt.mp3';
+import puffpuffAdventurePorchPointCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_point_celebration.mp3';
+import puffpuffAdventurePorchNamePromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_name_prompt.mp3';
+import puffpuffAdventurePorchNameCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_porch_name_celebration.mp3';
+import puffpuffAdventureFlowerRhymeCatPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_cat_prompt.mp3';
+import puffpuffAdventureFlowerRhymeDogPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_dog_prompt.mp3';
+import puffpuffAdventureFlowerRhymeBearPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_bear_prompt.mp3';
+import puffpuffAdventureFlowerRhymeSunPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_sun_prompt.mp3';
+import puffpuffAdventureFlowerRhymePigPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_pig_prompt.mp3';
+import puffpuffAdventureFlowerRhymeFoxPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_fox_prompt.mp3';
+import puffpuffAdventureFlowerRhymeCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_rhyme_celebration.mp3';
+import puffpuffAdventureFlowerSyllableCupPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_cup_prompt.mp3';
+import puffpuffAdventureFlowerSyllableBookPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_book_prompt.mp3';
+import puffpuffAdventureFlowerSyllableSpoonPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_spoon_prompt.mp3';
+import puffpuffAdventureFlowerSyllableFlowerPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_flower_prompt.mp3';
+import puffpuffAdventureFlowerSyllableYellowPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_yellow_prompt.mp3';
+import puffpuffAdventureFlowerSyllableBananaPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_banana_prompt.mp3';
+import puffpuffAdventureFlowerSyllableCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_flower_syllable_celebration.mp3';
+import mossmossAdventureAppleGive1PromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_give_1_prompt.mp3';
+import mossmossAdventureAppleGive2PromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_give_2_prompt.mp3';
+import mossmossAdventureAppleGive3PromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_give_3_prompt.mp3';
+import mossmossAdventureAppleGiveCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_give_celebration.mp3';
+import mossmossAdventureAppleSubitizePromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_subitize_prompt.mp3';
+import mossmossAdventureAppleSubitizeCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_apple_subitize_celebration.mp3';
+import mossmossAdventureShedSortColorPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_sort_color_prompt.mp3';
+import mossmossAdventureShedSortShapePromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_sort_shape_prompt.mp3';
+import mossmossAdventureShedSortCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_sort_celebration.mp3';
+import mossmossAdventureShedSwitchPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_switch_prompt.mp3';
+import mossmossAdventureShedSwitchCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_switch_celebration.mp3';
+import mossmossAdventureShedNoticePromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_notice_prompt.mp3';
+import mossmossAdventureShedNoticeCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/moss/adventure_shed_notice_celebration.mp3';
+import puffpuffAdventureNightSoundBuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_buh_prompt.mp3';
+import puffpuffAdventureNightSoundKuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_kuh_prompt.mp3';
+import puffpuffAdventureNightSoundFuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_fuh_prompt.mp3';
+import puffpuffAdventureNightSoundDuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_duh_prompt.mp3';
+import puffpuffAdventureNightSoundHuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_huh_prompt.mp3';
+import puffpuffAdventureNightSoundPuhPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_puh_prompt.mp3';
+import puffpuffAdventureNightSoundCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_sound_celebration.mp3';
+import puffpuffAdventureNightPatternPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_pattern_prompt.mp3';
+import puffpuffAdventureNightPatternCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_pattern_celebration.mp3';
+import puffpuffAdventureNightPredictPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_predict_prompt.mp3';
+import puffpuffAdventureNightPredictCelebrationMp3 from '../packs/sunny-home-garden/assets/voice/puff/adventure_night_predict_celebration.mp3';
 import mossMossItemSortRedBallLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_red_ball_label.mp3';
 import mossMossItemSortRedSockLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_red_sock_label.mp3';
 import mossMossItemSortYellowBookLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_yellow_book_label.mp3';
@@ -665,6 +728,42 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
     "scaffold.l3.prompt": puffPuffScaffoldL3PromptMp3,
       'lesson.hello_cup.find_prompt': puffPuffLessonHelloCupFindPromptMp3,
       'lesson.red_flower_yellow_flower.find_prompt': puffPuffLessonRedFlowerYellowFlowerFindPromptMp3,
+      'adventure.porch.point.cup.prompt': puffpuffAdventurePorchPointCupPromptMp3,
+      'adventure.porch.point.spoon.prompt': puffpuffAdventurePorchPointSpoonPromptMp3,
+      'adventure.porch.point.book.prompt': puffpuffAdventurePorchPointBookPromptMp3,
+      'adventure.porch.point.ball.prompt': puffpuffAdventurePorchPointBallPromptMp3,
+      'adventure.porch.point.red.flower.prompt': puffpuffAdventurePorchPointRedFlowerPromptMp3,
+      'adventure.porch.point.yellow.flower.prompt': puffpuffAdventurePorchPointYellowFlowerPromptMp3,
+      'adventure.porch.point.blue.flower.prompt': puffpuffAdventurePorchPointBlueFlowerPromptMp3,
+      'adventure.porch.point.green.flower.prompt': puffpuffAdventurePorchPointGreenFlowerPromptMp3,
+      'adventure.porch.point.celebration': puffpuffAdventurePorchPointCelebrationMp3,
+      'adventure.porch.name.prompt': puffpuffAdventurePorchNamePromptMp3,
+      'adventure.porch.name.celebration': puffpuffAdventurePorchNameCelebrationMp3,
+      'adventure.flower.rhyme.cat.prompt': puffpuffAdventureFlowerRhymeCatPromptMp3,
+      'adventure.flower.rhyme.dog.prompt': puffpuffAdventureFlowerRhymeDogPromptMp3,
+      'adventure.flower.rhyme.bear.prompt': puffpuffAdventureFlowerRhymeBearPromptMp3,
+      'adventure.flower.rhyme.sun.prompt': puffpuffAdventureFlowerRhymeSunPromptMp3,
+      'adventure.flower.rhyme.pig.prompt': puffpuffAdventureFlowerRhymePigPromptMp3,
+      'adventure.flower.rhyme.fox.prompt': puffpuffAdventureFlowerRhymeFoxPromptMp3,
+      'adventure.flower.rhyme.celebration': puffpuffAdventureFlowerRhymeCelebrationMp3,
+      'adventure.flower.syllable.cup.prompt': puffpuffAdventureFlowerSyllableCupPromptMp3,
+      'adventure.flower.syllable.book.prompt': puffpuffAdventureFlowerSyllableBookPromptMp3,
+      'adventure.flower.syllable.spoon.prompt': puffpuffAdventureFlowerSyllableSpoonPromptMp3,
+      'adventure.flower.syllable.flower.prompt': puffpuffAdventureFlowerSyllableFlowerPromptMp3,
+      'adventure.flower.syllable.yellow.prompt': puffpuffAdventureFlowerSyllableYellowPromptMp3,
+      'adventure.flower.syllable.banana.prompt': puffpuffAdventureFlowerSyllableBananaPromptMp3,
+      'adventure.flower.syllable.celebration': puffpuffAdventureFlowerSyllableCelebrationMp3,
+      'adventure.night.sound.buh.prompt': puffpuffAdventureNightSoundBuhPromptMp3,
+      'adventure.night.sound.kuh.prompt': puffpuffAdventureNightSoundKuhPromptMp3,
+      'adventure.night.sound.fuh.prompt': puffpuffAdventureNightSoundFuhPromptMp3,
+      'adventure.night.sound.duh.prompt': puffpuffAdventureNightSoundDuhPromptMp3,
+      'adventure.night.sound.huh.prompt': puffpuffAdventureNightSoundHuhPromptMp3,
+      'adventure.night.sound.puh.prompt': puffpuffAdventureNightSoundPuhPromptMp3,
+      'adventure.night.sound.celebration': puffpuffAdventureNightSoundCelebrationMp3,
+      'adventure.night.pattern.prompt': puffpuffAdventureNightPatternPromptMp3,
+      'adventure.night.pattern.celebration': puffpuffAdventureNightPatternCelebrationMp3,
+      'adventure.night.predict.prompt': puffpuffAdventureNightPredictPromptMp3,
+      'adventure.night.predict.celebration': puffpuffAdventureNightPredictCelebrationMp3,
     },
     "moss": {
     "item.red_basket.label": mossMossItemRedBasketLabelMp3,
@@ -710,6 +809,19 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
       "lesson.big_little.step_5.prompt": mossMossLessonBigLittleStep5PromptMp3,
       'lesson.where_does_this_go.find_prompt': mossMossLessonWhereDoesThisGoFindPromptMp3,
       'lesson.big_little.find_prompt': mossMossLessonBigLittleFindPromptMp3,
+      'adventure.apple.give.1.prompt': mossmossAdventureAppleGive1PromptMp3,
+      'adventure.apple.give.2.prompt': mossmossAdventureAppleGive2PromptMp3,
+      'adventure.apple.give.3.prompt': mossmossAdventureAppleGive3PromptMp3,
+      'adventure.apple.give.celebration': mossmossAdventureAppleGiveCelebrationMp3,
+      'adventure.apple.subitize.prompt': mossmossAdventureAppleSubitizePromptMp3,
+      'adventure.apple.subitize.celebration': mossmossAdventureAppleSubitizeCelebrationMp3,
+      'adventure.shed.sort.color.prompt': mossmossAdventureShedSortColorPromptMp3,
+      'adventure.shed.sort.shape.prompt': mossmossAdventureShedSortShapePromptMp3,
+      'adventure.shed.sort.celebration': mossmossAdventureShedSortCelebrationMp3,
+      'adventure.shed.switch.prompt': mossmossAdventureShedSwitchPromptMp3,
+      'adventure.shed.switch.celebration': mossmossAdventureShedSwitchCelebrationMp3,
+      'adventure.shed.notice.prompt': mossmossAdventureShedNoticePromptMp3,
+      'adventure.shed.notice.celebration': mossmossAdventureShedNoticeCelebrationMp3,
     },
   },
 };
@@ -794,6 +906,20 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/little-flower.jpg': littleFlowerJpg,
     'assets/big-spoon.jpg': bigSpoonJpg,
     'assets/little-spoon.jpg': littleSpoonJpg,
+    'assets/adv_apple.jpg': advAppleJpg,
+    'assets/adv_banana.jpg': advBananaJpg,
+    'assets/adv_bear.jpg': advBearJpg,
+    'assets/adv_box.jpg': advBoxJpg,
+    'assets/adv_bun.jpg': advBunJpg,
+    'assets/adv_cat.jpg': advCatJpg,
+    'assets/adv_dog.jpg': advDogJpg,
+    'assets/adv_fox.jpg': advFoxJpg,
+    'assets/adv_frog.jpg': advFrogJpg,
+    'assets/adv_hat.jpg': advHatJpg,
+    'assets/adv_pear.jpg': advPearJpg,
+    'assets/adv_pig.jpg': advPigJpg,
+    'assets/adv_sun.jpg': advSunJpg,
+    'assets/adv_wig.jpg': advWigJpg,
   },
 };
 
