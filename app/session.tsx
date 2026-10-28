@@ -11,7 +11,6 @@ import {
   PictureSetItem,
   PictureSetRecord,
   ScaffoldLevel,
-  SongTemplateRecord,
   getActivePackId,
   getCharacterById,
   getCharacters,
@@ -22,7 +21,6 @@ import {
   getPictureSetById,
   getPictureSets,
   getString,
-  getSongTemplates,
   getVoiceAsset,
 } from '../lib/pack-loader';
 import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
@@ -286,13 +284,6 @@ function resolvePictureSet(lesson: LessonRecord): PictureSetRecord | undefined {
     getPictureSetById(lesson.fallback_picture_id) ??
     getPictureSets().find((set) => set.tags.includes('fallback')) ??
     getPictureSets()[0]
-  );
-}
-
-function resolveSongTemplate(lesson: LessonRecord): SongTemplateRecord | undefined {
-  return (
-    getSongTemplates().find((template) => template.id === lesson.song_template_id) ??
-    getSongTemplates()[0]
   );
 }
 
@@ -653,40 +644,6 @@ function CelebrationBurst() {
   );
 }
 
-function ClosingCard({
-  song,
-  isTablet,
-}: {
-  song: SongTemplateRecord | undefined;
-  isTablet: boolean;
-}) {
-  const songTitle = song ? getString(song.title_ref) : null;
-  const lessonWord = song ? getString(song.lesson_word_ref) : null;
-  return (
-    <View style={styles.closingStack}>
-      {song ? (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={songTitle ?? undefined}
-          onPress={() => {
-            stopAllNarration();
-            router.push({ pathname: '/composer', params: { templateId: song.id } });
-          }}
-          style={({ pressed }) => [
-            isTablet ? styles.songCardTablet : styles.songCard,
-            pressed && styles.songCardPressed,
-          ]}
-        >
-          <Text style={isTablet ? styles.songTitleTablet : styles.songTitle}>{songTitle}</Text>
-          <View style={styles.songWordChip}>
-            <Text style={isTablet ? styles.songWordTablet : styles.songWord}>{lessonWord}</Text>
-          </View>
-        </Pressable>
-      ) : null}
-    </View>
-  );
-}
-
 function ResumeChoiceCard({
   isTablet,
   onContinue,
@@ -796,7 +753,6 @@ export default function SessionScreen() {
   const step = steps[Math.min(stepIndex, steps.length - 1)];
   const character = resolveCharacter(lesson);
   const pictureSet = resolvePictureSet(lesson);
-  const song = resolveSongTemplate(lesson);
   const itemsById = new Map(
     (pictureSet?.items ?? []).map((item) => [item.item_id, item])
   );
@@ -974,9 +930,7 @@ export default function SessionScreen() {
       <View style={styles.celebrationStage}>
         <CelebrationBurst />
       </View>
-    ) : (
-      <ClosingCard song={song} isTablet={isTablet} />
-    );
+    ) : null;
 
   const footerBanner =
     phase === 'celebration' ? (
@@ -1171,30 +1125,30 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   guideFrame: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     backgroundColor: '#F4EBDA',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
   guideFrameTablet: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
+    width: 126,
+    height: 126,
+    borderRadius: 63,
     backgroundColor: '#F4EBDA',
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
   guideImage: {
-    width: 54,
-    height: 54,
+    width: 82,
+    height: 82,
   },
   guideImageTablet: {
-    width: 76,
-    height: 76,
+    width: 114,
+    height: 114,
   },
   speechBubble: {
     flex: 1,
@@ -1602,11 +1556,11 @@ const styles = StyleSheet.create({
   },
   pictureCardSlot: {
     flexBasis: '47%',
-    flexGrow: 1,
+    flexGrow: 0,
   },
   pictureCardSlotTablet: {
     flexBasis: '47%',
-    flexGrow: 1,
+    flexGrow: 0,
   },
   pictureCardSlotSingle: {
     alignSelf: 'stretch',
@@ -1662,6 +1616,8 @@ const styles = StyleSheet.create({
   pictureLabel: {
     marginTop: 8,
     fontSize: 13,
+    lineHeight: 17,
+    minHeight: 34,
     fontWeight: '700',
     color: '#33302B',
     textAlign: 'center',
@@ -1719,88 +1675,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 17,
     fontWeight: '800',
-  },
-  closingStack: {
-    gap: 14,
-    marginTop: 8,
-  },
-  closingCard: {
-    backgroundColor: '#E1EFE8',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#BFDCCB',
-    padding: 20,
-    alignItems: 'center',
-  },
-  closingCardTablet: {
-    backgroundColor: '#E1EFE8',
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: '#BFDCCB',
-    padding: 28,
-    alignItems: 'center',
-  },
-  closingText: {
-    fontSize: 19,
-    lineHeight: 28,
-    fontWeight: '800',
-    color: '#2B6E58',
-    textAlign: 'center',
-  },
-  closingTextTablet: {
-    fontSize: 24,
-    lineHeight: 35,
-    fontWeight: '800',
-    color: '#2B6E58',
-    textAlign: 'center',
-  },
-  songCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 18,
-    alignItems: 'center',
-  },
-  songCardPressed: {
-    backgroundColor: '#F7F1E6',
-  },
-  songCardTablet: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 24,
-    alignItems: 'center',
-  },
-  songTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#33302B',
-    textAlign: 'center',
-  },
-  songTitleTablet: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#33302B',
-    textAlign: 'center',
-  },
-  songWordChip: {
-    marginTop: 10,
-    backgroundColor: '#FBEEDD',
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-  },
-  songWord: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: '#9A6A1F',
-  },
-  songWordTablet: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: '#9A6A1F',
   },
   doneButton: {
     backgroundColor: '#E8A24B',

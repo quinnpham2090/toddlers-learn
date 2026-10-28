@@ -13,7 +13,6 @@ import { playNoteSequence, secondsPerNote } from '../lib/song-audio';
 import { UserSavedSong, UserSavedSongNoteEvent, loadSavedSongs } from '../lib/song-store';
 
 const BACK_LABEL = 'Back';
-const COMPOSE_LABEL = 'Compose';
 const PLAY_LABEL = 'Play';
 const EMPTY_MESSAGE = 'No songs yet — compose your first song!';
 const FALLBACK_TEMPO = 84;
@@ -192,14 +191,6 @@ export default function SongbookScreen() {
   const emptyState = (
     <View style={styles.emptyState}>
       <Text style={styles.emptyText}>{EMPTY_MESSAGE}</Text>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={COMPOSE_LABEL}
-        onPress={() => router.push('/composer')}
-        style={({ pressed }) => [styles.composeButton, pressed && styles.composeButtonPressed]}
-      >
-        <Text style={styles.composeButtonText}>{COMPOSE_LABEL}</Text>
-      </Pressable>
     </View>
   );
 
@@ -527,25 +518,5 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#33302B',
     textAlign: 'center',
-  },
-  composeButton: {
-    backgroundColor: '#E8A24B',
-    borderRadius: 999,
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    marginTop: 16,
-    shadowColor: '#B4622D',
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 4,
-  },
-  composeButtonPressed: {
-    backgroundColor: '#D18A33',
-  },
-  composeButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '800',
   },
 });
