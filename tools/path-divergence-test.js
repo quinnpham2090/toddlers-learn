@@ -262,6 +262,7 @@ function summarize(queue) {
 }
 
 const fingerprints = new Map();
+const skillQueues = [];
 const contentGaps = new Set();
 
 for (const profile of profiles) {
@@ -331,12 +332,34 @@ for (const profile of profiles) {
     contentGaps.add(gap);
   }
   fingerprints.set(profile.key, queue.fingerprint);
+  skillQueues.push(pathItems.map((item) => item.skill_id).join(','));
 }
 
 check(
   new Set(fingerprints.values()).size === profiles.length,
-  'All 6 synthetic profiles produce different skill-id queues',
+  'All 6 synthetic profiles produce different queues',
   [...fingerprints.entries()].map(([key, value]) => `${key}=${value}`).join(' || ')
+);
+check(
+  new Set(skillQueues).size === profiles.length,
+  'All 6 synthetic profiles produce different skill-id queues',
+  skillQueues.join(' || ')
+);
+
+const afterSession = makeQueue(3, [
+  ...profileA,
+  makeEvent('give-n', {
+    date: '2026-01-07',
+    session: 'a-g2',
+    format: 'g3',
+    sourceSkill: 'give-n',
+    errand: 'errand-apple-give',
+  }),
+]);
+check(
+  afterSession.fingerprint !== makeQueue(3, profileA).fingerprint,
+  'Queue: recomputes after a new session of evidence',
+  afterSession.fingerprint
 );
 
 const pointToConfident = evaluateBands(
@@ -474,6 +497,34 @@ check(
   recheck.recheck_due && recheck.recheck_reason === 'days',
   'Bands: re-check due from ordinary play after 21 days',
   JSON.stringify({ due: recheck.recheck_due, reason: recheck.recheck_reason })
+);
+
+const recheckBySessions = [
+  ...series('point-to', {
+    dates: ['2026-01-01', '2026-01-02', '2026-01-03'],
+    sessions: ['recheck-s1', 'recheck-s2', 'recheck-s3'],
+    formats: ['f1', 'f2', 'f3'],
+  }),
+  ...Array.from({ length: 8 }, (_, index) =>
+    makeEvent('give-1', {
+      date: `2026-01-${String(index + 4).padStart(2, '0')}`,
+      session: `recheck-later-${index + 1}`,
+      format: `later-${index + 1}`,
+    })
+  ),
+];
+const recheckSessions = evaluateBands(recheckBySessions, skillMetaById, {
+  today_key: '2026-01-12',
+  total_sessions: 11,
+}).skills.find((skill) => skill.skill_id === 'point-to');
+check(
+  recheckSessions.recheck_due && recheckSessions.recheck_reason === 'sessions',
+  'Bands: re-check due from ordinary play after 8 sessions',
+  JSON.stringify({
+    due: recheckSessions.recheck_due,
+    reason: recheckSessions.recheck_reason,
+    sessions_since: recheckSessions.recheck_sessions_since,
+  })
 );
 
 const profileAQueue = makeQueue(3, profileA);
