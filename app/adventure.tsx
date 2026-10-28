@@ -41,6 +41,11 @@ import {
   recordAdventureEvidence,
   saveAdventureState,
 } from '../lib/adventure-store';
+import {
+  adventureAge,
+  englishErrandsEnabled,
+  loadAdventureQuestionnaire,
+} from '../lib/adventure-parent';
 
 const SPEECH_LANGUAGE = 'en-US';
 const SPEECH_RATE = 0.75;
@@ -392,6 +397,14 @@ export default function AdventureScreen() {
   const stops = getAdventureStops();
   const pictures = pictureItemMap();
   const todayKey = adventureLocalDateKey(new Date());
+  const [questionnaire] = useState(() => loadAdventureQuestionnaire());
+  const englishOn = englishErrandsEnabled(questionnaire);
+  const childAge = adventureAge(questionnaire);
+  const ageCap =
+    adventure.visit_rules.age_caps.find((cap) => childAge >= cap.age_min && childAge <= cap.age_max) ??
+    adventure.visit_rules.age_caps[1];
+  const maxStopsToday = childAge >= 5 ? adventure.visit_rules.max_stops_per_visit_day_oldest : adventure.visit_rules.max_stops_per_visit_day;
+  const maxActivitiesToday = ageCap ? ageCap.activities_max : 4;
 
   const [advState, setAdvState] = useState<AdventureState>(() => {
     const loaded = loadAdventureState();
@@ -405,6 +418,7 @@ export default function AdventureScreen() {
     return next;
   });
   const [mode, setMode] = useState<Mode>('journey');
+  const [winKind, setWinKind] = useState<'stop' | 'day'>('stop');
   const [activeStopId, setActiveStopId] = useState<string | null>(null);
   const [errandIndex, setErrandIndex] = useState(0);
   const [scaffoldLevel, setScaffoldLevel] = useState<ScaffoldLevelNumber>(0);
@@ -415,9 +429,16 @@ export default function AdventureScreen() {
   const [pickedItemId, setPickedItemId] = useState<string | null>(null);
   const advanceHandled = useRef(false);
   const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stopsToday = advState.day_key === todayKey ? advState.stops_today : 0;
+  const activitiesToday = advState.day_key === todayKey ? advState.activities_today : 0;
+  const dayBudgetUsed = stopsToday >= maxStopsToday || activitiesToday >= maxActivitiesToday;
 
   const activeStop = activeStopId ? stops.find((stop) => stop.id === activeStopId) : undefined;
-  const stopErrands = activeStop ? getAdventureErrandsForStop(activeStop.id) : [];
+  const stopErrands = activeStop
+    ? getAdventureErrandsForStop(activeStop.id).filter((candidate) =>
+        englishOn ? true : candidate.skill_id !== 'find-the-rhyme' && candidate.skill_id !== 'which-starts-with'
+      )
+    : [];
   const errand: AdventureErrandRecord | undefined = stopErrands[errandIndex];
   const variant: AdventureVariantRecord | undefined = (() => {
     if (!errand) {
@@ -434,7 +455,7 @@ export default function AdventureScreen() {
     : advState.in_progress_stop_id
       ? stops.find((stop) => stop.id === advState.in_progress_stop_id)
       : stops.find((stop) => !advState.done_stop_ids.includes(stop.id));
-  const dayStopUsed = advState.last_visit_day === todayKey && advState.in_progress_stop_id === null;
+  const dayStopUsed = dayBudgetUsed;
 
   function persist(next: AdventureState): void {
     setAdvState(next);
@@ -447,9 +468,12 @@ export default function AdventureScreen() {
   }
 
   function startStop(stop: AdventureStopRecord): void {
-    const errands = getAdventureErrandsForStop(stop.id);
+    const errands = getAdventureErrandsForStop(stop.id).filter((candidate) =>
+      englishOn ? true : candidate.skill_id !== 'find-the-rhyme' && candidate.skill_id !== 'which-starts-with'
+    );
     const resumeIndex = advState.in_progress_stop_id === stop.id ? advState.next_errand_index : 0;
-    const safeIndex = Math.max(0, Math.min(resumeIndex, errands.length - 1));
+    const safeIndex = Math.max(0, Math.min(resumeIndex, Math.max(0, errands.length - 1)));
+    const newDay = advState.day_key !== todayKey;
     const visitDays = advState.visit_days.includes(todayKey)
       ? advState.visit_days
       : [...advState.visit_days, todayKey];
@@ -460,6 +484,9 @@ export default function AdventureScreen() {
       last_visit_day: todayKey,
       in_progress_stop_id: stop.id,
       next_errand_index: safeIndex,
+      day_key: todayKey,
+      stops_today: newDay ? 0 : advState.stops_today,
+      activities_today: newDay ? 0 : advState.activities_today,
     });
     setActiveStopId(stop.id);
     setErrandIndex(safeIndex);
@@ -473,6 +500,9 @@ export default function AdventureScreen() {
 
   function handleJourneyPress(stop: AdventureStopRecord): void {
     if (mode !== 'journey' || advState.completed || dayStopUsed) {
+      return;
+    }
+    if (stopsToday >= maxStopsToday || activitiesToday >= maxActivitiesToday) {
       return;
     }
     if (currentStop && stop.id === currentStop.id) {
@@ -525,16 +555,31 @@ export default function AdventureScreen() {
       fallbackTimer.current = null;
     }
     stopAllNarration();
-    const errands = activeStop ? getAdventureErrandsForStop(activeStop.id) : [];
+    const errands = (activeStop ? getAdventureErrandsForStop(activeStop.id) : []).filter((candidate) =>
+      englishOn ? true : candidate.skill_id !== 'find-the-rhyme' && candidate.skill_id !== 'which-starts-with'
+    );
     const nextIndex = errandIndex + 1;
-    if (nextIndex < errands.length) {
-      persist({ ...advState, next_errand_index: nextIndex });
+    const activitiesAfter = activitiesToday + 1;
+    if (nextIndex < errands.length && activitiesAfter < maxActivitiesToday) {
+      persist({ ...advState, next_errand_index: nextIndex, activities_today: activitiesAfter, day_key: todayKey });
       setErrandIndex(nextIndex);
       setScaffoldLevel(0);
       setRetryCue(false);
       setWrongTaps(0);
       setPickedItemId(null);
       setPhase('check');
+      return;
+    }
+    if (nextIndex < errands.length) {
+      persist({
+        ...advState,
+        next_errand_index: nextIndex,
+        activities_today: activitiesAfter,
+        day_key: todayKey,
+        last_visit_day: todayKey,
+      });
+      setWinKind('day');
+      setMode('win');
       return;
     }
     if (activeStop) {
@@ -548,9 +593,13 @@ export default function AdventureScreen() {
         in_progress_stop_id: null,
         next_errand_index: 0,
         last_visit_day: todayKey,
+        activities_today: activitiesAfter,
+        stops_today: (advState.day_key === todayKey ? advState.stops_today : 0) + 1,
+        day_key: todayKey,
         completed: allDone || advState.completed,
       });
     }
+    setWinKind('stop');
     setMode('win');
   }
 
@@ -688,7 +737,7 @@ export default function AdventureScreen() {
   }
 
   if (mode === 'win') {
-    const songMomentRef = activeStop?.song_moment_ref;
+    const songMomentRef = winKind === 'stop' ? activeStop?.song_moment_ref : undefined;
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.winCenter}>
@@ -702,6 +751,11 @@ export default function AdventureScreen() {
               portraitSize={portraitSize}
               onListen={handleListen}
             />
+          ) : null}
+          {winKind === 'day' ? (
+            <View style={styles.songMomentCard}>
+              <Text style={styles.songMomentText}>{DAY_DONE_LABEL}</Text>
+            </View>
           ) : null}
           {songMomentRef ? (
             <View style={styles.songMomentCard}>

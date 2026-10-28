@@ -36,6 +36,9 @@ export interface AdventureState {
   next_errand_index: number;
   completed: boolean;
   used_variants: Record<string, string[]>;
+  day_key: string | null;
+  stops_today: number;
+  activities_today: number;
 }
 
 const EVIDENCE_FILE = 'adventure-evidence.json';
@@ -57,6 +60,9 @@ const DEFAULT_STATE: AdventureState = {
   next_errand_index: 0,
   completed: false,
   used_variants: {},
+  day_key: null,
+  stops_today: 0,
+  activities_today: 0,
 };
 
 function evidenceFile(): File {
@@ -148,7 +154,10 @@ function isAdventureState(value: unknown): value is AdventureState {
     typeof state.next_errand_index === 'number' &&
     typeof state.completed === 'boolean' &&
     typeof state.used_variants === 'object' &&
-    state.used_variants !== null
+    state.used_variants !== null &&
+    (state.day_key === null || state.day_key === undefined || typeof state.day_key === 'string') &&
+    (state.stops_today === undefined || typeof state.stops_today === 'number') &&
+    (state.activities_today === undefined || typeof state.activities_today === 'number')
   );
 }
 
@@ -162,7 +171,12 @@ export function loadAdventureState(): AdventureState {
     if (!isAdventureState(parsed)) {
       return { ...DEFAULT_STATE, used_variants: {} };
     }
-    return parsed;
+    return {
+      ...parsed,
+      day_key: typeof parsed.day_key === 'string' ? parsed.day_key : null,
+      stops_today: typeof parsed.stops_today === 'number' ? parsed.stops_today : 0,
+      activities_today: typeof parsed.activities_today === 'number' ? parsed.activities_today : 0,
+    };
   } catch {
     return { ...DEFAULT_STATE, used_variants: {} };
   }

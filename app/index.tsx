@@ -19,12 +19,15 @@ import {
 } from '../lib/pack-loader';
 import { loadSkillEvidence } from '../lib/progress-store';
 import { loadParentSettings } from '../lib/parent-settings';
+import { loadAdventureQuestionnaire } from '../lib/adventure-parent';
+import { loadAdventureState } from '../lib/adventure-store';
 
 const START_BUTTON_LABEL = 'Start';
 const PLAY_AGAIN_LABEL = 'Play again!';
 const SONGBOOK_BUTTON_LABEL = 'Songbook';
 const TOGETHER_BUTTON_LABEL = 'Together';
 const FOR_GROWN_UPS_LABEL = 'For grown-ups';
+const ADVENTURE_LABEL = 'Adventure';
 const OPEN_LABEL = 'Open';
 const JUMP_LABEL = 'Jump to the current stop';
 
@@ -189,12 +192,27 @@ function ForGrownUpsButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function AdventureButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={ADVENTURE_LABEL}
+      onPress={onPress}
+      style={({ pressed }) => [styles.adventureButton, pressed && styles.adventureButtonPressed]}
+    >
+      <Text style={styles.adventureButtonText}>{ADVENTURE_LABEL}</Text>
+    </Pressable>
+  );
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
+  const [adventureGateOpen, setAdventureGateOpen] = useState(false);
+  const [adventureStarted, setAdventureStarted] = useState(false);
   const [stopStates, setStopStates] = useState<StopState[]>(() => computeStopStates().states);
   const [stopLessonIds, setStopLessonIds] = useState<(string | null)[]>(
     () => computeStopStates().lessonIds
@@ -231,6 +249,7 @@ export default function HubWorld() {
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
+      setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
       setStopStates(states);
       setStopLessonIds(lessonIds);
@@ -439,13 +458,30 @@ export default function HubWorld() {
           </Text>
         </View>
       ) : null}
+      {!adventureStarted ? (
+        <AdventureButton onPress={() => setAdventureGateOpen(true)} />
+      ) : null}
       <StartButton
         label={allLessonsCompleted ? PLAY_AGAIN_LABEL : START_BUTTON_LABEL}
         onPress={() => router.push('/session')}
       />
+      {adventureStarted ? (
+        <AdventureButton onPress={() => setAdventureGateOpen(true)} />
+      ) : null}
       <ForGrownUpsButton onPress={() => setGrownUpsGateOpen(true)} />
     </View>
   );
+
+  const adventureGate = adventureGateOpen ? (
+    <ParentGate
+      onPass={() => {
+        setAdventureGateOpen(false);
+        const questionnaire = loadAdventureQuestionnaire();
+        router.push(questionnaire ? '/adventure' : '/adventure-setup');
+      }}
+      onCancel={() => setAdventureGateOpen(false)}
+    />
+  ) : null;
 
   const grownUpsGate = grownUpsGateOpen ? (
     <ParentGate
@@ -484,6 +520,7 @@ export default function HubWorld() {
           </View>
         </ScrollView>
         {jumpButton}
+        {adventureGate}
         {grownUpsGate}
       </SafeAreaView>
     );
@@ -497,6 +534,7 @@ export default function HubWorld() {
         {actionSection}
       </ScrollView>
       {jumpButton}
+      {adventureGate}
       {grownUpsGate}
     </SafeAreaView>
   );
@@ -794,6 +832,26 @@ const styles = StyleSheet.create({
   startButtonText: {
     color: '#FFFFFF',
     fontSize: 19,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+  },
+  adventureButton: {
+    backgroundColor: '#2B6E58',
+    borderRadius: 999,
+    paddingVertical: 14,
+    alignItems: 'center',
+    shadowColor: '#225744',
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
+  adventureButtonPressed: {
+    backgroundColor: '#225744',
+  },
+  adventureButtonText: {
+    color: '#FFFFFF',
+    fontSize: 17,
     fontWeight: '800',
     letterSpacing: 0.3,
   },

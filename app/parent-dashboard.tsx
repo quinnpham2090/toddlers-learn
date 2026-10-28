@@ -27,6 +27,9 @@ import { SELECTION_CODE_VERSION, selectNextLesson } from '../lib/lesson-selectio
 import { clearSessionBookmark } from '../lib/resume-store';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
 import { loadSavedSongs } from '../lib/song-store';
+import { loadAdventureState } from '../lib/adventure-store';
+import { buildAdventureMap } from '../lib/adventure-map';
+
 
 const BACK_LABEL = 'Back';
 const DASHBOARD_TITLE = 'For grown-ups';
@@ -37,6 +40,8 @@ const MISSIONS_SETTING_LABEL = 'Missions setting';
 const MISSIONS_TOGGLE_LABEL = 'Missions';
 const MISSIONS_TOGGLE_HINT = 'Shows the Together lane on the child’s home screen.';
 const DIAGNOSTICS_LABEL = 'Diagnostics';
+const ADVENTURE_MAP_LABEL = 'Still getting to know';
+const ADVENTURE_MAP_MIN_VISITS = 3;
 const RESET_SECTION_LABEL = 'Reset lesson progress';
 const RESET_BUTTON_LABEL = 'Reset lesson progress';
 const RESET_HINT =
@@ -235,6 +240,9 @@ export default function ParentDashboardScreen() {
     completedSkillIds,
     getLessonById,
   }) as LessonRecord | null;
+  const adventureState = loadAdventureState();
+  const adventureVisits = adventureState.visit_days.length;
+  const adventureMap = adventureVisits >= ADVENTURE_MAP_MIN_VISITS ? buildAdventureMap() : null;
   const activePackId = getActivePackId();
   const activePackVersion = getActivePack().manifest.version;
 
@@ -328,6 +336,40 @@ export default function ParentDashboardScreen() {
       <Text style={isTablet ? styles.noteTextTablet : styles.noteText}>{todaysNote}</Text>
     </SectionCard>
   );
+
+  const adventureMapSection = adventureMap ? (
+    <SectionCard heading={ADVENTURE_MAP_LABEL} isTablet={isTablet}>
+      <Text style={styles.mapDisclaimer}>
+        A provisional look after {adventureVisits} visits. It is play, not a test. It is not a diagnosis, a verdict, or a comparison. It keeps changing.
+      </Text>
+      {adventureMap.map((row) => {
+        const colors = BAND_COLORS[row.band];
+        return (
+          <View key={row.domain} style={styles.mapRow}>
+            <View style={styles.mapHeader}>
+              <Text style={isTablet ? styles.mapDomainTablet : styles.mapDomain}>{row.domainLabel}</Text>
+              <View style={[styles.bandChip, { backgroundColor: colors.soft }]}>
+                <Text style={[styles.bandChipText, { color: colors.deep }]}>
+                  {BAND_DISPLAY[row.band]}{row.provisional ? ' (early signal)' : ''}
+                </Text>
+              </View>
+              {row.provisional ? (
+                <View style={styles.provisionalChip}>
+                  <Text style={styles.provisionalChipText}>PROVISIONAL</Text>
+                </View>
+              ) : null}
+            </View>
+            <Text style={styles.mapLine}>
+              {row.strength ?? 'Nothing recorded here yet.'}
+            </Text>
+            {row.workingOn ? <Text style={styles.mapLine}>{row.workingOn}</Text> : null}
+            {row.nextUp ? <Text style={styles.mapLine}>{row.nextUp}</Text> : null}
+            {row.behaviourNote ? <Text style={styles.mapBehaviour}>{row.behaviourNote}</Text> : null}
+          </View>
+        );
+      })}
+    </SectionCard>
+  ) : null;
 
   const settingsSection = (
     <SectionCard heading={MISSIONS_SETTING_LABEL} isTablet={isTablet}>
@@ -438,6 +480,8 @@ export default function ParentDashboardScreen() {
               {headerSection}
               {skillBandsSection}
               {todaysNoteSection}
+        {adventureMapSection}
+              {adventureMapSection}
             </View>
             <View style={styles.tabletColumn}>
               {historySection}
@@ -458,6 +502,7 @@ export default function ParentDashboardScreen() {
         {skillBandsSection}
         {historySection}
         {todaysNoteSection}
+        {adventureMapSection}
         {settingsSection}
         {resetSection}
         {diagnosticsSection}
@@ -728,6 +773,60 @@ const styles = StyleSheet.create({
   diagEvidenceLineTablet: {
     fontSize: 16,
     color: '#33302B',
+    marginTop: 4,
+  },
+  mapDisclaimer: {
+    fontSize: 13,
+    lineHeight: 19,
+    color: '#7A7264',
+    marginBottom: 12,
+  },
+  mapRow: {
+    borderTopWidth: 1,
+    borderTopColor: '#F1EADB',
+    paddingTop: 12,
+    marginTop: 4,
+  },
+  mapHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 6,
+  },
+  mapDomain: {
+    fontSize: 15.5,
+    fontWeight: '800',
+    color: '#33302B',
+  },
+  mapDomainTablet: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#33302B',
+  },
+  provisionalChip: {
+    backgroundColor: '#FBEEDD',
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  provisionalChipText: {
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    color: '#9A6A1F',
+  },
+  mapLine: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#33302B',
+    marginTop: 2,
+  },
+  mapBehaviour: {
+    fontSize: 13,
+    lineHeight: 19,
+    fontStyle: 'italic',
+    color: '#7A7264',
     marginTop: 4,
   },
   resetHint: {
