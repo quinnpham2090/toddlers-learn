@@ -1,4 +1,5 @@
 import activePackPointerJson from '../packs/active.json';
+import adventureJson from '../packs/sunny-home-garden/adventure.json';
 import coreManifestJson from '../packs/core/manifest.json';
 import coreStringsJson from '../packs/core/strings.json';
 import coreSkillsJson from '../packs/core/skills.json';
@@ -1078,4 +1079,136 @@ export function getPackAsset(packId: string, assetPath: string): number | undefi
 
 export function getVoiceAsset(packId: string, speakerId: string, stringKey: string): number | undefined {
   return PACK_VOICE_REGISTRY[packId]?.[speakerId]?.[stringKey];
+}
+
+export type AdventureDomain = 'language' | 'maths' | 'music' | 'science' | 'sel' | 'motor';
+export type AdventureDisplay = 'image' | 'dots' | 'apple_pile' | 'text';
+
+export interface AdventureSkillRecord {
+  id: string;
+  domain: AdventureDomain;
+  bandable: boolean;
+  provisional: boolean;
+  title_ref: string;
+}
+
+export interface AdventureItemRecord {
+  item_id: string;
+  label_ref: string;
+  alt_text_parent_ref: string;
+  display: AdventureDisplay;
+  count?: number;
+  asset_path: string | null;
+  asset_sha256: string | null;
+  size_class: string;
+  passes_choke_tube_proxy: boolean;
+  depiction_tags: string[];
+}
+
+export interface AdventureVariantRecord {
+  id: string;
+  prompt_ref: string;
+  target_item_id: string;
+  choice_item_ids: string[];
+  display_item_id?: string;
+  sequence?: string[];
+  show_pile_count?: number;
+}
+
+export interface AdventureEvidenceMapping {
+  observable_behaviour: string;
+  weight_strong: 'strong' | 'participation';
+  weight_participation: 'participation';
+  bandable: boolean;
+}
+
+export interface AdventureErrandRecord {
+  id: string;
+  stop_id: string;
+  skill_id: string;
+  selection: 'items' | 'quantities' | 'fixed';
+  item_bank?: string[];
+  quantities?: number[];
+  celebration_ref: string;
+  evidence: AdventureEvidenceMapping;
+  variants: AdventureVariantRecord[];
+  accessibility_note?: string;
+}
+
+export interface AdventureStopRecord {
+  id: string;
+  title_ref: string;
+  guide: string;
+  order: number;
+  song_moment_ref?: string;
+}
+
+export interface AdventureAgeCap {
+  age_min: number;
+  age_max: number;
+  max_stops: number;
+  activities_min: number;
+  activities_max: number;
+  minutes: number;
+}
+
+export interface AdventureVisitRules {
+  max_stops_per_visit_day: number;
+  max_stops_per_visit_day_oldest: number;
+  max_checks_per_skill_per_visit: number;
+  entry_window_visits: number;
+  visits_target_min: number;
+  visits_target_max: number;
+  days_target_min: number;
+  days_target_max: number;
+  sparse_completion_day: number;
+  age_caps: AdventureAgeCap[];
+}
+
+export interface AdventureRecord {
+  id: string;
+  record_type: 'adventure';
+  version: string;
+  locale: string;
+  age_band: string;
+  status: string;
+  tags: string[];
+  created_by: string;
+  reviewed_by: string;
+  notes_author: string;
+  stops: AdventureStopRecord[];
+  skills: AdventureSkillRecord[];
+  items: AdventureItemRecord[];
+  errands: AdventureErrandRecord[];
+  visit_rules: AdventureVisitRules;
+}
+
+const adventure = adventureJson as unknown as AdventureRecord;
+
+export function getAdventure(): AdventureRecord {
+  return adventure;
+}
+
+export function getAdventureStops(): AdventureStopRecord[] {
+  return [...adventure.stops].sort((a, b) => a.order - b.order);
+}
+
+export function getAdventureStopById(id: string): AdventureStopRecord | undefined {
+  return adventure.stops.find((stop) => stop.id === id);
+}
+
+export function getAdventureErrandById(id: string): AdventureErrandRecord | undefined {
+  return adventure.errands.find((errand) => errand.id === id);
+}
+
+export function getAdventureErrandsForStop(stopId: string): AdventureErrandRecord[] {
+  return adventure.errands.filter((errand) => errand.stop_id === stopId);
+}
+
+export function getAdventureItemById(id: string): AdventureItemRecord | undefined {
+  return adventure.items.find((item) => item.item_id === id);
+}
+
+export function getAdventureSkillById(id: string): AdventureSkillRecord | undefined {
+  return adventure.skills.find((skill) => skill.id === id);
 }
