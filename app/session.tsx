@@ -49,6 +49,37 @@ const SPEECH_RATE = 0.75;
 const WORD_SPEECH_RATE = 0.6;
 const WORD_PAUSE_MS = 900;
 const CELEBRATION_FALLBACK_MS = 10000;
+type SessionKind = 'lesson' | 'adventure' | 'check';
+const SESSION_KIND: SessionKind = 'lesson';
+const FINALE_SLIDE_MS = 700;
+const FINALE_FALLBACK_MS = 10000;
+const FINALE_HINT_AFTER_WRONG_TAPS = 2;
+const FINALE_CONFIG: Record<
+  string,
+  { targetItemId: string; tileItemIds: string[]; findPromptRef: string }
+> = {
+  'lesson-hello-cup': {
+    targetItemId: 'cup',
+    tileItemIds: ['cup', 'ball', 'book'],
+    findPromptRef: 'lesson.hello_cup.find_prompt',
+  },
+  'lesson-red-flower-yellow-flower': {
+    targetItemId: 'red-flower',
+    tileItemIds: ['red-flower', 'blue-flower', 'yellow-flower'],
+    findPromptRef: 'lesson.red_flower_yellow_flower.find_prompt',
+  },
+  'lesson-where-does-this-go': {
+    targetItemId: 'yellow-basket',
+    tileItemIds: ['red-basket', 'yellow-basket'],
+    findPromptRef: 'lesson.where_does_this_go.find_prompt',
+  },
+  'lesson-big-little': {
+    targetItemId: 'big-spoon',
+    tileItemIds: ['big-spoon', 'little-spoon', 'big-cup'],
+    findPromptRef: 'lesson.big_little.find_prompt',
+  },
+};
+
 
 function stopSpeech(): void {
   try {
@@ -220,7 +251,7 @@ function goBack(): void {
 }
 
 type ScaffoldLevelNumber = 0 | 1 | 2 | 3;
-type SessionPhase = 'resume' | 'step' | 'celebration' | 'closing';
+type SessionPhase = 'resume' | 'step' | 'celebration' | 'finale' | 'closing';
 
 interface StepOutcome {
   stepIndex: number;
@@ -379,18 +410,26 @@ function GuideSpeech({
   isTablet,
   speaking,
   celebrating,
+  idle,
   prompt,
   scaffoldPrompt,
   portraitSize,
+  portraitRef,
+  slideX,
+  slideY,
   onListen,
 }: {
   character: CharacterRecord;
   isTablet: boolean;
   speaking: boolean;
   celebrating: boolean;
+  idle?: boolean;
   prompt: string;
   scaffoldPrompt: string | null;
   portraitSize: number;
+  portraitRef?: (instance: unknown) => void;
+  slideX?: Animated.Value;
+  slideY?: Animated.Value;
   onListen: () => void;
 }) {
   const name = getString(character.name_ref);
@@ -399,7 +438,7 @@ function GuideSpeech({
   const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
 
   useEffect(() => {
-    const mode = celebrating ? 'bounce' : speaking ? 'bob' : 'rest';
+    const mode = celebrating ? 'bounce' : speaking || idle ? 'bob' : 'rest';
     if (mode === 'rest') {
       bobAnimation.current?.stop();
       bobAnimation.current = null;
@@ -419,7 +458,7 @@ function GuideSpeech({
       bobAnimation.current?.stop();
       bobAnimation.current = null;
     };
-  }, [celebrating, speaking, bob]);
+  }, [celebrating, speaking, idle, bob]);
 
   const bobAmplitude = celebrating ? -13 : speaking ? -6 : 0;
   const bobTranslate = bob.interpolate({ inputRange: [0, 1], outputRange: [0, bobAmplitude] });
@@ -427,13 +466,19 @@ function GuideSpeech({
   return (
     <View style={isTablet ? styles.guideSpeechTablet : styles.guideSpeech}>
       <Animated.View
+        ref={portraitRef}
+        collapsable={false}
         style={[
           styles.guideFrameBase,
           {
             width: portraitSize,
             height: portraitSize,
             borderRadius: portraitSize / 2,
-            transform: [{ translateY: bobTranslate }],
+            transform: [
+              { translateY: bobTranslate },
+              { translateX: slideX ?? 0 },
+              { translateY: slideY ?? 0 },
+            ],
           },
         ]}
       >
@@ -483,6 +528,7 @@ function PictureChoice({
   item,
   single,
   highlighted,
+  picked,
   isTablet,
   size,
   onChoose,
@@ -490,6 +536,7 @@ function PictureChoice({
   item: PictureSetItem;
   single: boolean;
   highlighted: boolean;
+  picked?: boolean;
   isTablet: boolean;
   size: number;
   onChoose: (itemId: string) => void;
@@ -527,6 +574,7 @@ function PictureChoice({
           single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
           size > 0 && styles.pictureCardSized,
           highlighted && styles.pictureCardHighlighted,
+          picked && styles.pictureCardPicked,
           { transform: [{ scale: pressScale }] },
         ]}
       >
@@ -614,6 +662,28 @@ function HelpControl({
       </View>
     </View>
   );
+}
+
+interface MeasurableInstance {
+  measureInWindow: (callback: (x: number, y: number, width: number, height: number) => void) => void;
+}
+
+function FinaleNarrator({
+  text,
+  stringKey,
+  speakerId,
+}: {
+  text: string;
+  stringKey: string;
+  speakerId: string | null;
+}) {
+  useEffect(() => {
+    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => {});
+    return () => {
+      stopAllNarration();
+    };
+  }, []);
+  return null;
 }
 
 const BURST_COLORS = ['#E8A24B', '#2B6E58', '#B4502F', '#6F4E82', '#4F7A3A', '#3A5A8C'];
@@ -704,6 +774,15 @@ export default function SessionScreen() {
   const { width, height } = useWindowDimensions();
   const isTablet = width > 768;
   const [stage, setStage] = useState({ width, height: height * 0.62 });
+  const [finaleWrongTaps, setFinaleWrongTaps] = useState(0);
+  const [finalePickedId, setFinalePickedId] = useState<string | null>(null);
+  const finaleSlideX = useRef(new Animated.Value(0)).current;
+  const finaleSlideY = useRef(new Animated.Value(0)).current;
+  const finalePickupHandled = useRef(false);
+  const finaleFinished = useRef(false);
+  const finaleFallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const portraitInstance = useRef<MeasurableInstance | null>(null);
+  const tileInstances = useRef<Record<string, MeasurableInstance | null>>({});
 
   const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
   const overrideLessonId = Array.isArray(params.lessonId)
@@ -788,6 +867,13 @@ export default function SessionScreen() {
     phase === 'step'
       ? choicesForStep(step, scaffold, itemsById)
       : [];
+  const finaleConfig = FINALE_CONFIG[lesson.id];
+  const finaleEnabled = SESSION_KIND === 'lesson' && finaleConfig !== undefined;
+  const finaleItems = finaleConfig
+    ? finaleConfig.tileItemIds
+        .map((itemId) => itemsById.get(itemId))
+        .filter((item): item is PictureSetItem => item !== undefined)
+    : [];
   const stepPrompt = getString(step.prompt_ref);
   const scaffoldPrompt =
     scaffoldLevel > 0 ? getString(scaffold.prompt_ref) : null;
@@ -801,7 +887,8 @@ export default function SessionScreen() {
   const columnsGap = isTablet ? 36 : 0;
   const contentWidth = Math.max(0, stage.width - horizontalPad * 2);
   const gridWidth = isTablet ? Math.max(0, (contentWidth - columnsGap) / 2) : contentWidth;
-  const choiceRows = visibleChoices.length > 1 ? Math.ceil(visibleChoices.length / 2) : 1;
+  const fitItems = phase === 'finale' ? finaleItems : visibleChoices;
+  const choiceRows = fitItems.length > 1 ? Math.ceil(fitItems.length / 2) : 1;
   const preferredPortrait = isTablet ? 126 : 90;
   const portraitFloor = isTablet ? 96 : 72;
   const minTile = isTablet ? 120 : 96;
@@ -812,7 +899,7 @@ export default function SessionScreen() {
   const widthTile = Math.floor((gridWidth - 12) / 2);
   let portraitSize = preferredPortrait;
   let tileSize = widthTile;
-  if (visibleChoices.length > 1) {
+  if (fitItems.length > 1) {
     for (let attempt = 0; attempt < 12; attempt += 1) {
       const guideRow = Math.max(portraitSize, bubbleReserve) + 14;
       const fixedHeight = dotsHeight + guideRow + verticalReserve;
@@ -886,7 +973,14 @@ export default function SessionScreen() {
         }))
       );
       clearBookmark();
-      setPhase('closing');
+      setFinaleWrongTaps(0);
+      setFinalePickedId(null);
+      finalePickupHandled.current = false;
+      finaleFinished.current = false;
+      finaleSlideX.setValue(0);
+      finaleSlideY.setValue(0);
+      setRetryCue(false);
+      setPhase(finaleEnabled ? 'finale' : 'closing');
       return;
     }
     const nextIndex = stepIndex + 1;
@@ -918,12 +1012,65 @@ export default function SessionScreen() {
     setPhase('step');
   }
 
+  function finishFinale() {
+    if (finaleFinished.current) {
+      return;
+    }
+    finaleFinished.current = true;
+    if (finaleFallbackTimer.current !== null) {
+      clearTimeout(finaleFallbackTimer.current);
+      finaleFallbackTimer.current = null;
+    }
+    setPhase('closing');
+  }
+
+  function handleFinaleChoose(itemId: string) {
+    if (!finaleConfig || finalePickupHandled.current) {
+      return;
+    }
+    if (itemId !== finaleConfig.targetItemId) {
+      setFinaleWrongTaps((count) => count + 1);
+      setRetryCue(true);
+      return;
+    }
+    finalePickupHandled.current = true;
+    setRetryCue(false);
+    setFinalePickedId(itemId);
+    const tile = tileInstances.current[itemId];
+    const portrait = portraitInstance.current;
+    if (tile && portrait) {
+      portrait.measureInWindow((px: number, py: number, pw: number, ph: number) => {
+        tile.measureInWindow((tx: number, ty: number, tw: number, th: number) => {
+          Animated.parallel([
+            Animated.timing(finaleSlideX, {
+              toValue: tx + tw / 2 - (px + pw / 2),
+              duration: FINALE_SLIDE_MS,
+              useNativeDriver: true,
+            }),
+            Animated.timing(finaleSlideY, {
+              toValue: ty + th / 2 - (py + ph / 2),
+              duration: FINALE_SLIDE_MS,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        });
+      });
+    }
+    narrateLine(celebration, step.celebration_ref, character?.id ?? null, SPEECH_RATE, () =>
+      finishFinale()
+    );
+    finaleFallbackTimer.current = setTimeout(() => finishFinale(), FINALE_FALLBACK_MS);
+  }
+
   function handleListenAgain() {
-    if (!speechLine || !speechKey) {
+    const listenText =
+      phase === 'finale' && finaleConfig ? getString(finaleConfig.findPromptRef) : speechLine;
+    const listenKey = phase === 'finale' && finaleConfig ? finaleConfig.findPromptRef : speechKey;
+    if (!listenText || !listenKey) {
       return;
     }
     setSpeaking(true);
-    narrateLine(speechLine, speechKey, character?.id ?? null, SPEECH_RATE, () =>
+    narrateLine(listenText, listenKey, character?.id ?? null, SPEECH_RATE, () =>
       setSpeaking(false)
     );
   }
@@ -954,9 +1101,23 @@ export default function SessionScreen() {
       isTablet={isTablet}
       speaking={speaking}
       celebrating={phase === 'celebration'}
-      prompt={phase === 'closing' ? closingWin : phase === 'celebration' ? celebration : stepPrompt}
+      idle={phase === 'finale'}
+      prompt={
+        phase === 'closing'
+          ? closingWin
+          : phase === 'celebration'
+            ? celebration
+            : phase === 'finale' && finaleConfig
+              ? getString(finaleConfig.findPromptRef)
+              : stepPrompt
+      }
       scaffoldPrompt={phase === 'step' ? scaffoldPrompt : null}
       portraitSize={portraitSize}
+      portraitRef={(instance: unknown) => {
+        portraitInstance.current = instance as MeasurableInstance | null;
+      }}
+      slideX={finaleSlideX}
+      slideY={finaleSlideY}
       onListen={handleListenAgain}
     />
   ) : null;
@@ -995,6 +1156,32 @@ export default function SessionScreen() {
       <View style={styles.celebrationStage}>
         <CelebrationBurst />
       </View>
+    ) : phase === 'finale' && finaleConfig ? (
+      <View style={styles.grid}>
+        {finaleItems.map((item) => (
+          <View
+            key={item.item_id}
+            collapsable={false}
+            ref={(instance: unknown) => {
+              tileInstances.current[item.item_id] = instance as MeasurableInstance | null;
+            }}
+          >
+            <PictureChoice
+              item={item}
+              single={false}
+              highlighted={
+                finaleWrongTaps >= FINALE_HINT_AFTER_WRONG_TAPS &&
+                item.item_id === finaleConfig.targetItemId
+              }
+              picked={finalePickedId === item.item_id}
+              isTablet={isTablet}
+              size={tileSize}
+              onChoose={handleFinaleChoose}
+            />
+          </View>
+        ))}
+        {finalePickedId ? <CelebrationBurst /> : null}
+      </View>
     ) : null;
 
   const footerBanner =
@@ -1004,7 +1191,7 @@ export default function SessionScreen() {
           {celebration}
         </Text>
       </View>
-    ) : phase === 'step' && retryCue ? (
+    ) : (phase === 'step' || phase === 'finale') && retryCue ? (
       <View style={[styles.feedbackBanner, styles.feedbackBannerRetry]}>
         <Text
           style={[
@@ -1061,7 +1248,21 @@ export default function SessionScreen() {
           speakerId={character?.id ?? null}
           onSpeakingChange={setSpeaking}
         />
-        {phase === 'celebration' ? (
+        {phase === 'finale' && finaleConfig ? (
+          <FinaleNarrator
+            text={getString(finaleConfig.findPromptRef)}
+            stringKey={finaleConfig.findPromptRef}
+            speakerId={character?.id ?? null}
+          />
+        ) : null}
+        {phase === 'finale' && finaleConfig ? (
+        <FinaleNarrator
+          text={getString(finaleConfig.findPromptRef)}
+          stringKey={finaleConfig.findPromptRef}
+          speakerId={character?.id ?? null}
+        />
+      ) : null}
+      {phase === 'celebration' ? (
           <CelebrationSpeaker
             celebration={celebration}
             celebrationKey={step.celebration_ref}
@@ -1152,6 +1353,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  pictureCardPicked: {
+    borderColor: '#E8A24B',
+    borderWidth: 2,
+    shadowColor: '#B4622D',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
   },
   pictureCardSized: {
     flex: 1,

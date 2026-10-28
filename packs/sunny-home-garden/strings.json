@@ -258,7 +258,11 @@
       "item.big_spoon.label": "Big spoon",
       "item.big_spoon.alt_parent": "A big spoon.",
       "item.little_spoon.label": "Little spoon",
-      "item.little_spoon.alt_parent": "A little spoon."
+      "item.little_spoon.alt_parent": "A little spoon.",
+      "lesson.hello_cup.find_prompt": "Let's find the cup together!",
+      "lesson.red_flower_yellow_flower.find_prompt": "Let's find the red flower together!",
+      "lesson.where_does_this_go.find_prompt": "Let's find the yellow basket together!",
+      "lesson.big_little.find_prompt": "Let's find the big spoon together!"
     }
   }
 }

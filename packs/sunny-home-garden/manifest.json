@@ -96,6 +96,7 @@
     "assets/voice/puff/item_yellow_cup_label.mp3": "ae4065c3cade486759c12991874f28a127614ee2186a9f2651dde4329efe9647",
     "assets/voice/puff/item_yellow_flower_label.mp3": "29689bd8c4d51f32e272761ece7e01841078738fe8426aa44a70f16a050c0543",
     "assets/voice/puff/lesson_hello_cup_closing_win.mp3": "f51afd1d16ceaeba2e568a355a2ad74d09a5279bed7bf07974c0f039e231f6c4",
+    "assets/voice/puff/lesson_hello_cup_find_prompt.mp3": "4cb6bc15390cdafe0dfabf842f87dcd9fcb744dc3849ed1c515b693fae3c69d5",
     "assets/voice/puff/lesson_hello_cup_step_1_celebration.mp3": "610b0fdb9b484308d7faa62f5ce3f56b0ff2029e78f36efda2ed7e754337a15d",
     "assets/voice/puff/lesson_hello_cup_step_1_prompt.mp3": "ccd6a468443cbcb4b81e85e6608f6d82c5dc9c3a515acc4864406d87a0ebce96",
     "assets/voice/puff/lesson_hello_cup_step_2_celebration.mp3": "c4cdd3d0a646744b9d7af30f146fb07fb8c3d427105582831f3332f24c850262",
@@ -107,6 +108,7 @@
     "assets/voice/puff/lesson_hello_cup_step_5_celebration.mp3": "4132b91a1753ee11e21d29b3bdd654b1a6ecc749741dd520e54f3423c284acfe",
     "assets/voice/puff/lesson_hello_cup_step_5_prompt.mp3": "de3ed125640c0d6da039731757c8022cef43a56acac84c9c23583ed1504e3e33",
     "assets/voice/puff/lesson_red_flower_yellow_flower_closing_win.mp3": "ede5d199d58a1864f5ab19ddf9bfef1574fa057de67bc9ba37d5b1711e5c03df",
+    "assets/voice/puff/lesson_red_flower_yellow_flower_find_prompt.mp3": "be006611884964481be61714370676fe0e3df5ddeffcec64740f547ce1cfb305",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_1_celebration.mp3": "798b4b3582be05e4204a3be783512799c9c02c58581787b8fb19df4910c1fe22",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_1_prompt.mp3": "ecd1901f67ca4fb7c459987cf219242c4a94f7ce659b3833bfe55af5af9e4e6f",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_2_celebration.mp3": "b85b586668c36491c43444156b37c3e8035b932d20c9aa74bb4b329fcae07c97",
@@ -137,6 +139,7 @@
     "assets/voice/moss/item_sort_yellow_book_label.mp3": "080c2daf4e553a562988fd47c68d2d35424af5137d6194cbe6aa745f857de6c1",
     "assets/voice/moss/item_yellow_basket_label.mp3": "f6047fbd900b1d6fa382099a35ac88f681653bf288fc9d47e5221a38add107f1",
     "assets/voice/moss/lesson_big_little_closing_win.mp3": "7d403a5b37c398f12c182cee547fe09cf4ff7ebe43a348daf46a9f302d523fb4",
+    "assets/voice/moss/lesson_big_little_find_prompt.mp3": "1ceb65b71097df782a5aab827cad6e981d69bdfc0f76ca7baf9a38053ccc485d",
     "assets/voice/moss/lesson_big_little_step_1_celebration.mp3": "fd9bffcbdc780d5980ea8300d1b18f08fe57f3560478763dd97c4ce7a92511b2",
     "assets/voice/moss/lesson_big_little_step_1_prompt.mp3": "fceac28421268669e345b18fb4eff6ad2e0cfe1b5326d3d20b8dd22395734a41",
     "assets/voice/moss/lesson_big_little_step_2_celebration.mp3": "a5397d947274e302890fab6b4c17f0f765bf623eaab1e0552e8ea5c1e182ecda",
@@ -148,6 +151,7 @@
     "assets/voice/moss/lesson_big_little_step_5_celebration.mp3": "a3c57d1aa0afbc75f0d5d012cc849448cfa5dd98e593555f50e9cb6b876f7d43",
     "assets/voice/moss/lesson_big_little_step_5_prompt.mp3": "cd2f337bfdae29e8e487e81a278f1959acaca72b2c486273fe4b533cb2c4dd67",
     "assets/voice/moss/lesson_where_does_this_go_closing_win.mp3": "e9662ca5c1a9f4e31475def35807384db9b7d69fcff9874b640f0f8c40849824",
+    "assets/voice/moss/lesson_where_does_this_go_find_prompt.mp3": "7c8d5bd767f36f599aa5fd1ca7aa1bda3e7763e67ab6f948fd2341b4451ac75b",
     "assets/voice/moss/lesson_where_does_this_go_step_1_celebration.mp3": "ba653ee33b043ed3b76c87f6413b4903cdfaedd363ce0e2c7f6ac046d285d62f",
     "assets/voice/moss/lesson_where_does_this_go_step_1_prompt.mp3": "2ae9bbc201883a92aef3812d797f390ecf1211b74d2b18895f4f7d2001cd6dc3",
     "assets/voice/moss/lesson_where_does_this_go_step_2_celebration.mp3": "a574a3e90d230e64ae44be4f88e8eed6cda682d4d6288ff3fb21788ccc6832b0",
@@ -162,7 +166,7 @@
     "assets/voice/moss/scaffold_l1_prompt.mp3": "414f867ca6561f4f3e8d6ad87dbe944837a11d3f952872e24b2295c05a43937f",
     "assets/voice/moss/scaffold_l2_prompt.mp3": "ceef70bf977825977f604ea3b816b1d89ce9d54682e90b61944d5b97c37c90d5",
     "assets/voice/moss/scaffold_l3_prompt.mp3": "4ca14d48f54479209f8c2f0857b273761e301fc24c6d95c9eb91447b05b24d2c",
-    "strings.json": "56906847a2d0105bb5096688a57a9a0b31567c550db57d9841a6f98dbf6521cb",
+    "strings.json": "6fbab11093a4225f70a835ed6c7d86e3fcb8782b5f70c6450c5f642ed4d436d2",
     "skills.json": "20323c662f7ca5ddab91122fb0baff989c6a98e28ec28d449230002ab0e76fed",
     "lessons.json": "83be6ec6508393ddaa34e7d5070ecb18eb273f74959b5d24a66cfea674658e22",
     "song_templates.json": "9465ae685dcbf116336ad4d60b47f0dbe3430967020ba56d771c396f97e1bc88",
@@ -173,5 +177,5 @@
     "routines.json": "5e6f9bf2e62470979927c14aaea9ec18d3a586edde87f72f5b3354aebf518c50",
     "time_concepts.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "afe7e06a63c5cb5bb5a297e4fb1aded7b26c9b9f819c0898be29decc7116c529"
+  "pack_sha256": "b4c45a283098c3de2978b9678e712b130b6038f875d839006baf4e3f454fe20e"
 }

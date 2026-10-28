@@ -547,6 +547,10 @@ const PACK_REGISTRY: Record<string, PackFiles> = {
   },
 };
 import mossMossItemRedBasketLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_red_basket_label.mp3';
+import puffPuffLessonHelloCupFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/lesson_hello_cup_find_prompt.mp3';
+import puffPuffLessonRedFlowerYellowFlowerFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/lesson_red_flower_yellow_flower_find_prompt.mp3';
+import mossMossLessonWhereDoesThisGoFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/lesson_where_does_this_go_find_prompt.mp3';
+import mossMossLessonBigLittleFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/moss/lesson_big_little_find_prompt.mp3';
 import mossMossItemSortRedBallLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_red_ball_label.mp3';
 import mossMossItemSortRedSockLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_red_sock_label.mp3';
 import mossMossItemSortYellowBookLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_sort_yellow_book_label.mp3';
@@ -659,6 +663,8 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
     "scaffold.l1.prompt": puffPuffScaffoldL1PromptMp3,
     "scaffold.l2.prompt": puffPuffScaffoldL2PromptMp3,
     "scaffold.l3.prompt": puffPuffScaffoldL3PromptMp3,
+      'lesson.hello_cup.find_prompt': puffPuffLessonHelloCupFindPromptMp3,
+      'lesson.red_flower_yellow_flower.find_prompt': puffPuffLessonRedFlowerYellowFlowerFindPromptMp3,
     },
     "moss": {
     "item.red_basket.label": mossMossItemRedBasketLabelMp3,
@@ -702,6 +708,8 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
       "lesson.big_little.step_4.prompt": mossMossLessonBigLittleStep4PromptMp3,
       "lesson.big_little.step_5.celebration": mossMossLessonBigLittleStep5CelebrationMp3,
       "lesson.big_little.step_5.prompt": mossMossLessonBigLittleStep5PromptMp3,
+      'lesson.where_does_this_go.find_prompt': mossMossLessonWhereDoesThisGoFindPromptMp3,
+      'lesson.big_little.find_prompt': mossMossLessonBigLittleFindPromptMp3,
     },
   },
 };
