@@ -27,6 +27,10 @@ import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
 import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
 import {
+  getPostAdventurePathSelection,
+  type PostAdventurePathSelection,
+} from '../lib/path-queue';
+import {
   SessionBookmark,
   clearReplayBookmark,
   clearSessionBookmark,
@@ -264,12 +268,18 @@ interface StepOutcome {
 // On reaching the closing ritual they are written as one evidence entry per completed
 // step against the lesson's primary skill (the pack's steps carry no skill refs of their own).
 
-function resolveLesson(overrideLessonId?: string): LessonRecord | undefined {
+function resolveLesson(
+  overrideLessonId?: string,
+  pathSelection?: PostAdventurePathSelection | null
+): LessonRecord | undefined {
   if (overrideLessonId) {
     const overridden = getLessonById(overrideLessonId);
     if (overridden) {
       return overridden;
     }
+  }
+  if (pathSelection && pathSelection.active) {
+    return pathSelection.lessonId ? getLessonById(pathSelection.lessonId) : undefined;
   }
   const lessons = getLessons();
   const journeySkills = getJourneyStopSkills();
@@ -790,7 +800,10 @@ export default function SessionScreen() {
     : params.lessonId;
   const overrideActive = typeof overrideLessonId === 'string' && overrideLessonId.length > 0;
 
-  const lesson = resolveLesson(overrideActive ? overrideLessonId : undefined);
+  const [pathSelection] = useState<PostAdventurePathSelection | null>(() =>
+    overrideActive ? null : getPostAdventurePathSelection()
+  );
+  const lesson = resolveLesson(overrideActive ? overrideLessonId : undefined, pathSelection);
   const loadBookmark = overrideActive ? loadReplayBookmark : loadSessionBookmark;
   const saveBookmark = overrideActive ? setReplayBookmark : setSessionBookmark;
   const clearBookmark = overrideActive ? clearReplayBookmark : clearSessionBookmark;

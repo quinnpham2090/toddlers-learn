@@ -11,6 +11,7 @@ import {
   adventureLocalDateKey,
   loadAdventureEvidence,
 } from './adventure-store';
+import { evaluateSkillBand } from './bands.js';
 
 export type AdventureBand = 'not-yet-explored' | 'exploring' | 'practising' | 'confident';
 
@@ -67,42 +68,28 @@ function variantTargetLabel(event: AdventureEvidenceRecord): string | null {
   return itemLabel(variant.target_item_id);
 }
 
-function uniqueDates(events: AdventureEvidenceRecord[]): string[] {
-  const dates = new Set<string>();
-  for (const event of events) {
-    dates.add(adventureLocalDateKey(new Date(event.date)));
-  }
-  return Array.from(dates);
-}
-
 function computeBand(events: AdventureEvidenceRecord[]): AdventureBand {
-  const bandable = events.filter((event) => event.bandable);
-  if (bandable.length === 0) {
-    return events.length === 0 ? 'not-yet-explored' : 'exploring';
+  if (events.length === 0) {
+    return 'not-yet-explored';
   }
-  const qualifying = bandable.filter(
-    (event) => event.scaffold_level <= 1 && event.weight === 'strong'
-  );
-  const dates = uniqueDates(qualifying);
-  const allQualifyingAtLowScaffold = bandable.every((event) => event.scaffold_level <= 1);
-  const formats = new Set(qualifying.map((event) => event.variant_id));
-  const ordered = [...bandable].sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
-  const lastTwo = ordered.slice(-2);
-  const lastTwoQualifying = lastTwo.length >= 2 && lastTwo.every((event) => event.scaffold_level <= 1);
-
-  if (qualifying.length === 0 || dates.length < 2) {
+  if (!events.some((event) => event.bandable)) {
     return 'exploring';
   }
-  if (
-    qualifying.length >= 3 &&
-    allQualifyingAtLowScaffold &&
-    dates.length >= 2 &&
-    formats.size >= 2 &&
-    lastTwoQualifying
-  ) {
-    return 'confident';
-  }
-  return 'practising';
+  const normalized = events.map((event) => ({
+    id: event.id,
+    skill_id: 'adventure-domain',
+    scaffold_level: event.scaffold_level,
+    weight: event.weight,
+    bandable: event.bandable,
+    date: event.date,
+    session_id: `${adventureLocalDateKey(new Date(event.date))}:${event.stop_id}`,
+    format_key: event.variant_id,
+  }));
+  const result = evaluateSkillBand('adventure-domain', normalized, {
+    domain: 'domain',
+    provisional: false,
+  });
+  return result.display_band;
 }
 
 function strengthSentence(events: AdventureEvidenceRecord[]): string | null {
