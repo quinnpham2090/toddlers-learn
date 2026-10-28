@@ -10,6 +10,7 @@ const LOCALE_RE = /^[a-z]{2,3}(?:-[A-Z]{2}|-[a-zA-Z0-9]{2,8})*$/;
 const STRING_REF_RE = /^[a-z0-9_]+(?:\.[a-z0-9_]+)+$/;
 const SHA256_RE = /^[a-f0-9]{64}$/;
 const ASSET_EXT_RE = /^assets\/[a-z0-9/_-]+\.(svg|png|webp|jpg|jpeg)$/;
+const VOICE_ASSET_EXT_RE = /^assets\/voice\/[a-z0-9/_-]+\.mp3$/;
 
 const AGE_BANDS = ['2-3', '3-4', '4-5', '2-5'];
 const AGE_BAND_MIN_ORDER = { '2-3': 1, '3-4': 2, '4-5': 3, '2-5': 1 };
@@ -680,6 +681,13 @@ export function validate(pack) {
       for (const [fPath, digest] of Object.entries(manifest.file_hashes)) {
         if (typeof digest !== 'string' || !SHA256_RE.test(digest)) {
           addError('P-MEDIA', 'P-MEDIA-INVALID-SHA256', manifest.id || 'manifest', 'manifest', `Invalid SHA-256 digest for "${fPath}" in manifest.file_hashes.`);
+        }
+        if (fPath.startsWith('assets/voice/')) {
+          if (!VOICE_ASSET_EXT_RE.test(fPath)) {
+            addError('P-MEDIA', 'P-MEDIA-VOICE-ASSET-PATH', manifest.id || 'manifest', 'manifest', `Voice asset "${fPath}" must live under assets/voice/<speaker>/ with an .mp3 extension.`);
+          }
+        } else if (fPath.endsWith('.mp3')) {
+          addError('P-MEDIA', 'P-MEDIA-MP3-OUTSIDE-VOICE', manifest.id || 'manifest', 'manifest', `MP3 assets are only allowed under assets/voice/ (got "${fPath}").`);
         }
       }
     }

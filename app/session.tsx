@@ -23,7 +23,9 @@ import {
   getPictureSets,
   getString,
   getSongTemplates,
+  getVoiceAsset,
 } from '../lib/pack-loader';
+import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
 import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
 import {
@@ -55,7 +57,12 @@ function stopSpeech(): void {
   }
 }
 
-function speakLine(text: string | null, onDone?: () => void): void {
+function stopAllNarration(): void {
+  stopVoice();
+  stopSpeech();
+}
+
+function speakLine(text: string | null, onDone?: () => void, rate: number = SPEECH_RATE): void {
   if (!text) {
     return;
   }
@@ -63,7 +70,7 @@ function speakLine(text: string | null, onDone?: () => void): void {
     Speech.stop();
     Speech.speak(text, {
       language: SPEECH_LANGUAGE,
-      rate: SPEECH_RATE,
+      rate,
       onDone,
       onError: onDone,
     });
@@ -72,37 +79,64 @@ function speakLine(text: string | null, onDone?: () => void): void {
   }
 }
 
+function narrateLine(
+  text: string,
+  stringKey: string,
+  speakerId: string | null,
+  rate: number,
+  onDone: () => void
+): void {
+  const asset = speakerId ? getVoiceAsset(getActivePackId(), speakerId, stringKey) : undefined;
+  if (asset !== undefined) {
+    const started = playVoiceAsset(asset, onDone, onDone);
+    if (started) {
+      return;
+    }
+  }
+  speakLine(text, onDone, rate);
+}
+
 function Narrator({
   text,
+  stringKey,
+  speakerId,
   onSpeakingChange,
 }: {
   text: string | null;
+  stringKey: string | null;
+  speakerId: string | null;
   onSpeakingChange: (speaking: boolean) => void;
 }) {
   useEffect(() => {
-    if (!text) {
+    if (!text || !stringKey) {
       onSpeakingChange(false);
-      stopSpeech();
+      stopAllNarration();
       return;
     }
     onSpeakingChange(true);
-    speakLine(text, () => onSpeakingChange(false));
+    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => onSpeakingChange(false));
     return () => {
-      stopSpeech();
+      stopAllNarration();
       onSpeakingChange(false);
     };
-  }, [text, onSpeakingChange]);
+  }, [text, stringKey, speakerId, onSpeakingChange]);
   return null;
 }
 
 function CelebrationSpeaker({
   celebration,
+  celebrationKey,
   word,
+  wordKey,
+  speakerId,
   onAdvance,
   onSpeakingChange,
 }: {
   celebration: string;
+  celebrationKey: string;
   word: string | null;
+  wordKey: string | null;
+  speakerId: string | null;
   onAdvance: () => void;
   onSpeakingChange: (speaking: boolean) => void;
 }) {
@@ -141,37 +175,20 @@ function CelebrationSpeaker({
       if (cancelled) {
         return;
       }
-      if (!word) {
+      if (!word || !wordKey) {
         finish();
         return;
       }
-      try {
-        Speech.speak(word, {
-          language: SPEECH_LANGUAGE,
-          rate: WORD_SPEECH_RATE,
-          onDone: () => {
-            onSpeakingChange(false);
-            startPause();
-          },
-          onError: () => {
-            onSpeakingChange(false);
-            finish();
-          },
-        });
-      } catch {
-        finish();
-      }
+      onSpeakingChange(true);
+      narrateLine(word, wordKey, speakerId, WORD_SPEECH_RATE, () => {
+        onSpeakingChange(false);
+        startPause();
+      });
     };
 
     onSpeakingChange(true);
     try {
-      Speech.stop();
-      Speech.speak(celebration, {
-        language: SPEECH_LANGUAGE,
-        rate: SPEECH_RATE,
-        onDone: speakWord,
-        onError: speakWord,
-      });
+      narrateLine(celebration, celebrationKey, speakerId, SPEECH_RATE, speakWord);
     } catch {
       speakWord();
     }
@@ -188,7 +205,7 @@ function CelebrationSpeaker({
         clearTimeout(pauseTimer);
         pauseTimer = null;
       }
-      stopSpeech();
+      stopAllNarration();
       onSpeakingChange(false);
     };
   }, []);
@@ -197,7 +214,7 @@ function CelebrationSpeaker({
 }
 
 function goBack(): void {
-  stopSpeech();
+  stopAllNarration();
   router.back();
 }
 
@@ -548,7 +565,7 @@ function ClosingCard({
           accessibilityRole="button"
           accessibilityLabel={songTitle ?? undefined}
           onPress={() => {
-            stopSpeech();
+            stopAllNarration();
             router.push({ pathname: '/composer', params: { templateId: song.id } });
           }}
           style={({ pressed }) => [
@@ -685,6 +702,14 @@ export default function SessionScreen() {
       : phase === 'closing'
         ? closingWin
         : null;
+  const speechKey =
+    phase === 'step'
+      ? scaffoldPrompt
+        ? scaffold.prompt_ref
+        : step.prompt_ref
+      : phase === 'closing'
+        ? lesson.closing_win_ref
+        : null;
 
   function handleChoose(itemId: string) {
     if (itemId !== step.target_item_id) {
@@ -713,7 +738,7 @@ export default function SessionScreen() {
       return;
     }
     advanceHandledRef.current = true;
-    stopSpeech();
+    stopAllNarration();
     setRetryCue(false);
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
@@ -758,7 +783,9 @@ export default function SessionScreen() {
 
   function handleListenAgain() {
     setSpeaking(true);
-    speakLine(stepPrompt, () => setSpeaking(false));
+    narrateLine(stepPrompt, step.prompt_ref, character?.id ?? null, SPEECH_RATE, () =>
+      setSpeaking(false)
+    );
   }
 
   const headerSection = (
@@ -820,11 +847,19 @@ export default function SessionScreen() {
   if (isTablet) {
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <Narrator text={speechLine} onSpeakingChange={setSpeaking} />
+        <Narrator
+          text={speechLine}
+          stringKey={speechKey}
+          speakerId={character?.id ?? null}
+          onSpeakingChange={setSpeaking}
+        />
         {phase === 'celebration' ? (
-<CelebrationSpeaker
+          <CelebrationSpeaker
             celebration={celebration}
+            celebrationKey={step.celebration_ref}
             word={targetWord}
+            wordKey={targetItem?.label_ref ?? null}
+            speakerId={character?.id ?? null}
             onAdvance={handleNext}
             onSpeakingChange={setSpeaking}
           />
@@ -844,11 +879,19 @@ export default function SessionScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-      <Narrator text={speechLine} onSpeakingChange={setSpeaking} />
+      <Narrator
+        text={speechLine}
+        stringKey={speechKey}
+        speakerId={character?.id ?? null}
+        onSpeakingChange={setSpeaking}
+      />
       {phase === 'celebration' ? (
         <CelebrationSpeaker
           celebration={celebration}
+          celebrationKey={step.celebration_ref}
           word={targetWord}
+          wordKey={targetItem?.label_ref ?? null}
+          speakerId={character?.id ?? null}
           onAdvance={handleNext}
           onSpeakingChange={setSpeaking}
         />
