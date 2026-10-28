@@ -115,8 +115,8 @@
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_3_prompt.mp3": "fcf5c4a6e9cedadd8121d527a50f33e1a052b3e7a24e1a973f0c749c66e45dd3",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_4_celebration.mp3": "bc75e6ada673f7d1836b2211edea1e1389ed1d37fb962558fbeda9e15efaccf2",
     "assets/voice/puff/lesson_red_flower_yellow_flower_step_4_prompt.mp3": "0dfaf78f2ab476a6a75f840aaf493d668dc6de0a252572da14583d66ed41a792",
-    "assets/voice/puff/lesson_red_flower_yellow_flower_step_5_celebration.mp3": "8f7c5a74b7154ea6bd12bedc51908d45493d68f7d49c4be48a3739207e571563",
-    "assets/voice/puff/lesson_red_flower_yellow_flower_step_5_prompt.mp3": "bc7b6e25866074bf7a4c1a9e6b5c11715f2e5bdb704334e11bc04cd79d4f15b4",
+    "assets/voice/puff/lesson_red_flower_yellow_flower_step_5_celebration.mp3": "9d2c8be451919882ce4869facb3b4dea7f1dd47df475139a2f937c1674b550ef",
+    "assets/voice/puff/lesson_red_flower_yellow_flower_step_5_prompt.mp3": "42075b505098ffed6a599e7a6eca2d3d58f7ed25f32cc2dc5320d0b6a253b642",
     "assets/voice/puff/scaffold_l0_prompt.mp3": "4b74152c0469302381a6638059eb59da848233b7f40bb7bebf5d611720d0440a",
     "assets/voice/puff/scaffold_l1_prompt.mp3": "73688a0c822bf58680e5e4927bbbb2640f0d302e35465740c8951757c3f86e7a",
     "assets/voice/puff/scaffold_l2_prompt.mp3": "fa49f9a2a09316928e806d8c28341d8d3f9c1741b0a5680c316cab669978e4ed",
@@ -162,7 +162,7 @@
     "assets/voice/moss/scaffold_l1_prompt.mp3": "414f867ca6561f4f3e8d6ad87dbe944837a11d3f952872e24b2295c05a43937f",
     "assets/voice/moss/scaffold_l2_prompt.mp3": "ceef70bf977825977f604ea3b816b1d89ce9d54682e90b61944d5b97c37c90d5",
     "assets/voice/moss/scaffold_l3_prompt.mp3": "4ca14d48f54479209f8c2f0857b273761e301fc24c6d95c9eb91447b05b24d2c",
-    "strings.json": "224e0f8d1df5131c5f30ffa6c7c8745c9320abba19a60553b26416746dc19c82",
+    "strings.json": "56906847a2d0105bb5096688a57a9a0b31567c550db57d9841a6f98dbf6521cb",
     "skills.json": "20323c662f7ca5ddab91122fb0baff989c6a98e28ec28d449230002ab0e76fed",
     "lessons.json": "83be6ec6508393ddaa34e7d5070ecb18eb273f74959b5d24a66cfea674658e22",
     "song_templates.json": "9465ae685dcbf116336ad4d60b47f0dbe3430967020ba56d771c396f97e1bc88",
@@ -173,5 +173,5 @@
     "routines.json": "5e6f9bf2e62470979927c14aaea9ec18d3a586edde87f72f5b3354aebf518c50",
     "time_concepts.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "2534651536968559d142ea8126275eb8dca42b15cffb65153a553dfecb188b50"
+  "pack_sha256": "afe7e06a63c5cb5bb5a297e4fb1aded7b26c9b9f819c0898be29decc7116c529"
 }

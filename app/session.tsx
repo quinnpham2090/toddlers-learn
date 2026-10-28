@@ -1638,7 +1638,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   pictureCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F4EBDA',
     borderRadius: 22,
     borderWidth: 1,
     borderColor: '#E7DFCE',
@@ -1646,7 +1646,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pictureCardTablet: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F4EBDA',
     borderRadius: 26,
     borderWidth: 1,
     borderColor: '#E7DFCE',
@@ -1654,7 +1654,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pictureCardSingle: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F4EBDA',
     borderRadius: 22,
     borderWidth: 1,
     borderColor: '#E7DFCE',
