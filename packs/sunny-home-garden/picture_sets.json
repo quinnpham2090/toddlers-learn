@@ -24,7 +24,7 @@
         "label_ref": "item.cup.label",
         "alt_text_parent_ref": "item.cup.alt_parent",
         "asset_path": "assets/cup.jpg",
-        "asset_sha256": "2b4f2e687dc185eac81eadc7e1c113f09b96e9e9a91a8e12c5c9e9e696342465",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -36,7 +36,7 @@
         "label_ref": "item.spoon.label",
         "alt_text_parent_ref": "item.spoon.alt_parent",
         "asset_path": "assets/spoon.jpg",
-        "asset_sha256": "0cc6a35235d0c36695b71fc9d4ec0e9c32adda8b4af42005395a42d4757a3c9f",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -48,7 +48,7 @@
         "label_ref": "item.book.label",
         "alt_text_parent_ref": "item.book.alt_parent",
         "asset_path": "assets/book.jpg",
-        "asset_sha256": "c800c8ac89daa377d50936b7cd65e72d48e3e19c09317c7b645f7889421fe431",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -60,7 +60,7 @@
         "label_ref": "item.ball.label",
         "alt_text_parent_ref": "item.ball.alt_parent",
         "asset_path": "assets/ball.jpg",
-        "asset_sha256": "5956b486402eb00b5187f44edf17075455c136f962da5b3a6719b1aa5c57b9f7",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -94,7 +94,7 @@
         "label_ref": "item.red_flower.label",
         "alt_text_parent_ref": "item.red_flower.alt_parent",
         "asset_path": "assets/red-flower.jpg",
-        "asset_sha256": "c9a30f75f410a59f19ecceac32af6de6e7ebc3b4a0e2438aa4ae4ee6c602a3b4",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -106,7 +106,7 @@
         "label_ref": "item.yellow_flower.label",
         "alt_text_parent_ref": "item.yellow_flower.alt_parent",
         "asset_path": "assets/yellow-flower.jpg",
-        "asset_sha256": "414cafccf786b513069ab9e0a118dcbfa6276dbaed38a1064040858aa060d8a3",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -118,7 +118,7 @@
         "label_ref": "item.blue_flower.label",
         "alt_text_parent_ref": "item.blue_flower.alt_parent",
         "asset_path": "assets/blue-flower.jpg",
-        "asset_sha256": "6644177922970ecee9c0f3acfcb73d06dfb4e85ca266e1439540b3fccf0616a5",
+        "asset_sha256": "ce20fa5b01260d0f45cc37319c363b98bf6effb5f3c36f5e14392a912c7e768b",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -130,7 +130,7 @@
         "label_ref": "item.green_flower.label",
         "alt_text_parent_ref": "item.green_flower.alt_parent",
         "asset_path": "assets/green-flower.jpg",
-        "asset_sha256": "35e30b062d8d0002a9dd0cad12c280d2373468bfdd74e304ed61fc8262ade14b",
+        "asset_sha256": "ed42bcbdb4f774c6265ac5ac27c37053232e6ccd19c6a86a4ebb18d7585c109b",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -142,7 +142,7 @@
         "label_ref": "item.red_ball.label",
         "alt_text_parent_ref": "item.red_ball.alt_parent",
         "asset_path": "assets/red-ball.jpg",
-        "asset_sha256": "0c98cdad7fbd94f974ef303efae61d7267cb8ecddf457a22a29b1da99a3133a1",
+        "asset_sha256": "8f64a89fcdd2c619f68cefbdac4265f4c03c00826a39f9b1a03fead1ad031bd1",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -154,7 +154,7 @@
         "label_ref": "item.yellow_cup.label",
         "alt_text_parent_ref": "item.yellow_cup.alt_parent",
         "asset_path": "assets/yellow-cup.jpg",
-        "asset_sha256": "022dfb0256ef3eebc828c2a040c44c32a392c794f59fe9705a1b489877248343",
+        "asset_sha256": "f034add67362fdb5a68a31ca3d3c5debd0a76aaf92073bb8b7ea8bc23ae16c20",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -166,7 +166,7 @@
         "label_ref": "item.blue_book.label",
         "alt_text_parent_ref": "item.blue_book.alt_parent",
         "asset_path": "assets/blue-book.jpg",
-        "asset_sha256": "226f9ac7e6ffc84825b1810abe5e336dc45e238b4caab2408c0e4d05193e0e48",
+        "asset_sha256": "b39cbcee3b0b8da3c97abca705363b51128a7f75f38978eab4ddb6b6fddd47e6",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -178,7 +178,7 @@
         "label_ref": "item.green_leaf.label",
         "alt_text_parent_ref": "item.green_leaf.alt_parent",
         "asset_path": "assets/green-leaf.jpg",
-        "asset_sha256": "fb2f21cf6cc92613e8c386a912068a9b5e488b04e08df3f6526e452baf039033",
+        "asset_sha256": "d2519dff90f433f30da1cf03c1214fa470b6e977abde6a95590787a5413aca12",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -213,7 +213,7 @@
         "label_ref": "item.red_basket.label",
         "alt_text_parent_ref": "item.red_basket.alt_parent",
         "asset_path": "assets/red-basket.jpg",
-        "asset_sha256": "cf0a131ba86beac62c6ffbf78f2055b58bc9fcaa57b9172c426d4afc5e828eb3",
+        "asset_sha256": "f5f211d80594797d908605e09a4bfbebae5b16f76d7f5f3af5b7eeb97d3998dd",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -225,7 +225,7 @@
         "label_ref": "item.yellow_basket.label",
         "alt_text_parent_ref": "item.yellow_basket.alt_parent",
         "asset_path": "assets/yellow-basket.jpg",
-        "asset_sha256": "de3fd09bb89e94604081d9fb24f0deacbdda4f2a3a5f8a5d0ab010ef61263c77",
+        "asset_sha256": "005fe2c6a3b92e9a1b100b98baa0af4e1f12883a402431673818e74463530d8f",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -237,7 +237,7 @@
         "label_ref": "item.sort_red_ball.label",
         "alt_text_parent_ref": "item.sort_red_ball.alt_parent",
         "asset_path": "assets/sort-red-ball.jpg",
-        "asset_sha256": "4f4402e4ab1ce3592c1304da2e0a7351751fca82f7f94c3bf9fd79ab0e00ae40",
+        "asset_sha256": "0cd11ed5a087d8e3bc63e6c16b84a634d76dd850904b7ba8a92a7c1bd29651bc",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -249,7 +249,7 @@
         "label_ref": "item.sort_red_sock.label",
         "alt_text_parent_ref": "item.sort_red_sock.alt_parent",
         "asset_path": "assets/sort-red-sock.jpg",
-        "asset_sha256": "f0367a4139ba019ae7a0b17faa3ef039a28d4a154a1e6f180a5f34df52c78302",
+        "asset_sha256": "86261e916db8c1cb8b9ec3a54c0dc49ee448bd497167d0e55699448d0d21a5ef",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -262,7 +262,7 @@
         "label_ref": "item.sort_yellow_cup.label",
         "alt_text_parent_ref": "item.sort_yellow_cup.alt_parent",
         "asset_path": "assets/sort-yellow-cup.jpg",
-        "asset_sha256": "d4ede412bde3a0d3091d8d58886eac0ca2d7d05444c8f19f86fdd3ab17e307aa",
+        "asset_sha256": "d1b40635ccd0285d2675280d047af17b898f4ae7483f0d430a258d11c9661e24",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -274,7 +274,7 @@
         "label_ref": "item.sort_yellow_book.label",
         "alt_text_parent_ref": "item.sort_yellow_book.alt_parent",
         "asset_path": "assets/sort-yellow-book.jpg",
-        "asset_sha256": "604a2ff9eee3152988a6369fdfa8734246cae3c0584432a03be839a931ad2b71",
+        "asset_sha256": "99b1f7ed2ad42be5eee93bd81191a49508ef6954da1a64c897a64a1b7aad2a36",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -286,7 +286,7 @@
         "label_ref": "item.sort_blue_spoon.label",
         "alt_text_parent_ref": "item.sort_blue_spoon.alt_parent",
         "asset_path": "assets/sort-blue-spoon.jpg",
-        "asset_sha256": "b5a05ba9acb217f9153e87d8ad1c7180582a0781e3df25ad7a0da036180ddd49",
+        "asset_sha256": "d3820ed4ab289cdb4f15d01ab98e10a567d3d02c9566f04ae292a39b46f80378",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -298,7 +298,7 @@
         "label_ref": "item.sort_blue_leaf.label",
         "alt_text_parent_ref": "item.sort_blue_leaf.alt_parent",
         "asset_path": "assets/sort-blue-leaf.jpg",
-        "asset_sha256": "82213d4aeb5d811d84f60f97e220744b9316a5c0e4a3ad4cae1f015db76bf4b9",
+        "asset_sha256": "745263c072cc1fa1535cc571a753daeffe9359c17105a8b63584c9a887f2e9c9",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -333,7 +333,7 @@
         "label_ref": "item.big_cup.label",
         "alt_text_parent_ref": "item.big_cup.alt_parent",
         "asset_path": "assets/big-cup.jpg",
-        "asset_sha256": "fc020911a5d9fbb8fa6b58f8432168e866e1d7528da8d94b78abd0d926baa3cf",
+        "asset_sha256": "895085f0c518432221505dd13068b4b0899c67510f619088b810fe8de633ba65",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -345,7 +345,7 @@
         "label_ref": "item.little_cup.label",
         "alt_text_parent_ref": "item.little_cup.alt_parent",
         "asset_path": "assets/little-cup.jpg",
-        "asset_sha256": "247ad36df115f2261ad7447219f675e32a74d89c1ad3b95f4eb363ef4f511296",
+        "asset_sha256": "690ac319192c682ed5438a2fed29f53dc361b42d9014db64b11ac0db0796a42a",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -357,7 +357,7 @@
         "label_ref": "item.big_ball.label",
         "alt_text_parent_ref": "item.big_ball.alt_parent",
         "asset_path": "assets/big-ball.jpg",
-        "asset_sha256": "9c5ebdfde9aef06fdbd4a96d09ff7f06feb6c415211ddf936d21bc99b8dce716",
+        "asset_sha256": "287e45ead22f05f5c8924a0c71c9e4f5f2ad025b9ffe96e7cad3ee5106588bc1",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -369,7 +369,7 @@
         "label_ref": "item.little_ball.label",
         "alt_text_parent_ref": "item.little_ball.alt_parent",
         "asset_path": "assets/little-ball.jpg",
-        "asset_sha256": "7fc65d0d5cf8b0e529fdad2719c51b3ca15b1d258e4a084955a3f8d2cc5b9f92",
+        "asset_sha256": "0cc6ebe8118bd1c843a6c1967b1b54ae3b33a00e5274380a3bd5a8a2bf9f427b",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -381,7 +381,7 @@
         "label_ref": "item.big_book.label",
         "alt_text_parent_ref": "item.big_book.alt_parent",
         "asset_path": "assets/big-book.jpg",
-        "asset_sha256": "115ff754e439234836dd13fcd58e07eb59ec47f24c0df43f8f040eadcc37ae7c",
+        "asset_sha256": "336655298d68f6e5932642495b0b8b3c91df54f077ed8b31af1fd0d95b2a4017",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -393,7 +393,7 @@
         "label_ref": "item.little_book.label",
         "alt_text_parent_ref": "item.little_book.alt_parent",
         "asset_path": "assets/little-book.jpg",
-        "asset_sha256": "2f0e7ac0a1bcd6e4aa0aabb66c54c189bc1f4ffcd88617313e732bba82ff0ef2",
+        "asset_sha256": "53a90120c948263f86d738d719a6cc1a234a0ca700ec19c306564cdd183de849",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -405,7 +405,7 @@
         "label_ref": "item.big_flower.label",
         "alt_text_parent_ref": "item.big_flower.alt_parent",
         "asset_path": "assets/big-flower.jpg",
-        "asset_sha256": "248f88b9333266f4da7a7b3752259fc08c26b0e72538dbcea1d687394f6f9175",
+        "asset_sha256": "9a96541c22f6949d9a412abc19bed1cf875d153b91ebee7213a3337503fdf5d3",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -417,7 +417,7 @@
         "label_ref": "item.little_flower.label",
         "alt_text_parent_ref": "item.little_flower.alt_parent",
         "asset_path": "assets/little-flower.jpg",
-        "asset_sha256": "7a6190d96c06f653d16051046ad749e4be7e70ba1bc0bceacf67a868a067a999",
+        "asset_sha256": "6ab8f6e56bae680af9c94952ca77b194dc43be43c2e25c9822d63c468b355e53",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -429,7 +429,7 @@
         "label_ref": "item.big_spoon.label",
         "alt_text_parent_ref": "item.big_spoon.alt_parent",
         "asset_path": "assets/big-spoon.jpg",
-        "asset_sha256": "4e7c47506a478a79ac517772d1b526b1f88c46e3b7e4af2c2f8248e10de0dac1",
+        "asset_sha256": "b123f769eb21cfe70871ba76e4b6a7c9f0662428ba22bc72c23f218aeb81761f",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -441,7 +441,7 @@
         "label_ref": "item.little_spoon.label",
         "alt_text_parent_ref": "item.little_spoon.alt_parent",
         "asset_path": "assets/little-spoon.jpg",
-        "asset_sha256": "865c37dbe433fbe0570b2ca24c0181f5100de706dc8bf73c9a4a77a745422e43",
+        "asset_sha256": "6886841709c8370ff98d47ed63efa425a22abac09a9a3e713a13b0543a597b85",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -475,7 +475,7 @@
         "label_ref": "item.laundry_basket.label",
         "alt_text_parent_ref": "item.laundry_basket.alt_parent",
         "asset_path": "assets/laundry-basket.jpg",
-        "asset_sha256": "544e2e6d9b6079fb6fc5e0016043abdbc7c6981a1d8136b40bf16f185320b30c",
+        "asset_sha256": "09a7221e705d7ed8b8120a1923a9443f17a68e7e2f7721bfd9a3c07e00678442",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -487,7 +487,7 @@
         "label_ref": "item.cardboard_box.label",
         "alt_text_parent_ref": "item.cardboard_box.alt_parent",
         "asset_path": "assets/cardboard-box.jpg",
-        "asset_sha256": "f61700cb248eec82efdba683d7a677611fc9735351b0e7535c386a0befeac070",
+        "asset_sha256": "71454cbe15be7c8285282dff27a4b8e0845e9d25706c572c2603bcffe551d0a3",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -499,7 +499,7 @@
         "label_ref": "item.flat_towel.label",
         "alt_text_parent_ref": "item.flat_towel.alt_parent",
         "asset_path": "assets/flat-towel.jpg",
-        "asset_sha256": "c95e165935974a0bdc67a134d794736f9f455d3b7b31386689285a1a4974d9b0",
+        "asset_sha256": "73156b2d8ea20a232cf4710a5813680cc6d75c1d6c91722143c9b18e5bcbcddb",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -512,7 +512,7 @@
         "label_ref": "item.soft_toy.label",
         "alt_text_parent_ref": "item.soft_toy.alt_parent",
         "asset_path": "assets/soft-toy.jpg",
-        "asset_sha256": "7ad822541e5e84508b3a0f4453d1150249a4f8023d26f6811b8513761384b221",
+        "asset_sha256": "448d3d2aea878f6aff70906cb5f792f35a8bb5fc4aa70d19eea3cfbb5145c7d7",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -525,7 +525,7 @@
         "label_ref": "item.book_stack.label",
         "alt_text_parent_ref": "item.book_stack.alt_parent",
         "asset_path": "assets/book-stack.jpg",
-        "asset_sha256": "a082ae2033846e13af36c2dfd0f20863303f8264f9cd903f6b35ef34f1f1f9cd",
+        "asset_sha256": "e32bee5fc021574463d4f41f9646e3d98c7d50302e046f26a85f30fbdbf5f6a6",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -537,7 +537,7 @@
         "label_ref": "item.clean_socks.label",
         "alt_text_parent_ref": "item.clean_socks.alt_parent",
         "asset_path": "assets/clean-socks.jpg",
-        "asset_sha256": "ff588707696f9037d64b88ce1d4787b2c0e8c29f56884f925f800a0f25ae688a",
+        "asset_sha256": "a1bb032d50b156012f99da881e4cb6fe544f283cc2b2e4754e414957dc9b30f8",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -550,7 +550,7 @@
         "label_ref": "item.plastic_plate.label",
         "alt_text_parent_ref": "item.plastic_plate.alt_parent",
         "asset_path": "assets/plastic-plate.jpg",
-        "asset_sha256": "3e1b17c45df476f301ead52fdc2d7af03699c223c9135a462d01d153ff54c639",
+        "asset_sha256": "22b3d1819fded3c39f3c5983ddf376b63c3bec1ba9434f2dff00aad7f6a7f4e1",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -562,7 +562,7 @@
         "label_ref": "item.paper_plate.label",
         "alt_text_parent_ref": "item.paper_plate.alt_parent",
         "asset_path": "assets/paper-plate.jpg",
-        "asset_sha256": "7ee10f420249519f6b5d4b8799a1d349c5b1e2d0a4c2664a6c29e44d9a340cc2",
+        "asset_sha256": "dedf02efdc94f9393579c255ceb12cb80549fc9c4fc84e704816c62c17c0b97d",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -574,7 +574,7 @@
         "label_ref": "item.placemat.label",
         "alt_text_parent_ref": "item.placemat.alt_parent",
         "asset_path": "assets/placemat.jpg",
-        "asset_sha256": "be101c4ccf3d25200a87aa931c25c7be3c99146fb8fc3e0e0ec98f656673cafc",
+        "asset_sha256": "e39cc235d5eb53a3777f0df4366827ce4accd4181f22f69f62eb2762335e502f",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -586,7 +586,7 @@
         "label_ref": "item.plastic_cup.label",
         "alt_text_parent_ref": "item.plastic_cup.alt_parent",
         "asset_path": "assets/plastic-cup.jpg",
-        "asset_sha256": "c3b57e8af1177f459e772832d14fd531e4b23f4c696c7094450a1da7e523e31e",
+        "asset_sha256": "38f67aa95819f2a93ba81089edacd250d768feedbe390a8288125c229c258b1e",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -598,7 +598,7 @@
         "label_ref": "item.paper_cup.label",
         "alt_text_parent_ref": "item.paper_cup.alt_parent",
         "asset_path": "assets/paper-cup.jpg",
-        "asset_sha256": "dc2ac9e4c027e575ea46064892c2cd50f80d3ad320ad784e77efeefbcb8506ac",
+        "asset_sha256": "cef190226ca9465c80452ecddb29cff20771818bb0925ec39411150fb14406b3",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -610,7 +610,7 @@
         "label_ref": "item.cloth_napkin.label",
         "alt_text_parent_ref": "item.cloth_napkin.alt_parent",
         "asset_path": "assets/cloth-napkin.jpg",
-        "asset_sha256": "3573c8c151b4ff771d7fe4a2bd5000a36f6e6fa834bf5ae2c0ab11541ee0555c",
+        "asset_sha256": "d09a87b4c90585a9a20a0d03abd4cf3f596bb129a39ceab7b048a33a7219d71b",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -623,7 +623,7 @@
         "label_ref": "item.paper_towel_sheet.label",
         "alt_text_parent_ref": "item.paper_towel_sheet.alt_parent",
         "asset_path": "assets/paper-towel-sheet.jpg",
-        "asset_sha256": "49bdbba5ed09adfb2848ace79164b00464093a319f72d59ba41316dcc67c0e6f",
+        "asset_sha256": "5259b09f15c583f42bedb2b8e0954706e5c5f670471cf3197c772afd062b113d",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -635,7 +635,7 @@
         "label_ref": "item.tea_towel.label",
         "alt_text_parent_ref": "item.tea_towel.alt_parent",
         "asset_path": "assets/tea-towel.jpg",
-        "asset_sha256": "a59a2713d2a0329adfe162911cedb4fa740b03f65d9bce318f06fe53082082ea",
+        "asset_sha256": "83f44adb1dd67cb810e0c15563c1a8410d0ee0357b02389ac652d025b9d3210b",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -648,7 +648,7 @@
         "label_ref": "item.watering_can.label",
         "alt_text_parent_ref": "item.watering_can.alt_parent",
         "asset_path": "assets/watering-can.jpg",
-        "asset_sha256": "69434bbd13877c4b42940094a07cf02857a02997d8f8248b6e35762bbc89e456",
+        "asset_sha256": "0a533e805b2d3ae25158fd03fa776e551cec481c2ae8f6cf02c0df56807a9881",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -660,7 +660,7 @@
         "label_ref": "item.damp_cloth.label",
         "alt_text_parent_ref": "item.damp_cloth.alt_parent",
         "asset_path": "assets/damp-cloth.jpg",
-        "asset_sha256": "24e9d4900509b7e0d5dc9a17600cd86cdedfbfe637d86d855aa23d63b24cc8cf",
+        "asset_sha256": "0681cec1c0285bef3c819134f834cb53774d6b672a52b6bebb78965ce233567f",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -673,7 +673,7 @@
         "label_ref": "item.indoor_plant.label",
         "alt_text_parent_ref": "item.indoor_plant.alt_parent",
         "asset_path": "assets/indoor-plant.jpg",
-        "asset_sha256": "8743ba10e7534da2b38e4cdc34ef3999c1937e309768c2c9e915c6e9b0f02076",
+        "asset_sha256": "c4d07e2b6ff4afda08753c2d85042914c875add4db2b1b8188a035db15121bd0",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -686,7 +686,7 @@
         "label_ref": "item.outdoor_plant.label",
         "alt_text_parent_ref": "item.outdoor_plant.alt_parent",
         "asset_path": "assets/outdoor-plant.jpg",
-        "asset_sha256": "5150015dedad7ca99dc9893faf74c960f4485bff0e4116a134fdb55ee33da980",
+        "asset_sha256": "b3b03f8f9c351aa92b2e22cdcf1f2d3aef458a297835675d6501d8e8d49ee8be",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -699,7 +699,7 @@
         "label_ref": "item.night_lamp.label",
         "alt_text_parent_ref": "item.night_lamp.alt_parent",
         "asset_path": "assets/night-lamp.jpg",
-        "asset_sha256": "4f5f596c1af7297b5539d3bdbd902b8b0f6a790024c166f4b269749462192f62",
+        "asset_sha256": "9e229d7a60407284e0373a02f9615f6299f7f92da892a36a865153ee762a940c",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -711,7 +711,7 @@
         "label_ref": "item.closed_curtains.label",
         "alt_text_parent_ref": "item.closed_curtains.alt_parent",
         "asset_path": "assets/closed-curtains.jpg",
-        "asset_sha256": "548e44aab6caf0ec2a1d2f8f00e52cb6bab5832a17475bcd93bdbfcf6598d412",
+        "asset_sha256": "055106f4be214ae19ea635a710bd3054be63018150f56abb70cfbaae63f30aaf",
         "size_class": "large_household",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -723,7 +723,7 @@
         "label_ref": "item.quiet_book.label",
         "alt_text_parent_ref": "item.quiet_book.alt_parent",
         "asset_path": "assets/quiet-book.jpg",
-        "asset_sha256": "82fa9279fd7fb1f1ecac2054ab353b8deab27dda099e5934c144a4e736addf57",
+        "asset_sha256": "c239b2feeccc96d29ca00420e2e24783e734cf317f3c8f93c4b5fb7c18a8aad2",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -735,7 +735,7 @@
         "label_ref": "item.song_time_card.label",
         "alt_text_parent_ref": "item.song_time_card.alt_parent",
         "asset_path": "assets/song-time-card.jpg",
-        "asset_sha256": "dd5a750331139097b2abccb8f059594bfb13d049108e10bba9e8c904cb3b2594",
+        "asset_sha256": "4940ead33a8117ae76c99a130353c956db3d85031487e3f00376e6300e69e91d",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [
@@ -747,7 +747,7 @@
         "label_ref": "item.helping_hands.label",
         "alt_text_parent_ref": "item.helping_hands.alt_parent",
         "asset_path": "assets/helping-hands.jpg",
-        "asset_sha256": "0eb516b64d3bba259e243fa467c551b859e9ce072a7ee2d900dbecc7b2bcf550",
+        "asset_sha256": "4f741e9baf69597adef87433a7476672b21930560f4e329d923a8e46c4d5188d",
         "size_class": "handheld_safe",
         "passes_choke_tube_proxy": true,
         "depiction_tags": [

@@ -3,7 +3,7 @@ import type { ScrollViewInstance } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import ParentGate from '../components/ParentGate';
 import {
   CharacterRecord,
@@ -21,6 +21,7 @@ import { loadSkillEvidence } from '../lib/progress-store';
 import { loadParentSettings } from '../lib/parent-settings';
 import { loadAdventureQuestionnaire } from '../lib/adventure-parent';
 import { loadAdventureState } from '../lib/adventure-store';
+import { getPostAdventurePathSelection } from '../lib/path-queue';
 import { missionsUnlocked } from '../lib/mission-unlock';
 
 const START_BUTTON_LABEL = 'Start';
@@ -229,10 +230,12 @@ export default function HubWorld() {
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
   const [adventureGateOpen, setAdventureGateOpen] = useState(false);
   const [adventureStarted, setAdventureStarted] = useState(false);
-  const [stopStates, setStopStates] = useState<StopState[]>(() => computeStopStates().states);
+  const initialStopSelection = useMemo(() => computeStopStates(), []);
+  const [stopStates, setStopStates] = useState<StopState[]>(initialStopSelection.states);
   const [stopLessonIds, setStopLessonIds] = useState<(string | null)[]>(
-    () => computeStopStates().lessonIds
+    initialStopSelection.lessonIds
   );
+  const [nextPathSessionReady, setNextPathSessionReady] = useState(false);
   const [expandedStop, setExpandedStop] = useState<number | null>(null);
   const [currentNodeY, setCurrentNodeY] = useState(0);
   const scrollRef = useRef<ScrollViewInstance | null>(null);
@@ -266,6 +269,7 @@ export default function HubWorld() {
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
       setMissionsOpen(missionsUnlocked());
+      setNextPathSessionReady(getPostAdventurePathSelection().lessonId !== null);
       setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
       setStopStates(states);
@@ -478,10 +482,12 @@ export default function HubWorld() {
       {!adventureStarted ? (
         <AdventureButton onPress={() => setAdventureGateOpen(true)} />
       ) : null}
-      <StartButton
-        label={allLessonsCompleted ? PLAY_AGAIN_LABEL : START_BUTTON_LABEL}
-        onPress={() => router.push('/session')}
-      />
+      {!allLessonsCompleted || nextPathSessionReady ? (
+        <StartButton
+          label={START_BUTTON_LABEL}
+          onPress={() => router.push('/session')}
+        />
+      ) : null}
       <MapButton onPress={() => router.push('/child-map')} />
       {adventureStarted ? (
         <AdventureButton onPress={() => setAdventureGateOpen(true)} />

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -221,7 +221,7 @@ export default function ParentDashboardScreen() {
   const [resetConfirming, setResetConfirming] = useState(false);
 
   const evidenceBySkill = groupEvidenceBySkill(evidence);
-  const placementMap = buildPlacementMap();
+  const placementMap = useMemo(() => buildPlacementMap(), []);
   const bandRows = placementMap.skillBands.map((row) => ({
     key: row.skillId,
     title: row.title,

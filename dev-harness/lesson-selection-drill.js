@@ -51,7 +51,7 @@ const expectedJourney = [
   'everyday-object-words',
   'colour-naming',
   'sorting-one-rule',
-  'sequencing-now-next',
+  'sizes-big-little',
 ];
 report(
   'Journey (hub stop) order is the four-skill chain',
@@ -63,8 +63,8 @@ const cases = [
   { completed: [], expected: 'lesson-hello-cup', label: 'no evidence -> lesson 1' },
   { completed: ['everyday-object-words'], expected: 'lesson-red-flower-yellow-flower', label: 'lesson 1 evidence -> lesson 2' },
   { completed: ['everyday-object-words', 'colour-naming'], expected: 'lesson-where-does-this-go', label: 'lessons 1+2 evidence -> lesson 3' },
-  { completed: ['everyday-object-words', 'colour-naming', 'sorting-one-rule'], expected: 'lesson-now-next', label: 'lessons 1+2+3 evidence -> lesson 4' },
-  { completed: ['everyday-object-words', 'colour-naming', 'sorting-one-rule', 'sequencing-now-next'], expected: 'lesson-hello-cup', label: 'all four -> lesson 1 (replay)' },
+  { completed: ['everyday-object-words', 'colour-naming', 'sorting-one-rule'], expected: 'lesson-big-little', label: 'lessons 1+2+3 evidence -> lesson 4' },
+  { completed: ['everyday-object-words', 'colour-naming', 'sorting-one-rule', 'sizes-big-little'], expected: null, label: 'all four -> completion (no silent replay)' },
 ];
 
 for (const c of cases) {
@@ -74,9 +74,11 @@ for (const c of cases) {
     completedSkillIds: c.completed,
     getLessonById: getSunnyLessonById,
   });
+  const matches =
+    c.expected === null ? selected === null : selected !== null && selected.id === c.expected;
   report(
     `Pack 1 selection: ${c.label}`,
-    selected !== null && selected.id === c.expected,
+    matches,
     selected ? `selected ${selected.id}` : 'selected null'
   );
 }

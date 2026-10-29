@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,6 +25,8 @@ import {
 import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
 import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
 import {
   getPostAdventurePathSelection,
   type PostAdventurePathSelection,
@@ -45,6 +46,7 @@ const BACK_LABEL = 'Back';
 const HELP_LABEL = 'Help';
 const NEXT_LABEL = 'Next';
 const DONE_LABEL = 'Done';
+const SESSION_COMPLETION_LABEL = 'All done for now!';
 const CONTINUE_LABEL = 'Continue where you left off';
 const START_FRESH_LABEL = 'Start fresh';
 const LISTEN_LABEL = 'Listen';
@@ -80,7 +82,7 @@ const FINALE_CONFIG: Record<
   },
   'lesson-big-little': {
     targetItemId: 'big-spoon',
-    tileItemIds: ['big-spoon', 'little-spoon', 'big-cup'],
+    tileItemIds: ['big-spoon', 'little-spoon'],
     findPromptRef: 'lesson.big_little.find_prompt',
   },
 };
@@ -584,8 +586,6 @@ function PictureChoice({
         style={[
           single ? styles.pictureCardSingle : isTablet ? styles.pictureCardTablet : styles.pictureCard,
           size > 0 && styles.pictureCardSized,
-          highlighted && styles.pictureCardHighlighted,
-          picked && styles.pictureCardPicked,
           { transform: [{ scale: pressScale }] },
         ]}
       >
@@ -603,9 +603,9 @@ function PictureChoice({
             />
           ) : null}
         </View>
-        <Text style={single ? styles.pictureLabelSingle : styles.pictureLabel} numberOfLines={2}>
-          {label}
-        </Text>
+        {highlighted || picked ? (
+          <View pointerEvents="none" style={[styles.tileRing, picked && styles.tileRingPicked]} />
+        ) : null}
       </Animated.View>
     </Pressable>
   );
@@ -804,7 +804,10 @@ export default function SessionScreen() {
   const [pathSelection] = useState<PostAdventurePathSelection | null>(() =>
     overrideActive ? null : getPostAdventurePathSelection()
   );
-  const lesson = resolveLesson(overrideActive ? overrideLessonId : undefined, pathSelection);
+  const lesson = useMemo(
+    () => resolveLesson(overrideActive ? overrideLessonId : undefined, pathSelection),
+    [overrideActive, overrideLessonId, pathSelection]
+  );
   const loadBookmark = overrideActive ? loadReplayBookmark : loadSessionBookmark;
   const saveBookmark = overrideActive ? setReplayBookmark : setSessionBookmark;
   const clearBookmark = overrideActive ? clearReplayBookmark : clearSessionBookmark;
@@ -857,10 +860,22 @@ export default function SessionScreen() {
   }, [stepIndex, phase, stepAnim]);
 
   if (!lesson) {
+    if (overrideActive) {
+      return (
+        <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+          <View style={styles.topRow}>
+            <BackButton />
+          </View>
+        </SafeAreaView>
+      );
+    }
     return (
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <View style={styles.topRow}>
           <BackButton />
+        </View>
+        <View style={styles.completionStage}>
+          <Text style={styles.completionTitle}>{SESSION_COMPLETION_LABEL}</Text>
         </View>
       </SafeAreaView>
     );
@@ -1371,24 +1386,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  pictureCardPicked: {
-    borderColor: '#E8A24B',
-    borderWidth: 2,
-    shadowColor: '#B4622D',
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 8,
-  },
   pictureCardSized: {
     flex: 1,
-    justifyContent: 'space-between',
   },
   pictureFrameSized: {
     width: '100%',
     flex: 1,
-    borderRadius: 12,
-    backgroundColor: '#F4EBDA',
+    borderRadius: 14,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1524,6 +1528,17 @@ const styles = StyleSheet.create({
   feedbackBannerTextTablet: {
     fontSize: 18,
     lineHeight: 26,
+    fontWeight: '800',
+    color: '#2B6E58',
+    textAlign: 'center',
+  },
+  completionStage: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  completionTitle: {
+    fontSize: 26,
     fontWeight: '800',
     color: '#2B6E58',
     textAlign: 'center',
@@ -1865,68 +1880,54 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   pictureCard: {
-    backgroundColor: '#F4EBDA',
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 12,
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    borderRadius: 14,
   },
   pictureCardTablet: {
-    backgroundColor: '#F4EBDA',
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 18,
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    borderRadius: 14,
   },
   pictureCardSingle: {
-    backgroundColor: '#F4EBDA',
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: '#E7DFCE',
-    padding: 16,
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 320,
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 14,
   },
-  pictureCardHighlighted: {
+  tileRing: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 14,
     borderWidth: 3,
     borderColor: '#E8A24B',
-    backgroundColor: '#FDF3E3',
+  },
+  tileRingPicked: {
+    borderWidth: 5,
+    borderColor: '#B4622D',
   },
   pictureFrame: {
     width: '100%',
     aspectRatio: 1,
-    borderRadius: 12,
-    backgroundColor: '#F4EBDA',
+    borderRadius: 14,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
   },
   pictureFrameSingle: {
     width: '100%',
-    maxWidth: 260,
+    maxWidth: 320,
     aspectRatio: 1,
-    borderRadius: 16,
-    backgroundColor: '#F4EBDA',
+    borderRadius: 14,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  pictureLabel: {
-    marginTop: 8,
-    fontSize: 13,
-    lineHeight: 17,
-    minHeight: 34,
-    fontWeight: '700',
-    color: '#33302B',
-    textAlign: 'center',
-  },
-  pictureLabelSingle: {
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#33302B',
-    textAlign: 'center',
   },
   celebrationCard: {
     backgroundColor: '#E1EFE8',

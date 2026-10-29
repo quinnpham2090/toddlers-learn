@@ -139,7 +139,7 @@
       "alt_text_parent_ref": "item.adv_cat.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_cat.jpg",
-      "asset_sha256": "7479a38ac570c1c49a1940ccdff1b3860f5d47a06003555bf07495ed17ef491d",
+      "asset_sha256": "24309b4c388eb5a3e181ab05986b1d7944383bf0ec5f21324d06bf0459a27d35",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -152,7 +152,7 @@
       "alt_text_parent_ref": "item.adv_hat.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_hat.jpg",
-      "asset_sha256": "d1b43017a5471a080698d2a92c5610d3d5ef6ff80a3abee58925ee40a7df2d73",
+      "asset_sha256": "7f9f47080735e99f5fbe67bd5a1d17bb4c0aa85ae836b137005fc31ba042947e",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -165,7 +165,7 @@
       "alt_text_parent_ref": "item.adv_dog.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_dog.jpg",
-      "asset_sha256": "35a19f499f38d79ec7cfc65492df642f99f4a1e2689febb0fee8b49b53ec357a",
+      "asset_sha256": "8f08a3ef45f97cf31ee31f1b2c86c4e38abce99996ecd72515cd01ebcceb3a2d",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -178,7 +178,7 @@
       "alt_text_parent_ref": "item.adv_frog.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_frog.jpg",
-      "asset_sha256": "6b68a179c1f8ea3c227bda928f3606271196a1504fa861c4afb52bba4216244c",
+      "asset_sha256": "e8b1d6ec3c20c6104837302b396c796ca0d48e347d1c8f25ed117d422218536e",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -191,7 +191,7 @@
       "alt_text_parent_ref": "item.adv_bear.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_bear.jpg",
-      "asset_sha256": "20a273c82a1d5f87d9b003183d0adf513a1c43d486a1896076ccbe3269f58001",
+      "asset_sha256": "bd73c5ae333a41fe613aa82176be8b6a3b34098116d75c10d46c715ec7df242b",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -204,7 +204,7 @@
       "alt_text_parent_ref": "item.adv_pear.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_pear.jpg",
-      "asset_sha256": "582215f659531d8efa167e8fb58c14b60ef91bc6a327f9dbec892c9b3a10286e",
+      "asset_sha256": "4d43985e8e2d738afccd6245579d719b58725ddcca2e565a593abfe655f1bbb6",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -217,7 +217,7 @@
       "alt_text_parent_ref": "item.adv_sun.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_sun.jpg",
-      "asset_sha256": "74df6df1a81c40821f9490c18a567b6a25a82cf7128efdd2d6f56bed1e1780d9",
+      "asset_sha256": "f8a296948b19cc78c4ee144a5bae0b61ebdbd4ce4bcf79c7ec885e2ceb4c4dc3",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -230,7 +230,7 @@
       "alt_text_parent_ref": "item.adv_bun.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_bun.jpg",
-      "asset_sha256": "5bd300d18cc9d31c590061185dbcde4432be0dcd28ad7a3e1957513a2dfae994",
+      "asset_sha256": "edcedfa17d0ffd8304e56746eb16fd467cb29055d9d3eaff964f0861eacf4a24",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -243,7 +243,7 @@
       "alt_text_parent_ref": "item.adv_pig.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_pig.jpg",
-      "asset_sha256": "3a7468d7d8f027059e217fa8cbaeb4a64e0fa756f9609ee5d1f3243a167d3719",
+      "asset_sha256": "ae0b8725f28767bd71f03edd6751bf06fe3c9bc341db635781bd873c215562bc",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -256,7 +256,7 @@
       "alt_text_parent_ref": "item.adv_wig.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_wig.jpg",
-      "asset_sha256": "4489571716c838e8b7a7ba0094dc82a95a31a2757d6c34f58dc482261e570eed",
+      "asset_sha256": "2c8eabb935e20a1265c2ae6c5bd6a6df29998bc6e39b5538bd9264437726e231",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -269,7 +269,7 @@
       "alt_text_parent_ref": "item.adv_fox.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_fox.jpg",
-      "asset_sha256": "c9612b26f3d3d7b0eac435820ceb650a08f14c426279ec684d7eadfd2b304cfb",
+      "asset_sha256": "703c534a49f5c90a329f54b4b9c10d18ea4881b2ff47856a5369a6f070c78451",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -282,7 +282,7 @@
       "alt_text_parent_ref": "item.adv_box.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_box.jpg",
-      "asset_sha256": "99794f09e50a69d4343a9da95524200b8a98bc84dcc32c033280a18ae1bcb175",
+      "asset_sha256": "b2124d8f0599147b3f5e954316e60f202a81b0ea4df4862555136e8855ba3b55",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -295,7 +295,7 @@
       "alt_text_parent_ref": "item.adv_apple.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_apple.jpg",
-      "asset_sha256": "fd091e0cd407e08658cd55e2cf8982b92202a199b3fc0769325f40520e5b14b5",
+      "asset_sha256": "7145e485f0f9bc230e093b06b9301fe0501e32f71636c2e4aa0d81063127b63e",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
@@ -308,7 +308,7 @@
       "alt_text_parent_ref": "item.adv_banana.alt_parent",
       "display": "image",
       "asset_path": "assets/adv_banana.jpg",
-      "asset_sha256": "56c44eaf7901357823a035d48a1f743a7631a0b6cbeed5439abb1c89a48e6e40",
+      "asset_sha256": "2bf4bcff61a6c168ea72b246d0e3ddf0142c8069ecd67b24da6c4fec0c812442",
       "size_class": "handheld_safe",
       "passes_choke_tube_proxy": true,
       "depiction_tags": [
