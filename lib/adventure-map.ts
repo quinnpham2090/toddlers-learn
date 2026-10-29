@@ -4,12 +4,18 @@ import {
   getAdventureSkillById,
   getLessons,
   getPictureSets,
+  getSkills,
   getString,
 } from './pack-loader';
 import { adventureLocalDateKey, loadAdventureEvidence } from './adventure-store';
 import { adventureAge, loadAdventureQuestionnaire } from './adventure-parent';
 import { loadPathEvidence, loadPathQueue } from './path-queue';
-import { PATH_GRAPH, PATH_NODE_BY_ID, isAgeEligible } from './path-graph.js';
+import {
+  PACK_SKILL_TO_PATH,
+  PATH_GRAPH,
+  PATH_NODE_BY_ID,
+  isAgeEligible,
+} from './path-graph.js';
 import type { BandSkillResult } from './bands';
 import type { PathQueueItem } from './path-queue-engine';
 
@@ -119,8 +125,16 @@ export interface GrowingNote {
   date: string;
 }
 
+export interface SkillBandRow {
+  skillId: string;
+  title: string;
+  band: AdventureBand;
+  provisional: boolean;
+}
+
 export interface PlacementMap {
   rows: PlacementDomainRow[];
+  skillBands: SkillBandRow[];
   stillGettingToKnow: StillGettingToKnowItem[];
   growingNotes: GrowingNote[];
   disclaimer: string;
@@ -506,8 +520,20 @@ export function buildPlacementMap(): PlacementMap {
     };
   });
 
+  const skillBands: SkillBandRow[] = getSkills().map((skill) => {
+    const pathSkillId = PACK_SKILL_TO_PATH[skill.id] ?? skill.id;
+    const result = queue.band_results.find((entry) => entry.skill_id === pathSkillId);
+    return {
+      skillId: skill.id,
+      title: getString(skill.title_ref),
+      band: result?.display_band ?? 'not-yet-explored',
+      provisional: result?.provisional === true,
+    };
+  });
+
   return {
     rows,
+    skillBands,
     stillGettingToKnow,
     growingNotes: buildGrowingNotes(),
     disclaimer: DISCLAIMER,

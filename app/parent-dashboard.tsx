@@ -11,14 +11,12 @@ import {
   getLessons,
   getMissionById,
   getRoutineById,
-  getSkills,
   getString,
 } from '../lib/pack-loader';
 import {
   SkillBand,
   SkillEvidenceRecord,
   clearSkillEvidence,
-  deriveSkillBand,
   groupEvidenceBySkill,
   loadSkillEvidence,
   loadTogetherCompletions,
@@ -222,12 +220,12 @@ export default function ParentDashboardScreen() {
   const [evidence, setEvidence] = useState<SkillEvidenceRecord[]>(() => loadSkillEvidence());
   const [resetConfirming, setResetConfirming] = useState(false);
 
-  const skills = getSkills();
   const evidenceBySkill = groupEvidenceBySkill(evidence);
-  const bandRows = skills.map((skill) => ({
-    key: skill.id,
-    title: getString(skill.title_ref),
-    band: deriveSkillBand(evidenceBySkill.get(skill.id) ?? []),
+  const placementMap = buildPlacementMap();
+  const bandRows = placementMap.skillBands.map((row) => ({
+    key: row.skillId,
+    title: row.title,
+    band: row.band,
   }));
 
   const journeySkills = getJourneyStopSkills();
@@ -243,7 +241,6 @@ export default function ParentDashboardScreen() {
     completedSkillIds,
     getLessonById,
   }) as LessonRecord | null;
-  const placementMap = buildPlacementMap();
   const activePackId = getActivePackId();
   const activePackVersion = getActivePack().manifest.version;
 
