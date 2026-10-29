@@ -527,6 +527,102 @@ check(
   })
 );
 
+process.env.TZ = 'America/Los_Angeles';
+
+const isoInstant = (value) => new Date(value);
+const localDayOf = (value) => {
+  const date = isoInstant(value);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};
+
+const sharedUtcDayEvents = [
+  makeEvent('point-to', {
+    date: '2026-01-14T02:00:00Z',
+    session: 'bd-web-1',
+    format: 'bd-f1',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+  makeEvent('point-to', {
+    date: '2026-01-14T13:00:00Z',
+    session: 'bd-wem-2',
+    format: 'bd-f2',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+  makeEvent('point-to', {
+    date: '2026-01-14T13:30:00Z',
+    session: 'bd-web-3',
+    format: 'bd-f1',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+];
+const sharedUtcDayEvaluation = evaluateBands(sharedUtcDayEvents, skillMetaById, {
+  all_events: sharedUtcDayEvents,
+}).skills[0];
+const sharedUtcDayLocalDays = new Set(sharedUtcDayEvents.map((event) => localDayOf(event.date)));
+const sharedUtcDayUtcDays = new Set(
+  sharedUtcDayEvents.map((event) => event.date.slice(0, 10))
+);
+check(
+  sharedUtcDayUtcDays.size === 1 &&
+    sharedUtcDayLocalDays.size === 2 &&
+    sharedUtcDayEvaluation.display_band === 'confident' &&
+    sharedUtcDayEvaluation.day_count === 2,
+  'Bands: two plays on consecutive LOCAL days sharing one UTC day count as 2 days',
+  JSON.stringify({
+    utcDays: [...sharedUtcDayUtcDays],
+    localDays: [...sharedUtcDayLocalDays],
+    band: sharedUtcDayEvaluation.display_band,
+    dayCount: sharedUtcDayEvaluation.day_count,
+  })
+);
+
+const oneLocalEveningEvents = [
+  makeEvent('point-to', {
+    date: '2026-01-14T23:30:00Z',
+    session: 'bd-eve-1',
+    format: 'bd-f1',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+  makeEvent('point-to', {
+    date: '2026-01-15T07:30:00Z',
+    session: 'bd-eve-1',
+    format: 'bd-f2',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+  makeEvent('point-to', {
+    date: '2026-01-15T07:50:00Z',
+    session: 'bd-eve-1',
+    format: 'bd-f1',
+    sourceSkill: 'point-to',
+    errand: 'errand-porch-point',
+  }),
+];
+const oneLocalEveningEvaluation = evaluateBands(oneLocalEveningEvents, skillMetaById, {
+  all_events: oneLocalEveningEvents,
+}).skills[0];
+const oneLocalEveningLocalDays = new Set(oneLocalEveningEvents.map((event) => localDayOf(event.date)));
+const oneLocalEveningUtcDays = new Set(
+  oneLocalEveningEvents.map((event) => event.date.slice(0, 10))
+);
+check(
+  oneLocalEveningUtcDays.size === 2 &&
+    oneLocalEveningLocalDays.size === 1 &&
+    oneLocalEveningEvaluation.display_band === 'exploring' &&
+    oneLocalEveningEvaluation.day_count === 1,
+  'Bands: two plays inside one local evening straddling UTC midnight count as 1 day',
+  JSON.stringify({
+    utcDays: [...oneLocalEveningUtcDays],
+    localDays: [...oneLocalEveningLocalDays],
+    band: oneLocalEveningEvaluation.display_band,
+    dayCount: oneLocalEveningEvaluation.day_count,
+  })
+);
+
 const profileAQueue = makeQueue(3, profileA);
 const continuity = profileAQueue.continuity;
 const giveEntry = continuity.entries.find((entry) => entry.adventure_skill_id === 'give-n');

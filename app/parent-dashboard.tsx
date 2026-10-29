@@ -863,13 +863,6 @@ const styles = StyleSheet.create({
     color: '#33302B',
     marginTop: 2,
   },
-  mapBehaviour: {
-    fontSize: 13,
-    lineHeight: 19,
-    fontStyle: 'italic',
-    color: '#7A7264',
-    marginTop: 4,
-  },
   mapProvisionalNote: {
     fontSize: 13,
     lineHeight: 19,

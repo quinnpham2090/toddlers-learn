@@ -22,13 +22,6 @@ import type { PathQueueItem } from './path-queue-engine';
 export type AdventureBand = 'not-yet-explored' | 'exploring' | 'practising' | 'confident';
 export type PlacementDomain = 'language' | 'maths' | 'science';
 
-export const BAND_LABELS: Record<AdventureBand, string> = {
-  'not-yet-explored': 'Not yet explored',
-  exploring: 'Exploring',
-  practising: 'Practising',
-  confident: 'Confident',
-};
-
 const BAND_RANK: Record<AdventureBand, number> = {
   'not-yet-explored': 0,
   exploring: 1,

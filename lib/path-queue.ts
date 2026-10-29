@@ -4,7 +4,8 @@ import {
   loadAdventureState,
 } from './adventure-store';
 import { adventureAge, loadAdventureQuestionnaire } from './adventure-parent';
-import { getAdventureSkillById, getJourneyStopSkills, getLessonById, getLessons } from './pack-loader';
+import { journeyLessonsAllEvidenced } from './mission-unlock';
+import { getAdventureSkillById, getLessonById, getLessons } from './pack-loader';
 import { loadSkillEvidence } from './progress-store';
 import { ADVENTURE_SKILL_TO_PATH, PACK_SKILL_TO_PATH, PATH_GRAPH, PATH_NODE_BY_ID } from './path-graph.js';
 import { buildPathQueue } from './path-queue-engine.js';
@@ -113,15 +114,6 @@ export function loadPathQueue(): PathQueueResult {
   });
 }
 
-function journeyLessonsAllEvidenced(): boolean {
-  const journeySkills = getJourneyStopSkills();
-  if (journeySkills.length === 0) {
-    return false;
-  }
-  const evidenced = new Set(loadSkillEvidence().map((record) => record.skill_id));
-  return journeySkills.every((skill) => evidenced.has(skill.id));
-}
-
 export function getPostAdventurePathSelection(): PostAdventurePathSelection {
   const state = loadAdventureState();
   if (!state.completed) {
@@ -139,6 +131,3 @@ export function getPostAdventurePathSelection(): PostAdventurePathSelection {
   };
 }
 
-export function loadPathLesson(lessonId: string | null) {
-  return lessonId ? getLessonById(lessonId) : undefined;
-}

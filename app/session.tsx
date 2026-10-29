@@ -601,7 +601,9 @@ function PictureChoice({
               contentFit="contain"
               accessibilityLabel={label}
             />
-          ) : null}
+          ) : (
+            <View pointerEvents="none" style={styles.tilePlaceholder} />
+          )}
         </View>
         {highlighted || picked ? (
           <View pointerEvents="none" style={[styles.tileRing, picked && styles.tileRingPicked]} />
@@ -1897,6 +1899,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 14,
+  },
+  tilePlaceholder: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#F4EBDA',
   },
   tileRing: {
     position: 'absolute',

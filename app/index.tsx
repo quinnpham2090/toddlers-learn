@@ -22,7 +22,7 @@ import { loadParentSettings } from '../lib/parent-settings';
 import { loadAdventureQuestionnaire } from '../lib/adventure-parent';
 import { loadAdventureState } from '../lib/adventure-store';
 import { getPostAdventurePathSelection } from '../lib/path-queue';
-import { missionsUnlocked } from '../lib/mission-unlock';
+import { reconcileMissionUnlockGate } from '../lib/mission-unlock';
 
 const START_BUTTON_LABEL = 'Start';
 const PLAY_AGAIN_LABEL = 'Play again!';
@@ -90,21 +90,17 @@ function NodeIcon({ icon, color }: { icon: ActivityIcon; color: string }) {
   return <Text style={{ fontSize: 26, lineHeight: 30, color }}>{glyph}</Text>;
 }
 
-function StopLockMark({ color }: { color: string }) {
+function StopPlaceMark({ color }: { color: string }) {
   return (
-    <View style={{ alignItems: 'center' }}>
-      <View
-        style={{
-          width: 11,
-          height: 9,
-          borderRadius: 6,
-          borderWidth: 2.5,
-          borderColor: color,
-          marginBottom: -3,
-        }}
-      />
-      <View style={{ width: 15, height: 11, borderRadius: 3.5, backgroundColor: color }} />
-    </View>
+    <View
+      style={{
+        width: 17,
+        height: 17,
+        borderRadius: 9,
+        borderWidth: 2.5,
+        borderColor: color,
+      }}
+    />
   );
 }
 
@@ -226,7 +222,6 @@ export default function HubWorld() {
   const isTablet = width > 768;
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
-  const [missionsOpen, setMissionsOpen] = useState(false);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
   const [adventureGateOpen, setAdventureGateOpen] = useState(false);
   const [adventureStarted, setAdventureStarted] = useState(false);
@@ -268,7 +263,7 @@ export default function HubWorld() {
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
-      setMissionsOpen(missionsUnlocked());
+      reconcileMissionUnlockGate();
       setNextPathSessionReady(getPostAdventurePathSelection().lessonId !== null);
       setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
@@ -356,7 +351,7 @@ export default function HubWorld() {
             state === 'locked' && styles.pathNodeLocked,
           ]}
         >
-          {state === 'locked' ? <StopLockMark color={iconColor} /> : <NodeIcon icon={icon} color={iconColor} />}
+          {state === 'locked' ? <StopPlaceMark color={iconColor} /> : <NodeIcon icon={icon} color={iconColor} />}
         </View>
       </Pressable>
     );
@@ -447,7 +442,7 @@ export default function HubWorld() {
       isTablet={isTablet}
     />
   );
-  const togetherCard = missionsEnabled && missionsOpen ? (
+  const togetherCard = missionsEnabled ? (
     <ActivityCard
       icon="together"
       title={TOGETHER_BUTTON_LABEL}
@@ -518,7 +513,7 @@ export default function HubWorld() {
   ) : null;
 
   const jumpButton =
-    stops.length > 1 ? (
+    stops.length > 1 && currentIndex >= 0 ? (
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={JUMP_LABEL}
