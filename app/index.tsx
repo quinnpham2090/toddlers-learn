@@ -21,6 +21,7 @@ import { loadSkillEvidence } from '../lib/progress-store';
 import { loadParentSettings } from '../lib/parent-settings';
 import { loadAdventureQuestionnaire } from '../lib/adventure-parent';
 import { loadAdventureState } from '../lib/adventure-store';
+import { missionsUnlocked } from '../lib/mission-unlock';
 
 const START_BUTTON_LABEL = 'Start';
 const PLAY_AGAIN_LABEL = 'Play again!';
@@ -28,6 +29,7 @@ const SONGBOOK_BUTTON_LABEL = 'Songbook';
 const TOGETHER_BUTTON_LABEL = 'Together';
 const FOR_GROWN_UPS_LABEL = 'For grown-ups';
 const ADVENTURE_LABEL = 'Adventure';
+const MAP_LABEL = 'Map';
 const OPEN_LABEL = 'Open';
 const JUMP_LABEL = 'Jump to the current stop';
 
@@ -205,11 +207,25 @@ function AdventureButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function MapButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={MAP_LABEL}
+      onPress={onPress}
+      style={({ pressed }) => [styles.mapButton, pressed && styles.mapButtonPressed]}
+    >
+      <Text style={styles.mapButtonText}>{MAP_LABEL}</Text>
+    </Pressable>
+  );
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
+  const [missionsOpen, setMissionsOpen] = useState(false);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
   const [adventureGateOpen, setAdventureGateOpen] = useState(false);
   const [adventureStarted, setAdventureStarted] = useState(false);
@@ -249,6 +265,7 @@ export default function HubWorld() {
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
+      setMissionsOpen(missionsUnlocked());
       setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
       setStopStates(states);
@@ -426,7 +443,7 @@ export default function HubWorld() {
       isTablet={isTablet}
     />
   );
-  const togetherCard = missionsEnabled ? (
+  const togetherCard = missionsEnabled && missionsOpen ? (
     <ActivityCard
       icon="together"
       title={TOGETHER_BUTTON_LABEL}
@@ -465,6 +482,7 @@ export default function HubWorld() {
         label={allLessonsCompleted ? PLAY_AGAIN_LABEL : START_BUTTON_LABEL}
         onPress={() => router.push('/session')}
       />
+      <MapButton onPress={() => router.push('/child-map')} />
       {adventureStarted ? (
         <AdventureButton onPress={() => setAdventureGateOpen(true)} />
       ) : null}
@@ -854,6 +872,21 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '800',
     letterSpacing: 0.3,
+  },
+  mapButton: {
+    marginTop: 10,
+    backgroundColor: '#E1EFE8',
+    borderRadius: 999,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  mapButtonPressed: {
+    backgroundColor: '#CFE4D9',
+  },
+  mapButtonText: {
+    color: '#2B6E58',
+    fontSize: 16,
+    fontWeight: '800',
   },
   forGrownUpsButton: {
     backgroundColor: 'transparent',

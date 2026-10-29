@@ -70,7 +70,7 @@
     },
     {
       "id": "clap-the-beats",
-      "domain": "music",
+      "domain": "language",
       "bandable": true,
       "provisional": false,
       "title_ref": "adventure.skill.clap_the_beats.title"

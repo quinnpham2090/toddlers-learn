@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } fr
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import ParentGate from '../components/ParentGate';
+import { missionsUnlocked } from '../lib/mission-unlock';
 import {
   MissionRecord,
   RoutineRecord,
@@ -111,6 +112,7 @@ export default function TogetherScreen() {
   const isTablet = width > 768;
   const missions = getMissions();
   const routines = getRoutines();
+  const showMissions = missionsUnlocked();
   const [pending, setPending] = useState<PendingTarget | null>(null);
 
   function handlePass() {
@@ -125,7 +127,7 @@ export default function TogetherScreen() {
     });
   }
 
-  const missionsSection = (
+  const missionsSection = showMissions ? (
     <View style={styles.section}>
       <SectionHeading text={MISSIONS_SECTION_LABEL} isTablet={isTablet} />
       {missions.length === 0 ? (
@@ -143,7 +145,7 @@ export default function TogetherScreen() {
         </View>
       )}
     </View>
-  );
+  ) : null;
 
   const routinesSection = (
     <View style={styles.section}>
@@ -177,8 +179,12 @@ export default function TogetherScreen() {
             <BackButton />
           </View>
           <View style={styles.tabletColumns}>
-            <View style={styles.tabletColumn}>{missionsSection}</View>
-            <View style={styles.tabletColumn}>{routinesSection}</View>
+            <View style={styles.tabletColumn}>
+              {showMissions ? missionsSection : routinesSection}
+            </View>
+            {showMissions ? (
+              <View style={styles.tabletColumn}>{routinesSection}</View>
+            ) : null}
           </View>
         </ScrollView>
       </SafeAreaView>

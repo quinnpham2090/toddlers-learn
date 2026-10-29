@@ -27,8 +27,7 @@ import { SELECTION_CODE_VERSION, selectNextLesson } from '../lib/lesson-selectio
 import { clearSessionBookmark } from '../lib/resume-store';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
 import { loadSavedSongs } from '../lib/song-store';
-import { loadAdventureState } from '../lib/adventure-store';
-import { buildAdventureMap } from '../lib/adventure-map';
+import { buildPlacementMap } from '../lib/adventure-map';
 
 
 const BACK_LABEL = 'Back';
@@ -38,10 +37,14 @@ const TOGETHER_HISTORY_LABEL = 'Together history';
 const TODAYS_NOTE_LABEL = "Today's note";
 const MISSIONS_SETTING_LABEL = 'Missions setting';
 const MISSIONS_TOGGLE_LABEL = 'Missions';
-const MISSIONS_TOGGLE_HINT = 'Shows the Together lane on the child’s home screen.';
+const MISSIONS_TOGGLE_HINT =
+  'Shows the Together lane on the child’s home screen after the first path.';
 const DIAGNOSTICS_LABEL = 'Diagnostics';
-const ADVENTURE_MAP_LABEL = 'Still getting to know';
-const ADVENTURE_MAP_MIN_VISITS = 3;
+const PLACEMENT_MAP_LABEL = 'Parent map';
+const STILL_EMPTY_MESSAGE = 'Every skill has a first bit of evidence.';
+const STILL_CURIOSITY =
+  'Just places to wander into when they are ready.';
+const GROWING_EMPTY_MESSAGE = 'No growing notes yet.';
 const RESET_SECTION_LABEL = 'Reset lesson progress';
 const RESET_BUTTON_LABEL = 'Reset lesson progress';
 const RESET_HINT =
@@ -240,9 +243,7 @@ export default function ParentDashboardScreen() {
     completedSkillIds,
     getLessonById,
   }) as LessonRecord | null;
-  const adventureState = loadAdventureState();
-  const adventureVisits = adventureState.visit_days.length;
-  const adventureMap = adventureVisits >= ADVENTURE_MAP_MIN_VISITS ? buildAdventureMap() : null;
+  const placementMap = buildPlacementMap();
   const activePackId = getActivePackId();
   const activePackVersion = getActivePack().manifest.version;
 
@@ -337,20 +338,33 @@ export default function ParentDashboardScreen() {
     </SectionCard>
   );
 
-  const adventureMapSection = adventureMap ? (
-    <SectionCard heading={ADVENTURE_MAP_LABEL} isTablet={isTablet}>
-      <Text style={styles.mapDisclaimer}>
-        A provisional look after {adventureVisits} visits. It is play, not a test. It is not a diagnosis, a verdict, or a comparison. It keeps changing.
-      </Text>
-      {adventureMap.map((row) => {
+  const stillByDomain = placementMap.stillGettingToKnow.reduce<
+    { domain: string; label: string; titles: string[] }[]
+  >((groups, item) => {
+    const existing = groups.find((group) => group.domain === item.domain);
+    if (existing) {
+      existing.titles.push(item.title);
+      return groups;
+    }
+    groups.push({ domain: item.domain, label: item.domainLabel, titles: [item.title] });
+    return groups;
+  }, []);
+
+  const placementMapSection = (
+    <SectionCard heading={PLACEMENT_MAP_LABEL} isTablet={isTablet}>
+      <Text style={styles.mapDisclaimer}>{placementMap.disclaimer}</Text>
+      {placementMap.rows.map((row) => {
         const colors = BAND_COLORS[row.band];
         return (
           <View key={row.domain} style={styles.mapRow}>
             <View style={styles.mapHeader}>
-              <Text style={isTablet ? styles.mapDomainTablet : styles.mapDomain}>{row.domainLabel}</Text>
+              <Text style={isTablet ? styles.mapDomainTablet : styles.mapDomain}>
+                {row.domainLabel}
+              </Text>
               <View style={[styles.bandChip, { backgroundColor: colors.soft }]}>
                 <Text style={[styles.bandChipText, { color: colors.deep }]}>
-                  {BAND_DISPLAY[row.band]}{row.provisional ? ' (early signal)' : ''}
+                  {BAND_DISPLAY[row.band]}
+                  {row.provisional ? ' (early signal)' : ''}
                 </Text>
               </View>
               {row.provisional ? (
@@ -363,13 +377,44 @@ export default function ParentDashboardScreen() {
               {row.strength ?? 'Nothing recorded here yet.'}
             </Text>
             {row.workingOn ? <Text style={styles.mapLine}>{row.workingOn}</Text> : null}
-            {row.nextUp ? <Text style={styles.mapLine}>{row.nextUp}</Text> : null}
-            {row.behaviourNote ? <Text style={styles.mapBehaviour}>{row.behaviourNote}</Text> : null}
+            <Text style={styles.mapLine}>{row.nextUp}</Text>
+            {row.provisional ? (
+              <Text style={styles.mapProvisionalNote}>{placementMap.scienceProvisionalNote}</Text>
+            ) : null}
           </View>
         );
       })}
+      <View style={styles.mapSubsection}>
+        <Text style={isTablet ? styles.mapSubheadingTablet : styles.mapSubheading}>
+          {placementMap.stillGettingToKnowLabel}
+        </Text>
+        <Text style={styles.mapCuriosity}>{STILL_CURIOSITY}</Text>
+        {stillByDomain.length === 0 ? (
+          <Text style={styles.mapLine}>{STILL_EMPTY_MESSAGE}</Text>
+        ) : (
+          stillByDomain.map((group) => (
+            <Text key={group.domain} style={styles.mapLine}>
+              {group.label}: {group.titles.join(', ')}
+            </Text>
+          ))
+        )}
+      </View>
+      <View style={styles.growingStrip}>
+        <Text style={isTablet ? styles.mapSubheadingTablet : styles.mapSubheading}>
+          {placementMap.growingNotesLabel}
+        </Text>
+        {placementMap.growingNotes.length === 0 ? (
+          <Text style={styles.mapLine}>{GROWING_EMPTY_MESSAGE}</Text>
+        ) : (
+          placementMap.growingNotes.map((note) => (
+            <Text key={note.skillId} style={styles.growingNote}>
+              {note.title}: {note.note}
+            </Text>
+          ))
+        )}
+      </View>
     </SectionCard>
-  ) : null;
+  );
 
   const settingsSection = (
     <SectionCard heading={MISSIONS_SETTING_LABEL} isTablet={isTablet}>
@@ -480,8 +525,7 @@ export default function ParentDashboardScreen() {
               {headerSection}
               {skillBandsSection}
               {todaysNoteSection}
-        {adventureMapSection}
-              {adventureMapSection}
+              {placementMapSection}
             </View>
             <View style={styles.tabletColumn}>
               {historySection}
@@ -502,7 +546,7 @@ export default function ParentDashboardScreen() {
         {skillBandsSection}
         {historySection}
         {todaysNoteSection}
-        {adventureMapSection}
+        {placementMapSection}
         {settingsSection}
         {resetSection}
         {diagnosticsSection}
@@ -827,6 +871,49 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     fontStyle: 'italic',
     color: '#7A7264',
+    marginTop: 4,
+  },
+  mapProvisionalNote: {
+    fontSize: 13,
+    lineHeight: 19,
+    fontStyle: 'italic',
+    color: '#9A6A1F',
+    marginTop: 4,
+  },
+  mapSubsection: {
+    borderTopWidth: 1,
+    borderTopColor: '#F1EADB',
+    marginTop: 14,
+    paddingTop: 12,
+  },
+  mapSubheading: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#33302B',
+    marginBottom: 4,
+  },
+  mapSubheadingTablet: {
+    fontSize: 16.5,
+    fontWeight: '800',
+    color: '#33302B',
+    marginBottom: 5,
+  },
+  mapCuriosity: {
+    fontSize: 13,
+    lineHeight: 19,
+    color: '#7A7264',
+    marginBottom: 4,
+  },
+  growingStrip: {
+    backgroundColor: '#E1EFE8',
+    borderRadius: 14,
+    marginTop: 14,
+    padding: 12,
+  },
+  growingNote: {
+    fontSize: 13.5,
+    lineHeight: 20,
+    color: '#2B6E58',
     marginTop: 4,
   },
   resetHint: {

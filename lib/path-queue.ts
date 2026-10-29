@@ -49,6 +49,7 @@ function normalizeAdventureEvidence(): BandEvidence[] {
       date: record.date,
       session_id: `${adventureLocalDateKey(new Date(record.date))}:${record.stop_id}`,
       format_key: record.variant_id,
+      variant_id: record.variant_id,
       domain: adventureSkill?.domain,
       provisional: adventureSkill?.provisional ?? false,
       observable_behaviour: record.observable_behaviour,
@@ -84,10 +85,14 @@ function normalizeLessonEvidence(): BandEvidence[] {
   return normalized;
 }
 
+export function loadPathEvidence(): BandEvidence[] {
+  return [...normalizeAdventureEvidence(), ...normalizeLessonEvidence()];
+}
+
 export function loadPathQueue(): PathQueueResult {
   const questionnaire = loadAdventureQuestionnaire();
   const state = loadAdventureState();
-  const evidence = [...normalizeAdventureEvidence(), ...normalizeLessonEvidence()];
+  const evidence = loadPathEvidence();
   const totalSessions = new Set(
     evidence.map((entry) => entry.session_id ?? `${entry.source ?? 'evidence'}:${entry.date}`)
   ).size;

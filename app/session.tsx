@@ -30,6 +30,7 @@ import {
   getPostAdventurePathSelection,
   type PostAdventurePathSelection,
 } from '../lib/path-queue';
+import { markPathSessionCompleted } from '../lib/path-state';
 import {
   SessionBookmark,
   clearReplayBookmark,
@@ -985,6 +986,9 @@ export default function SessionScreen() {
           completed_with_help: outcome.completedWithHelp,
         }))
       );
+      if (pathSelection?.active) {
+        markPathSessionCompleted();
+      }
       clearBookmark();
       setFinaleWrongTaps(0);
       setFinalePickedId(null);

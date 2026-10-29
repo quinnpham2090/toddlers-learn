@@ -12,6 +12,7 @@ import {
   getString,
 } from '../lib/pack-loader';
 import { recordCompletion } from '../lib/together-store';
+import { missionsUnlocked } from '../lib/mission-unlock';
 
 const BACK_LABEL = 'Back';
 const GROWN_UP_GUIDE_LABEL = "Grown-up's guide";
@@ -110,6 +111,18 @@ export default function MissionBriefingScreen() {
   );
   const [grownUpPresent, setGrownUpPresent] = useState(false);
   const [spaceClear, setSpaceClear] = useState(false);
+
+  if (!missionsUnlocked()) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+        <View style={styles.scroll}>
+          <View style={styles.topRow}>
+            <BackButton />
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   if (!mission) {
     return (
