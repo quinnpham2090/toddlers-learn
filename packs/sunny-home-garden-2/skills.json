@@ -1,0 +1,56 @@
+[
+  {
+    "id": "point-to-choice",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.point_to_choice.title",
+    "description_ref": "skill.point_to_choice.description",
+    "domain": "language",
+    "is_entry_skill": true,
+    "prerequisites": [],
+    "next_skills": [
+      "sorting-one-rule"
+    ],
+    "age_band_min": "2-3",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sorting-one-rule",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.sorting_one_rule.title",
+    "description_ref": "skill.sorting_one_rule.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "colour-naming"
+    ],
+    "next_skills": [
+      "sizes-big-little"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  }
+]

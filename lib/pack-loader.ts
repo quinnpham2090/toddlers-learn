@@ -33,6 +33,17 @@ import sunnyPictureSetsJson from '../packs/sunny-home-garden/picture_sets.json';
 import sunnyMissionsJson from '../packs/sunny-home-garden/missions.json';
 import sunnyRoutinesJson from '../packs/sunny-home-garden/routines.json';
 import sunnyTimeConceptsJson from '../packs/sunny-home-garden/time_concepts.json';
+import sunny2ManifestJson from '../packs/sunny-home-garden-2/manifest.json';
+import sunny2StringsJson from '../packs/sunny-home-garden-2/strings.json';
+import sunny2SkillsJson from '../packs/sunny-home-garden-2/skills.json';
+import sunny2LessonsJson from '../packs/sunny-home-garden-2/lessons.json';
+import sunny2SongTemplatesJson from '../packs/sunny-home-garden-2/song_templates.json';
+import sunny2SavedSongsJson from '../packs/sunny-home-garden-2/saved_songs.json';
+import sunny2CharactersJson from '../packs/sunny-home-garden-2/characters.json';
+import sunny2PictureSetsJson from '../packs/sunny-home-garden-2/picture_sets.json';
+import sunny2MissionsJson from '../packs/sunny-home-garden-2/missions.json';
+import sunny2RoutinesJson from '../packs/sunny-home-garden-2/routines.json';
+import sunny2TimeConceptsJson from '../packs/sunny-home-garden-2/time_concepts.json';
 import puffPortraitJpg from '../packs/sunny-home-garden/assets/puff-portrait.jpg';
 import mossPortraitJpg from '../packs/sunny-home-garden/assets/moss-portrait.jpg';
 import cupJpg from '../packs/sunny-home-garden/assets/cup.jpg';
@@ -287,7 +298,7 @@ export interface LessonRecord {
   interaction_type: InteractionType;
   character_id: string;
   picture_set_id: string;
-  song_template_id: string;
+  song_template_id: string | null;
   mission_id: string | null;
   routine_id: string | null;
   estimated_minutes: number;
@@ -559,6 +570,20 @@ const PACK_REGISTRY: Record<string, PackFiles> = {
     missions: sunnyMissionsJson as MissionRecord[],
     routines: sunnyRoutinesJson as RoutineRecord[],
     timeConcepts: sunnyTimeConceptsJson as TimeConceptRecord[],
+  },
+  'sunny-home-garden-2': {
+    packId: 'sunny-home-garden-2',
+    manifest: sunny2ManifestJson as PackManifest,
+    strings: sunny2StringsJson as PackStrings,
+    skills: sunny2SkillsJson as SkillRecord[],
+    lessons: sunny2LessonsJson as LessonRecord[],
+    songTemplates: sunny2SongTemplatesJson as SongTemplateRecord[],
+    savedSongs: sunny2SavedSongsJson as SavedSongRecord[],
+    characters: sunny2CharactersJson as CharacterRecord[],
+    pictureSets: sunny2PictureSetsJson as PictureSetRecord[],
+    missions: sunny2MissionsJson as MissionRecord[],
+    routines: sunny2RoutinesJson as RoutineRecord[],
+    timeConcepts: sunny2TimeConceptsJson as TimeConceptRecord[],
   },
 };
 import mossMossItemRedBasketLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_red_basket_label.mp3';

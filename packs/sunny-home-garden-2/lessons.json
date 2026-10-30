@@ -1,0 +1,223 @@
+[
+  {
+    "id": "lesson-point-to",
+    "record_type": "lesson",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "lesson.point_to.title",
+    "primary_skill_id": "point-to-choice",
+    "secondary_skill_ids": [],
+    "interaction_type": "tap_choice",
+    "character_id": "puff",
+    "picture_set_id": "everyday-objects-set",
+    "song_template_id": null,
+    "mission_id": null,
+    "routine_id": null,
+    "estimated_minutes": 4,
+    "chunk_budget_minutes": 4,
+    "fallback_lesson_id": "lesson-point-to",
+    "fallback_picture_id": "everyday-objects-set",
+    "closing_win_ref": "lesson.point_to.closing_win",
+    "steps": [
+      {
+        "step_index": 1,
+        "prompt_ref": "lesson.point_to.step_1.prompt",
+        "target_item_id": "cup",
+        "choice_item_ids": [
+          "cup",
+          "ball"
+        ],
+        "celebration_ref": "lesson.point_to.step_1.celebration"
+      },
+      {
+        "step_index": 2,
+        "prompt_ref": "lesson.point_to.step_2.prompt",
+        "target_item_id": "spoon",
+        "choice_item_ids": [
+          "spoon",
+          "cup",
+          "book"
+        ],
+        "celebration_ref": "lesson.point_to.step_2.celebration"
+      },
+      {
+        "step_index": 3,
+        "prompt_ref": "lesson.point_to.step_3.prompt",
+        "target_item_id": "book",
+        "choice_item_ids": [
+          "book",
+          "ball",
+          "spoon"
+        ],
+        "celebration_ref": "lesson.point_to.step_3.celebration"
+      },
+      {
+        "step_index": 4,
+        "prompt_ref": "lesson.point_to.step_4.prompt",
+        "target_item_id": "ball",
+        "choice_item_ids": [
+          "ball",
+          "book",
+          "cup"
+        ],
+        "celebration_ref": "lesson.point_to.step_4.celebration"
+      }
+    ],
+    "scaffolds": {
+      "0": {
+        "level": 0,
+        "mode": "full_task",
+        "prompt_ref": "scaffold.l0.prompt",
+        "max_choices": 4,
+        "highlight_target": false,
+        "model_demonstration": false,
+        "child_final_tap_required": true
+      },
+      "1": {
+        "level": 1,
+        "mode": "fewer_choices",
+        "prompt_ref": "scaffold.l1.prompt",
+        "max_choices": 2,
+        "highlight_target": false,
+        "model_demonstration": false,
+        "child_final_tap_required": true
+      },
+      "2": {
+        "level": 2,
+        "mode": "highlight_and_model",
+        "prompt_ref": "scaffold.l2.prompt",
+        "max_choices": 2,
+        "highlight_target": true,
+        "model_demonstration": true,
+        "child_final_tap_required": true
+      },
+      "3": {
+        "level": 3,
+        "mode": "do_together_final_tap",
+        "prompt_ref": "scaffold.l3.prompt",
+        "max_choices": 1,
+        "highlight_target": true,
+        "model_demonstration": true,
+        "child_final_tap_required": true
+      }
+    }
+  },
+  {
+    "id": "lesson-sort-by-kind",
+    "record_type": "lesson",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "lesson.sort_by_kind.title",
+    "primary_skill_id": "sorting-one-rule",
+    "secondary_skill_ids": [],
+    "interaction_type": "sort_group",
+    "character_id": "moss",
+    "picture_set_id": "kind-groups-set",
+    "song_template_id": null,
+    "mission_id": null,
+    "routine_id": null,
+    "estimated_minutes": 4,
+    "chunk_budget_minutes": 4,
+    "fallback_lesson_id": "lesson-point-to",
+    "fallback_picture_id": "everyday-objects-set",
+    "closing_win_ref": "lesson.sort_by_kind.closing_win",
+    "steps": [
+      {
+        "step_index": 1,
+        "prompt_ref": "lesson.sort_by_kind.step_1.prompt",
+        "target_item_id": "balls-group",
+        "choice_item_ids": [
+          "balls-group",
+          "books-group"
+        ],
+        "celebration_ref": "lesson.sort_by_kind.step_1.celebration"
+      },
+      {
+        "step_index": 2,
+        "prompt_ref": "lesson.sort_by_kind.step_2.prompt",
+        "target_item_id": "books-group",
+        "choice_item_ids": [
+          "balls-group",
+          "books-group"
+        ],
+        "celebration_ref": "lesson.sort_by_kind.step_2.celebration"
+      },
+      {
+        "step_index": 3,
+        "prompt_ref": "lesson.sort_by_kind.step_3.prompt",
+        "target_item_id": "balls-group",
+        "choice_item_ids": [
+          "balls-group",
+          "books-group"
+        ],
+        "celebration_ref": "lesson.sort_by_kind.step_3.celebration"
+      },
+      {
+        "step_index": 4,
+        "prompt_ref": "lesson.sort_by_kind.step_4.prompt",
+        "target_item_id": "books-group",
+        "choice_item_ids": [
+          "balls-group",
+          "books-group"
+        ],
+        "celebration_ref": "lesson.sort_by_kind.step_4.celebration"
+      }
+    ],
+    "scaffolds": {
+      "0": {
+        "level": 0,
+        "mode": "full_task",
+        "prompt_ref": "scaffold.l0.prompt",
+        "max_choices": 4,
+        "highlight_target": false,
+        "model_demonstration": false,
+        "child_final_tap_required": true
+      },
+      "1": {
+        "level": 1,
+        "mode": "fewer_choices",
+        "prompt_ref": "scaffold.l1.prompt",
+        "max_choices": 2,
+        "highlight_target": false,
+        "model_demonstration": false,
+        "child_final_tap_required": true
+      },
+      "2": {
+        "level": 2,
+        "mode": "highlight_and_model",
+        "prompt_ref": "scaffold.l2.prompt",
+        "max_choices": 2,
+        "highlight_target": true,
+        "model_demonstration": true,
+        "child_final_tap_required": true
+      },
+      "3": {
+        "level": 3,
+        "mode": "do_together_final_tap",
+        "prompt_ref": "scaffold.l3.prompt",
+        "max_choices": 1,
+        "highlight_target": true,
+        "model_demonstration": true,
+        "child_final_tap_required": true
+      }
+    }
+  }
+]

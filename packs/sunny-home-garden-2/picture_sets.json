@@ -1,0 +1,212 @@
+[
+  {
+    "id": "everyday-objects-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.everyday_objects.title",
+    "alt_text_parent_ref": "picture_set.everyday_objects.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "cup",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "spoon",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "book",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "ball",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "colour-garden-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.colour_garden.title",
+    "alt_text_parent_ref": "picture_set.colour_garden.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "red-flower",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "yellow-flower",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "kind-groups-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.kind_groups.title",
+    "alt_text_parent_ref": "picture_set.kind_groups.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "ball",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "book",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "red-ball",
+        "label_ref": "item.red_ball.label",
+        "alt_text_parent_ref": "item.red_ball.alt_parent",
+        "asset_path": "assets/red-ball.jpg",
+        "asset_sha256": "8f64a89fcdd2c619f68cefbdac4265f4c03c00826a39f9b1a03fead1ad031bd1",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "blue-book",
+        "label_ref": "item.blue_book.label",
+        "alt_text_parent_ref": "item.blue_book.alt_parent",
+        "asset_path": "assets/blue-book.jpg",
+        "asset_sha256": "b39cbcee3b0b8da3c97abca705363b51128a7f75f38978eab4ddb6b6fddd47e6",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "balls-group",
+        "label_ref": "item.balls_group.label",
+        "alt_text_parent_ref": "item.balls_group.alt_parent",
+        "asset_path": "assets/balls-group.jpg",
+        "asset_sha256": "e6c7d3a5cc21a65b792f7a443f4ed1bf7cc20fa1a7a0e2f4c27f2613661eb564",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "books-group",
+        "label_ref": "item.books_group.label",
+        "alt_text_parent_ref": "item.books_group.alt_parent",
+        "asset_path": "assets/books-group.jpg",
+        "asset_sha256": "7bb305401190fbcd5a1d1d2c87313617e1946135f305ac459c6372ddd971ad91",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
+  }
+]

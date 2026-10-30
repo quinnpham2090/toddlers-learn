@@ -1,0 +1,80 @@
+[
+  {
+    "id": "puff",
+    "record_type": "character",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "name_ref": "character.puff.name",
+    "species_or_role": "lantern_guide",
+    "appearance": {
+      "silhouette_shape": "cloud_cushion",
+      "primary_palette": "indigo_amber",
+      "distinctive_prop": "story_leaf"
+    },
+    "voice_profile": {
+      "register": "warm_alto",
+      "pacing_wpm": 118,
+      "synth_fallback_enabled": true
+    },
+    "personality_lines": [
+      "character.puff.line_1",
+      "character.puff.line_2"
+    ],
+    "world_home_id": "sunny-home-garden-2",
+    "model_asset_path": "assets/puff-portrait.jpg",
+    "fallback_character_id": null,
+    "originality_attestation": {
+      "attester": "kilo",
+      "date": "2026-10-26",
+      "derivation_statement": "Original fluffy cloud-sprite design with a striped sky-blue scarf and a basket of flowers, authored for this pack only; not derived from any existing character."
+    }
+  },
+  {
+    "id": "moss",
+    "record_type": "character",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "name_ref": "character.moss.name",
+    "species_or_role": "routine_helper",
+    "appearance": {
+      "silhouette_shape": "bell_pebble",
+      "primary_palette": "sage_coral",
+      "distinctive_prop": "story_leaf"
+    },
+    "voice_profile": {
+      "register": "soft_mezzo",
+      "pacing_wpm": 100,
+      "synth_fallback_enabled": true
+    },
+    "personality_lines": [
+      "character.moss.line_1",
+      "character.moss.line_2"
+    ],
+    "world_home_id": "sunny-home-garden-2",
+    "model_asset_path": "assets/moss-portrait.jpg",
+    "fallback_character_id": null,
+    "originality_attestation": {
+      "attester": "kilo",
+      "date": "2026-10-26",
+      "derivation_statement": "Original round mushroom-cap sprite design with a sage vest and watering can, authored for this pack only; not derived from any existing character."
+    }
+  }
+]

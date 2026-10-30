@@ -85,6 +85,16 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['big-spoon', 'little-spoon'],
     findPromptRef: 'lesson.big_little.find_prompt',
   },
+  'lesson-point-to': {
+    targetItemId: 'cup',
+    tileItemIds: ['cup', 'ball', 'book'],
+    findPromptRef: 'lesson.point_to.find_prompt',
+  },
+  'lesson-sort-by-kind': {
+    targetItemId: 'balls-group',
+    tileItemIds: ['balls-group', 'books-group'],
+    findPromptRef: 'lesson.sort_by_kind.find_prompt',
+  },
 };
 
 
