@@ -36,6 +36,7 @@ const JUMP_LABEL = 'Jump to the current stop';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
+  maths: { soft: '#E5EDF7', deep: '#3A5A8C' },
   numeracy: { soft: '#E5EDF7', deep: '#3A5A8C' },
   music: { soft: '#F1E6F4', deep: '#6F4E82' },
   motor_routine: { soft: '#FBEEDD', deep: '#9A6A1F' },
@@ -320,14 +321,14 @@ export default function HubWorld() {
   const pathNodes = stops.map((stop, index) => {
     const state = stopStates[index] ?? 'locked';
     const lessonId = stopLessonIds[index] ?? null;
-    const accent = STOP_ACCENTS[stop.domain];
+    const accent = STOP_ACCENTS[stop.domain] ?? null;
     const lesson = lessons.find((candidate) => candidate.primary_skill_id === stop.id);
     const icon = activityIconFor(lesson?.interaction_type);
     const character = characterForStop(stop);
     const isExpanded = expandedStop === index;
     const nodeSize = state === 'current' ? (isTablet ? 96 : 78) : isTablet ? 80 : 66;
     const nodeColor =
-      state === 'locked' ? '#EFEAE0' : accent.deep;
+      state === 'locked' ? '#EFEAE0' : accent?.deep ?? '#7A7264';
     const iconColor = state === 'locked' ? '#C4BBA5' : '#FFFFFF';
 
     const node = (

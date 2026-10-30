@@ -254,6 +254,7 @@ export interface CharacterRecord {
 
 export type SkillDomain =
   | 'language'
+  | 'maths'
   | 'numeracy'
   | 'music'
   | 'motor_routine'

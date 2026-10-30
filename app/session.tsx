@@ -1100,8 +1100,14 @@ export default function SessionScreen() {
         });
       });
     }
-    narrateLine(celebration, step.celebration_ref, character?.id ?? null, SPEECH_RATE, () =>
-      finishFinale()
+    const finaleStep =
+      steps.find((candidate) => candidate.target_item_id === finaleConfig.targetItemId) ?? step;
+    narrateLine(
+      getString(finaleStep.celebration_ref),
+      finaleStep.celebration_ref,
+      character?.id ?? null,
+      SPEECH_RATE,
+      () => finishFinale()
     );
     finaleFallbackTimer.current = setTimeout(() => finishFinale(), FINALE_FALLBACK_MS);
   }
