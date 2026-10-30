@@ -25,6 +25,7 @@ import {
 import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
 import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
+import { completedWithHelpFor } from '../lib/evidence-policy.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -1013,7 +1014,7 @@ export default function SessionScreen() {
       {
         stepIndex: step.step_index,
         scaffoldLevelAtCompletion: scaffoldLevel,
-        completedWithHelp: scaffoldLevel === 3,
+        completedWithHelp: completedWithHelpFor(lesson, scaffoldLevel),
       },
     ]);
     setPhase('celebration');

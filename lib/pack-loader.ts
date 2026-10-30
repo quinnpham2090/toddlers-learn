@@ -435,6 +435,7 @@ export interface LessonRecord {
   closing_win_ref: string;
   steps: LessonStep[];
   scaffolds: Record<'0' | '1' | '2' | '3', ScaffoldLevel>;
+  evidence_help_only?: boolean;
 }
 
 export interface SongWordlists {

@@ -159,15 +159,15 @@
     "assets/voice/puff/lesson_words_that_sound_the_same_step_5_prompt.mp3": "008660af96fd0e2db019b700d8cce07fc7b62a7cc2ff4519257d1cfec690c906",
     "assets/yellow-flower.jpg": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
     "characters.json": "b5ef4c71aafe51d9321136d7bf8406d503fcbc3077e5943095051bad8eb94bac",
-    "lessons.json": "ab9740a5a0e468acc6d5e8e0497fd516ef892f87493198c18dd866c96b8e33ef",
+    "lessons.json": "84d6fa25de2cb44db97ba90bf40b0ba2fffbc7602c3879d241905fe46d3457da",
     "missions.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
     "picture_sets.json": "a777579a53875c942cc8b45429f5f9c617aab470aaadb6795829f495bac93b7c",
     "routines.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
     "saved_songs.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-    "skills.json": "0abbe384517d35aca84c1f05d37e863ff9134fd4f616ee94d493b4cfbec2f628",
+    "skills.json": "1b57e415e584dd58bc078c552be2c193e6a122fa8368b26ba1a0a9018c057d39",
     "song_templates.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
     "strings.json": "5abd71ba678da74223110ca6123846a5276f41b343e19e0816766827ebc124dc",
     "time_concepts.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
   },
-  "pack_sha256": "5e6326503375952e4c28e287e966245dcf08785dea2bb6b3884660878453c05b"
+  "pack_sha256": "5f018a589095ec777ec6ee1b138aca09cfc724551731e08032ce052626ee88d9"
 }

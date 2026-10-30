@@ -832,6 +832,7 @@
         "model_demonstration": true,
         "child_final_tap_required": true
       }
-    }
+    },
+    "evidence_help_only": true
   }
 ]
