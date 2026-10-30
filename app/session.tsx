@@ -80,6 +80,31 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['red-basket', 'yellow-basket'],
     findPromptRef: 'lesson.where_does_this_go.find_prompt',
   },
+  'lesson-words-that-sound-the-same': {
+    targetItemId: 'tree',
+    tileItemIds: ['tree', 'spoon', 'moon'],
+    findPromptRef: 'lesson.words_that_sound_the_same.find_prompt',
+  },
+  'lesson-finish-the-rhyme': {
+    targetItemId: 'key',
+    tileItemIds: ['key', 'mat', 'log'],
+    findPromptRef: 'lesson.finish_the_rhyme.find_prompt',
+  },
+  'lesson-clap-the-beats': {
+    targetItemId: 'beats-3-banana',
+    tileItemIds: ['beats-3-banana', 'beats-1-cup', 'beats-2-flower'],
+    findPromptRef: 'lesson.clap_the_beats.find_prompt',
+  },
+  'lesson-first-sounds': {
+    targetItemId: 'frog',
+    tileItemIds: ['frog', 'bear', 'cat'],
+    findPromptRef: 'lesson.first_sounds.find_prompt',
+  },
+  'lesson-name-it-together': {
+    targetItemId: 'ball',
+    tileItemIds: ['ball', 'cup', 'book'],
+    findPromptRef: 'lesson.name_it_together.find_prompt',
+  },
   'lesson-big-little': {
     targetItemId: 'big-spoon',
     tileItemIds: ['big-spoon', 'little-spoon'],

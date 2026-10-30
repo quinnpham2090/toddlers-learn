@@ -779,6 +779,18 @@ export function validate(pack) {
         if (phrase === 'beat' && sKey.startsWith('adventure.flower.syllable.')) {
           continue;
         }
+        // Lesson clap-the-beats copy uses musical 'beat' vocabulary (founder-
+        // approved voice lines); the competitive meaning of the word stays banned
+        // everywhere else.
+        if (phrase === 'beat' && sKey.startsWith('lesson.clap_the_beats.')) {
+          continue;
+        }
+        // The clap-the-beats lesson's own picture-set title and card labels use
+        // the same musical 'beat' vocabulary (founder-approved); competitive
+        // uses of the word stay banned everywhere else.
+        if (phrase === 'beat' && (sKey.startsWith('picture_set.beat_dots.') || sKey.startsWith('item.beats_1.'))) {
+          continue;
+        }
         if (containsBannedPhrase(sVal, phrase)) {
           addError(
             'P-COOP',
