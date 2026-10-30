@@ -592,6 +592,9 @@ function PictureChoice({
 }) {
   const label = getString(item.label_ref);
   const asset = getPackAsset(getActivePackId(), item.asset_path);
+  const itemCount = item.count ?? 1;
+  const groupPerRow = Math.min(Math.max(itemCount, 1), 3);
+  const groupThumbWidth = `${Math.floor(92 / groupPerRow)}%`;
   const pressScale = useRef(new Animated.Value(1)).current;
 
   const pressIn = () => {
@@ -630,15 +633,27 @@ function PictureChoice({
             single ? styles.pictureFrameSingle : size > 0 ? styles.pictureFrameSized : styles.pictureFrame
           }
         >
-          {asset !== undefined ? (
+          {asset === undefined ? (
+            <View pointerEvents="none" style={styles.tilePlaceholder} />
+          ) : itemCount > 1 ? (
+            <View style={styles.groupRow}>
+              {Array.from({ length: itemCount }, (_, thumbIndex) => (
+                <Image
+                  key={thumbIndex}
+                  source={asset}
+                  style={[styles.groupThumb, { width: groupThumbWidth }]}
+                  contentFit="contain"
+                  accessibilityLabel={label}
+                />
+              ))}
+            </View>
+          ) : (
             <Image
               source={asset}
               style={StyleSheet.absoluteFill}
               contentFit="contain"
               accessibilityLabel={label}
             />
-          ) : (
-            <View pointerEvents="none" style={styles.tilePlaceholder} />
           )}
         </View>
         {highlighted || picked ? (
@@ -678,6 +693,59 @@ function PictureGrid({
           onChoose={onChoose}
         />
       ))}
+    </View>
+  );
+}
+
+function PatternRow({
+  rowItemIds,
+  gapIndex,
+  filledItemId,
+  itemsById,
+  isTablet,
+  rowTile,
+}: {
+  rowItemIds: string[];
+  gapIndex: number | null;
+  filledItemId: string | null;
+  itemsById: Map<string, PictureSetItem>;
+  isTablet: boolean;
+  rowTile: number;
+}) {
+  const isCopy = gapIndex !== null;
+  const sequence =
+    !isCopy && filledItemId !== null ? [...rowItemIds, filledItemId] : rowItemIds;
+  return (
+    <View style={styles.patternRow}>
+      {sequence.map((itemId, index) => {
+        const isGap = isCopy && index === gapIndex;
+        const filled = isGap && filledItemId !== null;
+        if (isGap && !filled) {
+          return (
+            <View
+              key={`gap-${index}`}
+              style={[styles.patternSlot, { width: rowTile, height: rowTile }]}
+            />
+          );
+        }
+        const item = itemsById.get(itemId);
+        const asset = item ? getPackAsset(getActivePackId(), item.asset_path) : undefined;
+        return (
+          <View
+            key={`tile-${index}`}
+            style={[styles.patternTile, { width: rowTile, height: rowTile }]}
+          >
+            {asset !== undefined ? (
+              <Image
+                source={asset}
+                style={StyleSheet.absoluteFill}
+                contentFit="contain"
+                accessibilityLabel={item ? getString(item.label_ref) : ''}
+              />
+            ) : null}
+          </View>
+        );
+      })}
     </View>
   );
 }
@@ -867,6 +935,7 @@ export default function SessionScreen() {
   const [phase, setPhase] = useState<SessionPhase>(() => (resume ? 'resume' : 'step'));
   const [stepOutcomes, setStepOutcomes] = useState<StepOutcome[]>([]);
   const [retryCue, setRetryCue] = useState(false);
+  const [rowChoice, setRowChoice] = useState<string | null>(null);
   const [speaking, setSpeaking] = useState(false);
   const advanceHandledRef = useRef(false);
   const stepAnim = useRef(new Animated.Value(0)).current;
@@ -963,13 +1032,28 @@ export default function SessionScreen() {
   const dotsHeight = phase === 'step' || phase === 'celebration' ? 34 : 0;
   const verticalReserve = isTablet ? 40 : 24;
 
+  const stepRowIds = Array.isArray(step.row_item_ids) ? step.row_item_ids : null;
+  const stepRowGap = typeof step.row_gap_index === 'number' ? step.row_gap_index : null;
+  const hasRow = phase === 'step' && stepRowIds !== null && stepRowIds.length > 0;
+  const rowSlots = hasRow ? stepRowIds.length + (stepRowGap === null ? 1 : 0) : 0;
+  const rowTile = hasRow
+    ? Math.max(
+        24,
+        Math.min(
+          isTablet ? 56 : 46,
+          Math.floor((contentWidth - 8 * Math.max(rowSlots - 1, 0)) / Math.max(rowSlots, 1))
+        )
+      )
+    : 0;
+  const rowReserve = hasRow ? rowTile + 20 : 0;
+
   const widthTile = Math.floor((gridWidth - 12) / 2);
   let portraitSize = preferredPortrait;
   let tileSize = widthTile;
   if (fitItems.length > 1) {
     for (let attempt = 0; attempt < 12; attempt += 1) {
       const guideRow = Math.max(portraitSize, bubbleReserve) + 14;
-      const fixedHeight = dotsHeight + guideRow + verticalReserve;
+      const fixedHeight = dotsHeight + guideRow + verticalReserve + rowReserve;
       const byHeight = Math.floor((stage.height - fixedHeight - (choiceRows - 1) * 12) / choiceRows);
       if (widthTile <= byHeight) {
         tileSize = widthTile;
@@ -1009,6 +1093,9 @@ export default function SessionScreen() {
     }
     setRetryCue(false);
     advanceHandledRef.current = false;
+    if (Array.isArray(step.row_item_ids) && step.row_item_ids.length > 0) {
+      setRowChoice(itemId);
+    }
     setStepOutcomes((previous) => [
       ...previous,
       {
@@ -1031,6 +1118,7 @@ export default function SessionScreen() {
     advanceHandledRef.current = true;
     stopAllNarration();
     setRetryCue(false);
+    setRowChoice(null);
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
         stepOutcomes.map((outcome) => ({
@@ -1212,6 +1300,17 @@ export default function SessionScreen() {
     </View>
   );
 
+  const choiceGrid = (
+    <PictureGrid
+      items={visibleChoices}
+      targetItemId={step.target_item_id}
+      highlightTarget={scaffold.highlight_target}
+      isTablet={isTablet}
+      tileSize={tileSize}
+      onChoose={handleChoose}
+    />
+  );
+
   const playSection =
     phase === 'resume' ? (
       <ResumeChoiceCard
@@ -1220,14 +1319,21 @@ export default function SessionScreen() {
         onStartFresh={handleStartFresh}
       />
     ) : phase === 'step' ? (
-      <PictureGrid
-        items={visibleChoices}
-        targetItemId={step.target_item_id}
-        highlightTarget={scaffold.highlight_target}
-        isTablet={isTablet}
-        tileSize={tileSize}
-        onChoose={handleChoose}
-      />
+      hasRow ? (
+        <View style={styles.playColumn}>
+          <PatternRow
+            rowItemIds={stepRowIds as string[]}
+            gapIndex={stepRowGap}
+            filledItemId={rowChoice}
+            itemsById={itemsById}
+            isTablet={isTablet}
+            rowTile={rowTile}
+          />
+          {choiceGrid}
+        </View>
+      ) : (
+        choiceGrid
+      )
     ) : phase === 'celebration' ? (
       <View style={styles.celebrationStage}>
         <CelebrationBurst />
@@ -1899,6 +2005,37 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: '#9A6A1F',
+  },
+  playColumn: {
+    alignSelf: 'stretch',
+  },
+  patternRow: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    marginBottom: 10,
+  },
+  patternTile: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  patternSlot: {
+    borderRadius: 10,
+    borderWidth: 2.5,
+    borderColor: '#C4BBA5',
+  },
+  groupRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    gap: 4,
+  },
+  groupThumb: {
+    aspectRatio: 1,
   },
   grid: {
     flexDirection: 'row',

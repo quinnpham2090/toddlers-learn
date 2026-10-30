@@ -390,6 +390,8 @@ export interface LessonStep {
   target_item_id: string;
   choice_item_ids: string[];
   celebration_ref: string;
+  row_item_ids?: string[];
+  row_gap_index?: number;
 }
 
 export type ScaffoldMode =
@@ -517,6 +519,7 @@ export interface PictureSetItem {
   size_class: 'handheld_safe' | 'large_household' | 'small_blocked';
   passes_choke_tube_proxy: boolean;
   depiction_tags: DepictionTag[];
+  count?: number;
 }
 
 export interface PictureSetRecord {

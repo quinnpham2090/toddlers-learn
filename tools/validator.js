@@ -945,6 +945,19 @@ export function validate(pack) {
         if (!['handheld_safe', 'large_household', 'small_blocked'].includes(item.size_class)) {
           addError('P-SAFE', 'P-SAFE-SIZE-CLASS', id, 'picture_set', `Picture item "${item.item_id}" has invalid size_class "${item.size_class}".`);
         }
+
+        // Optional group/pile repeat count (display only): positive integer when present.
+        if (item.count !== undefined) {
+          if (typeof item.count !== 'number' || !Number.isInteger(item.count) || item.count < 1) {
+            addError(
+              'P-SCHEMA',
+              'P-SCHEMA-ITEM-COUNT',
+              id,
+              'picture_set',
+              `Picture item "${item.item_id}" count must be a positive integer (>= 1) when present; got ${JSON.stringify(item.count)}.`
+            );
+          }
+        }
       }
     }
   }
@@ -1690,6 +1703,71 @@ export function validate(pack) {
               );
             }
           });
+        }
+
+        // Optional pattern-row fields (display only; never a new evidence type).
+        const rowIds = st.row_item_ids;
+        const rowGap = st.row_gap_index;
+        if (rowIds !== undefined) {
+          if (!Array.isArray(rowIds) || rowIds.length < 2) {
+            addError(
+              'P-SCHEMA',
+              'P-SCHEMA-STEP-ROW-IDS',
+              id,
+              'lesson',
+              `Lesson "${id}" step ${idx + 1} row_item_ids must be an array of at least 2 item ids when present.`
+            );
+          } else {
+            const lessonSet = pictureSetMap.get(ls.picture_set_id);
+            const lessonItemIds = new Set((lessonSet && Array.isArray(lessonSet.items) ? lessonSet.items : []).map((entry) => entry.item_id));
+            rowIds.forEach((rid, rIdx) => {
+              if (!lessonItemIds.has(rid)) {
+                addError(
+                  'P-REF',
+                  'P-REF-STEP-ROW-ITEM',
+                  id,
+                  'lesson',
+                  `Lesson "${id}" step ${idx + 1} row_item_ids[${rIdx}] "${rid}" does not resolve to an item in the lesson's picture set "${ls.picture_set_id}".`,
+                  { referrers: [`lesson:${id}.steps[${idx}].row_item_ids[${rIdx}]`] }
+                );
+              }
+            });
+            if (rowGap !== undefined) {
+              if (!Number.isInteger(rowGap) || rowGap < 0 || rowGap >= rowIds.length) {
+                addError(
+                  'P-SCHEMA',
+                  'P-SCHEMA-STEP-ROW-GAP-RANGE',
+                  id,
+                  'lesson',
+                  `Lesson "${id}" step ${idx + 1} row_gap_index ${JSON.stringify(rowGap)} is out of range for a row of ${rowIds.length} item(s).`
+                );
+              } else if (rowIds[rowGap] !== st.target_item_id) {
+                addError(
+                  'P-SCHEMA',
+                  'P-SCHEMA-STEP-ROW-TARGET',
+                  id,
+                  'lesson',
+                  `Lesson "${id}" step ${idx + 1} copy row expects target_item_id "${st.target_item_id}" at gap index ${rowGap} but the row has "${rowIds[rowGap]}".`
+                );
+              }
+            } else if (rowIds[rowIds.length - 1] === st.target_item_id) {
+              addError(
+                'P-SCHEMA',
+                'P-SCHEMA-STEP-ROW-TARGET',
+                id,
+                'lesson',
+                `Lesson "${id}" step ${idx + 1} extension target_item_id "${st.target_item_id}" repeats the last row tile; the continuation must be a different tile.`
+              );
+            }
+          }
+        } else if (rowGap !== undefined) {
+          addError(
+            'P-SCHEMA',
+            'P-SCHEMA-STEP-ROW-GAP-RANGE',
+            id,
+            'lesson',
+            `Lesson "${id}" step ${idx + 1} has row_gap_index without row_item_ids.`
+          );
         }
       });
     }
