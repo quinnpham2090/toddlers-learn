@@ -312,7 +312,7 @@ export default function HubWorld() {
   const bannerAccent = bannerStop ? STOP_ACCENTS[bannerStop.domain] : null;
 
   const bannerSection =
-    bannerStop && bannerAccent ? (
+    bannerStop && bannerAccent && currentIndex >= 0 ? (
       <View style={[styles.stopBanner, { backgroundColor: bannerAccent.deep }]}>
         <Text style={styles.stopBannerText}>{getString(bannerStop.title_ref)}</Text>
       </View>
@@ -331,30 +331,43 @@ export default function HubWorld() {
       state === 'locked' ? '#EFEAE0' : accent?.deep ?? '#7A7264';
     const iconColor = state === 'locked' ? '#C4BBA5' : '#FFFFFF';
 
+    const nodeTitle = getString(lesson ? lesson.title_ref : stop.title_ref);
     const node = (
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={getString(stop.title_ref)}
-        disabled={state === 'locked'}
-        onPress={() => handleNodePress(index)}
-        style={({ pressed }) => [pressed && state !== 'locked' ? styles.pathNodePressed : null]}
-      >
-        <View
-          style={[
-            styles.pathNode,
-            {
-              width: nodeSize,
-              height: nodeSize,
-              borderRadius: nodeSize / 2,
-              backgroundColor: nodeColor,
-            },
-            state === 'current' && styles.pathNodeCurrent,
-            state === 'locked' && styles.pathNodeLocked,
-          ]}
+      <View style={styles.nodeWithLabel}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={getString(stop.title_ref)}
+          disabled={state === 'locked'}
+          onPress={() => handleNodePress(index)}
+          style={({ pressed }) => [pressed && state !== 'locked' ? styles.pathNodePressed : null]}
         >
-          {state === 'locked' ? <StopPlaceMark color={iconColor} /> : <NodeIcon icon={icon} color={iconColor} />}
-        </View>
-      </Pressable>
+          <View
+            style={[
+              styles.pathNode,
+              {
+                width: nodeSize,
+                height: nodeSize,
+                borderRadius: nodeSize / 2,
+                backgroundColor: nodeColor,
+              },
+              state === 'current' && styles.pathNodeCurrent,
+              state === 'locked' && styles.pathNodeLocked,
+            ]}
+          >
+            {state === 'locked' ? <StopPlaceMark color={iconColor} /> : <NodeIcon icon={icon} color={iconColor} />}
+          </View>
+        </Pressable>
+        <Text
+          style={[
+            isTablet ? styles.nodeLabelTablet : styles.nodeLabel,
+            state === 'current' ? styles.nodeLabelCurrent : null,
+            state === 'locked' && styles.nodeLabelLocked,
+          ]}
+          numberOfLines={2}
+        >
+          {nodeTitle}
+        </Text>
+      </View>
     );
 
     const nodeRow =
@@ -603,6 +616,32 @@ const styles = StyleSheet.create({
   },
   nodeRow: {
     paddingVertical: 14,
+  },
+  nodeWithLabel: {
+    alignItems: 'center',
+    maxWidth: 168,
+  },
+  nodeLabel: {
+    marginTop: 6,
+    fontSize: 12.5,
+    lineHeight: 16,
+    fontWeight: '700',
+    color: '#33302B',
+    textAlign: 'center',
+  },
+  nodeLabelTablet: {
+    marginTop: 7,
+    fontSize: 14.5,
+    lineHeight: 19,
+    fontWeight: '700',
+    color: '#33302B',
+    textAlign: 'center',
+  },
+  nodeLabelCurrent: {
+    color: '#2B6E58',
+  },
+  nodeLabelLocked: {
+    color: '#C4BBA5',
   },
   nodeRowLeft: {
     alignItems: 'flex-start',
