@@ -63,26 +63,30 @@ report('Pack 1 still validates with 0 errors', v1.valid, `errors=${v1.error_coun
 report('Pack 2 still validates with 0 errors', v2.valid, `errors=${v2.error_count}`);
 
 const allPacks = [pack1, pack2];
-const itemsWithCount = allPacks.flatMap((pack) =>
-  pack.picture_sets.flatMap((set) => set.items.filter((item) => item.count !== undefined))
+const countSets = allPacks.flatMap((pack) =>
+  pack.picture_sets
+    .filter((set) => set.items.some((item) => item.count !== undefined))
+    .map((set) => set.id)
 );
 report(
-  'no existing picture item carries the new count field (rendering inputs unchanged)',
-  itemsWithCount.length === 0,
-  `items with count=${itemsWithCount.length}`
+  'count items live only in the Wave 3 counting set (pre-Wave-3 rendering inputs unchanged)',
+  JSON.stringify(countSets) === JSON.stringify(['counting-groups-set']),
+  `sets with count items=${countSets.join(',') || 'none'}`
 );
 
-const stepsWithRows = allPacks.flatMap((pack) =>
-  pack.lessons.flatMap((lesson) =>
-    lesson.steps.filter(
-      (step) => step.row_item_ids !== undefined || step.row_gap_index !== undefined
+const rowLessonIds = allPacks.flatMap((pack) =>
+  pack.lessons
+    .filter((lesson) =>
+      lesson.steps.some(
+        (step) => step.row_item_ids !== undefined || step.row_gap_index !== undefined
+      )
     )
-  )
+    .map((lesson) => lesson.id)
 );
 report(
-  'no existing lesson step carries the new row fields (no layout change)',
-  stepsWithRows.length === 0,
-  `steps with rows=${stepsWithRows.length}`
+  'row fields are used only by the Wave 3 pattern lesson (other lessons unchanged)',
+  JSON.stringify(rowLessonIds) === JSON.stringify(['lesson-copy-the-pattern']),
+  `lessons with rows=${rowLessonIds.join(',') || 'none'}`
 );
 
 // ============ (a) COUNT ============

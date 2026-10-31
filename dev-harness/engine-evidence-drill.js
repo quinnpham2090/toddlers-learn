@@ -70,6 +70,7 @@ const packs = packDirs.map((dirName) => ({ dirName, pack: loadPackDir(path.join(
 const legacyWeight = (entry) => (entry.completed_with_help ? 'participation' : 'strong');
 
 // ============ (a) no existing step carries the fields; existing output unchanged ============
+const W3_LESSON_IDS = ['lesson-see-how-many', 'lesson-give-one', 'lesson-give-two', 'lesson-give-three', 'lesson-give-just-right', 'lesson-copy-the-pattern', 'lesson-sort-by-colour'];
 const flaggedSteps = [];
 const existingOutcomeChecks = [];
 for (const { dirName, pack } of packs) {
@@ -77,6 +78,10 @@ for (const { dirName, pack } of packs) {
     for (const step of lesson.steps) {
       if (step.evidence_skill_ids !== undefined || step.evidence_participation !== undefined) {
         flaggedSteps.push(`${dirName}:${lesson.id}:step${step.step_index}`);
+      }
+      // pre-Wave-3 lessons must be byte-for-byte unchanged
+      if (W3_LESSON_IDS.includes(lesson.id)) {
+        continue;
       }
       // existing step -> outcome shape the session would have produced before this change
       const outcome = {
@@ -98,13 +103,14 @@ for (const { dirName, pack } of packs) {
     }
   }
 }
+const flaggedLessons = [...new Set(flaggedSteps.map((entry) => entry.split(':')[1]))];
 report(
-  'no existing step in any pack carries the new fields',
-  flaggedSteps.length === 0,
-  `flagged=${flaggedSteps.join(', ') || 'none'}`
+  'per-step evidence fields are used only by the Wave 3 lessons (4 Wave 3 lessons use defaults)',
+  flaggedLessons.length > 0 && flaggedLessons.every((id) => W3_LESSON_IDS.includes(id)),
+  `lessons=${flaggedLessons.join(',') || 'none'}`
 );
 report(
-  'existing lesson steps still emit exactly one entry for the primary skill, unchanged keys/weight',
+  'pre-Wave-3 lesson steps still emit exactly one entry for the primary skill, unchanged keys/weight',
   existingOutcomeChecks.length > 0 && existingOutcomeChecks.every(Boolean),
   `checked=${existingOutcomeChecks.length}`
 );

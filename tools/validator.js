@@ -791,6 +791,20 @@ export function validate(pack) {
         if (phrase === 'beat' && (sKey.startsWith('picture_set.beat_dots.') || sKey.startsWith('item.beats_1.'))) {
           continue;
         }
+        // Wave 3 beat-patterns lesson (copy-the-pattern) uses the same musical
+        // 'beat' vocabulary (founder-approved voice lines and beat-tile labels);
+        // the competitive meaning of the word stays banned everywhere else.
+        if (
+          phrase === 'beat' &&
+          (sKey.startsWith('lesson.copy_the_pattern.') ||
+            sKey.startsWith('skill.beat_patterns.') ||
+            sKey.startsWith('item.beat_loud.') ||
+            sKey.startsWith('item.beat_soft.') ||
+            sKey.startsWith('item.beat_rest.') ||
+            sKey.startsWith('picture_set.pattern.'))
+        ) {
+          continue;
+        }
         if (containsBannedPhrase(sVal, phrase)) {
           addError(
             'P-COOP',

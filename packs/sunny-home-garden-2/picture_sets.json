@@ -764,5 +764,497 @@
         ]
       }
     ]
+  },
+  {
+    "id": "counting-groups-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.counting_groups.title",
+    "alt_text_parent_ref": "picture_set.counting_groups.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "ball-1",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball_1.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "ball-2",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball_2.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "ball-3",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball_3.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      },
+      {
+        "item_id": "cup-1",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup_1.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "cup-2",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup_2.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "cup-3",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup_3.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      },
+      {
+        "item_id": "spoon-1",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon_1.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "spoon-2",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon_2.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "spoon-3",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon_3.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      },
+      {
+        "item_id": "book-1",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book_1.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "book-2",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book_2.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "book-3",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book_3.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      },
+      {
+        "item_id": "red-flower-1",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower_1.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "red-flower-2",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower_2.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "red-flower-3",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower_3.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      },
+      {
+        "item_id": "yellow-flower-1",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower_1.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 1
+      },
+      {
+        "item_id": "yellow-flower-2",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower_2.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 2
+      },
+      {
+        "item_id": "yellow-flower-3",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower_3.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ],
+        "count": 3
+      }
+    ]
+  },
+  {
+    "id": "pattern-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.pattern.title",
+    "alt_text_parent_ref": "picture_set.pattern.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "red-flower",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "yellow-flower",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "blue-flower",
+        "label_ref": "item.blue_flower.label",
+        "alt_text_parent_ref": "item.blue_flower.alt_parent",
+        "asset_path": "assets/blue-flower.jpg",
+        "asset_sha256": "ce20fa5b01260d0f45cc37319c363b98bf6effb5f3c36f5e14392a912c7e768b",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "ball",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "cup",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "spoon",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "book",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "beat-loud",
+        "label_ref": "item.beat_loud.label",
+        "alt_text_parent_ref": "item.beat_loud.alt_parent",
+        "asset_path": "assets/beat-loud.jpg",
+        "asset_sha256": "cc98451a227caa2f7013e4538dfcbe6bee1bea09f0e9d98cff70913495de25d6",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "beat-soft",
+        "label_ref": "item.beat_soft.label",
+        "alt_text_parent_ref": "item.beat_soft.alt_parent",
+        "asset_path": "assets/beat-soft.jpg",
+        "asset_sha256": "b2ce150a694276f1ac4aa7be629a50f830236b99e2ed999770b200b45cd3aba6",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "beat-rest",
+        "label_ref": "item.beat_rest.label",
+        "alt_text_parent_ref": "item.beat_rest.alt_parent",
+        "asset_path": "assets/beat-rest.jpg",
+        "asset_sha256": "5680c7e990d113c8c112a8754d4fac2acaa99a4a29c7df5ad815568cb3c20adb",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "colour-sorting-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.colour_sorting.title",
+    "alt_text_parent_ref": "picture_set.colour_sorting.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "red-basket",
+        "label_ref": "item.red_basket.label",
+        "alt_text_parent_ref": "item.red_basket.alt_parent",
+        "asset_path": "assets/red-basket.jpg",
+        "asset_sha256": "f5f211d80594797d908605e09a4bfbebae5b16f76d7f5f3af5b7eeb97d3998dd",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "yellow-basket",
+        "label_ref": "item.yellow_basket.label",
+        "alt_text_parent_ref": "item.yellow_basket.alt_parent",
+        "asset_path": "assets/yellow-basket.jpg",
+        "asset_sha256": "005fe2c6a3b92e9a1b100b98baa0af4e1f12883a402431673818e74463530d8f",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "blue-basket",
+        "label_ref": "item.blue_basket.label",
+        "alt_text_parent_ref": "item.blue_basket.alt_parent",
+        "asset_path": "assets/blue-basket.jpg",
+        "asset_sha256": "cb2883413f9f20c30731b49d736334ba0426a365c61b0859a190170fa77bb021",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "red-flower",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "yellow-flower",
+        "label_ref": "item.yellow_flower.label",
+        "alt_text_parent_ref": "item.yellow_flower.alt_parent",
+        "asset_path": "assets/yellow-flower.jpg",
+        "asset_sha256": "751927558f3772fdfd80982dadf2610e599b837d320f2fcc5fcfbe94193e7848",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "blue-flower",
+        "label_ref": "item.blue_flower.label",
+        "alt_text_parent_ref": "item.blue_flower.alt_parent",
+        "asset_path": "assets/blue-flower.jpg",
+        "asset_sha256": "ce20fa5b01260d0f45cc37319c363b98bf6effb5f3c36f5e14392a912c7e768b",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
   }
 ]

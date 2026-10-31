@@ -121,6 +121,41 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['balls-group', 'books-group'],
     findPromptRef: 'lesson.sort_by_kind.find_prompt',
   },
+  'lesson-see-how-many': {
+    targetItemId: 'book-3',
+    tileItemIds: ['book-3', 'book-1', 'book-2'],
+    findPromptRef: 'lesson.see_how_many.find_prompt',
+  },
+  'lesson-give-one': {
+    targetItemId: 'ball-1',
+    tileItemIds: ['ball-1', 'ball-3', 'ball-2'],
+    findPromptRef: 'lesson.give_one.find_prompt',
+  },
+  'lesson-give-two': {
+    targetItemId: 'red-flower-2',
+    tileItemIds: ['red-flower-2', 'red-flower-1', 'red-flower-3'],
+    findPromptRef: 'lesson.give_two.find_prompt',
+  },
+  'lesson-give-three': {
+    targetItemId: 'cup-3',
+    tileItemIds: ['cup-3', 'cup-1', 'cup-2'],
+    findPromptRef: 'lesson.give_three.find_prompt',
+  },
+  'lesson-give-just-right': {
+    targetItemId: 'red-flower-3',
+    tileItemIds: ['red-flower-3', 'red-flower-2', 'red-flower-1'],
+    findPromptRef: 'lesson.give_just_right.find_prompt',
+  },
+  'lesson-copy-the-pattern': {
+    targetItemId: 'ball',
+    tileItemIds: ['ball', 'cup', 'spoon'],
+    findPromptRef: 'lesson.copy_the_pattern.find_prompt',
+  },
+  'lesson-sort-by-colour': {
+    targetItemId: 'blue-basket',
+    tileItemIds: ['blue-basket', 'red-basket', 'yellow-basket'],
+    findPromptRef: 'lesson.sort_by_colour.find_prompt',
+  },
 };
 
 
