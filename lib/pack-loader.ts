@@ -130,6 +130,8 @@ import sunny2BookJpg from '../packs/sunny-home-garden-2/assets/book.jpg';
 import sunny2BallJpg from '../packs/sunny-home-garden-2/assets/ball.jpg';
 import sunny2RedFlowerJpg from '../packs/sunny-home-garden-2/assets/red-flower.jpg';
 import sunny2YellowFlowerJpg from '../packs/sunny-home-garden-2/assets/yellow-flower.jpg';
+import sunny2YellowCupJpg from '../packs/sunny-home-garden-2/assets/yellow-cup.jpg';
+import sunny2GreenLeafJpg from '../packs/sunny-home-garden-2/assets/green-leaf.jpg';
 import sunny2RedBallJpg from '../packs/sunny-home-garden-2/assets/red-ball.jpg';
 import sunny2BlueBookJpg from '../packs/sunny-home-garden-2/assets/blue-book.jpg';
 import sunny2BallsGroupJpg from '../packs/sunny-home-garden-2/assets/balls-group.jpg';
@@ -1434,8 +1436,8 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/beat-soft.jpg': sunny2BeatSoftJpg,
     'assets/beat-rest.jpg': sunny2BeatRestJpg,
     'assets/blue-basket.jpg': sunny2BlueBasketJpg,
-    'assets/yellow-cup.jpg': yellowCupJpg,
-    'assets/green-leaf.jpg': greenLeafJpg,
+    'assets/yellow-cup.jpg': sunny2YellowCupJpg,
+    'assets/green-leaf.jpg': sunny2GreenLeafJpg,
   },
 };
 
