@@ -1562,5 +1562,112 @@
         ]
       }
     ]
+  },
+  {
+    "id": "what-do-you-see-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.what_do_you_see.title",
+    "alt_text_parent_ref": "picture_set.what_do_you_see.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "red-flower",
+        "label_ref": "item.red_flower.label",
+        "alt_text_parent_ref": "item.red_flower.alt_parent",
+        "asset_path": "assets/red-flower.jpg",
+        "asset_sha256": "d40460a1acf958828ab5c66aedf2ba1a7b47a7981ec33a4458f8ef62dd380937",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "book",
+        "label_ref": "item.book.label",
+        "alt_text_parent_ref": "item.book.alt_parent",
+        "asset_path": "assets/book.jpg",
+        "asset_sha256": "a8d901f25dd345711ebd31b304e4573823b307c0e41f431a74da0328c49118c7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "ball",
+        "label_ref": "item.ball.label",
+        "alt_text_parent_ref": "item.ball.alt_parent",
+        "asset_path": "assets/ball.jpg",
+        "asset_sha256": "c62c80dbc976582a3406183b11d55ed2058dc6f25dfc96af2eb7609b31f10b5d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "cup",
+        "label_ref": "item.cup.label",
+        "alt_text_parent_ref": "item.cup.alt_parent",
+        "asset_path": "assets/cup.jpg",
+        "asset_sha256": "55d076d7eaa75c7af63f8ac303ffa179ba1b70c61042f00b1ed5ca7a66b6ae03",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "spoon",
+        "label_ref": "item.spoon.label",
+        "alt_text_parent_ref": "item.spoon.alt_parent",
+        "asset_path": "assets/spoon.jpg",
+        "asset_sha256": "4536631c054b907f5742533c968f2a2391442c539a6e21cf4332a8d6a7dde8f5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "yellow-cup",
+        "label_ref": "item.yellow_cup.label",
+        "alt_text_parent_ref": "item.yellow_cup.alt_parent",
+        "asset_path": "assets/yellow-cup.jpg",
+        "asset_sha256": "f034add67362fdb5a68a31ca3d3c5debd0a76aaf92073bb8b7ea8bc23ae16c20",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "green-leaf",
+        "label_ref": "item.green_leaf.label",
+        "alt_text_parent_ref": "item.green_leaf.alt_parent",
+        "asset_path": "assets/green-leaf.jpg",
+        "asset_sha256": "d2519dff90f433f30da1cf03c1214fa470b6e977abde6a95590787a5413aca12",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "nature_item"
+        ]
+      }
+    ]
   }
 ]

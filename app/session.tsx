@@ -157,6 +157,11 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['blue-basket', 'red-basket', 'yellow-basket'],
     findPromptRef: 'lesson.sort_by_colour.find_prompt',
   },
+  'lesson-what-do-you-see': {
+    targetItemId: 'green-leaf',
+    tileItemIds: ['green-leaf', 'book', 'cup'],
+    findPromptRef: 'lesson.what_do_you_see.find_prompt',
+  },
 };
 
 

@@ -217,7 +217,6 @@
       "syllable-clapping"
     ],
     "next_skills": [
-      "name-with-grown-up",
       "initial-sound-matching"
     ],
     "age_band_min": "3-4",
@@ -246,7 +245,6 @@
       "onset-rime-prep"
     ],
     "next_skills": [
-      "name-with-grown-up-choice",
       "which-starts-with"
     ],
     "age_band_min": "3-4",
@@ -275,7 +273,7 @@
       "initial-sound-matching"
     ],
     "next_skills": [
-      "name-with-grown-up-choice"
+      "notice-with-choices"
     ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
@@ -302,7 +300,9 @@
     "prerequisites": [
       "point-to-choice"
     ],
-    "next_skills": [],
+    "next_skills": [
+      "name-with-grown-up-choice"
+    ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null
@@ -603,6 +603,62 @@
       "colour-naming"
     ],
     "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "notice-with-choices",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.notice_with_choices.title",
+    "description_ref": "skill.notice_with_choices.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "what-do-you-see"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "what-do-you-see",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.what_do_you_see.title",
+    "description_ref": "skill.what_do_you_see.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "name-with-grown-up"
+    ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null

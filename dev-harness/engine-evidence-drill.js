@@ -71,6 +71,8 @@ const legacyWeight = (entry) => (entry.completed_with_help ? 'participation' : '
 
 // ============ (a) no existing step carries the fields; existing output unchanged ============
 const W3_LESSON_IDS = ['lesson-see-how-many', 'lesson-give-one', 'lesson-give-two', 'lesson-give-three', 'lesson-give-just-right', 'lesson-copy-the-pattern', 'lesson-sort-by-colour'];
+// Lessons that intentionally carry per-step evidence fields (W3 maths + W2-L5 science).
+const PER_STEP_EVIDENCE_LESSON_IDS = [...W3_LESSON_IDS, 'lesson-what-do-you-see'];
 const flaggedSteps = [];
 const existingOutcomeChecks = [];
 for (const { dirName, pack } of packs) {
@@ -80,7 +82,7 @@ for (const { dirName, pack } of packs) {
         flaggedSteps.push(`${dirName}:${lesson.id}:step${step.step_index}`);
       }
       // pre-Wave-3 lessons must be byte-for-byte unchanged
-      if (W3_LESSON_IDS.includes(lesson.id)) {
+      if (PER_STEP_EVIDENCE_LESSON_IDS.includes(lesson.id)) {
         continue;
       }
       // existing step -> outcome shape the session would have produced before this change
@@ -105,8 +107,8 @@ for (const { dirName, pack } of packs) {
 }
 const flaggedLessons = [...new Set(flaggedSteps.map((entry) => entry.split(':')[1]))];
 report(
-  'per-step evidence fields are used only by the Wave 3 lessons (4 Wave 3 lessons use defaults)',
-  flaggedLessons.length > 0 && flaggedLessons.every((id) => W3_LESSON_IDS.includes(id)),
+  'per-step evidence fields are used only by the W3 maths lessons + W2-L5 science lesson',
+  flaggedLessons.length > 0 && flaggedLessons.every((id) => PER_STEP_EVIDENCE_LESSON_IDS.includes(id)),
   `lessons=${flaggedLessons.join(',') || 'none'}`
 );
 report(

@@ -461,7 +461,31 @@
       "song.wordlist.object_cup": "Cup",
       "song.wordlist.object_leaf": "Leaf",
       "song.wordlist.object_sock": "Sock",
-      "song.wordlist.object_spoon": "Spoon"
+      "song.wordlist.object_spoon": "Spoon",
+      "lesson.what_do_you_see.title": "What Do You See?",
+      "lesson.what_do_you_see.step_1.prompt": "Look together! Tap something red!",
+      "lesson.what_do_you_see.step_1.celebration": "You found something red — the red flower!",
+      "lesson.what_do_you_see.step_2.prompt": "What do you see? Tap the book!",
+      "lesson.what_do_you_see.step_2.celebration": "You found the book!",
+      "lesson.what_do_you_see.step_3.prompt": "Look together! Tap something you can drink from!",
+      "lesson.what_do_you_see.step_3.celebration": "You found the cup — you can drink from it!",
+      "lesson.what_do_you_see.step_4.prompt": "What do you see that grows in the garden? Tap it!",
+      "lesson.what_do_you_see.step_4.celebration": "You found the green leaf — it grows in the garden!",
+      "lesson.what_do_you_see.step_5.prompt": "Look together! Tap something you can read!",
+      "lesson.what_do_you_see.step_5.celebration": "You found the book — you can read it!",
+      "lesson.what_do_you_see.closing_win": "You noticed so much together!",
+      "lesson.what_do_you_see.find_prompt": "Let’s find the green leaf together!",
+      "skill.notice_with_choices.title": "Noticing with Choices",
+      "skill.notice_with_choices.description": "Notice something by a property (colour, thing, use, growing thing) and point to it",
+      "skill.what_do_you_see.title": "What Do You See?",
+      "skill.what_do_you_see.description": "Answer a looking question by tapping what you see",
+      "picture_set.what_do_you_see.title": "Things You See",
+      "picture_set.what_do_you_see.alt_parent": "Photographs for noticing: a red flower, a book, a ball, a cup, a spoon, a yellow cup, and a green leaf.",
+      "item.yellow_cup.label": "Yellow cup!",
+      "item.yellow_cup.alt_parent": "A yellow cup.",
+      "item.green_leaf.label": "Green leaf!",
+      "item.green_leaf.alt_parent": "A green leaf.",
+      "adventure.skill.what_do_you_see.title": "Noticing and pointing to things you see"
     }
   }
 }
