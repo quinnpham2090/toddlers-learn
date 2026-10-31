@@ -26,6 +26,9 @@ const missions = readJson('packs/sunny-home-garden-2/missions.json').map((missio
 }));
 const TODAY = '2026-06-01';
 const TOMORROW = '2026-06-02';
+const DAY1 = '2026-06-01';
+const DAY2 = '2026-06-02';
+const DAY3 = '2026-06-03';
 const base = { missions, age: 4, todayKey: TODAY, lastOfferDayKey: null, lastOfferedMissionId: null };
 
 // ---- inventory (live pack) ----
@@ -60,18 +63,22 @@ report(
   JSON.stringify(primaryFirst)
 );
 
-// ---- (b) rotation: least recently offered within a skill ----
-const first = selectMissionOffer({ ...base, completedSkillIds: ['sizes-big-little'] });
+// ---- (b) rotation: least recently offered within a skill (consecutive days) ----
+// RE-SCOPED for the relaxed rule: the previous offer now needs its day key, because the
+// block only applies back-to-back. Same intent (alternation), correct new inputs.
+const first = selectMissionOffer({ ...base, todayKey: DAY1, completedSkillIds: ['sizes-big-little'] });
 const second = selectMissionOffer({
   ...base,
-  todayKey: TOMORROW,
+  todayKey: DAY2,
   completedSkillIds: ['sizes-big-little'],
+  lastOfferDayKey: DAY1,
   lastOfferedMissionId: first.missionId,
 });
 const third = selectMissionOffer({
   ...base,
-  todayKey: '2026-06-03',
+  todayKey: DAY3,
   completedSkillIds: ['sizes-big-little'],
+  lastOfferDayKey: DAY2,
   lastOfferedMissionId: second.missionId,
 });
 report(
@@ -80,17 +87,55 @@ report(
   `${first.missionId} -> ${second.missionId} -> ${third.missionId}`
 );
 
-// ---- (c) never the same mission twice in a row ----
-const repeat = selectMissionOffer({
-  ...base,
-  todayKey: TOMORROW,
-  completedSkillIds: ['sorting-one-rule'],
-  lastOfferedMissionId: 'mission-tidy-team',
-});
+// ---- (c) the relaxed back-to-back rule: the 7 worked examples (all binding) ----
+// RE-SCOPED for the relaxed rule: the old case asserted an INDEFINITE block (no day key
+// passed); it now asserts the back-to-back block, and the gap case proves the row breaks.
+const callOffer = (todayKey, lastOfferDayKey, lastOfferedMissionId, completedSkillIds) =>
+  selectMissionOffer({ ...base, todayKey, lastOfferDayKey, lastOfferedMissionId, completedSkillIds });
+
+const ex1 = callOffer(DAY1, null, null, ['sorting-one-rule']);
 report(
-  'the only mission for a skill is NOT offered twice in a row',
-  repeat === null,
-  JSON.stringify(repeat)
+  'worked ex 1: day 1 sorting offers Tidy Team',
+  ex1 && ex1.missionId === 'mission-tidy-team',
+  JSON.stringify(ex1)
+);
+const ex2 = callOffer(DAY2, DAY1, 'mission-tidy-team', ['sorting-one-rule']);
+report(
+  'worked ex 2: day 2 sorting offers NOTHING (back-to-back; day not consumed, state unchanged)',
+  ex2 === null,
+  JSON.stringify(ex2)
+);
+const ex3 = callOffer(DAY3, DAY1, 'mission-tidy-team', ['sorting-one-rule']);
+report(
+  'worked ex 3: day 3 sorting offers Tidy Team again (the skipped day broke the row)',
+  ex3 && ex3.missionId === 'mission-tidy-team',
+  JSON.stringify(ex3)
+);
+const s1 = callOffer(DAY1, null, null, ['sizes-big-little']);
+const s2 = callOffer(DAY2, DAY1, s1.missionId, ['sizes-big-little']);
+const s3 = callOffer(DAY3, DAY2, s2.missionId, ['sizes-big-little']);
+report(
+  'worked ex 4: sizes missions alternate across consecutive days',
+  s1.missionId !== s2.missionId && s3.missionId === s1.missionId,
+  `${s1.missionId} -> ${s2.missionId} -> ${s3.missionId}`
+);
+const ex5 = callOffer('2026-06-05', DAY1, 'mission-tidy-team', ['sorting-one-rule']);
+report(
+  'worked ex 5: a 4-day gap allows the same mission again',
+  ex5 && ex5.missionId === 'mission-tidy-team',
+  JSON.stringify(ex5)
+);
+const ex6 = callOffer(DAY1, DAY1, 'mission-tidy-team', ['sorting-one-rule']);
+report('worked ex 6: a second lesson the same day offers nothing (day cap unchanged)', ex6 === null, JSON.stringify(ex6));
+report(
+  'worked ex 7a: last offer 2026-10-31, today 2026-11-01 -> BLOCKED (month boundary)',
+  callOffer('2026-11-01', '2026-10-31', 'mission-tidy-team', ['sorting-one-rule']) === null
+);
+const ex7b = callOffer('2026-11-01', '2026-10-30', 'mission-tidy-team', ['sorting-one-rule']);
+report(
+  'worked ex 7b: last offer 2026-10-30, today 2026-11-01 -> ALLOWED',
+  ex7b && ex7b.missionId === 'mission-tidy-team',
+  JSON.stringify(ex7b)
 );
 
 // ---- (d) no match => no offer (and purity => the day is not consumed) ----
