@@ -1256,5 +1256,311 @@
         ]
       }
     ]
+  },
+  {
+    "id": "home-things-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-1",
+      "sunny-home-garden"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, placeholder art, not live.",
+    "title_ref": "picture_set.home_things.title",
+    "alt_text_parent_ref": "picture_set.home_things.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "laundry-basket",
+        "label_ref": "item.laundry_basket.label",
+        "alt_text_parent_ref": "item.laundry_basket.alt_parent",
+        "asset_path": "assets/laundry-basket.jpg",
+        "asset_sha256": "09a7221e705d7ed8b8120a1923a9443f17a68e7e2f7721bfd9a3c07e00678442",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "cardboard-box",
+        "label_ref": "item.cardboard_box.label",
+        "alt_text_parent_ref": "item.cardboard_box.alt_parent",
+        "asset_path": "assets/cardboard-box.jpg",
+        "asset_sha256": "71454cbe15be7c8285282dff27a4b8e0845e9d25706c572c2603bcffe551d0a3",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "flat-towel",
+        "label_ref": "item.flat_towel.label",
+        "alt_text_parent_ref": "item.flat_towel.alt_parent",
+        "asset_path": "assets/flat-towel.jpg",
+        "asset_sha256": "73156b2d8ea20a232cf4710a5813680cc6d75c1d6c91722143c9b18e5bcbcddb",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "soft-toy",
+        "label_ref": "item.soft_toy.label",
+        "alt_text_parent_ref": "item.soft_toy.alt_parent",
+        "asset_path": "assets/soft-toy.jpg",
+        "asset_sha256": "448d3d2aea878f6aff70906cb5f792f35a8bb5fc4aa70d19eea3cfbb5145c7d7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "book-stack",
+        "label_ref": "item.book_stack.label",
+        "alt_text_parent_ref": "item.book_stack.alt_parent",
+        "asset_path": "assets/book-stack.jpg",
+        "asset_sha256": "e32bee5fc021574463d4f41f9646e3d98c7d50302e046f26a85f30fbdbf5f6a6",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "clean-socks",
+        "label_ref": "item.clean_socks.label",
+        "alt_text_parent_ref": "item.clean_socks.alt_parent",
+        "asset_path": "assets/clean-socks.jpg",
+        "asset_sha256": "a1bb032d50b156012f99da881e4cb6fe544f283cc2b2e4754e414957dc9b30f8",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "plastic-plate",
+        "label_ref": "item.plastic_plate.label",
+        "alt_text_parent_ref": "item.plastic_plate.alt_parent",
+        "asset_path": "assets/plastic-plate.jpg",
+        "asset_sha256": "22b3d1819fded3c39f3c5983ddf376b63c3bec1ba9434f2dff00aad7f6a7f4e1",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "paper-plate",
+        "label_ref": "item.paper_plate.label",
+        "alt_text_parent_ref": "item.paper_plate.alt_parent",
+        "asset_path": "assets/paper-plate.jpg",
+        "asset_sha256": "dedf02efdc94f9393579c255ceb12cb80549fc9c4fc84e704816c62c17c0b97d",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "placemat",
+        "label_ref": "item.placemat.label",
+        "alt_text_parent_ref": "item.placemat.alt_parent",
+        "asset_path": "assets/placemat.jpg",
+        "asset_sha256": "e39cc235d5eb53a3777f0df4366827ce4accd4181f22f69f62eb2762335e502f",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "plastic-cup",
+        "label_ref": "item.plastic_cup.label",
+        "alt_text_parent_ref": "item.plastic_cup.alt_parent",
+        "asset_path": "assets/plastic-cup.jpg",
+        "asset_sha256": "38f67aa95819f2a93ba81089edacd250d768feedbe390a8288125c229c258b1e",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "paper-cup",
+        "label_ref": "item.paper_cup.label",
+        "alt_text_parent_ref": "item.paper_cup.alt_parent",
+        "asset_path": "assets/paper-cup.jpg",
+        "asset_sha256": "cef190226ca9465c80452ecddb29cff20771818bb0925ec39411150fb14406b3",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "cloth-napkin",
+        "label_ref": "item.cloth_napkin.label",
+        "alt_text_parent_ref": "item.cloth_napkin.alt_parent",
+        "asset_path": "assets/cloth-napkin.jpg",
+        "asset_sha256": "d09a87b4c90585a9a20a0d03abd4cf3f596bb129a39ceab7b048a33a7219d71b",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "paper-towel-sheet",
+        "label_ref": "item.paper_towel_sheet.label",
+        "alt_text_parent_ref": "item.paper_towel_sheet.alt_parent",
+        "asset_path": "assets/paper-towel-sheet.jpg",
+        "asset_sha256": "5259b09f15c583f42bedb2b8e0954706e5c5f670471cf3197c772afd062b113d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "tea-towel",
+        "label_ref": "item.tea_towel.label",
+        "alt_text_parent_ref": "item.tea_towel.alt_parent",
+        "asset_path": "assets/tea-towel.jpg",
+        "asset_sha256": "83f44adb1dd67cb810e0c15563c1a8410d0ee0357b02389ac652d025b9d3210b",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "watering-can",
+        "label_ref": "item.watering_can.label",
+        "alt_text_parent_ref": "item.watering_can.alt_parent",
+        "asset_path": "assets/watering-can.jpg",
+        "asset_sha256": "0a533e805b2d3ae25158fd03fa776e551cec481c2ae8f6cf02c0df56807a9881",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "damp-cloth",
+        "label_ref": "item.damp_cloth.label",
+        "alt_text_parent_ref": "item.damp_cloth.alt_parent",
+        "asset_path": "assets/damp-cloth.jpg",
+        "asset_sha256": "0681cec1c0285bef3c819134f834cb53774d6b672a52b6bebb78965ce233567f",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "soft_fabric"
+        ]
+      },
+      {
+        "item_id": "indoor-plant",
+        "label_ref": "item.indoor_plant.label",
+        "alt_text_parent_ref": "item.indoor_plant.alt_parent",
+        "asset_path": "assets/indoor-plant.jpg",
+        "asset_sha256": "c4d07e2b6ff4afda08753c2d85042914c875add4db2b1b8188a035db15121bd0",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "nature_item"
+        ]
+      },
+      {
+        "item_id": "outdoor-plant",
+        "label_ref": "item.outdoor_plant.label",
+        "alt_text_parent_ref": "item.outdoor_plant.alt_parent",
+        "asset_path": "assets/outdoor-plant.jpg",
+        "asset_sha256": "b3b03f8f9c351aa92b2e22cdcf1f2d3aef458a297835675d6501d8e8d49ee8be",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe",
+          "nature_item"
+        ]
+      },
+      {
+        "item_id": "night-lamp",
+        "label_ref": "item.night_lamp.label",
+        "alt_text_parent_ref": "item.night_lamp.alt_parent",
+        "asset_path": "assets/night-lamp.jpg",
+        "asset_sha256": "9e229d7a60407284e0373a02f9615f6299f7f92da892a36a865153ee762a940c",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "closed-curtains",
+        "label_ref": "item.closed_curtains.label",
+        "alt_text_parent_ref": "item.closed_curtains.alt_parent",
+        "asset_path": "assets/closed-curtains.jpg",
+        "asset_sha256": "055106f4be214ae19ea635a710bd3054be63018150f56abb70cfbaae63f30aaf",
+        "size_class": "large_household",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "quiet-book",
+        "label_ref": "item.quiet_book.label",
+        "alt_text_parent_ref": "item.quiet_book.alt_parent",
+        "asset_path": "assets/quiet-book.jpg",
+        "asset_sha256": "c239b2feeccc96d29ca00420e2e24783e734cf317f3c8f93c4b5fb7c18a8aad2",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "song-time-card",
+        "label_ref": "item.song_time_card.label",
+        "alt_text_parent_ref": "item.song_time_card.alt_parent",
+        "asset_path": "assets/song-time-card.jpg",
+        "asset_sha256": "4940ead33a8117ae76c99a130353c956db3d85031487e3f00376e6300e69e91d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "helping-hands",
+        "label_ref": "item.helping_hands.label",
+        "alt_text_parent_ref": "item.helping_hands.alt_parent",
+        "asset_path": "assets/helping-hands.jpg",
+        "asset_sha256": "4f741e9baf69597adef87433a7476672b21930560f4e329d923a8e46c4d5188d",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
   }
 ]
