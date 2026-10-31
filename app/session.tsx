@@ -33,6 +33,7 @@ import {
   type PostAdventurePathSelection,
 } from '../lib/path-queue';
 import { markPathSessionCompleted } from '../lib/path-state';
+import { markPathLessonCompleted } from '../lib/path-lesson-signal';
 import {
   SessionBookmark,
   clearReplayBookmark,
@@ -1165,8 +1166,9 @@ export default function SessionScreen() {
       recordStepEvidence(
         stepOutcomes.flatMap((outcome) => stepEvidenceEntries(outcome, lessonPrimarySkillId))
       );
-      if (pathSelection?.active) {
+      if (pathSelection?.active && lesson) {
         markPathSessionCompleted();
+        markPathLessonCompleted([lesson.primary_skill_id, ...lesson.secondary_skill_ids]);
       }
       clearBookmark();
       setFinaleWrongTaps(0);

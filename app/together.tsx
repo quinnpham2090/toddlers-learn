@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import ParentGate from '../components/ParentGate';
 import { missionsUnlocked } from '../lib/mission-unlock';
 import {
   MissionRecord,
   RoutineRecord,
+  getMissionById,
   getMissions,
   getRoutines,
   getString,
@@ -114,6 +115,16 @@ export default function TogetherScreen() {
   const routines = getRoutines();
   const showMissions = missionsUnlocked();
   const [pending, setPending] = useState<PendingTarget | null>(null);
+  const params = useLocalSearchParams<{ offer?: string | string[] }>();
+  const offerParam = Array.isArray(params.offer) ? params.offer[0] : params.offer;
+
+  // An offer tapped on the hub pre-selects that mission so the EXISTING
+  // ParentGate -> briefing flow runs; nothing else about the flow changes.
+  useEffect(() => {
+    if (typeof offerParam === 'string' && offerParam.length > 0 && getMissionById(offerParam)) {
+      setPending({ kind: 'mission', id: offerParam });
+    }
+  }, [offerParam]);
 
   function handlePass() {
     const target = pending;

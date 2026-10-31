@@ -13,16 +13,21 @@ import {
   getActivePackId,
   getCharacters,
   getLessons,
+  getMissionById,
+  getMissions,
   getString,
   getJourneyStopSkills,
   getPackAsset,
 } from '../lib/pack-loader';
 import { loadSkillEvidence } from '../lib/progress-store';
 import { loadParentSettings } from '../lib/parent-settings';
-import { loadAdventureQuestionnaire } from '../lib/adventure-parent';
-import { loadAdventureState } from '../lib/adventure-store';
+import { adventureAge, loadAdventureQuestionnaire } from '../lib/adventure-parent';
+import { adventureLocalDateKey, loadAdventureState } from '../lib/adventure-store';
 import { getPostAdventurePathSelection } from '../lib/path-queue';
 import { reconcileMissionUnlockGate } from '../lib/mission-unlock';
+import { selectMissionOffer } from '../lib/mission-offer.js';
+import { loadMissionOfferState, recordMissionOffer } from '../lib/mission-offer-state';
+import { consumePathLessonCompletion } from '../lib/path-lesson-signal';
 
 const START_BUTTON_LABEL = 'Start';
 const PLAY_AGAIN_LABEL = 'Play again!';
@@ -33,6 +38,8 @@ const ADVENTURE_LABEL = 'Adventure';
 const MAP_LABEL = 'Map';
 const OPEN_LABEL = 'Open';
 const JUMP_LABEL = 'Jump to the current stop';
+const MISSION_OFFER_LABEL = 'Play together?';
+const MISSION_OFFER_DISMISS_LABEL = 'Not now';
 
 const STOP_ACCENTS: Record<SkillDomain, { soft: string; deep: string }> = {
   language: { soft: '#FBE7DF', deep: '#B4502F' },
@@ -166,6 +173,45 @@ function ActivityCard({
   );
 }
 
+function MissionOfferCard({
+  guide,
+  title,
+  isTablet,
+  onPlay,
+  onDismiss,
+}: {
+  guide: CharacterRecord;
+  title: string;
+  isTablet: boolean;
+  onPlay: () => void;
+  onDismiss: () => void;
+}) {
+  return (
+    <View style={isTablet ? styles.missionOfferCardTablet : styles.missionOfferCard}>
+      <GuideBubble character={guide} text={MISSION_OFFER_LABEL} isTablet={isTablet} />
+      <Text style={isTablet ? styles.missionOfferTitleTablet : styles.missionOfferTitle}>{title}</Text>
+      <View style={styles.missionOfferActions}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={OPEN_LABEL}
+          onPress={onPlay}
+          style={({ pressed }) => [styles.activityButton, pressed && styles.activityButtonPressed]}
+        >
+          <Text style={styles.activityButtonText}>{OPEN_LABEL}</Text>
+        </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={MISSION_OFFER_DISMISS_LABEL}
+          onPress={onDismiss}
+          style={({ pressed }) => [styles.missionOfferDismiss, pressed && styles.missionOfferDismissPressed]}
+        >
+          <Text style={styles.missionOfferDismissText}>{MISSION_OFFER_DISMISS_LABEL}</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
 function StartButton({ label, onPress }: { label: string; onPress: () => void }) {
   return (
     <Pressable
@@ -218,6 +264,32 @@ function MapButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+function selectMissionOfferForHub(unlocked: boolean): string | null {
+  const completion = consumePathLessonCompletion();
+  if (!completion || !unlocked) {
+    return null;
+  }
+  const todayKey = adventureLocalDateKey(new Date());
+  const state = loadMissionOfferState();
+  const offer = selectMissionOffer({
+    missions: getMissions().map((mission) => ({
+      id: mission.id,
+      skill_id: mission.skill_id,
+      age_band: mission.age_band,
+    })),
+    completedSkillIds: completion.skillIds,
+    age: adventureAge(loadAdventureQuestionnaire()),
+    todayKey,
+    lastOfferDayKey: state.last_offer_day_key,
+    lastOfferedMissionId: state.last_offered_mission_id,
+  });
+  if (!offer) {
+    return null;
+  }
+  recordMissionOffer(offer.missionId, todayKey);
+  return offer.missionId;
+}
+
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
@@ -232,6 +304,7 @@ export default function HubWorld() {
     initialStopSelection.lessonIds
   );
   const [nextPathSessionReady, setNextPathSessionReady] = useState(false);
+  const [missionOfferId, setMissionOfferId] = useState<string | null>(null);
   const [expandedStop, setExpandedStop] = useState<number | null>(null);
   const [currentNodeY, setCurrentNodeY] = useState(0);
   const scrollRef = useRef<ScrollViewInstance | null>(null);
@@ -264,7 +337,8 @@ export default function HubWorld() {
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
-      reconcileMissionUnlockGate();
+      const missionsOpen = reconcileMissionUnlockGate();
+      setMissionOfferId(selectMissionOfferForHub(missionsOpen));
       setNextPathSessionReady(getPostAdventurePathSelection().lessonId !== null);
       setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
@@ -495,6 +569,19 @@ export default function HubWorld() {
         <StartButton
           label={START_BUTTON_LABEL}
           onPress={() => router.push('/session')}
+        />
+      ) : null}
+      {missionOfferId && guide ? (
+        <MissionOfferCard
+          guide={guide}
+          title={getString(getMissionById(missionOfferId)?.title_ref ?? '')}
+          isTablet={isTablet}
+          onPlay={() => {
+            const offeredId = missionOfferId;
+            setMissionOfferId(null);
+            router.push({ pathname: '/together', params: { offer: offeredId } });
+          }}
+          onDismiss={() => setMissionOfferId(null)}
         />
       ) : null}
       <MapButton onPress={() => router.push('/child-map')} />
@@ -805,6 +892,54 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '800',
+  },
+  missionOfferCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 14,
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#F1EADB',
+  },
+  missionOfferCardTablet: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    padding: 18,
+    marginTop: 14,
+    borderWidth: 1,
+    borderColor: '#F1EADB',
+  },
+  missionOfferTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#33302B',
+    marginTop: 8,
+  },
+  missionOfferTitleTablet: {
+    fontSize: 19,
+    fontWeight: '800',
+    color: '#33302B',
+    marginTop: 10,
+  },
+  missionOfferActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginTop: 12,
+  },
+  missionOfferDismiss: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 999,
+    backgroundColor: '#F4EBDA',
+  },
+  missionOfferDismissPressed: {
+    backgroundColor: '#E7DFCE',
+  },
+  missionOfferDismissText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#7A7264',
   },
   activityCard: {
     flexDirection: 'row',
