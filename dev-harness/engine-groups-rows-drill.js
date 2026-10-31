@@ -212,9 +212,8 @@ report(
   `calls=${evidenceCalls.length}`
 );
 report(
-  'evidence still keys by lesson primary skill (unchanged shape)',
-  sessionSource.includes('skill_id: lessonPrimarySkillId') &&
-    sessionSource.includes('completed_with_help: outcome.completedWithHelp')
+  'evidence still keys by the lesson primary skill by default (groups/rows add display only)',
+  sessionSource.includes('stepEvidenceEntries(outcome, lessonPrimarySkillId)')
 );
 report(
   'target matching still by item id (groups/rows are display only)',

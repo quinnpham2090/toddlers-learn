@@ -5,6 +5,7 @@ import {
 } from './adventure-store';
 import { adventureAge, loadAdventureQuestionnaire } from './adventure-parent';
 import { journeyLessonsAllEvidenced } from './mission-unlock';
+import { evidenceWeightFor } from './evidence-policy.js';
 import { getAdventureSkillById, getLessonById, getLessons } from './pack-loader';
 import { loadSkillEvidence } from './progress-store';
 import { ADVENTURE_SKILL_TO_PATH, PACK_SKILL_TO_PATH, PATH_GRAPH, PATH_NODE_BY_ID } from './path-graph.js';
@@ -73,7 +74,7 @@ function normalizeLessonEvidence(): BandEvidence[] {
       source: 'lesson',
       source_skill_id: record.skill_id,
       scaffold_level: record.scaffold_level_at_completion,
-      weight: record.completed_with_help ? 'participation' : 'strong',
+      weight: evidenceWeightFor(record),
       bandable: true,
       date: record.date,
       session_id: `lesson:${record.date}`,

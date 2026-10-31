@@ -25,7 +25,7 @@ import {
 import { playVoiceAsset, stopVoice } from '../lib/voice-audio';
 import { recordStepEvidence, loadSkillEvidence } from '../lib/progress-store';
 import { selectNextLesson } from '../lib/lesson-selection.js';
-import { completedWithHelpFor } from '../lib/evidence-policy.js';
+import { completedWithHelpFor, stepEvidenceEntries } from '../lib/evidence-policy.js';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -300,6 +300,8 @@ interface StepOutcome {
   stepIndex: number;
   scaffoldLevelAtCompletion: ScaffoldLevelNumber;
   completedWithHelp: boolean;
+  evidenceSkillIds: string[] | null;
+  evidenceParticipation: boolean;
 }
 
 // Step outcomes are held in memory only, shaped for the later progress store:
@@ -1102,6 +1104,11 @@ export default function SessionScreen() {
         stepIndex: step.step_index,
         scaffoldLevelAtCompletion: scaffoldLevel,
         completedWithHelp: completedWithHelpFor(lesson, scaffoldLevel),
+        evidenceSkillIds:
+          Array.isArray(step.evidence_skill_ids) && step.evidence_skill_ids.length > 0
+            ? step.evidence_skill_ids
+            : null,
+        evidenceParticipation: step.evidence_participation === true,
       },
     ]);
     setPhase('celebration');
@@ -1121,11 +1128,7 @@ export default function SessionScreen() {
     setRowChoice(null);
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
-        stepOutcomes.map((outcome) => ({
-          skill_id: lessonPrimarySkillId,
-          scaffold_level_at_completion: outcome.scaffoldLevelAtCompletion,
-          completed_with_help: outcome.completedWithHelp,
-        }))
+        stepOutcomes.flatMap((outcome) => stepEvidenceEntries(outcome, lessonPrimarySkillId))
       );
       if (pathSelection?.active) {
         markPathSessionCompleted();

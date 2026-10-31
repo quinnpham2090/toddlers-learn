@@ -392,6 +392,8 @@ export interface LessonStep {
   celebration_ref: string;
   row_item_ids?: string[];
   row_gap_index?: number;
+  evidence_skill_ids?: string[];
+  evidence_participation?: boolean;
 }
 
 export type ScaffoldMode =

@@ -1769,6 +1769,40 @@ export function validate(pack) {
             `Lesson "${id}" step ${idx + 1} has row_gap_index without row_item_ids.`
           );
         }
+
+        // Optional per-step evidence metadata.
+        if (st.evidence_skill_ids !== undefined) {
+          if (!Array.isArray(st.evidence_skill_ids) || st.evidence_skill_ids.length === 0) {
+            addError(
+              'P-SCHEMA',
+              'P-SCHEMA-STEP-EVIDENCE-SKILLS',
+              id,
+              'lesson',
+              `Lesson "${id}" step ${idx + 1} evidence_skill_ids must be a non-empty array when present.`
+            );
+          } else {
+            st.evidence_skill_ids.forEach((evidenceSkillId, eIdx) => {
+              if (!skillMap.has(evidenceSkillId) && !declaredDeps.has(evidenceSkillId)) {
+                addError(
+                  'P-SCHEMA',
+                  'P-SCHEMA-STEP-EVIDENCE-SKILLS',
+                  id,
+                  'lesson',
+                  `Lesson "${id}" step ${idx + 1} evidence_skill_ids[${eIdx}] "${evidenceSkillId}" does not resolve to a skill in the pack or a declared dependency.`
+                );
+              }
+            });
+          }
+        }
+        if (st.evidence_participation !== undefined && typeof st.evidence_participation !== 'boolean') {
+          addError(
+            'P-SCHEMA',
+            'P-SCHEMA-STEP-EVIDENCE-PARTICIPATION',
+            id,
+            'lesson',
+            `Lesson "${id}" step ${idx + 1} evidence_participation must be a boolean when present.`
+          );
+        }
       });
     }
 

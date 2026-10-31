@@ -11,12 +11,14 @@ export interface SkillEvidenceRecord {
   completed_with_help: boolean;
   date: string;
   source: EvidenceSource;
+  participation?: boolean;
 }
 
 export interface NewSkillEvidence {
   skill_id: string;
   scaffold_level_at_completion: number;
   completed_with_help: boolean;
+  participation?: boolean;
 }
 
 const STORE_FILE_NAME = 'skill-evidence.json';
@@ -36,7 +38,8 @@ function isSkillEvidenceRecord(value: unknown): value is SkillEvidenceRecord {
     typeof record.scaffold_level_at_completion === 'number' &&
     typeof record.completed_with_help === 'boolean' &&
     typeof record.date === 'string' &&
-    record.source === 'session'
+    record.source === 'session' &&
+    (record.participation === undefined || typeof record.participation === 'boolean')
   );
 }
 
