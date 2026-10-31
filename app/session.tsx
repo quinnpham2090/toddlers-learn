@@ -162,6 +162,31 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['green-leaf', 'book', 'cup'],
     findPromptRef: 'lesson.what_do_you_see.find_prompt',
   },
+  'lesson-give-four': {
+    targetItemId: 'ball-4',
+    tileItemIds: ['ball-4', 'ball-2', 'ball-3'],
+    findPromptRef: 'lesson.give_four.find_prompt',
+  },
+  'lesson-how-many': {
+    targetItemId: 'ball-4',
+    tileItemIds: ['ball-4', 'ball-3', 'ball-2'],
+    findPromptRef: 'lesson.how_many.find_prompt',
+  },
+  'lesson-more-or-less': {
+    targetItemId: 'red-flower-4',
+    tileItemIds: ['red-flower-4', 'red-flower-2', 'red-flower-3'],
+    findPromptRef: 'lesson.more_or_less.find_prompt',
+  },
+  'lesson-shape-names': {
+    targetItemId: 'ball',
+    tileItemIds: ['ball', 'book', 'cup'],
+    findPromptRef: 'lesson.shape_names.find_prompt',
+  },
+  'lesson-copy-abc-pattern': {
+    targetItemId: 'spoon',
+    tileItemIds: ['spoon', 'cup', 'ball'],
+    findPromptRef: 'lesson.copy_abc_pattern.find_prompt',
+  },
 };
 
 
@@ -1482,14 +1507,7 @@ export default function SessionScreen() {
             speakerId={character?.id ?? null}
           />
         ) : null}
-        {phase === 'finale' && finaleConfig ? (
-        <FinaleNarrator
-          text={getString(finaleConfig.findPromptRef)}
-          stringKey={finaleConfig.findPromptRef}
-          speakerId={character?.id ?? null}
-        />
-      ) : null}
-      {phase === 'celebration' ? (
+        {phase === 'celebration' ? (
           <CelebrationSpeaker
             celebration={celebration}
             celebrationKey={step.celebration_ref}
@@ -1529,6 +1547,13 @@ export default function SessionScreen() {
         speakerId={character?.id ?? null}
         onSpeakingChange={setSpeaking}
       />
+      {phase === 'finale' && finaleConfig ? (
+        <FinaleNarrator
+          text={getString(finaleConfig.findPromptRef)}
+          stringKey={finaleConfig.findPromptRef}
+          speakerId={character?.id ?? null}
+        />
+      ) : null}
       {phase === 'celebration' ? (
         <CelebrationSpeaker
           celebration={celebration}

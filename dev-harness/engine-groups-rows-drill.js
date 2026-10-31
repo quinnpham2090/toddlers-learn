@@ -84,8 +84,8 @@ const rowLessonIds = allPacks.flatMap((pack) =>
     .map((lesson) => lesson.id)
 );
 report(
-  'row fields are used only by the Wave 3 pattern lesson (other lessons unchanged)',
-  JSON.stringify(rowLessonIds) === JSON.stringify(['lesson-copy-the-pattern']),
+  'row fields are used only by the pattern lessons (other lessons unchanged)',
+  JSON.stringify(rowLessonIds) === JSON.stringify(['lesson-copy-the-pattern', 'lesson-copy-abc-pattern']),
   `lessons with rows=${rowLessonIds.join(',') || 'none'}`
 );
 

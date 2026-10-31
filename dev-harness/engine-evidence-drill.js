@@ -71,8 +71,8 @@ const legacyWeight = (entry) => (entry.completed_with_help ? 'participation' : '
 
 // ============ (a) no existing step carries the fields; existing output unchanged ============
 const W3_LESSON_IDS = ['lesson-see-how-many', 'lesson-give-one', 'lesson-give-two', 'lesson-give-three', 'lesson-give-just-right', 'lesson-copy-the-pattern', 'lesson-sort-by-colour'];
-// Lessons that intentionally carry per-step evidence fields (W3 maths + W2-L5 science).
-const PER_STEP_EVIDENCE_LESSON_IDS = [...W3_LESSON_IDS, 'lesson-what-do-you-see'];
+// Lessons that intentionally carry per-step evidence fields (W3 maths + W2-L5 science + W4 ABC pattern).
+const PER_STEP_EVIDENCE_LESSON_IDS = [...W3_LESSON_IDS, 'lesson-what-do-you-see', 'lesson-copy-abc-pattern'];
 const flaggedSteps = [];
 const existingOutcomeChecks = [];
 for (const { dirName, pack } of packs) {

@@ -438,7 +438,8 @@
       "give-2"
     ],
     "next_skills": [
-      "give-n"
+      "give-n",
+      "give-4"
     ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
@@ -658,6 +659,118 @@
     ],
     "next_skills": [
       "name-with-grown-up"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-4",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_4.title",
+    "description_ref": "skill.give_4.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-3"
+    ],
+    "next_skills": [
+      "cardinality"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "cardinality",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.cardinality.title",
+    "description_ref": "skill.cardinality.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-4"
+    ],
+    "next_skills": [
+      "more-less"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "more-less",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.more_less.title",
+    "description_ref": "skill.more_less.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "cardinality"
+    ],
+    "next_skills": [
+      "shape-names"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "shape-names",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.shape_names.title",
+    "description_ref": "skill.shape_names.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "subitize"
+    ],
+    "next_skills": [
+      "pattern-extension"
     ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,

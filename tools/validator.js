@@ -805,6 +805,12 @@ export function validate(pack) {
         ) {
           continue;
         }
+        // Wave 4 ABC-pattern lesson (copy-abc-pattern) reuses the same musical
+        // 'beat' vocabulary (founder-approved voice line); the competitive
+        // meaning of the word stays banned everywhere else.
+        if (phrase === 'beat' && sKey.startsWith('lesson.copy_abc_pattern.')) {
+          continue;
+        }
         if (containsBannedPhrase(sVal, phrase)) {
           addError(
             'P-COOP',
