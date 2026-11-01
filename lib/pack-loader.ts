@@ -506,6 +506,37 @@ import sunny2PuffLessonWhyDidThatHappenStep4CelebrationMp3 from '../packs/sunny-
 import sunny2PuffLessonWhyDidThatHappenStep5CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_why_did_that_happen_step_5_celebration.mp3';
 import sunny2PuffLessonWhyDidThatHappenClosingWinMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_why_did_that_happen_closing_win.mp3';
 import sunny2PuffLessonWhyDidThatHappenFindPromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_why_did_that_happen_find_prompt.mp3';
+import sunny2AppleJpg from '../packs/sunny-home-garden-2/assets/apple.jpg';
+import sunny2BananaJpg from '../packs/sunny-home-garden-2/assets/banana.jpg';
+import sunny2BreadJpg from '../packs/sunny-home-garden-2/assets/bread.jpg';
+import sunny2EggJpg from '../packs/sunny-home-garden-2/assets/egg.jpg';
+import sunny2BusJpg from '../packs/sunny-home-garden-2/assets/bus.jpg';
+import sunny2TrainJpg from '../packs/sunny-home-garden-2/assets/train.jpg';
+import sunny2BicycleJpg from '../packs/sunny-home-garden-2/assets/bicycle.jpg';
+import sunny2PuffLessonFoodWordsStep1PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_1_prompt.mp3';
+import sunny2PuffLessonFoodWordsStep2PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_2_prompt.mp3';
+import sunny2PuffLessonFoodWordsStep3PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_3_prompt.mp3';
+import sunny2PuffLessonFoodWordsStep4PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_4_prompt.mp3';
+import sunny2PuffLessonFoodWordsStep5PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_5_prompt.mp3';
+import sunny2PuffLessonFoodWordsStep1CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_1_celebration.mp3';
+import sunny2PuffLessonFoodWordsStep2CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_2_celebration.mp3';
+import sunny2PuffLessonFoodWordsStep3CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_3_celebration.mp3';
+import sunny2PuffLessonFoodWordsStep4CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_4_celebration.mp3';
+import sunny2PuffLessonFoodWordsStep5CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_5_celebration.mp3';
+import sunny2PuffLessonFoodWordsClosingWinMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_closing_win.mp3';
+import sunny2PuffLessonFoodWordsFindPromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_find_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep1PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_1_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep2PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_2_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep3PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_3_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep4PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_4_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep5PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_5_prompt.mp3';
+import sunny2PuffLessonVehicleWordsStep1CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_1_celebration.mp3';
+import sunny2PuffLessonVehicleWordsStep2CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_2_celebration.mp3';
+import sunny2PuffLessonVehicleWordsStep3CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_3_celebration.mp3';
+import sunny2PuffLessonVehicleWordsStep4CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_4_celebration.mp3';
+import sunny2PuffLessonVehicleWordsStep5CelebrationMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_step_5_celebration.mp3';
+import sunny2PuffLessonVehicleWordsClosingWinMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_closing_win.mp3';
+import sunny2PuffLessonVehicleWordsFindPromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_vehicle_words_find_prompt.mp3';
 import sunny2PuffLessonWhatDoYouSeeStep1PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_what_do_you_see_step_1_prompt.mp3';
 import sunny2PuffLessonWhatDoYouSeeStep2PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_what_do_you_see_step_2_prompt.mp3';
 import sunny2PuffLessonWhatDoYouSeeStep3PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_what_do_you_see_step_3_prompt.mp3';
@@ -1446,6 +1477,30 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
         "lesson.why_did_that_happen.step_5.celebration": sunny2PuffLessonWhyDidThatHappenStep5CelebrationMp3,
         "lesson.why_did_that_happen.closing_win": sunny2PuffLessonWhyDidThatHappenClosingWinMp3,
         "lesson.why_did_that_happen.find_prompt": sunny2PuffLessonWhyDidThatHappenFindPromptMp3,
+        "lesson.food_words.step_1.prompt": sunny2PuffLessonFoodWordsStep1PromptMp3,
+        "lesson.food_words.step_2.prompt": sunny2PuffLessonFoodWordsStep2PromptMp3,
+        "lesson.food_words.step_3.prompt": sunny2PuffLessonFoodWordsStep3PromptMp3,
+        "lesson.food_words.step_4.prompt": sunny2PuffLessonFoodWordsStep4PromptMp3,
+        "lesson.food_words.step_5.prompt": sunny2PuffLessonFoodWordsStep5PromptMp3,
+        "lesson.food_words.step_1.celebration": sunny2PuffLessonFoodWordsStep1CelebrationMp3,
+        "lesson.food_words.step_2.celebration": sunny2PuffLessonFoodWordsStep2CelebrationMp3,
+        "lesson.food_words.step_3.celebration": sunny2PuffLessonFoodWordsStep3CelebrationMp3,
+        "lesson.food_words.step_4.celebration": sunny2PuffLessonFoodWordsStep4CelebrationMp3,
+        "lesson.food_words.step_5.celebration": sunny2PuffLessonFoodWordsStep5CelebrationMp3,
+        "lesson.food_words.closing_win": sunny2PuffLessonFoodWordsClosingWinMp3,
+        "lesson.food_words.find_prompt": sunny2PuffLessonFoodWordsFindPromptMp3,
+        "lesson.vehicle_words.step_1.prompt": sunny2PuffLessonVehicleWordsStep1PromptMp3,
+        "lesson.vehicle_words.step_2.prompt": sunny2PuffLessonVehicleWordsStep2PromptMp3,
+        "lesson.vehicle_words.step_3.prompt": sunny2PuffLessonVehicleWordsStep3PromptMp3,
+        "lesson.vehicle_words.step_4.prompt": sunny2PuffLessonVehicleWordsStep4PromptMp3,
+        "lesson.vehicle_words.step_5.prompt": sunny2PuffLessonVehicleWordsStep5PromptMp3,
+        "lesson.vehicle_words.step_1.celebration": sunny2PuffLessonVehicleWordsStep1CelebrationMp3,
+        "lesson.vehicle_words.step_2.celebration": sunny2PuffLessonVehicleWordsStep2CelebrationMp3,
+        "lesson.vehicle_words.step_3.celebration": sunny2PuffLessonVehicleWordsStep3CelebrationMp3,
+        "lesson.vehicle_words.step_4.celebration": sunny2PuffLessonVehicleWordsStep4CelebrationMp3,
+        "lesson.vehicle_words.step_5.celebration": sunny2PuffLessonVehicleWordsStep5CelebrationMp3,
+        "lesson.vehicle_words.closing_win": sunny2PuffLessonVehicleWordsClosingWinMp3,
+        "lesson.vehicle_words.find_prompt": sunny2PuffLessonVehicleWordsFindPromptMp3,
       },
       "moss": {
         "item.balls_group.label": sunny2MossBallsGroupLabelMp3,
@@ -1768,6 +1823,13 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/rough-basket.jpg': sunny2RoughBasketJpg,
     'assets/smooth-basket.jpg': sunny2SmoothBasketJpg,
     'assets/sun.jpg': sunny2SunJpg,
+    'assets/apple.jpg': sunny2AppleJpg,
+    'assets/banana.jpg': sunny2BananaJpg,
+    'assets/bread.jpg': sunny2BreadJpg,
+    'assets/egg.jpg': sunny2EggJpg,
+    'assets/bus.jpg': sunny2BusJpg,
+    'assets/train.jpg': sunny2TrainJpg,
+    'assets/bicycle.jpg': sunny2BicycleJpg,
   },
 };
 

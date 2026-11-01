@@ -191,7 +191,7 @@ report('fallbacks resolve in queue order: first-sounds -> letter-names-1 -> lett
 // ================= 5. skill graph =================
 report('which-starts-with next = [notice-with-choices, letter-names] (branch; notice path still reachable)', JSON.stringify(skillById('which-starts-with')?.next_skills) === JSON.stringify(['notice-with-choices', 'letter-names']));
 report('all 3 new skills exist, domain language', ['letter-names', 'letter-sounds', 'animal-words'].every((id) => skillById(id)?.domain === 'language'));
-report('letter-names next = [letter-sounds]; letter-sounds next = []; animal-words next = []', JSON.stringify(skillById('letter-names')?.next_skills) === JSON.stringify(['letter-sounds']) && JSON.stringify(skillById('letter-sounds')?.next_skills) === JSON.stringify([]) && JSON.stringify(skillById('animal-words')?.next_skills) === JSON.stringify([]));
+report('letter-names next = [letter-sounds]; letter-sounds next = [] (animal-words gained the W8 food-words edge)', JSON.stringify(skillById('letter-names')?.next_skills) === JSON.stringify(['letter-sounds']) && JSON.stringify(skillById('letter-sounds')?.next_skills) === JSON.stringify([]));
 report('animal-words prerequisite is the point-to-choice FALLBACK (cross-pack rejected)', JSON.stringify(skillById('animal-words')?.prerequisites) === JSON.stringify(['point-to-choice']));
 report('everyday-object-words NOT referenced by any Pack 2 record (fallback used, no dangling dep)', !JSON.stringify(skills).includes('everyday-object-words'));
 

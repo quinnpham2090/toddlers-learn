@@ -222,6 +222,16 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['cup', 'ball', 'book'],
     findPromptRef: 'lesson.why_did_that_happen.find_prompt',
   },
+  'lesson-food-words': {
+    targetItemId: 'apple',
+    tileItemIds: ['apple', 'egg', 'banana'],
+    findPromptRef: 'lesson.food_words.find_prompt',
+  },
+  'lesson-vehicle-words': {
+    targetItemId: 'car',
+    tileItemIds: ['car', 'train', 'bicycle'],
+    findPromptRef: 'lesson.vehicle_words.find_prompt',
+  },
 };
 
 

@@ -305,7 +305,9 @@ report('L1 bands neither colour-naming nor sizes-big-little', !JSON.stringify(le
 
 // ================= 10. pre-existing steps unchanged =================
 const w6Ids = Object.keys(W6);
-const preLessons = lessons.filter((l) => !w6Ids.includes(l.id));
+// Pre-Wave-6 lessons, pinned explicitly so this snapshot stays wave-relative.
+const PRE_W6_LESSON_IDS = ['lesson-point-to','lesson-sort-by-kind','lesson-words-that-sound-the-same','lesson-finish-the-rhyme','lesson-clap-the-beats','lesson-first-sounds','lesson-name-it-together','lesson-see-how-many','lesson-give-one','lesson-give-two','lesson-give-three','lesson-give-just-right','lesson-copy-the-pattern','lesson-sort-by-colour','lesson-what-do-you-see','lesson-give-four','lesson-how-many','lesson-more-or-less','lesson-shape-names','lesson-copy-abc-pattern','lesson-letter-names-1','lesson-letter-names-2','lesson-first-letter-sounds','lesson-animal-words'];
+const preLessons = PRE_W6_LESSON_IDS.map((id) => lessonById(id)).filter(Boolean);
 const preHash = crypto.createHash('sha256').update(JSON.stringify(preLessons.map((x) => ({ id: x.id, steps: x.steps })))).digest('hex');
 report('all pre-existing steps byte-unchanged (118 steps at HEAD 8f3b314; snapshot hash)', preHash === '4f710f3077512e76e2cdae28d02c77ef2a705902cab2dfd789b218e194d53b58', preHash);
 report('pre-existing step count is 118 (verified from the repo)', preLessons.reduce((n, l) => n + l.steps.length, 0) === 118);

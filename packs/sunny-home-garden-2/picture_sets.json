@@ -2362,5 +2362,145 @@
         ]
       }
     ]
+  },
+  {
+    "id": "food-words-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.food_words.title",
+    "alt_text_parent_ref": "picture_set.food_words.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "apple",
+        "label_ref": "item.apple.label",
+        "alt_text_parent_ref": "item.apple.alt_parent",
+        "asset_path": "assets/apple.jpg",
+        "asset_sha256": "1d979fef67b4fda390acd7f08b5f4789489ba68c9d4b7c88840a60e98bba77f0",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "banana",
+        "label_ref": "item.banana.label",
+        "alt_text_parent_ref": "item.banana.alt_parent",
+        "asset_path": "assets/banana.jpg",
+        "asset_sha256": "81dfd1d8d9b348b9487323ed6a1079efde8e8e6d86f82c2ae1350eac47612fdd",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "bread",
+        "label_ref": "item.bread.label",
+        "alt_text_parent_ref": "item.bread.alt_parent",
+        "asset_path": "assets/bread.jpg",
+        "asset_sha256": "39545f0989b6c437478d461e3f162606130bc5e768b2af34b63c5d35a4dbc346",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "egg",
+        "label_ref": "item.egg.label",
+        "alt_text_parent_ref": "item.egg.alt_parent",
+        "asset_path": "assets/egg.jpg",
+        "asset_sha256": "65fa0f06a5116458371d2eb2e5cfcd61682b6c1ea898d58e36a09b30a73b5fa3",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "vehicle-words-set",
+    "record_type": "picture_set",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "picture_set.vehicle_words.title",
+    "alt_text_parent_ref": "picture_set.vehicle_words.alt_parent",
+    "depiction_tags": [
+      "household_safe"
+    ],
+    "items": [
+      {
+        "item_id": "bus",
+        "label_ref": "item.bus.label",
+        "alt_text_parent_ref": "item.bus.alt_parent",
+        "asset_path": "assets/bus.jpg",
+        "asset_sha256": "3c5268cc241da63caf8e14893b3ccb8f54d45af8dd2cb77a72aa35ebd1634dd5",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "train",
+        "label_ref": "item.train.label",
+        "alt_text_parent_ref": "item.train.alt_parent",
+        "asset_path": "assets/train.jpg",
+        "asset_sha256": "c17099d6f85d7b829608717563c3965e984c1600f2a959d01d6e4db95fdb5c1c",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "bicycle",
+        "label_ref": "item.bicycle.label",
+        "alt_text_parent_ref": "item.bicycle.alt_parent",
+        "asset_path": "assets/bicycle.jpg",
+        "asset_sha256": "609d770dcf390370e4c4a136c3575008b2d04210637eef52c86931e252eea1e2",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      },
+      {
+        "item_id": "car",
+        "label_ref": "item.car.label",
+        "alt_text_parent_ref": "item.car.alt_parent",
+        "asset_path": "assets/car.jpg",
+        "asset_sha256": "511793a7d9b02f671afe6ac1eea421b6d794111b571835d1fd674d430e4984b7",
+        "size_class": "handheld_safe",
+        "passes_choke_tube_proxy": true,
+        "depiction_tags": [
+          "household_safe"
+        ]
+      }
+    ]
   }
 ]

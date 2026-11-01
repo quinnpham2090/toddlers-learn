@@ -852,7 +852,9 @@
     "prerequisites": [
       "point-to-choice"
     ],
-    "next_skills": [],
+    "next_skills": [
+      "food-words"
+    ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null
@@ -938,6 +940,60 @@
     ],
     "next_skills": [],
     "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "food-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.food_words.title",
+    "description_ref": "skill.food_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "animal-words"
+    ],
+    "next_skills": [
+      "vehicle-words"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "vehicle-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.vehicle_words.title",
+    "description_ref": "skill.vehicle_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "food-words"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null
   }
