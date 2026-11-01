@@ -636,6 +636,29 @@ import sunny2EggJpg from '../packs/sunny-home-garden-2/assets/egg.jpg';
 import sunny2BusJpg from '../packs/sunny-home-garden-2/assets/bus.jpg';
 import sunny2TrainJpg from '../packs/sunny-home-garden-2/assets/train.jpg';
 import sunny2BicycleJpg from '../packs/sunny-home-garden-2/assets/bicycle.jpg';
+import sunny2OutdoorPlantJpg from '../packs/sunny-home-garden-2/assets/outdoor-plant.jpg';
+import sunny2LaundryBasketJpg from '../packs/sunny-home-garden-2/assets/laundry-basket.jpg';
+import sunny2CardboardBoxJpg from '../packs/sunny-home-garden-2/assets/cardboard-box.jpg';
+import sunny2FlatTowelJpg from '../packs/sunny-home-garden-2/assets/flat-towel.jpg';
+import sunny2SoftToyJpg from '../packs/sunny-home-garden-2/assets/soft-toy.jpg';
+import sunny2BookStackJpg from '../packs/sunny-home-garden-2/assets/book-stack.jpg';
+import sunny2CleanSocksJpg from '../packs/sunny-home-garden-2/assets/clean-socks.jpg';
+import sunny2PlasticPlateJpg from '../packs/sunny-home-garden-2/assets/plastic-plate.jpg';
+import sunny2PaperPlateJpg from '../packs/sunny-home-garden-2/assets/paper-plate.jpg';
+import sunny2PlacematJpg from '../packs/sunny-home-garden-2/assets/placemat.jpg';
+import sunny2PlasticCupJpg from '../packs/sunny-home-garden-2/assets/plastic-cup.jpg';
+import sunny2PaperCupJpg from '../packs/sunny-home-garden-2/assets/paper-cup.jpg';
+import sunny2ClothNapkinJpg from '../packs/sunny-home-garden-2/assets/cloth-napkin.jpg';
+import sunny2PaperTowelSheetJpg from '../packs/sunny-home-garden-2/assets/paper-towel-sheet.jpg';
+import sunny2TeaTowelJpg from '../packs/sunny-home-garden-2/assets/tea-towel.jpg';
+import sunny2WateringCanJpg from '../packs/sunny-home-garden-2/assets/watering-can.jpg';
+import sunny2DampClothJpg from '../packs/sunny-home-garden-2/assets/damp-cloth.jpg';
+import sunny2IndoorPlantJpg from '../packs/sunny-home-garden-2/assets/indoor-plant.jpg';
+import sunny2NightLampJpg from '../packs/sunny-home-garden-2/assets/night-lamp.jpg';
+import sunny2ClosedCurtainsJpg from '../packs/sunny-home-garden-2/assets/closed-curtains.jpg';
+import sunny2QuietBookJpg from '../packs/sunny-home-garden-2/assets/quiet-book.jpg';
+import sunny2SongTimeCardJpg from '../packs/sunny-home-garden-2/assets/song-time-card.jpg';
+import sunny2HelpingHandsJpg from '../packs/sunny-home-garden-2/assets/helping-hands.jpg';
 import sunny2PuffLessonFoodWordsStep1PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_1_prompt.mp3';
 import sunny2PuffLessonFoodWordsStep2PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_2_prompt.mp3';
 import sunny2PuffLessonFoodWordsStep3PromptMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/lesson_food_words_step_3_prompt.mp3';
@@ -2048,6 +2071,29 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/bus.jpg': sunny2BusJpg,
     'assets/train.jpg': sunny2TrainJpg,
     'assets/bicycle.jpg': sunny2BicycleJpg,
+    'assets/outdoor-plant.jpg': sunny2OutdoorPlantJpg,
+    'assets/laundry-basket.jpg': sunny2LaundryBasketJpg,
+    'assets/cardboard-box.jpg': sunny2CardboardBoxJpg,
+    'assets/flat-towel.jpg': sunny2FlatTowelJpg,
+    'assets/soft-toy.jpg': sunny2SoftToyJpg,
+    'assets/book-stack.jpg': sunny2BookStackJpg,
+    'assets/clean-socks.jpg': sunny2CleanSocksJpg,
+    'assets/plastic-plate.jpg': sunny2PlasticPlateJpg,
+    'assets/paper-plate.jpg': sunny2PaperPlateJpg,
+    'assets/placemat.jpg': sunny2PlacematJpg,
+    'assets/plastic-cup.jpg': sunny2PlasticCupJpg,
+    'assets/paper-cup.jpg': sunny2PaperCupJpg,
+    'assets/cloth-napkin.jpg': sunny2ClothNapkinJpg,
+    'assets/paper-towel-sheet.jpg': sunny2PaperTowelSheetJpg,
+    'assets/tea-towel.jpg': sunny2TeaTowelJpg,
+    'assets/watering-can.jpg': sunny2WateringCanJpg,
+    'assets/damp-cloth.jpg': sunny2DampClothJpg,
+    'assets/indoor-plant.jpg': sunny2IndoorPlantJpg,
+    'assets/night-lamp.jpg': sunny2NightLampJpg,
+    'assets/closed-curtains.jpg': sunny2ClosedCurtainsJpg,
+    'assets/quiet-book.jpg': sunny2QuietBookJpg,
+    'assets/song-time-card.jpg': sunny2SongTimeCardJpg,
+    'assets/helping-hands.jpg': sunny2HelpingHandsJpg,
   },
   'sunny-home-garden-3': {
     'assets/ball.jpg': sunny3BallJpg,
