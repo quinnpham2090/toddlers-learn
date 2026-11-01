@@ -12,12 +12,12 @@ export function missionsUnlocked(profileId = DEFAULT_PROFILE_ID): boolean {
   return path.first_path_session_completed_at !== null;
 }
 
-export function journeyLessonsAllEvidenced(): boolean {
-  const journeySkills = getJourneyStopSkills();
+export function journeyLessonsAllEvidenced(profileId: string = DEFAULT_PROFILE_ID): boolean {
+  const journeySkills = getJourneyStopSkills(profileId);
   if (journeySkills.length === 0) {
     return false;
   }
-  const evidenced = new Set(loadSkillEvidence().map((record) => record.skill_id));
+  const evidenced = new Set(loadSkillEvidence(profileId).map((record) => record.skill_id));
   return journeySkills.every((skill) => evidenced.has(skill.id));
 }
 
@@ -26,7 +26,7 @@ export function reconcileMissionUnlockGate(profileId = DEFAULT_PROFILE_ID): bool
   if (!adventure.completed) {
     return false;
   }
-  if (journeyLessonsAllEvidenced()) {
+  if (journeyLessonsAllEvidenced(profileId)) {
     const path = loadPathState(profileId);
     if (path.first_path_session_completed_at === null) {
       markPathSessionCompleted(profileId);

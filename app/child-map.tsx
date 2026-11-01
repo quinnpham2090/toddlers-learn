@@ -12,6 +12,7 @@ import {
   getSongTemplates,
   getString,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 
 const BACK_LABEL = 'Back';
 const MAP_TITLE = 'Map';
@@ -37,9 +38,17 @@ function SectionHeading({ text, isTablet }: { text: string; isTablet: boolean })
   return <Text style={isTablet ? styles.sectionHeadingTablet : styles.sectionHeading}>{text}</Text>;
 }
 
-function CharacterPortrait({ character, size }: { character: CharacterRecord; size: number }) {
-  const asset = getPackAsset(getActivePackId(), character.model_asset_path);
-  const name = getString(character.name_ref);
+function CharacterPortrait({
+  character,
+  size,
+  profileId,
+}: {
+  character: CharacterRecord;
+  size: number;
+  profileId: string;
+}) {
+  const asset = getPackAsset(getActivePackId(profileId), character.model_asset_path);
+  const name = getString(character.name_ref, undefined, profileId);
   return (
     <View style={[styles.portrait, { width: size, height: size, borderRadius: size / 2 }]}>
       {asset !== undefined ? (
@@ -57,9 +66,10 @@ function CharacterPortrait({ character, size }: { character: CharacterRecord; si
 export default function ChildMapScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
+  const profileId = DEFAULT_PROFILE_ID;
   const stops = getAdventureStops();
-  const characters = getCharacters();
-  const songs = getSongTemplates();
+  const characters = getCharacters(profileId);
+  const songs = getSongTemplates(profileId);
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
@@ -72,17 +82,17 @@ export default function ChildMapScreen() {
         <View style={styles.section}>
           <SectionHeading text={PLACES_LABEL} isTablet={isTablet} />
           {stops.map((stop) => {
-            const guide = getCharacterById(stop.guide);
+            const guide = getCharacterById(stop.guide, profileId);
             return (
               <View key={stop.id} style={isTablet ? styles.placeCardTablet : styles.placeCard}>
-                {guide ? <CharacterPortrait character={guide} size={isTablet ? 72 : 56} /> : null}
+                {guide ? <CharacterPortrait character={guide} size={isTablet ? 72 : 56} profileId={profileId} /> : null}
                 <View style={styles.placeText}>
                   <Text style={isTablet ? styles.placeTitleTablet : styles.placeTitle}>
-                    {getString(stop.title_ref)}
+                    {getString(stop.title_ref, undefined, profileId)}
                   </Text>
                   {guide ? (
                     <Text style={isTablet ? styles.placeGuideTablet : styles.placeGuide}>
-                      {`with ${getString(guide.name_ref)}`}
+                      {`with ${getString(guide.name_ref, undefined, profileId)}`}
                     </Text>
                   ) : null}
                 </View>
@@ -95,14 +105,14 @@ export default function ChildMapScreen() {
           <SectionHeading text={CHARACTERS_LABEL} isTablet={isTablet} />
           {characters.map((character) => (
             <View key={character.id} style={isTablet ? styles.placeCardTablet : styles.placeCard}>
-              <CharacterPortrait character={character} size={isTablet ? 72 : 56} />
+              <CharacterPortrait character={character} size={isTablet ? 72 : 56} profileId={profileId} />
               <View style={styles.placeText}>
                 <Text style={isTablet ? styles.placeTitleTablet : styles.placeTitle}>
-                  {getString(character.name_ref)}
+                  {getString(character.name_ref, undefined, profileId)}
                 </Text>
                 {character.personality_lines[0] ? (
                   <Text style={isTablet ? styles.placeGuideTablet : styles.placeGuide}>
-                    {getString(character.personality_lines[0])}
+                    {getString(character.personality_lines[0], undefined, profileId)}
                   </Text>
                 ) : null}
               </View>
@@ -115,7 +125,7 @@ export default function ChildMapScreen() {
           {songs.map((song) => (
             <View key={song.id} style={isTablet ? styles.songRowTablet : styles.songRow}>
               <Text style={isTablet ? styles.placeTitleTablet : styles.placeTitle}>
-                {getString(song.title_ref)}
+                {getString(song.title_ref, undefined, profileId)}
               </Text>
             </View>
           ))}

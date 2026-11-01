@@ -24,6 +24,8 @@ import { loadParentSettings } from '../lib/parent-settings';
 import { adventureAge, loadAdventureQuestionnaire } from '../lib/adventure-parent';
 import { adventureLocalDateKey, loadAdventureState } from '../lib/adventure-store';
 import { getPostAdventurePathSelection } from '../lib/path-queue';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
+import { maybeGraduate } from '../lib/graduation';
 import { reconcileMissionUnlockGate } from '../lib/mission-unlock';
 import { selectMissionOffer } from '../lib/mission-offer.js';
 import { loadMissionOfferState, recordMissionOffer } from '../lib/mission-offer-state';
@@ -116,13 +118,15 @@ function GuideBubble({
   character,
   text,
   isTablet,
+  profileId,
 }: {
   character: CharacterRecord;
   text: string;
   isTablet: boolean;
+  profileId: string;
 }) {
-  const asset = getPackAsset(getActivePackId(), character.model_asset_path);
-  const name = getString(character.name_ref);
+  const asset = getPackAsset(getActivePackId(profileId), character.model_asset_path);
+  const name = getString(character.name_ref, undefined, profileId);
   return (
     <View style={isTablet ? styles.guideRowTablet : styles.guideRow}>
       <View style={isTablet ? styles.guidePortraitTablet : styles.guidePortrait}>
@@ -179,16 +183,18 @@ function MissionOfferCard({
   isTablet,
   onPlay,
   onDismiss,
+  profileId,
 }: {
   guide: CharacterRecord;
   title: string;
   isTablet: boolean;
   onPlay: () => void;
   onDismiss: () => void;
+  profileId: string;
 }) {
   return (
     <View style={isTablet ? styles.missionOfferCardTablet : styles.missionOfferCard}>
-      <GuideBubble character={guide} text={MISSION_OFFER_LABEL} isTablet={isTablet} />
+      <GuideBubble character={guide} text={MISSION_OFFER_LABEL} isTablet={isTablet} profileId={profileId} />
       <Text style={isTablet ? styles.missionOfferTitleTablet : styles.missionOfferTitle}>{title}</Text>
       <View style={styles.missionOfferActions}>
         <Pressable
@@ -264,7 +270,7 @@ function MapButton({ onPress }: { onPress: () => void }) {
   );
 }
 
-function selectMissionOfferForHub(unlocked: boolean): string | null {
+function selectMissionOfferForHub(unlocked: boolean, profileId: string): string | null {
   const completion = consumePathLessonCompletion();
   if (!completion || !unlocked) {
     return null;
@@ -272,7 +278,7 @@ function selectMissionOfferForHub(unlocked: boolean): string | null {
   const todayKey = adventureLocalDateKey(new Date());
   const state = loadMissionOfferState();
   const offer = selectMissionOffer({
-    missions: getMissions().map((mission) => ({
+    missions: getMissions(profileId).map((mission) => ({
       id: mission.id,
       skill_id: mission.skill_id,
       age_band: mission.age_band,
@@ -293,6 +299,7 @@ function selectMissionOfferForHub(unlocked: boolean): string | null {
 export default function HubWorld() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
+  const profileId = DEFAULT_PROFILE_ID;
 
   const [missionsEnabled, setMissionsEnabled] = useState(true);
   const [grownUpsGateOpen, setGrownUpsGateOpen] = useState(false);
@@ -310,10 +317,10 @@ export default function HubWorld() {
   const scrollRef = useRef<ScrollViewInstance | null>(null);
 
   function computeStopStates(): { states: StopState[]; lessonIds: (string | null)[] } {
-    const evidence = loadSkillEvidence();
+    const evidence = loadSkillEvidence(profileId);
     const completedSkillIds = new Set(evidence.map((record) => record.skill_id));
-    const journeySkills = getJourneyStopSkills();
-    const lessons = getLessons();
+    const journeySkills = getJourneyStopSkills(profileId);
+    const lessons = getLessons(profileId);
     const lessonIds = journeySkills.map((skill) => {
       const lesson = lessons.find((candidate) => candidate.primary_skill_id === skill.id);
       return lesson ? lesson.id : null;
@@ -337,9 +344,10 @@ export default function HubWorld() {
   useFocusEffect(
     useCallback(() => {
       setMissionsEnabled(loadParentSettings().missions_enabled);
-      const missionsOpen = reconcileMissionUnlockGate();
-      setMissionOfferId(selectMissionOfferForHub(missionsOpen));
-      setNextPathSessionReady(getPostAdventurePathSelection().lessonId !== null);
+      maybeGraduate(profileId);
+      const missionsOpen = reconcileMissionUnlockGate(profileId);
+      setMissionOfferId(selectMissionOfferForHub(missionsOpen, profileId));
+      setNextPathSessionReady(getPostAdventurePathSelection(profileId).lessonId !== null);
       setAdventureStarted(loadAdventureState().visit_days.length > 0);
       const { states, lessonIds } = computeStopStates();
       setStopStates(states);
@@ -352,13 +360,13 @@ export default function HubWorld() {
   const allLessonsCompleted =
     stopStates.length > 0 && stopStates.every((state) => state === 'done');
 
-  const characters = getCharacters();
-  const stops = getJourneyStopSkills();
-  const lessons = getLessons();
+  const characters = getCharacters(profileId);
+  const stops = getJourneyStopSkills(profileId);
+  const lessons = getLessons(profileId);
   const guide = characters.find((character) => character.species_or_role === 'lantern_guide');
 
-  const activePack = getActivePack();
-  const packTitle = getString(activePack.manifest.title_ref);
+  const activePack = getActivePack(profileId);
+  const packTitle = getString(activePack.manifest.title_ref, undefined, profileId);
 
   const currentIndex = stopStates.findIndex((state) => state === 'current');
   const currentStop = currentIndex >= 0 ? stops[currentIndex] : undefined;
@@ -388,7 +396,7 @@ export default function HubWorld() {
   const bannerSection =
     bannerStop && bannerAccent && currentIndex >= 0 ? (
       <View style={[styles.stopBanner, { backgroundColor: bannerAccent.deep }]}>
-        <Text style={styles.stopBannerText}>{getString(bannerStop.title_ref)}</Text>
+        <Text style={styles.stopBannerText}>{getString(bannerStop.title_ref, undefined, profileId)}</Text>
       </View>
     ) : null;
 
@@ -405,12 +413,12 @@ export default function HubWorld() {
       state === 'locked' ? '#EFEAE0' : accent?.deep ?? '#7A7264';
     const iconColor = state === 'locked' ? '#C4BBA5' : '#FFFFFF';
 
-    const nodeTitle = getString(lesson ? lesson.title_ref : stop.title_ref);
+    const nodeTitle = getString(lesson ? lesson.title_ref : stop.title_ref, undefined, profileId);
     const node = (
       <View style={styles.nodeWithLabel}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={getString(stop.title_ref)}
+          accessibilityLabel={getString(stop.title_ref, undefined, profileId)}
           disabled={state === 'locked'}
           onPress={() => handleNodePress(index)}
           style={({ pressed }) => [pressed && state !== 'locked' ? styles.pathNodePressed : null]}
@@ -450,16 +458,18 @@ export default function HubWorld() {
           {index % 2 === 0 ? (
             <GuideBubble
               character={character}
-              text={getString(character.personality_lines[0])}
+              text={getString(character.personality_lines[0], undefined, profileId)}
               isTablet={isTablet}
+              profileId={profileId}
             />
           ) : null}
           {node}
           {index % 2 === 1 ? (
             <GuideBubble
               character={character}
-              text={getString(character.personality_lines[0])}
+              text={getString(character.personality_lines[0], undefined, profileId)}
               isTablet={isTablet}
+              profileId={profileId}
             />
           ) : null}
         </View>
@@ -476,10 +486,10 @@ export default function HubWorld() {
 
     const overview = isExpanded && state !== 'locked' ? (
       <View style={styles.overviewCard}>
-        <Text style={styles.overviewStopTitle}>{getString(stop.title_ref)}</Text>
+        <Text style={styles.overviewStopTitle}>{getString(stop.title_ref, undefined, profileId)}</Text>
         {lesson ? (
           <View style={styles.lessonTile}>
-            <Text style={styles.lessonTileTitle}>{getString(lesson.title_ref)}</Text>
+            <Text style={styles.lessonTileTitle}>{getString(lesson.title_ref, undefined, profileId)}</Text>
             <View style={[styles.lessonDot, state === 'done' && styles.lessonDotDone]} />
           </View>
         ) : null}
@@ -574,7 +584,7 @@ export default function HubWorld() {
       {missionOfferId && guide ? (
         <MissionOfferCard
           guide={guide}
-          title={getString(getMissionById(missionOfferId)?.title_ref ?? '')}
+          title={getString(getMissionById(missionOfferId, profileId)?.title_ref ?? '', undefined, profileId)}
           isTablet={isTablet}
           onPlay={() => {
             const offeredId = missionOfferId;
@@ -582,6 +592,7 @@ export default function HubWorld() {
             router.push({ pathname: '/together', params: { offer: offeredId } });
           }}
           onDismiss={() => setMissionOfferId(null)}
+          profileId={profileId}
         />
       ) : null}
       <MapButton onPress={() => router.push('/child-map')} />

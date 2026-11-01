@@ -55,6 +55,7 @@ export interface PathQueueInput {
   totalSessions?: number;
   todayKey?: string;
   sparseLaunch?: boolean;
+  ageBypass?: boolean;
 }
 
 export interface PathSessionOption {

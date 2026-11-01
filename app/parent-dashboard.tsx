@@ -26,6 +26,10 @@ import { clearSessionBookmark } from '../lib/resume-store';
 import { loadParentSettings, saveParentSettings } from '../lib/parent-settings';
 import { loadSavedSongs } from '../lib/song-store';
 import { buildPlacementMap } from '../lib/adventure-map';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
+import { loadPackAssignment } from '../lib/pack-assignment';
+import { getGraduationProgress } from '../lib/graduation';
+import { listAvailablePacks } from '../lib/pack-activation';
 
 
 const BACK_LABEL = 'Back';
@@ -38,6 +42,18 @@ const MISSIONS_TOGGLE_LABEL = 'Missions';
 const MISSIONS_TOGGLE_HINT =
   'Shows the Together lane on the child’s home screen after the first path.';
 const DIAGNOSTICS_LABEL = 'Diagnostics';
+const GRADUATION_DATE_FALLBACK = 'an earlier day';
+
+function formatGraduationDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return GRADUATION_DATE_FALLBACK;
+  }
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 const PLACEMENT_MAP_LABEL = 'Parent map';
 const STILL_EMPTY_MESSAGE = 'Every skill has a first bit of evidence.';
 const STILL_CURIOSITY =
@@ -209,6 +225,7 @@ function DiagnosticRow({
 export default function ParentDashboardScreen() {
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
+  const profileId = DEFAULT_PROFILE_ID;
 
   const [missionsEnabled, setMissionsEnabled] = useState(() => {
     try {
@@ -217,41 +234,47 @@ export default function ParentDashboardScreen() {
       return true;
     }
   });
-  const [evidence, setEvidence] = useState<SkillEvidenceRecord[]>(() => loadSkillEvidence());
+  const [evidence, setEvidence] = useState<SkillEvidenceRecord[]>(() => loadSkillEvidence(profileId));
   const [resetConfirming, setResetConfirming] = useState(false);
 
   const evidenceBySkill = groupEvidenceBySkill(evidence);
-  const placementMap = useMemo(() => buildPlacementMap(), []);
+  const placementMap = useMemo(() => buildPlacementMap(profileId), [profileId]);
   const bandRows = placementMap.skillBands.map((row) => ({
     key: row.skillId,
     title: row.title,
     band: row.band,
   }));
 
-  const journeySkills = getJourneyStopSkills();
+  const journeySkills = getJourneyStopSkills(profileId);
   const evidenceByJourneySkill = journeySkills.map((skill) => ({
     id: skill.id,
-    title: getString(skill.title_ref),
+    title: getString(skill.title_ref, undefined, profileId),
     count: (evidenceBySkill.get(skill.id) ?? []).length,
   }));
   const completedSkillIds = Array.from(new Set(evidence.map((record) => record.skill_id)));
   const nextLesson = selectNextLesson({
-    lessons: getLessons(),
+    lessons: getLessons(profileId),
     journeySkills,
     completedSkillIds,
-    getLessonById,
+    getLessonById: (id: string) => getLessonById(id, profileId),
   }) as LessonRecord | null;
-  const activePackId = getActivePackId();
-  const activePackVersion = getActivePack().manifest.version;
+  const activePackId = getActivePackId(profileId);
+  const activePackVersion = getActivePack(profileId).manifest.version;
+  const graduationProgress = getGraduationProgress(profileId);
+  const assignment = loadPackAssignment(profileId);
+  const packTitleById = new Map(listAvailablePacks().map((pack) => [pack.id, pack.title]));
+  const graduationLine = assignment
+    ? `Finished ${packTitleById.get(assignment.graduated_from_pack_id) ?? assignment.graduated_from_pack_id} on ${formatGraduationDate(assignment.graduated_at)} ${String.fromCharCode(8212)} now on ${packTitleById.get(assignment.assigned_pack_id) ?? assignment.assigned_pack_id}.`
+    : null;
 
   const completions = loadTogetherCompletions();
   const history: TogetherHistoryEntry[] = completions
     .map((completion) => {
       const record =
         completion.kind === 'mission'
-          ? getMissionById(completion.item_id)
-          : getRoutineById(completion.item_id);
-      const title = record ? getString(record.title_ref) : completion.item_id;
+          ? getMissionById(completion.item_id, profileId)
+          : getRoutineById(completion.item_id, profileId);
+      const title = record ? getString(record.title_ref, undefined, profileId) : completion.item_id;
       return { kind: completion.kind, title, date: completion.date };
     })
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
@@ -294,7 +317,7 @@ export default function ParentDashboardScreen() {
   function handleConfirmReset() {
     clearSkillEvidence();
     clearSessionBookmark();
-    setEvidence(loadSkillEvidence());
+    setEvidence(loadSkillEvidence(profileId));
     setResetConfirming(false);
   }
 
@@ -483,11 +506,21 @@ export default function ParentDashboardScreen() {
         value={`${activePackId} (v${activePackVersion})`}
         isTablet={isTablet}
       />
+      {graduationProgress ? (
+        <DiagnosticRow
+          label="Pack 2 journey"
+          value={`${graduationProgress.finishedCount} of ${graduationProgress.total} skills finished`}
+          isTablet={isTablet}
+        />
+      ) : null}
+      {graduationLine ? (
+        <DiagnosticRow label="Graduation" value={graduationLine} isTablet={isTablet} />
+      ) : null}
       <DiagnosticRow
         label="Next lesson"
         value={
           nextLesson
-            ? `${nextLesson.id} — ${getString(nextLesson.title_ref)}`
+            ? `${nextLesson.id} — ${getString(nextLesson.title_ref, undefined, profileId)}`
             : 'none resolvable'
         }
         isTablet={isTablet}

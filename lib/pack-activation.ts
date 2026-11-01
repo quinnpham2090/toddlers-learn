@@ -4,7 +4,7 @@ import {
   loadActivePackOverride,
   saveActivePackOverride,
 } from './active-pack-store';
-import { PackFiles, getActivePackId, getRegisteredPacks, invalidateActivePackOverrideCache } from './pack-loader';
+import { PackFiles, getGlobalActivePackId, getRegisteredPacks, invalidateActivePackOverrideCache } from './pack-loader';
 
 export interface AvailablePack {
   id: string;
@@ -33,9 +33,9 @@ function isActivatablePackId(id: string): boolean {
 
 export function activatePack(id: string): ActivationResult {
   if (!isActivatablePackId(id)) {
-    return { ok: false, activePackId: getActivePackId() };
+    return { ok: false, activePackId: getGlobalActivePackId() };
   }
-  const current = getActivePackId();
+  const current = getGlobalActivePackId();
   if (current === id) {
     return { ok: true, activePackId: id };
   }
@@ -45,10 +45,10 @@ export function activatePack(id: string): ActivationResult {
     updated_at: new Date().toISOString(),
   });
   if (!written) {
-    return { ok: false, activePackId: getActivePackId() };
+    return { ok: false, activePackId: getGlobalActivePackId() };
   }
   invalidateActivePackOverrideCache();
-  return { ok: true, activePackId: getActivePackId() };
+  return { ok: true, activePackId: getGlobalActivePackId() };
 }
 
 export function rollbackPack(): ActivationResult {
@@ -57,7 +57,7 @@ export function rollbackPack(): ActivationResult {
   if (previous === null || !isActivatablePackId(previous)) {
     clearActivePackOverride();
     invalidateActivePackOverrideCache();
-    return { ok: true, activePackId: getActivePackId() };
+    return { ok: true, activePackId: getGlobalActivePackId() };
   }
   const written = saveActivePackOverride({
     active_pack_id: previous,
@@ -65,8 +65,8 @@ export function rollbackPack(): ActivationResult {
     updated_at: new Date().toISOString(),
   });
   if (!written) {
-    return { ok: false, activePackId: getActivePackId() };
+    return { ok: false, activePackId: getGlobalActivePackId() };
   }
   invalidateActivePackOverrideCache();
-  return { ok: true, activePackId: getActivePackId() };
+  return { ok: true, activePackId: getGlobalActivePackId() };
 }

@@ -675,6 +675,9 @@ import sunny2PuffLessonWhatDoYouSeeFindPromptMp3 from '../packs/sunny-home-garde
 import sunny2PuffItemGreenLeafLabelMp3 from '../packs/sunny-home-garden-2/assets/voice/puff/item_green_leaf_label.mp3';
 import { ActivePackOverride, loadActivePackOverride } from './active-pack-store';
 import { resolveActivePackId } from './pack-activation-resolution.js';
+import { resolveActivePackIdWithAssignment } from './pack-assignment-resolution.js';
+import { loadPackAssignment } from './pack-assignment';
+import { DEFAULT_PROFILE_ID } from './path-state';
 
 export type AgeBand = '2-3' | '3-4' | '4-5' | '2-5';
 export type RecordStatus = 'draft' | 'review' | 'live';
@@ -2107,7 +2110,7 @@ export function getRegisteredPacks(): PackFiles[] {
   return Object.values(PACK_REGISTRY);
 }
 
-export function getActivePackId(): string {
+export function getGlobalActivePackId(): string {
   const override = readOverrideCached();
   const resolved = resolveActivePackId(
     override ? override.active_pack_id : null,
@@ -2120,8 +2123,23 @@ export function getActivePackId(): string {
   return resolved;
 }
 
-export function getActivePack(): PackFiles {
-  const activePackId = getActivePackId();
+export function getActivePackId(profileId: string = DEFAULT_PROFILE_ID): string {
+  const override = readOverrideCached();
+  const assignment = loadPackAssignment(profileId);
+  const resolved = resolveActivePackIdWithAssignment(
+    override ? override.active_pack_id : null,
+    assignment ? assignment.assigned_pack_id : null,
+    activePackPointer.active_pack_id,
+    Object.keys(PACK_REGISTRY)
+  );
+  if (resolved === null) {
+    throw new Error('No content packs are present in the static pack registry.');
+  }
+  return resolved;
+}
+
+export function getActivePack(profileId: string = DEFAULT_PROFILE_ID): PackFiles {
+  const activePackId = getActivePackId(profileId);
   const pack = PACK_REGISTRY[activePackId];
   if (!pack) {
     throw new Error(`Active pack "${activePackId}" is not present in the static pack registry.`);
@@ -2129,8 +2147,8 @@ export function getActivePack(): PackFiles {
   return pack;
 }
 
-export function getStrings(locale?: string): StringTable {
-  const pack = getActivePack();
+export function getStrings(locale?: string, profileId: string = DEFAULT_PROFILE_ID): StringTable {
+  const pack = getActivePack(profileId);
   const locales = pack.strings.locales;
   const requested = locale ?? pack.manifest.default_locale;
   if (locales[requested]) {
@@ -2139,77 +2157,77 @@ export function getStrings(locale?: string): StringTable {
   return locales[pack.manifest.default_locale];
 }
 
-export function getString(ref: string, locale?: string): string {
-  const table = getStrings(locale);
+export function getString(ref: string, locale?: string, profileId: string = DEFAULT_PROFILE_ID): string {
+  const table = getStrings(locale, profileId);
   return table[ref] ?? ref;
 }
 
-export function getSkills(): SkillRecord[] {
-  return getActivePack().skills;
+export function getSkills(profileId: string = DEFAULT_PROFILE_ID): SkillRecord[] {
+  return getActivePack(profileId).skills;
 }
 
-export function getSkillById(id: string): SkillRecord | undefined {
-  return getSkills().find((skill) => skill.id === id);
+export function getSkillById(id: string, profileId: string = DEFAULT_PROFILE_ID): SkillRecord | undefined {
+  return getSkills(profileId).find((skill) => skill.id === id);
 }
 
-export function getLessons(): LessonRecord[] {
-  return getActivePack().lessons;
+export function getLessons(profileId: string = DEFAULT_PROFILE_ID): LessonRecord[] {
+  return getActivePack(profileId).lessons;
 }
 
-export function getLessonById(id: string): LessonRecord | undefined {
-  return getLessons().find((lesson) => lesson.id === id);
+export function getLessonById(id: string, profileId: string = DEFAULT_PROFILE_ID): LessonRecord | undefined {
+  return getLessons(profileId).find((lesson) => lesson.id === id);
 }
 
-export function getCharacters(): CharacterRecord[] {
-  return getActivePack().characters;
+export function getCharacters(profileId: string = DEFAULT_PROFILE_ID): CharacterRecord[] {
+  return getActivePack(profileId).characters;
 }
 
-export function getCharacterById(id: string): CharacterRecord | undefined {
-  return getCharacters().find((character) => character.id === id);
+export function getCharacterById(id: string, profileId: string = DEFAULT_PROFILE_ID): CharacterRecord | undefined {
+  return getCharacters(profileId).find((character) => character.id === id);
 }
 
-export function getPictureSets(): PictureSetRecord[] {
-  return getActivePack().pictureSets;
+export function getPictureSets(profileId: string = DEFAULT_PROFILE_ID): PictureSetRecord[] {
+  return getActivePack(profileId).pictureSets;
 }
 
-export function getPictureSetById(id: string): PictureSetRecord | undefined {
-  return getPictureSets().find((set) => set.id === id);
+export function getPictureSetById(id: string, profileId: string = DEFAULT_PROFILE_ID): PictureSetRecord | undefined {
+  return getPictureSets(profileId).find((set) => set.id === id);
 }
 
-export function getMissions(): MissionRecord[] {
-  return getActivePack().missions;
+export function getMissions(profileId: string = DEFAULT_PROFILE_ID): MissionRecord[] {
+  return getActivePack(profileId).missions;
 }
 
-export function getMissionById(id: string): MissionRecord | undefined {
-  return getMissions().find((mission) => mission.id === id);
+export function getMissionById(id: string, profileId: string = DEFAULT_PROFILE_ID): MissionRecord | undefined {
+  return getMissions(profileId).find((mission) => mission.id === id);
 }
 
-export function getRoutines(): RoutineRecord[] {
-  return getActivePack().routines;
+export function getRoutines(profileId: string = DEFAULT_PROFILE_ID): RoutineRecord[] {
+  return getActivePack(profileId).routines;
 }
 
-export function getRoutineById(id: string): RoutineRecord | undefined {
-  return getRoutines().find((routine) => routine.id === id);
+export function getRoutineById(id: string, profileId: string = DEFAULT_PROFILE_ID): RoutineRecord | undefined {
+  return getRoutines(profileId).find((routine) => routine.id === id);
 }
 
-export function getTimeConcepts(): TimeConceptRecord[] {
-  return getActivePack().timeConcepts;
+export function getTimeConcepts(profileId: string = DEFAULT_PROFILE_ID): TimeConceptRecord[] {
+  return getActivePack(profileId).timeConcepts;
 }
 
-export function getSongTemplates(): SongTemplateRecord[] {
-  return getActivePack().songTemplates;
+export function getSongTemplates(profileId: string = DEFAULT_PROFILE_ID): SongTemplateRecord[] {
+  return getActivePack(profileId).songTemplates;
 }
 
-export function getSongTemplateById(id: string): SongTemplateRecord | undefined {
-  return getSongTemplates().find((template) => template.id === id);
+export function getSongTemplateById(id: string, profileId: string = DEFAULT_PROFILE_ID): SongTemplateRecord | undefined {
+  return getSongTemplates(profileId).find((template) => template.id === id);
 }
 
-export function getSavedSongs(): SavedSongRecord[] {
-  return getActivePack().savedSongs;
+export function getSavedSongs(profileId: string = DEFAULT_PROFILE_ID): SavedSongRecord[] {
+  return getActivePack(profileId).savedSongs;
 }
 
-export function getJourneyStopSkills(): SkillRecord[] {
-  const skills = getSkills();
+export function getJourneyStopSkills(profileId: string = DEFAULT_PROFILE_ID): SkillRecord[] {
+  const skills = getSkills(profileId);
   const byId = new Map(skills.map((skill) => [skill.id, skill]));
   const visited = new Set<string>();
   const order: SkillRecord[] = [];

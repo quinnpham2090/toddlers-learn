@@ -6,7 +6,9 @@ import {
 import { adventureAge, loadAdventureQuestionnaire } from './adventure-parent';
 import { journeyLessonsAllEvidenced } from './mission-unlock';
 import { evidenceWeightFor } from './evidence-policy.js';
-import { getAdventureSkillById, getLessonById, getLessons } from './pack-loader';
+import { getActivePackId, getAdventureSkillById, getLessonById, getLessons } from './pack-loader';
+import { loadPackAssignment } from './pack-assignment';
+import { DEFAULT_PROFILE_ID } from './path-state';
 import { loadSkillEvidence } from './progress-store';
 import { ADVENTURE_SKILL_TO_PATH, PACK_SKILL_TO_PATH, PATH_GRAPH, PATH_NODE_BY_ID } from './path-graph.js';
 import { buildPathQueue } from './path-queue-engine.js';
@@ -60,9 +62,9 @@ function normalizeAdventureEvidence(): BandEvidence[] {
   return normalized;
 }
 
-function normalizeLessonEvidence(): BandEvidence[] {
+function normalizeLessonEvidence(profileId: string): BandEvidence[] {
   const normalized: BandEvidence[] = [];
-  for (const record of loadSkillEvidence()) {
+  for (const record of loadSkillEvidence(profileId)) {
     const pathSkillId = PACK_SKILL_TO_PATH[record.skill_id] ?? record.skill_id;
     const node = PATH_NODE_BY_ID.get(pathSkillId);
     if (!node) {
@@ -87,19 +89,21 @@ function normalizeLessonEvidence(): BandEvidence[] {
   return normalized;
 }
 
-export function loadPathEvidence(): BandEvidence[] {
-  return [...normalizeAdventureEvidence(), ...normalizeLessonEvidence()];
+export function loadPathEvidence(profileId: string = DEFAULT_PROFILE_ID): BandEvidence[] {
+  return [...normalizeAdventureEvidence(), ...normalizeLessonEvidence(profileId)];
 }
 
-export function loadPathQueue(): PathQueueResult {
+export function loadPathQueue(profileId: string = DEFAULT_PROFILE_ID): PathQueueResult {
   const questionnaire = loadAdventureQuestionnaire();
   const state = loadAdventureState();
-  const evidence = loadPathEvidence();
+  const evidence = loadPathEvidence(profileId);
   const totalSessions = new Set(
     evidence.map((entry) => entry.session_id ?? `${entry.source ?? 'evidence'}:${entry.date}`)
   ).size;
   const sparseLaunch = state.visit_days.length > 0 && state.visit_days.length <= 2;
-  const lessons = getLessons().map((lesson) => ({
+  const assignment = loadPackAssignment(profileId);
+  const ageBypass = assignment !== null && getActivePackId(profileId) === assignment.assigned_pack_id;
+  const lessons = getLessons(profileId).map((lesson) => ({
     id: lesson.id,
     primary_skill_id: lesson.primary_skill_id,
     age_band: lesson.age_band,
@@ -112,16 +116,19 @@ export function loadPathQueue(): PathQueueResult {
     totalSessions,
     todayKey: adventureLocalDateKey(new Date()),
     sparseLaunch,
+    ageBypass,
   });
 }
 
-export function getPostAdventurePathSelection(): PostAdventurePathSelection {
+export function getPostAdventurePathSelection(
+  profileId: string = DEFAULT_PROFILE_ID
+): PostAdventurePathSelection {
   const state = loadAdventureState();
   if (!state.completed) {
     return { active: false, queue: null, lessonId: null };
   }
-  const queue = loadPathQueue();
-  if (journeyLessonsAllEvidenced()) {
+  const queue = loadPathQueue(profileId);
+  if (journeyLessonsAllEvidenced(profileId)) {
     return { active: true, queue, lessonId: null };
   }
   const first = queue.session_options[0];

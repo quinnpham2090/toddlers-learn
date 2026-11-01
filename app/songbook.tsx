@@ -8,6 +8,7 @@ import {
   getSongTemplateById,
   getSongTemplates,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 import { deriveSongTitle } from '../lib/song-completion';
 import { playNoteSequence, secondsPerNote } from '../lib/song-audio';
 import { UserSavedSong, UserSavedSongNoteEvent, loadSavedSongs } from '../lib/song-store';
@@ -17,8 +18,11 @@ const PLAY_LABEL = 'Play';
 const EMPTY_MESSAGE = 'No songs yet — compose your first song!';
 const FALLBACK_TEMPO = 84;
 
-function resolveTemplateFor(song: UserSavedSong): SongTemplateRecord | undefined {
-  return getSongTemplateById(song.song_template_id) ?? getSongTemplates()[0];
+function resolveTemplateFor(
+  song: UserSavedSong,
+  profileId: string
+): SongTemplateRecord | undefined {
+  return getSongTemplateById(song.song_template_id, profileId) ?? getSongTemplates(profileId)[0];
 }
 
 function BackButton() {
@@ -154,6 +158,7 @@ function SongDetail({
 }
 
 export default function SongbookScreen() {
+  const profileId = DEFAULT_PROFILE_ID;
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
   const [songs, setSongs] = useState<UserSavedSong[]>([]);
@@ -170,7 +175,7 @@ export default function SongbookScreen() {
     const nextSelected = song.id === selectedId ? null : song.id;
     setSelectedId(nextSelected);
     if (nextSelected !== null) {
-      const template = resolveTemplateFor(song);
+      const template = resolveTemplateFor(song, profileId);
       playNoteSequence(
         song.note_events.map((event) => event.pitch),
         secondsPerNote(template?.tempo ?? FALLBACK_TEMPO)
@@ -179,7 +184,7 @@ export default function SongbookScreen() {
   }
 
   function handleReplay(song: UserSavedSong) {
-    const template = resolveTemplateFor(song);
+    const template = resolveTemplateFor(song, profileId);
     playNoteSequence(
       song.note_events.map((event) => event.pitch),
       secondsPerNote(template?.tempo ?? FALLBACK_TEMPO)
@@ -200,7 +205,7 @@ export default function SongbookScreen() {
         <View key={song.id}>
           <SongRow
             song={song}
-            template={resolveTemplateFor(song)}
+            template={resolveTemplateFor(song, profileId)}
             selected={song.id === selectedId}
             isTablet={isTablet}
             onPress={() => handleSelect(song)}
@@ -208,7 +213,7 @@ export default function SongbookScreen() {
           {isTablet ? null : song.id === selectedId && selectedSong ? (
             <SongDetail
               song={selectedSong}
-              template={resolveTemplateFor(selectedSong)}
+              template={resolveTemplateFor(selectedSong, profileId)}
               isTablet={isTablet}
               onPlay={() => handleReplay(selectedSong)}
             />
@@ -233,7 +238,7 @@ export default function SongbookScreen() {
               {selectedSong ? (
                 <SongDetail
                   song={selectedSong}
-                  template={resolveTemplateFor(selectedSong)}
+                  template={resolveTemplateFor(selectedSong, profileId)}
                   isTablet={isTablet}
                   onPlay={() => handleReplay(selectedSong)}
                 />

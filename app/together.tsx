@@ -12,6 +12,7 @@ import {
   getRoutines,
   getString,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 
 const BACK_LABEL = 'Back';
 const MISSIONS_SECTION_LABEL = 'Missions';
@@ -109,10 +110,11 @@ function RoutineRow({
 }
 
 export default function TogetherScreen() {
+  const profileId = DEFAULT_PROFILE_ID;
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
-  const missions = getMissions();
-  const routines = getRoutines();
+  const missions = getMissions(profileId);
+  const routines = getRoutines(profileId);
   const showMissions = missionsUnlocked();
   const [pending, setPending] = useState<PendingTarget | null>(null);
   const params = useLocalSearchParams<{ offer?: string | string[] }>();
@@ -121,7 +123,7 @@ export default function TogetherScreen() {
   // An offer tapped on the hub pre-selects that mission so the EXISTING
   // ParentGate -> briefing flow runs; nothing else about the flow changes.
   useEffect(() => {
-    if (typeof offerParam === 'string' && offerParam.length > 0 && getMissionById(offerParam)) {
+    if (typeof offerParam === 'string' && offerParam.length > 0 && getMissionById(offerParam, profileId)) {
       setPending({ kind: 'mission', id: offerParam });
     }
   }, [offerParam]);

@@ -199,7 +199,7 @@ report(
 const sessionSource = readText('app/session.tsx');
 report(
   'the completion signal is set only for post-adventure PATH sessions',
-  /if \(pathSelection\?\.active && lesson\) \{\s*markPathSessionCompleted\(\);\s*markPathLessonCompleted\(/.test(sessionSource)
+  /if \(pathSelection\?\.active && lesson\) \{\s*markPathSessionCompleted\((?:profileId)?\);\s*(?:maybeGraduate\(profileId\);\s*)?markPathLessonCompleted\(/.test(sessionSource)
 );
 const signalSource = readText('lib/path-lesson-signal.ts');
 report(

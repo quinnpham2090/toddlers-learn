@@ -399,7 +399,7 @@ report('tablet layout mounts FinaleNarrator exactly once (duplicate removed)', c
 report('phone layout mounts FinaleNarrator exactly once', countMounts(phoneRegion) === 1, `phone=${countMounts(phoneRegion)}`);
 const mountOk = (region) =>
   /phase === 'finale' && finaleConfig \?/.test(region) &&
-  /text=\{getString\(finaleConfig\.findPromptRef\)\}/.test(region) &&
+  /text=\{getString\(finaleConfig\.findPromptRef(?:, undefined, profileId)?\)\}/.test(region) &&
   /stringKey=\{finaleConfig\.findPromptRef\}/.test(region) &&
   /speakerId=\{character\?\.id \?\? null\}/.test(region);
 report('both mounts use the finale-phase condition + identical props', mountOk(tabletRegion) && mountOk(phoneRegion));

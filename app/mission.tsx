@@ -11,6 +11,7 @@ import {
   getPictureSets,
   getString,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 import { recordCompletion } from '../lib/together-store';
 import { missionsUnlocked } from '../lib/mission-unlock';
 
@@ -32,9 +33,9 @@ interface ChainOption {
   label: string;
 }
 
-function pictureItemsById(): Map<string, PictureSetItem> {
+function pictureItemsById(profileId: string): Map<string, PictureSetItem> {
   const map = new Map<string, PictureSetItem>();
-  for (const set of getPictureSets()) {
+  for (const set of getPictureSets(profileId)) {
     for (const item of set.items) {
       map.set(item.item_id, item);
     }
@@ -99,11 +100,12 @@ function PrecheckRow({
 }
 
 export default function MissionBriefingScreen() {
+  const profileId = DEFAULT_PROFILE_ID;
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
   const params = useLocalSearchParams<{ id: string | string[] }>();
   const idParam = Array.isArray(params.id) ? params.id[0] : params.id;
-  const mission = (idParam ? getMissionById(idParam) : undefined) ?? getMissions()[0];
+  const mission = (idParam ? getMissionById(idParam, profileId) : undefined) ?? getMissions(profileId)[0];
 
   const [phase, setPhase] = useState<BriefingPhase>('briefing');
   const [selectedLevels, setSelectedLevels] = useState<number[]>(() =>
@@ -146,7 +148,7 @@ export default function MissionBriefingScreen() {
   const precheckPrompt = getString(mission.parent_precheck.prompt_ref);
   const safetyNotes = mission.safety_notes_refs.map((ref) => getString(ref));
   const returnRitual = getString(mission.return_ritual_ref);
-  const itemsById = pictureItemsById();
+  const itemsById = pictureItemsById(profileId);
 
   function chainOptions(object: MissionRoutineObject): ChainOption[] {
     const substitute = itemsById.get(object.alternative_object_id);

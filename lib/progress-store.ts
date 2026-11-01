@@ -1,4 +1,5 @@
 import { File, Paths } from 'expo-file-system';
+import { DEFAULT_PROFILE_ID } from './path-state';
 
 export type SkillBand = 'not-yet-explored' | 'exploring' | 'practising' | 'confident';
 
@@ -21,10 +22,39 @@ export interface NewSkillEvidence {
   participation?: boolean;
 }
 
-const STORE_FILE_NAME = 'skill-evidence.json';
+const LEGACY_STORE_FILE_NAME = 'skill-evidence.json';
 
-function storeFile(): File {
-  return new File(Paths.document, STORE_FILE_NAME);
+function storeFileName(profileId: string): string {
+  return `skill-evidence-${profileId}.json`;
+}
+
+function storeFile(profileId: string): File {
+  return new File(Paths.document, storeFileName(profileId));
+}
+
+/**
+ * One-time, non-destructive migration: on first read for the DEFAULT profile,
+ * if the per-profile file is absent but the legacy global file exists, copy it
+ * across. The legacy file is never deleted by the app (a human can remove it
+ * later) and is ignored by every reader once the per-profile file exists.
+ */
+function migrateLegacyEvidenceForDefaultProfile(profileId: string): void {
+  if (profileId !== DEFAULT_PROFILE_ID) {
+    return;
+  }
+  try {
+    const target = storeFile(profileId);
+    if (target.exists) {
+      return;
+    }
+    const legacy = new File(Paths.document, LEGACY_STORE_FILE_NAME);
+    if (!legacy.exists) {
+      return;
+    }
+    target.writeSync(legacy.textSync());
+  } catch {
+    // fail-safe: migration must never crash a read
+  }
 }
 
 function isSkillEvidenceRecord(value: unknown): value is SkillEvidenceRecord {
@@ -43,9 +73,10 @@ function isSkillEvidenceRecord(value: unknown): value is SkillEvidenceRecord {
   );
 }
 
-export function loadSkillEvidence(): SkillEvidenceRecord[] {
+export function loadSkillEvidence(profileId: string = DEFAULT_PROFILE_ID): SkillEvidenceRecord[] {
   try {
-    const file = storeFile();
+    migrateLegacyEvidenceForDefaultProfile(profileId);
+    const file = storeFile(profileId);
     if (!file.exists) {
       return [];
     }
@@ -70,12 +101,15 @@ function maxEvidenceId(existing: SkillEvidenceRecord[]): number {
   return max;
 }
 
-export function recordStepEvidence(entries: NewSkillEvidence[]): SkillEvidenceRecord[] | null {
+export function recordStepEvidence(
+  entries: NewSkillEvidence[],
+  profileId: string = DEFAULT_PROFILE_ID
+): SkillEvidenceRecord[] | null {
   if (entries.length === 0) {
     return [];
   }
   try {
-    const existing = loadSkillEvidence();
+    const existing = loadSkillEvidence(profileId);
     const date = new Date().toISOString();
     let counter = maxEvidenceId(existing);
     const records: SkillEvidenceRecord[] = entries.map((entry) => {
@@ -87,16 +121,16 @@ export function recordStepEvidence(entries: NewSkillEvidence[]): SkillEvidenceRe
         source: 'session',
       };
     });
-    storeFile().writeSync(JSON.stringify([...existing, ...records]));
+    storeFile(profileId).writeSync(JSON.stringify([...existing, ...records]));
     return records;
   } catch {
     return null;
   }
 }
 
-export function clearSkillEvidence(): void {
+export function clearSkillEvidence(profileId: string = DEFAULT_PROFILE_ID): void {
   try {
-    const file = storeFile();
+    const file = storeFile(profileId);
     if (file.exists) {
       file.delete();
     }

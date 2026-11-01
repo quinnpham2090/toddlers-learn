@@ -19,7 +19,7 @@ import {
   AdventureVariantRecord,
   CharacterRecord,
   PictureSetItem,
-  getActivePackId,
+  getGlobalActivePackId,
   getAdventure,
   getAdventureErrandsForStop,
   getAdventureItemById,
@@ -77,7 +77,7 @@ function narrate(
   speakerId: string | null,
   onDone: () => void
 ): void {
-  const asset = speakerId ? getVoiceAsset(getActivePackId(), speakerId, stringKey) : undefined;
+  const asset = speakerId ? getVoiceAsset(getGlobalActivePackId(), speakerId, stringKey) : undefined;
   if (asset !== undefined) {
     stopVoice();
     if (playVoiceAsset(asset, onDone, onDone)) {
@@ -135,7 +135,7 @@ function resolveItem(
   if (adventureItem) {
     const asset =
       adventureItem.display === 'image' && adventureItem.asset_path
-        ? getPackAsset(getActivePackId(), adventureItem.asset_path)
+        ? getPackAsset(getGlobalActivePackId(), adventureItem.asset_path)
         : undefined;
     return {
       id,
@@ -150,7 +150,7 @@ function resolveItem(
     return {
       id,
       label: getString(pictureItem.label_ref),
-      asset: getPackAsset(getActivePackId(), pictureItem.asset_path),
+      asset: getPackAsset(getGlobalActivePackId(), pictureItem.asset_path),
       adventureItem: undefined,
       pictureItem,
     };
@@ -177,7 +177,7 @@ function ApplePile({ count, size }: { count: number; size: number }) {
       {Array.from({ length: count }, (_, index) => (
         <Image
           key={index}
-          source={getPackAsset(getActivePackId(), 'assets/adv_apple.jpg')}
+          source={getPackAsset(getGlobalActivePackId(), 'assets/adv_apple.jpg')}
           style={{ width: size, height: size }}
           contentFit="contain"
         />
@@ -259,7 +259,7 @@ function GuideBubble({
   onListen: () => void;
 }) {
   const name = getString(character.name_ref);
-  const asset = getPackAsset(getActivePackId(), character.model_asset_path);
+  const asset = getPackAsset(getGlobalActivePackId(), character.model_asset_path);
   const bob = useRef(new Animated.Value(0)).current;
   const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -690,7 +690,7 @@ export default function AdventureScreen() {
                   : 'place';
               const stopGuide = resolveCharacter(stop.guide);
               const portraitAsset = stopGuide
-                ? getPackAsset(getActivePackId(), stopGuide.model_asset_path)
+                ? getPackAsset(getGlobalActivePackId(), stopGuide.model_asset_path)
                 : undefined;
               const tappable = state === 'current' && !advState.completed;
               const content = (

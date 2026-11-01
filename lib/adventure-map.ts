@@ -10,6 +10,7 @@ import {
 import { adventureLocalDateKey, loadAdventureEvidence } from './adventure-store';
 import { adventureAge, loadAdventureQuestionnaire } from './adventure-parent';
 import { loadPathEvidence, loadPathQueue } from './path-queue';
+import { DEFAULT_PROFILE_ID } from './path-state';
 import {
   PACK_SKILL_TO_PATH,
   PATH_GRAPH,
@@ -160,21 +161,21 @@ function toPast(observable: string | null): string | null {
     .join(' ');
 }
 
-function itemLabel(itemId: string): string | null {
+function itemLabel(itemId: string, profileId: string = DEFAULT_PROFILE_ID): string | null {
   const adventureItem = getAdventureItemById(itemId);
   if (adventureItem) {
     return getString(adventureItem.label_ref);
   }
-  for (const set of getPictureSets()) {
+  for (const set of getPictureSets(profileId)) {
     const item = set.items.find((candidate) => candidate.item_id === itemId);
     if (item) {
-      return getString(item.label_ref);
+      return getString(item.label_ref, undefined, profileId);
     }
   }
   return null;
 }
 
-function variantTargetLabel(event: DisplayEvent): string | null {
+function variantTargetLabel(event: DisplayEvent, profileId: string = DEFAULT_PROFILE_ID): string | null {
   if (event.source !== 'adventure' || !event.errandId || !event.variantId) {
     return null;
   }
@@ -186,59 +187,63 @@ function variantTargetLabel(event: DisplayEvent): string | null {
   if (!variant) {
     return null;
   }
-  return itemLabel(variant.target_item_id);
+  return itemLabel(variant.target_item_id, profileId);
 }
 
-function lessonTitleFor(packSkillId: string | null): string | null {
+function lessonTitleFor(
+  packSkillId: string | null,
+  profileId: string = DEFAULT_PROFILE_ID
+): string | null {
   if (!packSkillId) {
     return null;
   }
-  const lesson = getLessons().find((candidate) => candidate.primary_skill_id === packSkillId);
-  return lesson ? getString(lesson.title_ref) : null;
+  const lesson = getLessons(profileId).find((candidate) => candidate.primary_skill_id === packSkillId);
+  return lesson ? getString(lesson.title_ref, undefined, profileId) : null;
 }
 
-function behaviourText(event: DisplayEvent): string {
+function behaviourText(event: DisplayEvent, profileId: string = DEFAULT_PROFILE_ID): string {
   if (event.source === 'lesson') {
-    const title = lessonTitleFor(event.packSkillId);
+    const title = lessonTitleFor(event.packSkillId, profileId);
     return title ? `completed “${title}”` : 'completed a lesson';
   }
   const behaviour = toPast(event.observable) ?? 'played';
-  const target = variantTargetLabel(event);
+  const target = variantTargetLabel(event, profileId);
   return target ? `${behaviour} (${target})` : behaviour;
 }
 
-function eventSentence(event: DisplayEvent, supported = false): string {
+function eventSentence(event: DisplayEvent, supported = false, profileId: string = DEFAULT_PROFILE_ID): string {
   if (supported && event.source === 'lesson') {
-    const title = lessonTitleFor(event.packSkillId);
+    const title = lessonTitleFor(event.packSkillId, profileId);
     return `On ${formatDate(event.date)}, with a model, they completed ${title ? `“${title}”` : 'a lesson'}.`;
   }
   if (supported) {
-    return `On ${formatDate(event.date)}, with support, they ${behaviourText(event)}.`;
+    return `On ${formatDate(event.date)}, with support, they ${behaviourText(event, profileId)}.`;
   }
-  return `On ${formatDate(event.date)}, they ${behaviourText(event)}.`;
+  return `On ${formatDate(event.date)}, they ${behaviourText(event, profileId)}.`;
 }
 
 function causeSentence(
   event: DisplayEvent | undefined,
   fallback: string,
-  supported = false
+  supported = false,
+  profileId: string = DEFAULT_PROFILE_ID
 ): string {
   if (!event) {
     return fallback;
   }
   if (supported && event.source === 'lesson') {
-    const title = lessonTitleFor(event.packSkillId);
+    const title = lessonTitleFor(event.packSkillId, profileId);
     return `because on ${formatDate(event.date)}, with a model, they completed ${title ? `“${title}”` : 'a lesson'}.`;
   }
   if (supported) {
-    return `because on ${formatDate(event.date)}, with support, they ${behaviourText(event)}.`;
+    return `because on ${formatDate(event.date)}, with support, they ${behaviourText(event, profileId)}.`;
   }
-  return `because on ${formatDate(event.date)} they ${behaviourText(event)}.`;
+  return `because on ${formatDate(event.date)} they ${behaviourText(event, profileId)}.`;
 }
 
-function buildEvents(): Map<string, DisplayEvent[]> {
+function buildEvents(profileId: string = DEFAULT_PROFILE_ID): Map<string, DisplayEvent[]> {
   const grouped = new Map<string, DisplayEvent[]>();
-  for (const evidence of loadPathEvidence()) {
+  for (const evidence of loadPathEvidence(profileId)) {
     const event: DisplayEvent = {
       pathSkillId: evidence.skill_id,
       source: evidence.source === 'lesson' ? 'lesson' : 'adventure',
@@ -275,27 +280,32 @@ function latestHigh(events: DisplayEvent[] | undefined): DisplayEvent | undefine
     .slice(-1)[0];
 }
 
-function strengthSentence(skillId: string, eventsBySkill: Map<string, DisplayEvent[]>): string | null {
+function strengthSentence(
+  skillId: string,
+  eventsBySkill: Map<string, DisplayEvent[]>,
+  profileId: string = DEFAULT_PROFILE_ID
+): string | null {
   const events = eventsBySkill.get(skillId);
   const strong = latestStrong(events);
   if (strong) {
-    return eventSentence(strong);
+    return eventSentence(strong, false, profileId);
   }
   const high = latestHigh(events);
-  return high ? eventSentence(high, true) : null;
+  return high ? eventSentence(high, true, profileId) : null;
 }
 
 function workingOnSentence(
   result: BandSkillResult,
-  eventsBySkill: Map<string, DisplayEvent[]>
+  eventsBySkill: Map<string, DisplayEvent[]>,
+  profileId: string = DEFAULT_PROFILE_ID
 ): string {
   const high = latestHigh(eventsBySkill.get(result.skill_id));
   if (high) {
     if (high.source === 'lesson') {
-      const title = lessonTitleFor(high.packSkillId);
+      const title = lessonTitleFor(high.packSkillId, profileId);
       return `Working on ${title ? `“${title}”` : 'a lesson'} with a model.`;
     }
-    const target = variantTargetLabel(high);
+    const target = variantTargetLabel(high, profileId);
     return `Working on: ${high.observable ?? 'the next step'}${target ? ` (${target})` : ''} with a model.`;
   }
   return `Working on ${skillTitle(result.skill_id)} in new places.`;
@@ -339,7 +349,8 @@ function nextUpCause(
   item: PathQueueItem | undefined,
   result: BandSkillResult | undefined,
   eventsBySkill: Map<string, DisplayEvent[]>,
-  fallback: string
+  fallback: string,
+  profileId: string = DEFAULT_PROFILE_ID
 ): string {
   if (!item) {
     return fallback;
@@ -357,7 +368,7 @@ function nextUpCause(
   if (item.branch === 'advancement') {
     const strong = latestStrong(sourceEvents);
     if (strong) {
-      return causeSentence(strong, fallback);
+      return causeSentence(strong, fallback, false, profileId);
     }
     if (result) {
       return `because they have ${result.qualifying_count} strong moments across ${result.day_count} day${result.day_count === 1 ? '' : 's'}.`;
@@ -367,7 +378,7 @@ function nextUpCause(
   if (item.branch === 'catch-up') {
     const high = latestHigh(sourceEvents);
     if (high) {
-      return causeSentence(high, 'because they needed a smaller step.', true);
+      return causeSentence(high, 'because they needed a smaller step.', true, profileId);
     }
     if (result) {
       return `because they have ${result.qualifying_count} strong moment${result.qualifying_count === 1 ? '' : 's'} across ${result.session_count} session${result.session_count === 1 ? '' : 's'}.`;
@@ -389,7 +400,7 @@ function nextUpCause(
       .sort((left, right) => (left.date < right.date ? -1 : left.date > right.date ? 1 : 0))
       .slice(-1)[0];
     if (sortEvent && scienceEvent) {
-      return `because on ${formatDate(sortEvent.date)} they ${behaviourText(sortEvent)} and on ${formatDate(scienceEvent.date)} they ${behaviourText(scienceEvent)}.`;
+      return `because on ${formatDate(sortEvent.date)} they ${behaviourText(sortEvent, profileId)} and on ${formatDate(scienceEvent.date)} they ${behaviourText(scienceEvent, profileId)}.`;
     }
     return 'because they sorted by one rule and noticed things in the garden.';
   }
@@ -417,7 +428,8 @@ function compareBandGrowth(left: BandSkillResult, right: BandSkillResult): numbe
 
 function buildStillGettingToKnow(
   knownSkillIds: Set<string>,
-  age: number
+  age: number,
+  profileId: string = DEFAULT_PROFILE_ID
 ): StillGettingToKnowItem[] {
   return PATH_GRAPH.filter(
     (node) =>
@@ -433,7 +445,7 @@ function buildStillGettingToKnow(
   }));
 }
 
-function buildGrowingNotes(): GrowingNote[] {
+function buildGrowingNotes(profileId: string = DEFAULT_PROFILE_ID): GrowingNote[] {
   const latestBySkill = new Map<string, GrowingNote>();
   for (const record of loadAdventureEvidence()) {
     if (record.bandable) {
@@ -461,9 +473,9 @@ function buildGrowingNotes(): GrowingNote[] {
   );
 }
 
-export function buildPlacementMap(): PlacementMap {
-  const queue = loadPathQueue();
-  const eventsBySkill = buildEvents();
+export function buildPlacementMap(profileId: string = DEFAULT_PROFILE_ID): PlacementMap {
+  const queue = loadPathQueue(profileId);
+  const eventsBySkill = buildEvents(profileId);
   const age = adventureAge(loadAdventureQuestionnaire());
   const resultsByDomain = new Map<PlacementDomain, BandSkillResult[]>();
   for (const domain of DISPLAY_DOMAINS) {
@@ -501,10 +513,10 @@ export function buildPlacementMap(): PlacementMap {
       domainLabel: DOMAIN_LABELS[domain],
       band: representative?.display_band ?? 'not-yet-explored',
       provisional: domain === 'science',
-      strength: representative ? strengthSentence(representative.skill_id, eventsBySkill) : null,
-      workingOn: growth ? workingOnSentence(growth, eventsBySkill) : null,
+      strength: representative ? strengthSentence(representative.skill_id, eventsBySkill, profileId) : null,
+      workingOn: growth ? workingOnSentence(growth, eventsBySkill, profileId) : null,
       nextUp: item
-        ? `Next up: ${targetTitle(item)} — ${nextUpCause(item, result, eventsBySkill, 'because there is no evidence yet.')}`
+        ? `Next up: ${targetTitle(item)} — ${nextUpCause(item, result, eventsBySkill, 'because there is no evidence yet.', profileId)}`
         : firstUnknown
           ? `Next up: ${firstUnknown.title} — because there is no evidence yet.`
           : results.length > 0
@@ -513,7 +525,7 @@ export function buildPlacementMap(): PlacementMap {
     };
   });
 
-  const skillBands: SkillBandRow[] = getSkills().map((skill) => {
+  const skillBands: SkillBandRow[] = getSkills(profileId).map((skill) => {
     const pathSkillId = PACK_SKILL_TO_PATH[skill.id] ?? skill.id;
     const result = queue.band_results.find((entry) => entry.skill_id === pathSkillId);
     return {
@@ -528,7 +540,7 @@ export function buildPlacementMap(): PlacementMap {
     rows,
     skillBands,
     stillGettingToKnow,
-    growingNotes: buildGrowingNotes(),
+    growingNotes: buildGrowingNotes(profileId),
     disclaimer: DISCLAIMER,
     growingNotesLabel: GROWING_NOTES_LABEL,
     stillGettingToKnowLabel: STILL_GETTING_TO_KNOW_LABEL,

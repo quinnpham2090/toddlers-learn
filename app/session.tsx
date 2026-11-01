@@ -32,7 +32,8 @@ import {
   getPostAdventurePathSelection,
   type PostAdventurePathSelection,
 } from '../lib/path-queue';
-import { markPathSessionCompleted } from '../lib/path-state';
+import { DEFAULT_PROFILE_ID, markPathSessionCompleted } from '../lib/path-state';
+import { maybeGraduate } from '../lib/graduation';
 import { markPathLessonCompleted } from '../lib/path-lesson-signal';
 import {
   SessionBookmark,
@@ -300,9 +301,10 @@ function narrateLine(
   stringKey: string,
   speakerId: string | null,
   rate: number,
-  onDone: () => void
+  onDone: () => void,
+  profileId: string = DEFAULT_PROFILE_ID
 ): void {
-  const asset = speakerId ? getVoiceAsset(getActivePackId(), speakerId, stringKey) : undefined;
+  const asset = speakerId ? getVoiceAsset(getActivePackId(profileId), speakerId, stringKey) : undefined;
   if (asset !== undefined) {
     const started = playVoiceAsset(asset, onDone, onDone);
     if (started) {
@@ -317,11 +319,13 @@ function Narrator({
   stringKey,
   speakerId,
   onSpeakingChange,
+  profileId,
 }: {
   text: string | null;
   stringKey: string | null;
   speakerId: string | null;
   onSpeakingChange: (speaking: boolean) => void;
+  profileId: string;
 }) {
   useEffect(() => {
     if (!text || !stringKey) {
@@ -330,7 +334,7 @@ function Narrator({
       return;
     }
     onSpeakingChange(true);
-    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => onSpeakingChange(false));
+    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => onSpeakingChange(false), profileId);
     return () => {
       stopAllNarration();
       onSpeakingChange(false);
@@ -347,6 +351,7 @@ function CelebrationSpeaker({
   speakerId,
   onAdvance,
   onSpeakingChange,
+  profileId,
 }: {
   celebration: string;
   celebrationKey: string;
@@ -355,6 +360,7 @@ function CelebrationSpeaker({
   speakerId: string | null;
   onAdvance: () => void;
   onSpeakingChange: (speaking: boolean) => void;
+  profileId: string;
 }) {
   const finishedRef = useRef(false);
 
@@ -399,12 +405,12 @@ function CelebrationSpeaker({
       narrateLine(word, wordKey, speakerId, WORD_SPEECH_RATE, () => {
         onSpeakingChange(false);
         startPause();
-      });
+      }, profileId);
     };
 
     onSpeakingChange(true);
     try {
-      narrateLine(celebration, celebrationKey, speakerId, SPEECH_RATE, speakWord);
+      narrateLine(celebration, celebrationKey, speakerId, SPEECH_RATE, speakWord, profileId);
     } catch {
       speakWord();
     }
@@ -452,61 +458,71 @@ interface StepOutcome {
 
 function resolveLesson(
   overrideLessonId?: string,
-  pathSelection?: PostAdventurePathSelection | null
+  pathSelection?: PostAdventurePathSelection | null,
+  profileId: string = DEFAULT_PROFILE_ID
 ): LessonRecord | undefined {
   if (overrideLessonId) {
-    const overridden = getLessonById(overrideLessonId);
+    const overridden = getLessonById(overrideLessonId, profileId);
     if (overridden) {
       return overridden;
     }
   }
   if (pathSelection && pathSelection.active) {
-    return pathSelection.lessonId ? getLessonById(pathSelection.lessonId) : undefined;
+    return pathSelection.lessonId ? getLessonById(pathSelection.lessonId, profileId) : undefined;
   }
-  const lessons = getLessons();
-  const journeySkills = getJourneyStopSkills();
-  const evidence = loadSkillEvidence();
+  const lessons = getLessons(profileId);
+  const journeySkills = getJourneyStopSkills(profileId);
+  const evidence = loadSkillEvidence(profileId);
   const completedSkillIds = Array.from(new Set(evidence.map((record) => record.skill_id)));
   const selected = selectNextLesson({
     lessons,
     journeySkills,
     completedSkillIds,
-    getLessonById,
+    getLessonById: (id: string) => getLessonById(id, profileId),
   }) as LessonRecord | null;
   return selected ?? undefined;
 }
 
-function resolveCharacter(lesson: LessonRecord): CharacterRecord | undefined {
-  const primary = getCharacterById(lesson.character_id);
+function resolveCharacter(
+  lesson: LessonRecord,
+  profileId: string = DEFAULT_PROFILE_ID
+): CharacterRecord | undefined {
+  const primary = getCharacterById(lesson.character_id, profileId);
   if (primary) {
     return primary;
   }
-  const guide = getCharacters().find((character) => character.species_or_role === 'lantern_guide');
-  return guide ?? getCharacters()[0];
+  const guide = getCharacters(profileId).find((character) => character.species_or_role === 'lantern_guide');
+  return guide ?? getCharacters(profileId)[0];
 }
 
-function resolveCharacterAsset(character: CharacterRecord): number | undefined {
+function resolveCharacterAsset(
+  character: CharacterRecord,
+  profileId: string = DEFAULT_PROFILE_ID
+): number | undefined {
   const seen = new Set<string>();
   let current: CharacterRecord | undefined = character;
   while (current && !seen.has(current.id)) {
     seen.add(current.id);
-    const asset = getPackAsset(getActivePackId(), current.model_asset_path);
+    const asset = getPackAsset(getActivePackId(profileId), current.model_asset_path);
     if (asset !== undefined) {
       return asset;
     }
     current = current.fallback_character_id
-      ? getCharacterById(current.fallback_character_id)
+      ? getCharacterById(current.fallback_character_id, profileId)
       : undefined;
   }
   return undefined;
 }
 
-function resolvePictureSet(lesson: LessonRecord): PictureSetRecord | undefined {
+function resolvePictureSet(
+  lesson: LessonRecord,
+  profileId: string = DEFAULT_PROFILE_ID
+): PictureSetRecord | undefined {
   return (
-    getPictureSetById(lesson.picture_set_id) ??
-    getPictureSetById(lesson.fallback_picture_id) ??
-    getPictureSets().find((set) => set.tags.includes('fallback')) ??
-    getPictureSets()[0]
+    getPictureSetById(lesson.picture_set_id, profileId) ??
+    getPictureSetById(lesson.fallback_picture_id, profileId) ??
+    getPictureSets(profileId).find((set) => set.tags.includes('fallback')) ??
+    getPictureSets(profileId)[0]
   );
 }
 
@@ -599,6 +615,7 @@ function ProgressDots({
 
 function GuideSpeech({
   character,
+  profileId,
   isTablet,
   speaking,
   celebrating,
@@ -623,9 +640,10 @@ function GuideSpeech({
   slideX?: Animated.Value;
   slideY?: Animated.Value;
   onListen: () => void;
+  profileId: string;
 }) {
-  const name = getString(character.name_ref);
-  const asset = resolveCharacterAsset(character);
+  const name = getString(character.name_ref, undefined, profileId);
+  const asset = resolveCharacterAsset(character, profileId);
   const bob = useRef(new Animated.Value(0)).current;
   const bobAnimation = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -718,6 +736,7 @@ function GuideSpeech({
 
 function PictureChoice({
   item,
+  profileId,
   single,
   highlighted,
   picked,
@@ -732,9 +751,10 @@ function PictureChoice({
   isTablet: boolean;
   size: number;
   onChoose: (itemId: string) => void;
+  profileId: string;
 }) {
-  const label = getString(item.label_ref);
-  const asset = getPackAsset(getActivePackId(), item.asset_path);
+  const label = getString(item.label_ref, undefined, profileId);
+  const asset = getPackAsset(getActivePackId(profileId), item.asset_path);
   const itemCount = item.count ?? 1;
   const groupPerRow = Math.min(Math.max(itemCount, 1), 3);
   const groupThumbWidth = `${Math.floor(92 / groupPerRow)}%`;
@@ -814,6 +834,7 @@ function PictureGrid({
   isTablet,
   tileSize,
   onChoose,
+  profileId,
 }: {
   items: PictureSetItem[];
   targetItemId: string;
@@ -821,6 +842,7 @@ function PictureGrid({
   isTablet: boolean;
   tileSize: number;
   onChoose: (itemId: string) => void;
+  profileId: string;
 }) {
   const single = items.length === 1;
   return (
@@ -834,6 +856,7 @@ function PictureGrid({
           isTablet={isTablet}
           size={single ? 0 : tileSize}
           onChoose={onChoose}
+          profileId={profileId}
         />
       ))}
     </View>
@@ -842,6 +865,7 @@ function PictureGrid({
 
 function PatternRow({
   rowItemIds,
+  profileId,
   gapIndex,
   filledItemId,
   itemsById,
@@ -854,6 +878,7 @@ function PatternRow({
   itemsById: Map<string, PictureSetItem>;
   isTablet: boolean;
   rowTile: number;
+  profileId: string;
 }) {
   const isCopy = gapIndex !== null;
   const sequence =
@@ -872,7 +897,7 @@ function PatternRow({
           );
         }
         const item = itemsById.get(itemId);
-        const asset = item ? getPackAsset(getActivePackId(), item.asset_path) : undefined;
+        const asset = item ? getPackAsset(getActivePackId(profileId), item.asset_path) : undefined;
         return (
           <View
             key={`tile-${index}`}
@@ -883,7 +908,7 @@ function PatternRow({
                 source={asset}
                 style={StyleSheet.absoluteFill}
                 contentFit="contain"
-                accessibilityLabel={item ? getString(item.label_ref) : ''}
+                accessibilityLabel={item ? getString(item.label_ref, undefined, profileId) : ''}
               />
             ) : null}
           </View>
@@ -932,13 +957,15 @@ function FinaleNarrator({
   text,
   stringKey,
   speakerId,
+  profileId,
 }: {
   text: string;
   stringKey: string;
   speakerId: string | null;
+  profileId: string;
 }) {
   useEffect(() => {
-    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => {});
+    narrateLine(text, stringKey, speakerId, SPEECH_RATE, () => {}, profileId);
     return () => {
       stopAllNarration();
     };
@@ -1044,17 +1071,22 @@ export default function SessionScreen() {
   const portraitInstance = useRef<MeasurableInstance | null>(null);
   const tileInstances = useRef<Record<string, MeasurableInstance | null>>({});
 
-  const params = useLocalSearchParams<{ lessonId?: string | string[] }>();
+  const params = useLocalSearchParams<{ lessonId?: string | string[]; profileId?: string | string[] }>();
+  const profileIdParam = Array.isArray(params.profileId) ? params.profileId[0] : params.profileId;
+  const profileId =
+    typeof profileIdParam === 'string' && profileIdParam.length > 0
+      ? profileIdParam
+      : DEFAULT_PROFILE_ID;
   const overrideLessonId = Array.isArray(params.lessonId)
     ? params.lessonId[0]
     : params.lessonId;
   const overrideActive = typeof overrideLessonId === 'string' && overrideLessonId.length > 0;
 
   const [pathSelection] = useState<PostAdventurePathSelection | null>(() =>
-    overrideActive ? null : getPostAdventurePathSelection()
+    overrideActive ? null : getPostAdventurePathSelection(profileId)
   );
   const lesson = useMemo(
-    () => resolveLesson(overrideActive ? overrideLessonId : undefined, pathSelection),
+    () => resolveLesson(overrideActive ? overrideLessonId : undefined, pathSelection, profileId),
     [overrideActive, overrideLessonId, pathSelection]
   );
   const loadBookmark = overrideActive ? loadReplayBookmark : loadSessionBookmark;
@@ -1135,8 +1167,8 @@ export default function SessionScreen() {
   const lessonId = lesson.id;
   const lessonPrimarySkillId = lesson.primary_skill_id;
   const step = steps[Math.min(stepIndex, steps.length - 1)];
-  const character = resolveCharacter(lesson);
-  const pictureSet = resolvePictureSet(lesson);
+  const character = resolveCharacter(lesson, profileId);
+  const pictureSet = resolvePictureSet(lesson, profileId);
   const itemsById = new Map(
     (pictureSet?.items ?? []).map((item) => [item.item_id, item])
   );
@@ -1153,14 +1185,14 @@ export default function SessionScreen() {
         .map((itemId) => itemsById.get(itemId))
         .filter((item): item is PictureSetItem => item !== undefined)
     : [];
-  const stepPrompt = getString(step.prompt_ref);
+  const stepPrompt = getString(step.prompt_ref, undefined, profileId);
   const scaffoldPrompt =
-    scaffoldLevel > 0 ? getString(scaffold.prompt_ref) : null;
-  const celebration = getString(step.celebration_ref);
-  const closingWin = getString(lesson.closing_win_ref);
+    scaffoldLevel > 0 ? getString(scaffold.prompt_ref, undefined, profileId) : null;
+  const celebration = getString(step.celebration_ref, undefined, profileId);
+  const closingWin = getString(lesson.closing_win_ref, undefined, profileId);
   const targetItem = itemsById.get(step.target_item_id);
-  const targetWord = targetItem ? getString(targetItem.label_ref) : null;
-  const lessonTitle = getString(lesson.title_ref);
+  const targetWord = targetItem ? getString(targetItem.label_ref, undefined, profileId) : null;
+  const lessonTitle = getString(lesson.title_ref, undefined, profileId);
 
   const horizontalPad = isTablet ? 32 : 20;
   const columnsGap = isTablet ? 36 : 0;
@@ -1269,10 +1301,12 @@ export default function SessionScreen() {
     setRowChoice(null);
     if (stepIndex >= steps.length - 1) {
       recordStepEvidence(
-        stepOutcomes.flatMap((outcome) => stepEvidenceEntries(outcome, lessonPrimarySkillId))
+        stepOutcomes.flatMap((outcome) => stepEvidenceEntries(outcome, lessonPrimarySkillId)),
+        profileId
       );
       if (pathSelection?.active && lesson) {
-        markPathSessionCompleted();
+        markPathSessionCompleted(profileId);
+        maybeGraduate(profileId);
         markPathLessonCompleted([lesson.primary_skill_id, ...lesson.secondary_skill_ids]);
       }
       clearBookmark();
@@ -1362,7 +1396,7 @@ export default function SessionScreen() {
     const finaleStep =
       steps.find((candidate) => candidate.target_item_id === finaleConfig.targetItemId) ?? step;
     narrateLine(
-      getString(finaleStep.celebration_ref),
+      getString(finaleStep.celebration_ref, undefined, profileId),
       finaleStep.celebration_ref,
       character?.id ?? null,
       SPEECH_RATE,
@@ -1373,7 +1407,7 @@ export default function SessionScreen() {
 
   function handleListenAgain() {
     const listenText =
-      phase === 'finale' && finaleConfig ? getString(finaleConfig.findPromptRef) : speechLine;
+      phase === 'finale' && finaleConfig ? getString(finaleConfig.findPromptRef, undefined, profileId) : speechLine;
     const listenKey = phase === 'finale' && finaleConfig ? finaleConfig.findPromptRef : speechKey;
     if (!listenText || !listenKey) {
       return;
@@ -1408,6 +1442,7 @@ export default function SessionScreen() {
     <GuideSpeech
       character={character}
       isTablet={isTablet}
+      profileId={profileId}
       speaking={speaking}
       celebrating={phase === 'celebration'}
       idle={phase === 'finale'}
@@ -1417,7 +1452,7 @@ export default function SessionScreen() {
           : phase === 'celebration'
             ? celebration
             : phase === 'finale' && finaleConfig
-              ? getString(finaleConfig.findPromptRef)
+              ? getString(finaleConfig.findPromptRef, undefined, profileId)
               : stepPrompt
       }
       scaffoldPrompt={phase === 'step' ? scaffoldPrompt : null}
@@ -1453,6 +1488,7 @@ export default function SessionScreen() {
       isTablet={isTablet}
       tileSize={tileSize}
       onChoose={handleChoose}
+      profileId={profileId}
     />
   );
 
@@ -1473,6 +1509,7 @@ export default function SessionScreen() {
             itemsById={itemsById}
             isTablet={isTablet}
             rowTile={rowTile}
+            profileId={profileId}
           />
           {choiceGrid}
         </View>
@@ -1496,6 +1533,7 @@ export default function SessionScreen() {
             <PictureChoice
               item={item}
               single={false}
+              profileId={profileId}
               highlighted={
                 finaleWrongTaps >= FINALE_HINT_AFTER_WRONG_TAPS &&
                 item.item_id === finaleConfig.targetItemId
@@ -1526,7 +1564,7 @@ export default function SessionScreen() {
             styles.feedbackBannerRetryText,
           ]}
         >
-          {getString('session.retry_cue')}
+          {getString('session.retry_cue', undefined, profileId)}
         </Text>
       </View>
     ) : null;
@@ -1574,12 +1612,14 @@ export default function SessionScreen() {
           stringKey={speechKey}
           speakerId={character?.id ?? null}
           onSpeakingChange={setSpeaking}
+          profileId={profileId}
         />
         {phase === 'finale' && finaleConfig ? (
           <FinaleNarrator
-            text={getString(finaleConfig.findPromptRef)}
+            text={getString(finaleConfig.findPromptRef, undefined, profileId)}
             stringKey={finaleConfig.findPromptRef}
             speakerId={character?.id ?? null}
+            profileId={profileId}
           />
         ) : null}
         {phase === 'celebration' ? (
@@ -1591,6 +1631,7 @@ export default function SessionScreen() {
             speakerId={character?.id ?? null}
             onAdvance={handleNext}
             onSpeakingChange={setSpeaking}
+            profileId={profileId}
           />
         ) : null}
         {chromeSection}
@@ -1621,12 +1662,14 @@ export default function SessionScreen() {
         stringKey={speechKey}
         speakerId={character?.id ?? null}
         onSpeakingChange={setSpeaking}
+        profileId={profileId}
       />
       {phase === 'finale' && finaleConfig ? (
         <FinaleNarrator
-          text={getString(finaleConfig.findPromptRef)}
+          text={getString(finaleConfig.findPromptRef, undefined, profileId)}
           stringKey={finaleConfig.findPromptRef}
           speakerId={character?.id ?? null}
+          profileId={profileId}
         />
       ) : null}
       {phase === 'celebration' ? (
@@ -1638,6 +1681,7 @@ export default function SessionScreen() {
           speakerId={character?.id ?? null}
           onAdvance={handleNext}
           onSpeakingChange={setSpeaking}
+          profileId={profileId}
         />
       ) : null}
       {chromeSection}

@@ -9,6 +9,7 @@ import {
   getSongTemplateById,
   getSongTemplates,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 import {
   CompletedNoteEvent,
   completeSong,
@@ -228,6 +229,7 @@ function NoticeCard({ text, isTablet }: { text: string; isTablet: boolean }) {
 }
 
 export default function ComposerScreen() {
+  const profileId = DEFAULT_PROFILE_ID;
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
   const params = useLocalSearchParams<{ templateId: string | string[] }>();
@@ -235,8 +237,8 @@ export default function ComposerScreen() {
     ? params.templateId[0]
     : params.templateId;
   const template =
-    (templateIdParam ? getSongTemplateById(templateIdParam) : undefined) ??
-    getSongTemplates()[0];
+    (templateIdParam ? getSongTemplateById(templateIdParam, profileId) : undefined) ??
+    getSongTemplates(profileId)[0];
   const set = template ? getPentatonicSet(template) : undefined;
   const [childNotes, setChildNotes] = useState<SongPitch[]>([]);
   const [completed, setCompleted] = useState<{

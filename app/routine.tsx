@@ -8,6 +8,7 @@ import {
   getRoutines,
   getString,
 } from '../lib/pack-loader';
+import { DEFAULT_PROFILE_ID } from '../lib/path-state';
 import { recordCompletion } from '../lib/together-store';
 
 const BACK_LABEL = 'Back';
@@ -79,11 +80,12 @@ function PrecheckRow({
 }
 
 export default function RoutineBriefingScreen() {
+  const profileId = DEFAULT_PROFILE_ID;
   const { width } = useWindowDimensions();
   const isTablet = width > 768;
   const params = useLocalSearchParams<{ id: string | string[] }>();
   const idParam = Array.isArray(params.id) ? params.id[0] : params.id;
-  const routine = (idParam ? getRoutineById(idParam) : undefined) ?? getRoutines()[0];
+  const routine = (idParam ? getRoutineById(idParam, profileId) : undefined) ?? getRoutines(profileId)[0];
 
   const [phase, setPhase] = useState<BriefingPhase>('briefing');
   const [stepIndex, setStepIndex] = useState(0);
