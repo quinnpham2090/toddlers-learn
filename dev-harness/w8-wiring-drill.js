@@ -274,9 +274,17 @@ const pack1VoiceResolves = (key) => {
   const rel = importPathFor(identFor(pack1VoiceBlock, key));
   return Boolean(rel && exists(rel));
 };
+const pack3LessonIds = new Set(readJson('packs/sunny-home-garden-3/lessons.json').map((l) => l.id));
+const pack3Strings = readJson('packs/sunny-home-garden-3/strings.json').locales['en-US'];
+const pack3VoiceBlock = sliceBetween(loaderSrc, '"sunny-home-garden-3": {', 'const PACK_ASSET_REGISTRY');
+const pack3VoiceResolves = (key) => {
+  const rel = importPathFor(identFor(pack3VoiceBlock, key));
+  return Boolean(rel && exists(rel));
+};
 const badRefs = [];
 for (const e of finaleEntries) {
   if (pack2LessonIds.has(e.id)) { if (!(e.ref in strings) || !voiceResolves(e.ref)) badRefs.push(`${e.ref}(pack2)`); }
+  else if (pack3LessonIds.has(e.id)) { if (!(e.ref in pack3Strings) || !pack3VoiceResolves(e.ref)) badRefs.push(`${e.ref}(pack3)`); }
   else if (!(e.ref in pack1Strings) || !pack1VoiceResolves(e.ref)) badRefs.push(`${e.ref}(pack1)`);
 }
 report(`all ${finaleEntries.length} FINALE_CONFIG findPromptRefs resolve under their owning pack`, finaleEntries.length >= 33 && badRefs.length === 0, `count=${finaleEntries.length} bad=${badRefs.join(', ')}`);

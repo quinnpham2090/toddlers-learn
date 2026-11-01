@@ -232,6 +232,36 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['car', 'train', 'bicycle'],
     findPromptRef: 'lesson.vehicle_words.find_prompt',
   },
+  'lesson-number-symbols-1-3': {
+    targetItemId: 'numeral-3',
+    tileItemIds: ['numeral-3', 'numeral-2', 'numeral-1'],
+    findPromptRef: 'lesson.number_symbols_1_3.find_prompt',
+  },
+  'lesson-number-symbols-1-10': {
+    targetItemId: 'numeral-10',
+    tileItemIds: ['numeral-10', 'numeral-8', 'numeral-9'],
+    findPromptRef: 'lesson.number_symbols_1_10.find_prompt',
+  },
+  'lesson-add-take-away': {
+    targetItemId: 'cup-5',
+    tileItemIds: ['cup-5', 'cup-4', 'cup-3'],
+    findPromptRef: 'lesson.add_take_away.find_prompt',
+  },
+  'lesson-onset-rime-blending': {
+    targetItemId: 'bee',
+    tileItemIds: ['bee', 'tree', 'ball'],
+    findPromptRef: 'lesson.onset_rime_blending.find_prompt',
+  },
+  'lesson-final-sounds': {
+    targetItemId: 'letter-f',
+    tileItemIds: ['letter-f', 'letter-l', 'letter-g'],
+    findPromptRef: 'lesson.final_sounds.find_prompt',
+  },
+  'lesson-measurement-compare': {
+    targetItemId: 'spoon',
+    tileItemIds: ['spoon', 'cup'],
+    findPromptRef: 'lesson.measurement_compare.find_prompt',
+  },
 };
 
 

@@ -34,6 +34,129 @@ import sunnyMissionsJson from '../packs/sunny-home-garden/missions.json';
 import sunnyRoutinesJson from '../packs/sunny-home-garden/routines.json';
 import sunnyTimeConceptsJson from '../packs/sunny-home-garden/time_concepts.json';
 import sunny2ManifestJson from '../packs/sunny-home-garden-2/manifest.json';
+import sunny3ManifestJson from '../packs/sunny-home-garden-3/manifest.json';
+import sunny3StringsJson from '../packs/sunny-home-garden-3/strings.json';
+import sunny3SkillsJson from '../packs/sunny-home-garden-3/skills.json';
+import sunny3LessonsJson from '../packs/sunny-home-garden-3/lessons.json';
+import sunny3SongTemplatesJson from '../packs/sunny-home-garden-3/song_templates.json';
+import sunny3SavedSongsJson from '../packs/sunny-home-garden-3/saved_songs.json';
+import sunny3CharactersJson from '../packs/sunny-home-garden-3/characters.json';
+import sunny3PictureSetsJson from '../packs/sunny-home-garden-3/picture_sets.json';
+import sunny3MissionsJson from '../packs/sunny-home-garden-3/missions.json';
+import sunny3RoutinesJson from '../packs/sunny-home-garden-3/routines.json';
+import sunny3TimeConceptsJson from '../packs/sunny-home-garden-3/time_concepts.json';
+import sunny3BallJpg from '../packs/sunny-home-garden-3/assets/ball.jpg';
+import sunny3BeeJpg from '../packs/sunny-home-garden-3/assets/bee.jpg';
+import sunny3BookJpg from '../packs/sunny-home-garden-3/assets/book.jpg';
+import sunny3CarJpg from '../packs/sunny-home-garden-3/assets/car.jpg';
+import sunny3CatJpg from '../packs/sunny-home-garden-3/assets/cat.jpg';
+import sunny3CupJpg from '../packs/sunny-home-garden-3/assets/cup.jpg';
+import sunny3DogJpg from '../packs/sunny-home-garden-3/assets/dog.jpg';
+import sunny3FrogJpg from '../packs/sunny-home-garden-3/assets/frog.jpg';
+import sunny3GreenLeafJpg from '../packs/sunny-home-garden-3/assets/green-leaf.jpg';
+import sunny3HatJpg from '../packs/sunny-home-garden-3/assets/hat.jpg';
+import sunny3LetterBJpg from '../packs/sunny-home-garden-3/assets/letter-b.jpg';
+import sunny3LetterCJpg from '../packs/sunny-home-garden-3/assets/letter-c.jpg';
+import sunny3LetterDJpg from '../packs/sunny-home-garden-3/assets/letter-d.jpg';
+import sunny3LetterFJpg from '../packs/sunny-home-garden-3/assets/letter-f.jpg';
+import sunny3LetterGJpg from '../packs/sunny-home-garden-3/assets/letter-g.jpg';
+import sunny3LetterHJpg from '../packs/sunny-home-garden-3/assets/letter-h.jpg';
+import sunny3LetterLJpg from '../packs/sunny-home-garden-3/assets/letter-l.jpg';
+import sunny3LetterPJpg from '../packs/sunny-home-garden-3/assets/letter-p.jpg';
+import sunny3LetterSJpg from '../packs/sunny-home-garden-3/assets/letter-s.jpg';
+import sunny3LetterWJpg from '../packs/sunny-home-garden-3/assets/letter-w.jpg';
+import sunny3LongRibbonJpg from '../packs/sunny-home-garden-3/assets/long-ribbon.jpg';
+import sunny3MoonJpg from '../packs/sunny-home-garden-3/assets/moon.jpg';
+import sunny3MossPortraitJpg from '../packs/sunny-home-garden-3/assets/moss-portrait.jpg';
+import sunny3Numeral1Jpg from '../packs/sunny-home-garden-3/assets/numeral-1.jpg';
+import sunny3Numeral10Jpg from '../packs/sunny-home-garden-3/assets/numeral-10.jpg';
+import sunny3Numeral2Jpg from '../packs/sunny-home-garden-3/assets/numeral-2.jpg';
+import sunny3Numeral3Jpg from '../packs/sunny-home-garden-3/assets/numeral-3.jpg';
+import sunny3Numeral4Jpg from '../packs/sunny-home-garden-3/assets/numeral-4.jpg';
+import sunny3Numeral5Jpg from '../packs/sunny-home-garden-3/assets/numeral-5.jpg';
+import sunny3Numeral6Jpg from '../packs/sunny-home-garden-3/assets/numeral-6.jpg';
+import sunny3Numeral7Jpg from '../packs/sunny-home-garden-3/assets/numeral-7.jpg';
+import sunny3Numeral8Jpg from '../packs/sunny-home-garden-3/assets/numeral-8.jpg';
+import sunny3Numeral9Jpg from '../packs/sunny-home-garden-3/assets/numeral-9.jpg';
+import sunny3PuffPortraitJpg from '../packs/sunny-home-garden-3/assets/puff-portrait.jpg';
+import sunny3RedFlowerJpg from '../packs/sunny-home-garden-3/assets/red-flower.jpg';
+import sunny3ShortRibbonJpg from '../packs/sunny-home-garden-3/assets/short-ribbon.jpg';
+import sunny3SpoonJpg from '../packs/sunny-home-garden-3/assets/spoon.jpg';
+import sunny3StarJpg from '../packs/sunny-home-garden-3/assets/star.jpg';
+import sunny3TreeJpg from '../packs/sunny-home-garden-3/assets/tree.jpg';
+import sunny3YellowFlowerJpg from '../packs/sunny-home-garden-3/assets/yellow-flower.jpg';
+import sunny3LessonAddTakeAwayClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_closing_win.mp3';
+import sunny3LessonAddTakeAwayFindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_find_prompt.mp3';
+import sunny3LessonAddTakeAwayStep1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_1_celebration.mp3';
+import sunny3LessonAddTakeAwayStep1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_1_prompt.mp3';
+import sunny3LessonAddTakeAwayStep2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_2_celebration.mp3';
+import sunny3LessonAddTakeAwayStep2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_2_prompt.mp3';
+import sunny3LessonAddTakeAwayStep3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_3_celebration.mp3';
+import sunny3LessonAddTakeAwayStep3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_3_prompt.mp3';
+import sunny3LessonAddTakeAwayStep4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_4_celebration.mp3';
+import sunny3LessonAddTakeAwayStep4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_4_prompt.mp3';
+import sunny3LessonAddTakeAwayStep5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_5_celebration.mp3';
+import sunny3LessonAddTakeAwayStep5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_add_take_away_step_5_prompt.mp3';
+import sunny3LessonMeasurementCompareClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_closing_win.mp3';
+import sunny3LessonMeasurementCompareFindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_find_prompt.mp3';
+import sunny3LessonMeasurementCompareStep1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_1_celebration.mp3';
+import sunny3LessonMeasurementCompareStep1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_1_prompt.mp3';
+import sunny3LessonMeasurementCompareStep2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_2_celebration.mp3';
+import sunny3LessonMeasurementCompareStep2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_2_prompt.mp3';
+import sunny3LessonMeasurementCompareStep3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_3_celebration.mp3';
+import sunny3LessonMeasurementCompareStep3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_3_prompt.mp3';
+import sunny3LessonMeasurementCompareStep4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_4_celebration.mp3';
+import sunny3LessonMeasurementCompareStep4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_4_prompt.mp3';
+import sunny3LessonMeasurementCompareStep5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_5_celebration.mp3';
+import sunny3LessonMeasurementCompareStep5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_measurement_compare_step_5_prompt.mp3';
+import sunny3LessonNumberSymbols110ClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_closing_win.mp3';
+import sunny3LessonNumberSymbols110FindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_find_prompt.mp3';
+import sunny3LessonNumberSymbols110Step1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_1_celebration.mp3';
+import sunny3LessonNumberSymbols110Step1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_1_prompt.mp3';
+import sunny3LessonNumberSymbols110Step2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_2_celebration.mp3';
+import sunny3LessonNumberSymbols110Step2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_2_prompt.mp3';
+import sunny3LessonNumberSymbols110Step3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_3_celebration.mp3';
+import sunny3LessonNumberSymbols110Step3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_3_prompt.mp3';
+import sunny3LessonNumberSymbols110Step4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_4_celebration.mp3';
+import sunny3LessonNumberSymbols110Step4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_4_prompt.mp3';
+import sunny3LessonNumberSymbols110Step5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_5_celebration.mp3';
+import sunny3LessonNumberSymbols110Step5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_10_step_5_prompt.mp3';
+import sunny3LessonNumberSymbols13ClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_closing_win.mp3';
+import sunny3LessonNumberSymbols13FindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_find_prompt.mp3';
+import sunny3LessonNumberSymbols13Step1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_1_celebration.mp3';
+import sunny3LessonNumberSymbols13Step1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_1_prompt.mp3';
+import sunny3LessonNumberSymbols13Step2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_2_celebration.mp3';
+import sunny3LessonNumberSymbols13Step2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_2_prompt.mp3';
+import sunny3LessonNumberSymbols13Step3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_3_celebration.mp3';
+import sunny3LessonNumberSymbols13Step3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_3_prompt.mp3';
+import sunny3LessonNumberSymbols13Step4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_4_celebration.mp3';
+import sunny3LessonNumberSymbols13Step4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_4_prompt.mp3';
+import sunny3LessonNumberSymbols13Step5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_5_celebration.mp3';
+import sunny3LessonNumberSymbols13Step5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/moss/lesson_number_symbols_1_3_step_5_prompt.mp3';
+import sunny3LessonFinalSoundsClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_closing_win.mp3';
+import sunny3LessonFinalSoundsFindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_find_prompt.mp3';
+import sunny3LessonFinalSoundsStep1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_1_celebration.mp3';
+import sunny3LessonFinalSoundsStep1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_1_prompt.mp3';
+import sunny3LessonFinalSoundsStep2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_2_celebration.mp3';
+import sunny3LessonFinalSoundsStep2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_2_prompt.mp3';
+import sunny3LessonFinalSoundsStep3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_3_celebration.mp3';
+import sunny3LessonFinalSoundsStep3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_3_prompt.mp3';
+import sunny3LessonFinalSoundsStep4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_4_celebration.mp3';
+import sunny3LessonFinalSoundsStep4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_4_prompt.mp3';
+import sunny3LessonFinalSoundsStep5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_5_celebration.mp3';
+import sunny3LessonFinalSoundsStep5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_final_sounds_step_5_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingClosingWinMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_closing_win.mp3';
+import sunny3LessonOnsetRimeBlendingFindPromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_find_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingStep1CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_1_celebration.mp3';
+import sunny3LessonOnsetRimeBlendingStep1PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_1_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingStep2CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_2_celebration.mp3';
+import sunny3LessonOnsetRimeBlendingStep2PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_2_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingStep3CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_3_celebration.mp3';
+import sunny3LessonOnsetRimeBlendingStep3PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_3_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingStep4CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_4_celebration.mp3';
+import sunny3LessonOnsetRimeBlendingStep4PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_4_prompt.mp3';
+import sunny3LessonOnsetRimeBlendingStep5CelebrationMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_5_celebration.mp3';
+import sunny3LessonOnsetRimeBlendingStep5PromptMp3 from '../packs/sunny-home-garden-3/assets/voice/puff/lesson_onset_rime_blending_step_5_prompt.mp3';
 import sunny2StringsJson from '../packs/sunny-home-garden-2/strings.json';
 import sunny2SkillsJson from '../packs/sunny-home-garden-2/skills.json';
 import sunny2LessonsJson from '../packs/sunny-home-garden-2/lessons.json';
@@ -1020,6 +1143,20 @@ const PACK_REGISTRY: Record<string, PackFiles> = {
     routines: sunny2RoutinesJson as RoutineRecord[],
     timeConcepts: sunny2TimeConceptsJson as TimeConceptRecord[],
   },
+  'sunny-home-garden-3': {
+    packId: 'sunny-home-garden-3',
+    manifest: sunny3ManifestJson as PackManifest,
+    strings: sunny3StringsJson as PackStrings,
+    skills: sunny3SkillsJson as SkillRecord[],
+    lessons: sunny3LessonsJson as LessonRecord[],
+    songTemplates: sunny3SongTemplatesJson as SongTemplateRecord[],
+    savedSongs: sunny3SavedSongsJson as SavedSongRecord[],
+    characters: sunny3CharactersJson as CharacterRecord[],
+    pictureSets: sunny3PictureSetsJson as PictureSetRecord[],
+    missions: sunny3MissionsJson as MissionRecord[],
+    routines: sunny3RoutinesJson as RoutineRecord[],
+    timeConcepts: sunny3TimeConceptsJson as TimeConceptRecord[],
+  },
 };
 import mossMossItemRedBasketLabelMp3 from '../packs/sunny-home-garden/assets/voice/moss/item_red_basket_label.mp3';
 import puffPuffLessonHelloCupFindPromptMp3 from '../packs/sunny-home-garden/assets/voice/puff/lesson_hello_cup_find_prompt.mp3';
@@ -1665,6 +1802,84 @@ const PACK_VOICE_REGISTRY: Record<string, Record<string, Record<string, number>>
         "lesson.copy_abc_pattern.find_prompt": sunny2MossLessonCopyAbcPatternFindPromptMp3,
       },
   },
+  "sunny-home-garden-3": {
+    "moss": {
+        "lesson.add_take_away.closing_win": sunny3LessonAddTakeAwayClosingWinMp3,
+        "lesson.add_take_away.find_prompt": sunny3LessonAddTakeAwayFindPromptMp3,
+        "lesson.add_take_away.step_1.celebration": sunny3LessonAddTakeAwayStep1CelebrationMp3,
+        "lesson.add_take_away.step_1.prompt": sunny3LessonAddTakeAwayStep1PromptMp3,
+        "lesson.add_take_away.step_2.celebration": sunny3LessonAddTakeAwayStep2CelebrationMp3,
+        "lesson.add_take_away.step_2.prompt": sunny3LessonAddTakeAwayStep2PromptMp3,
+        "lesson.add_take_away.step_3.celebration": sunny3LessonAddTakeAwayStep3CelebrationMp3,
+        "lesson.add_take_away.step_3.prompt": sunny3LessonAddTakeAwayStep3PromptMp3,
+        "lesson.add_take_away.step_4.celebration": sunny3LessonAddTakeAwayStep4CelebrationMp3,
+        "lesson.add_take_away.step_4.prompt": sunny3LessonAddTakeAwayStep4PromptMp3,
+        "lesson.add_take_away.step_5.celebration": sunny3LessonAddTakeAwayStep5CelebrationMp3,
+        "lesson.add_take_away.step_5.prompt": sunny3LessonAddTakeAwayStep5PromptMp3,
+        "lesson.measurement_compare.closing_win": sunny3LessonMeasurementCompareClosingWinMp3,
+        "lesson.measurement_compare.find_prompt": sunny3LessonMeasurementCompareFindPromptMp3,
+        "lesson.measurement_compare.step_1.celebration": sunny3LessonMeasurementCompareStep1CelebrationMp3,
+        "lesson.measurement_compare.step_1.prompt": sunny3LessonMeasurementCompareStep1PromptMp3,
+        "lesson.measurement_compare.step_2.celebration": sunny3LessonMeasurementCompareStep2CelebrationMp3,
+        "lesson.measurement_compare.step_2.prompt": sunny3LessonMeasurementCompareStep2PromptMp3,
+        "lesson.measurement_compare.step_3.celebration": sunny3LessonMeasurementCompareStep3CelebrationMp3,
+        "lesson.measurement_compare.step_3.prompt": sunny3LessonMeasurementCompareStep3PromptMp3,
+        "lesson.measurement_compare.step_4.celebration": sunny3LessonMeasurementCompareStep4CelebrationMp3,
+        "lesson.measurement_compare.step_4.prompt": sunny3LessonMeasurementCompareStep4PromptMp3,
+        "lesson.measurement_compare.step_5.celebration": sunny3LessonMeasurementCompareStep5CelebrationMp3,
+        "lesson.measurement_compare.step_5.prompt": sunny3LessonMeasurementCompareStep5PromptMp3,
+        "lesson.number_symbols_1_10.closing_win": sunny3LessonNumberSymbols110ClosingWinMp3,
+        "lesson.number_symbols_1_10.find_prompt": sunny3LessonNumberSymbols110FindPromptMp3,
+        "lesson.number_symbols_1_10.step_1.celebration": sunny3LessonNumberSymbols110Step1CelebrationMp3,
+        "lesson.number_symbols_1_10.step_1.prompt": sunny3LessonNumberSymbols110Step1PromptMp3,
+        "lesson.number_symbols_1_10.step_2.celebration": sunny3LessonNumberSymbols110Step2CelebrationMp3,
+        "lesson.number_symbols_1_10.step_2.prompt": sunny3LessonNumberSymbols110Step2PromptMp3,
+        "lesson.number_symbols_1_10.step_3.celebration": sunny3LessonNumberSymbols110Step3CelebrationMp3,
+        "lesson.number_symbols_1_10.step_3.prompt": sunny3LessonNumberSymbols110Step3PromptMp3,
+        "lesson.number_symbols_1_10.step_4.celebration": sunny3LessonNumberSymbols110Step4CelebrationMp3,
+        "lesson.number_symbols_1_10.step_4.prompt": sunny3LessonNumberSymbols110Step4PromptMp3,
+        "lesson.number_symbols_1_10.step_5.celebration": sunny3LessonNumberSymbols110Step5CelebrationMp3,
+        "lesson.number_symbols_1_10.step_5.prompt": sunny3LessonNumberSymbols110Step5PromptMp3,
+        "lesson.number_symbols_1_3.closing_win": sunny3LessonNumberSymbols13ClosingWinMp3,
+        "lesson.number_symbols_1_3.find_prompt": sunny3LessonNumberSymbols13FindPromptMp3,
+        "lesson.number_symbols_1_3.step_1.celebration": sunny3LessonNumberSymbols13Step1CelebrationMp3,
+        "lesson.number_symbols_1_3.step_1.prompt": sunny3LessonNumberSymbols13Step1PromptMp3,
+        "lesson.number_symbols_1_3.step_2.celebration": sunny3LessonNumberSymbols13Step2CelebrationMp3,
+        "lesson.number_symbols_1_3.step_2.prompt": sunny3LessonNumberSymbols13Step2PromptMp3,
+        "lesson.number_symbols_1_3.step_3.celebration": sunny3LessonNumberSymbols13Step3CelebrationMp3,
+        "lesson.number_symbols_1_3.step_3.prompt": sunny3LessonNumberSymbols13Step3PromptMp3,
+        "lesson.number_symbols_1_3.step_4.celebration": sunny3LessonNumberSymbols13Step4CelebrationMp3,
+        "lesson.number_symbols_1_3.step_4.prompt": sunny3LessonNumberSymbols13Step4PromptMp3,
+        "lesson.number_symbols_1_3.step_5.celebration": sunny3LessonNumberSymbols13Step5CelebrationMp3,
+        "lesson.number_symbols_1_3.step_5.prompt": sunny3LessonNumberSymbols13Step5PromptMp3,
+    },
+    "puff": {
+        "lesson.final_sounds.closing_win": sunny3LessonFinalSoundsClosingWinMp3,
+        "lesson.final_sounds.find_prompt": sunny3LessonFinalSoundsFindPromptMp3,
+        "lesson.final_sounds.step_1.celebration": sunny3LessonFinalSoundsStep1CelebrationMp3,
+        "lesson.final_sounds.step_1.prompt": sunny3LessonFinalSoundsStep1PromptMp3,
+        "lesson.final_sounds.step_2.celebration": sunny3LessonFinalSoundsStep2CelebrationMp3,
+        "lesson.final_sounds.step_2.prompt": sunny3LessonFinalSoundsStep2PromptMp3,
+        "lesson.final_sounds.step_3.celebration": sunny3LessonFinalSoundsStep3CelebrationMp3,
+        "lesson.final_sounds.step_3.prompt": sunny3LessonFinalSoundsStep3PromptMp3,
+        "lesson.final_sounds.step_4.celebration": sunny3LessonFinalSoundsStep4CelebrationMp3,
+        "lesson.final_sounds.step_4.prompt": sunny3LessonFinalSoundsStep4PromptMp3,
+        "lesson.final_sounds.step_5.celebration": sunny3LessonFinalSoundsStep5CelebrationMp3,
+        "lesson.final_sounds.step_5.prompt": sunny3LessonFinalSoundsStep5PromptMp3,
+        "lesson.onset_rime_blending.closing_win": sunny3LessonOnsetRimeBlendingClosingWinMp3,
+        "lesson.onset_rime_blending.find_prompt": sunny3LessonOnsetRimeBlendingFindPromptMp3,
+        "lesson.onset_rime_blending.step_1.celebration": sunny3LessonOnsetRimeBlendingStep1CelebrationMp3,
+        "lesson.onset_rime_blending.step_1.prompt": sunny3LessonOnsetRimeBlendingStep1PromptMp3,
+        "lesson.onset_rime_blending.step_2.celebration": sunny3LessonOnsetRimeBlendingStep2CelebrationMp3,
+        "lesson.onset_rime_blending.step_2.prompt": sunny3LessonOnsetRimeBlendingStep2PromptMp3,
+        "lesson.onset_rime_blending.step_3.celebration": sunny3LessonOnsetRimeBlendingStep3CelebrationMp3,
+        "lesson.onset_rime_blending.step_3.prompt": sunny3LessonOnsetRimeBlendingStep3PromptMp3,
+        "lesson.onset_rime_blending.step_4.celebration": sunny3LessonOnsetRimeBlendingStep4CelebrationMp3,
+        "lesson.onset_rime_blending.step_4.prompt": sunny3LessonOnsetRimeBlendingStep4PromptMp3,
+        "lesson.onset_rime_blending.step_5.celebration": sunny3LessonOnsetRimeBlendingStep5CelebrationMp3,
+        "lesson.onset_rime_blending.step_5.prompt": sunny3LessonOnsetRimeBlendingStep5PromptMp3,
+    },
+  },
 };
 
 
@@ -1830,6 +2045,48 @@ const PACK_ASSET_REGISTRY: Record<string, Record<string, number>> = {
     'assets/bus.jpg': sunny2BusJpg,
     'assets/train.jpg': sunny2TrainJpg,
     'assets/bicycle.jpg': sunny2BicycleJpg,
+  },
+  'sunny-home-garden-3': {
+    'assets/ball.jpg': sunny3BallJpg,
+    'assets/bee.jpg': sunny3BeeJpg,
+    'assets/book.jpg': sunny3BookJpg,
+    'assets/car.jpg': sunny3CarJpg,
+    'assets/cat.jpg': sunny3CatJpg,
+    'assets/cup.jpg': sunny3CupJpg,
+    'assets/dog.jpg': sunny3DogJpg,
+    'assets/frog.jpg': sunny3FrogJpg,
+    'assets/green-leaf.jpg': sunny3GreenLeafJpg,
+    'assets/hat.jpg': sunny3HatJpg,
+    'assets/letter-b.jpg': sunny3LetterBJpg,
+    'assets/letter-c.jpg': sunny3LetterCJpg,
+    'assets/letter-d.jpg': sunny3LetterDJpg,
+    'assets/letter-f.jpg': sunny3LetterFJpg,
+    'assets/letter-g.jpg': sunny3LetterGJpg,
+    'assets/letter-h.jpg': sunny3LetterHJpg,
+    'assets/letter-l.jpg': sunny3LetterLJpg,
+    'assets/letter-p.jpg': sunny3LetterPJpg,
+    'assets/letter-s.jpg': sunny3LetterSJpg,
+    'assets/letter-w.jpg': sunny3LetterWJpg,
+    'assets/long-ribbon.jpg': sunny3LongRibbonJpg,
+    'assets/moon.jpg': sunny3MoonJpg,
+    'assets/moss-portrait.jpg': sunny3MossPortraitJpg,
+    'assets/numeral-1.jpg': sunny3Numeral1Jpg,
+    'assets/numeral-10.jpg': sunny3Numeral10Jpg,
+    'assets/numeral-2.jpg': sunny3Numeral2Jpg,
+    'assets/numeral-3.jpg': sunny3Numeral3Jpg,
+    'assets/numeral-4.jpg': sunny3Numeral4Jpg,
+    'assets/numeral-5.jpg': sunny3Numeral5Jpg,
+    'assets/numeral-6.jpg': sunny3Numeral6Jpg,
+    'assets/numeral-7.jpg': sunny3Numeral7Jpg,
+    'assets/numeral-8.jpg': sunny3Numeral8Jpg,
+    'assets/numeral-9.jpg': sunny3Numeral9Jpg,
+    'assets/puff-portrait.jpg': sunny3PuffPortraitJpg,
+    'assets/red-flower.jpg': sunny3RedFlowerJpg,
+    'assets/short-ribbon.jpg': sunny3ShortRibbonJpg,
+    'assets/spoon.jpg': sunny3SpoonJpg,
+    'assets/star.jpg': sunny3StarJpg,
+    'assets/tree.jpg': sunny3TreeJpg,
+    'assets/yellow-flower.jpg': sunny3YellowFlowerJpg,
   },
 };
 

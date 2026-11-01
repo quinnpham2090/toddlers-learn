@@ -1,0 +1,1164 @@
+[
+  {
+    "id": "point-to-choice",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "2-3",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.point_to_choice.title",
+    "description_ref": "skill.point_to_choice.description",
+    "domain": "language",
+    "is_entry_skill": true,
+    "prerequisites": [],
+    "next_skills": [
+      "rhyme-listening"
+    ],
+    "age_band_min": "2-3",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sorting-one-rule",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.sorting_one_rule.title",
+    "description_ref": "skill.sorting_one_rule.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "colour-naming"
+    ],
+    "next_skills": [
+      "sizes-big-little",
+      "subitize"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "rhyme-listening",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.rhyme_listening.title",
+    "description_ref": "skill.rhyme_listening.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [],
+    "next_skills": [
+      "find-the-rhyme"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "find-the-rhyme",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.find_the_rhyme.title",
+    "description_ref": "skill.find_the_rhyme.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "rhyme-listening"
+    ],
+    "next_skills": [
+      "rhyme-production"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "rhyme-production",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.rhyme_production.title",
+    "description_ref": "skill.rhyme_production.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "rhyme-listening",
+      "find-the-rhyme"
+    ],
+    "next_skills": [
+      "syllable-clapping",
+      "clap-the-beats"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "syllable-clapping",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.syllable_clapping.title",
+    "description_ref": "skill.syllable_clapping.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "find-the-rhyme"
+    ],
+    "next_skills": [
+      "onset-rime-prep"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "clap-the-beats",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.clap_the_beats.title",
+    "description_ref": "skill.clap_the_beats.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "syllable-clapping"
+    ],
+    "next_skills": [
+      "onset-rime-prep",
+      "sorting-one-rule"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "onset-rime-prep",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.onset_rime_prep.title",
+    "description_ref": "skill.onset_rime_prep.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "syllable-clapping"
+    ],
+    "next_skills": [
+      "initial-sound-matching"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "initial-sound-matching",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.initial_sound_matching.title",
+    "description_ref": "skill.initial_sound_matching.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "onset-rime-prep"
+    ],
+    "next_skills": [
+      "which-starts-with"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "which-starts-with",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.which_starts_with.title",
+    "description_ref": "skill.which_starts_with.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "initial-sound-matching"
+    ],
+    "next_skills": [
+      "notice-with-choices",
+      "letter-names",
+      "onset-rime-blending"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "name-with-grown-up",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.name_with_grown_up.title",
+    "description_ref": "skill.name_with_grown_up.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "name-with-grown-up-choice"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "name-with-grown-up-choice",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.name_with_grown_up_choice.title",
+    "description_ref": "skill.name_with_grown_up_choice.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "subitize",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.subitize.title",
+    "description_ref": "skill.subitize.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "sizes-big-little"
+    ],
+    "next_skills": [
+      "give-1",
+      "pattern-copy"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-1",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_1.title",
+    "description_ref": "skill.give_1.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "subitize"
+    ],
+    "next_skills": [
+      "give-2"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-2",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_2.title",
+    "description_ref": "skill.give_2.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-1"
+    ],
+    "next_skills": [
+      "give-3"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-3",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_3.title",
+    "description_ref": "skill.give_3.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-2"
+    ],
+    "next_skills": [
+      "give-n",
+      "give-4"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-n",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_n.title",
+    "description_ref": "skill.give_n.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-3"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "pattern-copy",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.pattern_copy.title",
+    "description_ref": "skill.pattern_copy.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "subitize"
+    ],
+    "next_skills": [
+      "pattern-extension"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "pattern-extension",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.pattern_extension.title",
+    "description_ref": "skill.pattern_extension.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "pattern-copy"
+    ],
+    "next_skills": [
+      "beat-patterns"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "beat-patterns",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.beat_patterns.title",
+    "description_ref": "skill.beat_patterns.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "pattern-extension"
+    ],
+    "next_skills": [
+      "what-comes-next"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "what-comes-next",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.what_comes_next.title",
+    "description_ref": "skill.what_comes_next.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "beat-patterns"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sort-by-colour",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.sort_by_colour.title",
+    "description_ref": "skill.sort_by_colour.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "sorting-one-rule",
+      "colour-naming"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "notice-with-choices",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.notice_with_choices.title",
+    "description_ref": "skill.notice_with_choices.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "what-do-you-see"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "what-do-you-see",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.what_do_you_see.title",
+    "description_ref": "skill.what_do_you_see.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "name-with-grown-up"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "give-4",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.give_4.title",
+    "description_ref": "skill.give_4.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-3"
+    ],
+    "next_skills": [
+      "cardinality"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "cardinality",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.cardinality.title",
+    "description_ref": "skill.cardinality.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "give-4"
+    ],
+    "next_skills": [
+      "more-less",
+      "number-symbols-1-3",
+      "operations-with-objects"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "more-less",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.more_less.title",
+    "description_ref": "skill.more_less.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "cardinality"
+    ],
+    "next_skills": [
+      "shape-names",
+      "measurement-comparison"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "shape-names",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.shape_names.title",
+    "description_ref": "skill.shape_names.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "subitize"
+    ],
+    "next_skills": [
+      "pattern-extension"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "letter-names",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.letter_names.title",
+    "description_ref": "skill.letter_names.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "which-starts-with"
+    ],
+    "next_skills": [
+      "letter-sounds"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "letter-sounds",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.letter_sounds.title",
+    "description_ref": "skill.letter_sounds.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "letter-names"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "animal-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.animal_words.title",
+    "description_ref": "skill.animal_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [
+      "food-words"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "sort-by-property",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.sort_by_property.title",
+    "description_ref": "skill.sort_by_property.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "sorting-one-rule",
+      "what-do-you-see"
+    ],
+    "next_skills": [
+      "what-will-happen-if"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "what-will-happen-if",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.what_will_happen_if.title",
+    "description_ref": "skill.what_will_happen_if.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "what-do-you-see",
+      "sort-by-property"
+    ],
+    "next_skills": [
+      "explain-why"
+    ],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "explain-why",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.explain_why.title",
+    "description_ref": "skill.explain_why.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "what-will-happen-if"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "food-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.food_words.title",
+    "description_ref": "skill.food_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "animal-words"
+    ],
+    "next_skills": [
+      "vehicle-words"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "vehicle-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.vehicle_words.title",
+    "description_ref": "skill.vehicle_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "food-words"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "number-symbols-1-3",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.number_symbols_1_3.title",
+    "description_ref": "skill.number_symbols_1_3.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "cardinality"
+    ],
+    "next_skills": [
+      "number-symbols-1-10"
+    ],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "number-symbols-1-10",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.number_symbols_1_10.title",
+    "description_ref": "skill.number_symbols_1_10.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "number-symbols-1-3"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "operations-with-objects",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.operations_with_objects.title",
+    "description_ref": "skill.operations_with_objects.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "cardinality"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "onset-rime-blending",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.onset_rime_blending.title",
+    "description_ref": "skill.onset_rime_blending.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "which-starts-with"
+    ],
+    "next_skills": [
+      "final-sounds"
+    ],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "final-sounds",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.final_sounds.title",
+    "description_ref": "skill.final_sounds.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "onset-rime-blending"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "measurement-comparison",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-3",
+      "sunny-home-garden-3"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.measurement_comparison.title",
+    "description_ref": "skill.measurement_comparison.description",
+    "domain": "maths",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "more-less"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  }
+]
