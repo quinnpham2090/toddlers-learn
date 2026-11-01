@@ -313,7 +313,9 @@ report("L3 lines use the sounds only ('buh', 'kuh', 'fuh')", l3Texts.every((t) =
 
 // ================= 9. pre-existing steps unchanged =================
 const w5Ids = Object.keys(W5);
-const preLessons = lessons.filter((l) => !w5Ids.includes(l.id));
+// Pre-Wave-5 lessons, pinned explicitly so this snapshot stays wave-relative.
+const PRE_W5_LESSON_IDS = ['lesson-point-to','lesson-sort-by-kind','lesson-words-that-sound-the-same','lesson-finish-the-rhyme','lesson-clap-the-beats','lesson-first-sounds','lesson-name-it-together','lesson-see-how-many','lesson-give-one','lesson-give-two','lesson-give-three','lesson-give-just-right','lesson-copy-the-pattern','lesson-sort-by-colour','lesson-what-do-you-see','lesson-give-four','lesson-how-many','lesson-more-or-less','lesson-shape-names','lesson-copy-abc-pattern'];
+const preLessons = PRE_W5_LESSON_IDS.map((id) => lessonById(id)).filter(Boolean);
 const preHash = crypto.createHash('sha256').update(JSON.stringify(preLessons.map((x) => ({ id: x.id, steps: x.steps })))).digest('hex');
 report('all pre-existing steps byte-unchanged (98 steps at HEAD ed33e3d; snapshot hash)', preHash === '5f85958ee51802bcc824feb509708f822b60a4407ebe7f695eefb2cdf3d4fa53', preHash);
 report('pre-existing step count is 98 (verified from the repo)', preLessons.reduce((n, l) => n + l.steps.length, 0) === 98);
@@ -337,7 +339,7 @@ for (const e of finaleEntries) {
   if (pack2LessonIds.has(e.id)) { if (!(e.ref in strings) || !voiceResolves(e.ref)) badRefs.push(`${e.ref}(pack2)`); }
   else if (!(e.ref in pack1Strings) || !pack1VoiceResolves(e.ref)) badRefs.push(`${e.ref}(pack1)`);
 }
-report(`all ${finaleEntries.length} FINALE_CONFIG findPromptRefs resolve under their owning pack (28 total = 24 + 4 new)`, finaleEntries.length === 28 && badRefs.length === 0, `count=${finaleEntries.length} bad=${badRefs.join(', ')}`);
+report(`all ${finaleEntries.length} FINALE_CONFIG findPromptRefs resolve under their owning pack (>= 28)`, finaleEntries.length >= 28 && badRefs.length === 0, `count=${finaleEntries.length} bad=${badRefs.join(', ')}`);
 
 console.log(`\n${failures === 0 ? 'ALL WAVE 5 WIRING CHECKS PASSED' : failures + ' CHECK(S) FAILED'}`);
 process.exit(failures === 0 ? 0 : 1);

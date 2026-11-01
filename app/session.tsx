@@ -207,6 +207,21 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['cow', 'frog', 'cat'],
     findPromptRef: 'lesson.animal_words.find_prompt',
   },
+  'lesson-sort-by-property': {
+    targetItemId: 'smooth-basket',
+    tileItemIds: ['smooth-basket', 'rough-basket'],
+    findPromptRef: 'lesson.sort_by_property.find_prompt',
+  },
+  'lesson-what-will-happen-if': {
+    targetItemId: 'green-leaf',
+    tileItemIds: ['green-leaf', 'book'],
+    findPromptRef: 'lesson.what_will_happen_if.find_prompt',
+  },
+  'lesson-why-did-that-happen': {
+    targetItemId: 'cup',
+    tileItemIds: ['cup', 'ball', 'book'],
+    findPromptRef: 'lesson.why_did_that_happen.find_prompt',
+  },
 };
 
 

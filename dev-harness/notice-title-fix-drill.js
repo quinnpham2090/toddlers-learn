@@ -102,8 +102,8 @@ for (const [id, expected] of Object.entries(TITLE_REF_SNAPSHOT)) {
 report('no snapshot node disappeared', missing.length === 0, missing.join(', '));
 report('every other node title_ref unchanged (only notice-with-choices differs)', changed.length === 0, changed.join(', '));
 report(
-  'node count unchanged from snapshot',
-  PATH_GRAPH.length === Object.keys(TITLE_REF_SNAPSHOT).length,
+  'no snapshot node removed (later waves may add nodes)',
+  PATH_GRAPH.length >= Object.keys(TITLE_REF_SNAPSHOT).length,
   `${PATH_GRAPH.length} vs ${Object.keys(TITLE_REF_SNAPSHOT).length}`
 );
 

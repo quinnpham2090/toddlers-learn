@@ -856,5 +856,89 @@
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null
+  },
+  {
+    "id": "sort-by-property",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.sort_by_property.title",
+    "description_ref": "skill.sort_by_property.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "sorting-one-rule",
+      "what-do-you-see"
+    ],
+    "next_skills": [
+      "what-will-happen-if"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "what-will-happen-if",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.what_will_happen_if.title",
+    "description_ref": "skill.what_will_happen_if.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "what-do-you-see",
+      "sort-by-property"
+    ],
+    "next_skills": [
+      "explain-why"
+    ],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "explain-why",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "4-5",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.explain_why.title",
+    "description_ref": "skill.explain_why.description",
+    "domain": "science",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "what-will-happen-if"
+    ],
+    "next_skills": [],
+    "age_band_min": "4-5",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
   }
 ]
