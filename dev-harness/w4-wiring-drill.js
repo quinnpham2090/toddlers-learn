@@ -381,7 +381,10 @@ report('shape-names-set reuse items copied verbatim (ball/book/cup asset + hash)
 
 // ================= 9. pre-existing steps unchanged =================
 const w4Ids = Object.keys(W4);
-const preLessons = lessons.filter((l) => !w4Ids.includes(l.id));
+// Pre-Wave-4 lessons, pinned explicitly so this snapshot stays wave-relative
+// (the pack keeps growing in later waves).
+const PRE_W4_LESSON_IDS = ['lesson-point-to','lesson-sort-by-kind','lesson-words-that-sound-the-same','lesson-finish-the-rhyme','lesson-clap-the-beats','lesson-first-sounds','lesson-name-it-together','lesson-see-how-many','lesson-give-one','lesson-give-two','lesson-give-three','lesson-give-just-right','lesson-copy-the-pattern','lesson-sort-by-colour','lesson-what-do-you-see'];
+const preLessons = PRE_W4_LESSON_IDS.map((id) => lessonById(id)).filter(Boolean);
 const preHash = crypto.createHash('sha256').update(JSON.stringify(preLessons.map((x) => ({ id: x.id, steps: x.steps })))).digest('hex');
 report('all pre-existing steps byte-unchanged (73 steps across 15 lessons; snapshot hash)', preHash === '4db6c396c6d409356ae4f09876ba3791f171318064a85190ac463be220d701c0', preHash);
 report('pre-existing step count is 73 (this prompt said 63 — discrepancy reported)', preLessons.reduce((n, l) => n + l.steps.length, 0) === 73);
@@ -425,8 +428,8 @@ for (const e of finaleEntries) {
   }
 }
 report(
-  `all ${finaleEntries.length} FINALE_CONFIG findPromptRefs resolve under their owning pack (${pack2Refs} Pack 2 + ${pack1Refs} Pack 1 = 24)`,
-  finaleEntries.length === 24 && badRefs.length === 0,
+  `all ${finaleEntries.length} FINALE_CONFIG findPromptRefs resolve under their owning pack (${pack2Refs} Pack 2 + ${pack1Refs} Pack 1)`,
+  finaleEntries.length >= 24 && badRefs.length === 0,
   `count=${finaleEntries.length} pack2=${pack2Refs} pack1=${pack1Refs} bad=${badRefs.join(', ')}`
 );
 

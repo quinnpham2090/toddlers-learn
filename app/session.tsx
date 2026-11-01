@@ -187,6 +187,26 @@ const FINALE_CONFIG: Record<
     tileItemIds: ['spoon', 'cup', 'ball'],
     findPromptRef: 'lesson.copy_abc_pattern.find_prompt',
   },
+  'lesson-letter-names-1': {
+    targetItemId: 'letter-h',
+    tileItemIds: ['letter-h', 'letter-d', 'letter-f'],
+    findPromptRef: 'lesson.letter_names_1.find_prompt',
+  },
+  'lesson-letter-names-2': {
+    targetItemId: 'letter-w',
+    tileItemIds: ['letter-w', 'letter-g', 'letter-s'],
+    findPromptRef: 'lesson.letter_names_2.find_prompt',
+  },
+  'lesson-first-letter-sounds': {
+    targetItemId: 'letter-c',
+    tileItemIds: ['letter-c', 'letter-d', 'letter-g'],
+    findPromptRef: 'lesson.first_letter_sounds.find_prompt',
+  },
+  'lesson-animal-words': {
+    targetItemId: 'cow',
+    tileItemIds: ['cow', 'frog', 'cat'],
+    findPromptRef: 'lesson.animal_words.find_prompt',
+  },
 };
 
 

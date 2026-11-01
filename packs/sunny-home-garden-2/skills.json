@@ -273,7 +273,8 @@
       "initial-sound-matching"
     ],
     "next_skills": [
-      "notice-with-choices"
+      "notice-with-choices",
+      "letter-names"
     ],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
@@ -772,6 +773,86 @@
     "next_skills": [
       "pattern-extension"
     ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "letter-names",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.letter_names.title",
+    "description_ref": "skill.letter_names.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "which-starts-with"
+    ],
+    "next_skills": [
+      "letter-sounds"
+    ],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "letter-sounds",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.letter_sounds.title",
+    "description_ref": "skill.letter_sounds.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "letter-names"
+    ],
+    "next_skills": [],
+    "age_band_min": "3-4",
+    "evidence_needed_to_advance": 3,
+    "catch_up_variant_of": null
+  },
+  {
+    "id": "animal-words",
+    "record_type": "skill",
+    "version": "1.0.0",
+    "locale": "en-US",
+    "age_band": "3-4",
+    "status": "draft",
+    "tags": [
+      "pack-2",
+      "sunny-home-garden-2"
+    ],
+    "created_by": "kilo",
+    "reviewed_by": "founder",
+    "notes_author": "DRAFT — pending founder review and signature, founder-supplied art and voice, not live.",
+    "title_ref": "skill.animal_words.title",
+    "description_ref": "skill.animal_words.description",
+    "domain": "language",
+    "is_entry_skill": false,
+    "prerequisites": [
+      "point-to-choice"
+    ],
+    "next_skills": [],
     "age_band_min": "3-4",
     "evidence_needed_to_advance": 3,
     "catch_up_variant_of": null

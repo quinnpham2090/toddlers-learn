@@ -72,7 +72,7 @@ const legacyWeight = (entry) => (entry.completed_with_help ? 'participation' : '
 // ============ (a) no existing step carries the fields; existing output unchanged ============
 const W3_LESSON_IDS = ['lesson-see-how-many', 'lesson-give-one', 'lesson-give-two', 'lesson-give-three', 'lesson-give-just-right', 'lesson-copy-the-pattern', 'lesson-sort-by-colour'];
 // Lessons that intentionally carry per-step evidence fields (W3 maths + W2-L5 science + W4 ABC pattern).
-const PER_STEP_EVIDENCE_LESSON_IDS = [...W3_LESSON_IDS, 'lesson-what-do-you-see', 'lesson-copy-abc-pattern'];
+const PER_STEP_EVIDENCE_LESSON_IDS = [...W3_LESSON_IDS, 'lesson-what-do-you-see', 'lesson-copy-abc-pattern', 'lesson-letter-names-1', 'lesson-letter-names-2', 'lesson-first-letter-sounds', 'lesson-animal-words'];
 const flaggedSteps = [];
 const existingOutcomeChecks = [];
 for (const { dirName, pack } of packs) {
@@ -107,7 +107,7 @@ for (const { dirName, pack } of packs) {
 }
 const flaggedLessons = [...new Set(flaggedSteps.map((entry) => entry.split(':')[1]))];
 report(
-  'per-step evidence fields are used only by the W3 maths lessons + W2-L5 science lesson',
+  'per-step evidence fields are used only by the wired per-step-evidence lessons',
   flaggedLessons.length > 0 && flaggedLessons.every((id) => PER_STEP_EVIDENCE_LESSON_IDS.includes(id)),
   `lessons=${flaggedLessons.join(',') || 'none'}`
 );

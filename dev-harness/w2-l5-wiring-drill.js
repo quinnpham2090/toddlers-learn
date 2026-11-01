@@ -224,8 +224,8 @@ report(
   JSON.stringify(skill('initial-sound-matching')?.next_skills) === JSON.stringify(['which-starts-with'])
 );
 report(
-  'which-starts-with.next_skills restored to notice-with-choices',
-  JSON.stringify(skill('which-starts-with')?.next_skills) === JSON.stringify(['notice-with-choices'])
+  'which-starts-with.next_skills includes notice-with-choices (W5 added the letter-names branch)',
+  (skill('which-starts-with')?.next_skills ?? []).includes('notice-with-choices')
 );
 report('manifest temp-patch notes revoked', !/TEMPORARY/.test(manifest.notes_author));
 
